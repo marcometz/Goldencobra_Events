@@ -21,7 +21,7 @@ Goldencobra::ArticlesHelper.module_eval do
   
   private
   def event_item_helper(child, depth, current_depth)
-    child_link = child.title
+    child_block = render_child_block(child)
     current_depth = current_depth + 1
     if child.children && (depth == 0 || current_depth <= depth)
       content_level = ""
@@ -29,10 +29,23 @@ Goldencobra::ArticlesHelper.module_eval do
           content_level << event_item_helper(subchild, depth, current_depth)
       end
       if content_level.present?
-        child_link = child_link + content_tag(:ul, raw(content_level), :class => "level_#{current_depth}" )
+        child_block = child_block + content_tag(:ul, raw(content_level), :class => "level_#{current_depth}" )
       end
     end  
-    return content_tag(:li, raw(child_link), :class => "article_event_item")
+    return content_tag(:li, raw(child_block), :class => "article_event_item")
+  end
+  
+  
+  def render_child_block(event)
+    content = ""
+    content << content_tag(:div, raw(event.title), :class=> "title")
+    content << content_tag(:div, raw(event.description), :class=> "description")
+    content << content_tag(:div, raw(event.external_link), :class=> "external_link")
+    content << content_tag(:div, raw(event.max_number_of_participators), :class=> "max_number_of_participators")
+    content << content_tag(:div, raw(event.type_of_event), :class=> "type_of_event")
+    content << content_tag(:div, raw(event.type_of_registration), :class=> "type_of_registration")
+    content << content_tag(:div, raw(event.exclusive), :class=> "exclusive")
+    return content_tag(:div, raw(content), :class=>"article_event_content")
   end
     
 end
