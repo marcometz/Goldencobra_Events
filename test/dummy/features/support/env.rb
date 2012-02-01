@@ -12,6 +12,7 @@ require 'capybara/rails'
 require 'capybara/cucumber'
 require 'capybara-webkit'
 
+
 #FactoryGirl.find_definitions
 
 Capybara.javascript_driver = :webkit

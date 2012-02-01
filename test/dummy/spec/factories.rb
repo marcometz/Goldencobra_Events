@@ -5,6 +5,8 @@ Factory.define :article, :class => Goldencobra::Article do |u|
   u.url_name "short-title"
   u.startpage false
   u.active true
+  u.event_id nil
+  u.event_levels 0
 end
 
 Factory.define :event, :class => GoldencobraEvents::Event do |u|

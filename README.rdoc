@@ -1,3 +1,9 @@
 = GoldencobraEvents
 
-This project rocks and uses MIT-LICENSE.
+== Usage
+
+	render_article_events({})
+		:depth => 0,1,2,3
+		:class => "basdf"
+		:id => "asdf"
+	

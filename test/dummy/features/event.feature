@@ -41,11 +41,43 @@ Feature: Create and manage events
       | title                        | startpage | id |
       | "Programm"                   | false     |  2 |
       | "Startseite"                 | false     |  1 |
+    And the following "events" exist:
+        | title                        | parent_id | id |
+        | "Event1"                     |           |  1 |
+        | "Event2"                     | 1         |  2 |  
     When I go to the admin list of articles  
     Then I click on "Edit" within "tr#article_2"
-    And I should see "Article #2" within "#page_title"
+    And I should see "Edit Article" within "#page_title"
     And I should see "Event Module" within "#sidebar"
-    And I should see "Select Eventtree to display" within "#event_module_sidebar_section"
+    And I should see "Select an event tree to display" within "#event_module_sidebar_section"
+    And I select "Event2" within "#article_event_id"
+    When I press "Event zuweisen"
+    Then I should see "Edit Article" within ".action_items"
+    And I click on "Edit Article"
+    And I should see "Event2" within "#article_event_id"
+    
+  Scenario: visit an article an look for events 
+    Given the following "articles" exist:
+      | title                        | startpage | id | url_name    | event_id | event_levels | active  |
+      | "Programm"                   | false     |  1 | programm    |    1     |   1          | true    |
+      | "Unterprogramm"              | false     |  2 | subprogramm |    2     |   0          | true    |
+    And the following "events" exist:
+        | title                        | parent_id | id |
+        | "Event1"                     |           |  1 |
+        | "Event2"                     | 1         |  2 |  
+        | "Event3"                     | 1         |  3 |  
+        | "Event4"                     | 2         |  4 |  
+    When I visit url "/programm"
+    Then I should see "Programm"
+    And I should see "Event2"
+    And I should see "Event3"
+    And I should not see "Event1"
+    And I should not see "Event4"
+    When I visit url "/subprogramm"
+    Then I should see "Event4"
+    And I should not see "Event1"
+    And I should not see "Event2"
+    And I should not see "Event3"
 
     
   

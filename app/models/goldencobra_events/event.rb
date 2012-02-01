@@ -19,5 +19,9 @@
 module GoldencobraEvents
   class Event < ActiveRecord::Base
     has_ancestry :orphan_strategy => :restrict
+    has_many :articles, :class_name => Goldencobra::Article   #, :foreign_key => "article_id"
+    
+    scope :active, where(:active => true)
+    
   end
 end
