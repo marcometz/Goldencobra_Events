@@ -7,6 +7,15 @@ Factory.define :article, :class => Goldencobra::Article do |u|
   u.active true
 end
 
+Factory.define :event, :class => GoldencobraEvents::Event do |u|
+  u.title "Event Title"
+  u.description "Dies ist eine Beschreibung"
+  u.external_link "http://www.google.de"
+  u.max_number_of_participators 12
+  u.active true
+  u.exclusive false
+end
+
 
 Factory.define :menue, :class => Goldencobra::Menue do |u|
   u.title 'Nachrichten'

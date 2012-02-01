@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131165313) do
+ActiveRecord::Schema.define(:version => 20120201112815) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -64,8 +64,14 @@ ActiveRecord::Schema.define(:version => 20120131165313) do
     t.string   "ancestry"
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.boolean  "active",                      :default => true
+    t.string   "external_link"
+    t.integer  "max_number_of_participators", :default => 0
+    t.string   "type_of_event"
+    t.string   "type_of_registration"
+    t.boolean  "exclusive",                   :default => false
   end
 
   create_table "goldencobra_menues", :force => true do |t|
