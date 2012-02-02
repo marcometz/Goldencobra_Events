@@ -14,6 +14,8 @@
 #  type_of_event               :string(255)
 #  type_of_registration        :string(255)
 #  exclusive                   :boolean(1)      default(FALSE)
+#  start_date                  :datetime
+#  end_date                    :datetime
 #
 
 require 'test_helper'

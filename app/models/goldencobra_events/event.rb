@@ -14,13 +14,17 @@
 #  type_of_event               :string(255)
 #  type_of_registration        :string(255)
 #  exclusive                   :boolean(1)      default(FALSE)
+#  start_date                  :datetime
+#  end_date                    :datetime
 #
 
 module GoldencobraEvents
   class Event < ActiveRecord::Base
     has_ancestry :orphan_strategy => :restrict
     has_many :articles, :class_name => Goldencobra::Article   #, :foreign_key => "article_id"
-    
+    has_many :event_pricegroups
+    has_many :pricegroups, :through => :event_pricegroups
+    accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
     
   end

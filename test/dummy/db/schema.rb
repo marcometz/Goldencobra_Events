@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201151937) do
+ActiveRecord::Schema.define(:version => 20120202100611) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -62,6 +62,19 @@ ActiveRecord::Schema.define(:version => 20120201151937) do
   add_index "goldencobra_articles", ["ancestry"], :name => "index_goldencobra_articles_on_ancestry"
   add_index "goldencobra_articles", ["slug"], :name => "index_goldencobra_articles_on_slug"
 
+  create_table "goldencobra_events_event_pricegroups", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "pricegroup_id"
+    t.float    "price",                       :default => 0.0
+    t.integer  "max_number_of_participators", :default => 0
+    t.datetime "cancelation_until"
+    t.datetime "start_reservation"
+    t.datetime "end_reservation"
+    t.boolean  "available",                   :default => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+  end
+
   create_table "goldencobra_events_events", :force => true do |t|
     t.string   "ancestry"
     t.string   "title"
@@ -74,6 +87,14 @@ ActiveRecord::Schema.define(:version => 20120201151937) do
     t.string   "type_of_event"
     t.string   "type_of_registration"
     t.boolean  "exclusive",                   :default => false
+    t.datetime "start_date"
+    t.datetime "end_date"
+  end
+
+  create_table "goldencobra_events_pricegroups", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "goldencobra_menues", :force => true do |t|

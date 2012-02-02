@@ -4,5 +4,4 @@ ActiveAdmin.register Goldencobra::Article, :as => "Article" do
     render "/goldencobra_events/admin/events/event_module_sidebar"
   end
   
-  
 end

@@ -12,9 +12,11 @@ Feature: Create and manage events
     Then I should see "New Event" within "h2#page_title"
     And I fill in "event_title" with "Ausflug"
     And I fill in "event_description" with "Dies ist ein Ausflug nach Brandenburg"
+    And I select "February" within "#event_start_date_2i"
     And I press "Create Event"
     Then I should see "Ausflug" within "#main_content"
     And I should see "Dies ist ein Ausflug nach Brandenburg" within "#main_content"
+    And I should see "February"
     
   Scenario: Create a subevent item
     Given that a confirmed admin exists
@@ -78,6 +80,29 @@ Feature: Create and manage events
     And I should not see "Event1"
     And I should not see "Event2"
     And I should not see "Event3"
+    
+  @javascript  
+  Scenario: add prices to existing event
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "pricegroup" exist:
+        | title                        | id |
+        | "Studenten"                  |  1 |
+    And the following "events" exist:
+        | title                        | parent_id | id |
+        | "Event"                      |           |  1 |
+    When I go to the admin list of events  
+    Then I click on "Edit" within "tr#event_1"
+    And I should see "Edit Event" within "#page_title"
+    When I click on "Add New Event Pricegroup"
+    Then I should see "Studenten"
+    And I should see "Price"
+    And I fill in "Price" with "10,5"
+    Then I press "Update Event"
+    And I should see "Studenten"
+    And I should see "10"
+    
+    
 
     
   

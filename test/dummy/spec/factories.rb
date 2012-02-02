@@ -19,6 +19,11 @@ Factory.define :event, :class => GoldencobraEvents::Event do |u|
 end
 
 
+Factory.define :pricegroup, :class => GoldencobraEvents::Pricegroup do |u|
+  u.title "Gruppe"
+end
+
+
 Factory.define :menue, :class => Goldencobra::Menue do |u|
   u.title 'Nachrichten'
   u.target 'www.ikusei.de'

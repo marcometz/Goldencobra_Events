@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  event_id: 1
+  pricegroup_id: 1
+  price: 1.5
+  max_number_of_participators: 1
+  cancelation_until: 2012-02-02 11:06:11
+  start_reservation: 2012-02-02 11:06:11
+  end_reservation: 2012-02-02 11:06:11
+  available: false
+
+two:
+  event_id: 1
+  pricegroup_id: 1
+  price: 1.5
+  max_number_of_participators: 1
+  cancelation_until: 2012-02-02 11:06:11
+  start_reservation: 2012-02-02 11:06:11
+  end_reservation: 2012-02-02 11:06:11
+  available: false
