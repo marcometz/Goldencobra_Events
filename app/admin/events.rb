@@ -1,5 +1,7 @@
 ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   
+  menu :parent => "Event-Management"
+  
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
@@ -17,6 +19,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         m.input :start_reservation, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
         m.input :end_reservation, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
         m.input :cancelation_until, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
+        m.input :webcode, :hint => "Wenn hier ein Code angegeben ist, ist diese Preisgruppe nicht mehr &ouml;ffentlich sichtbar, sondern nur noch mit oben genanntem Webcode."
         m.input :available, :as => :boolean 
       end
     end    
@@ -65,6 +68,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
           th "End"
           th "Cancel"
           th "Available"
+          th "Webcode"
         end
         event.event_pricegroups.each do |epg|
       	  tr do
@@ -75,6 +79,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       	    td epg.end_reservation
       	    td epg.cancelation_until
       	    td epg.available
+      	    td epg.webcode
       	  end
         end
       end      

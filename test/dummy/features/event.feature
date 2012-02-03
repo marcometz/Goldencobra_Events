@@ -64,11 +64,15 @@ Feature: Create and manage events
       | "Programm"                   | false     |  1 | programm    |    1     |   1          | true    |
       | "Unterprogramm"              | false     |  2 | subprogramm |    2     |   0          | true    |
     And the following "events" exist:
-        | title                        | parent_id | id |
-        | "Event1"                     |           |  1 |
-        | "Event2"                     | 1         |  2 |  
-        | "Event3"                     | 1         |  3 |  
-        | "Event4"                     | 2         |  4 |  
+        | title                        | parent_id | id | active |
+        | "Event1"                     |           |  1 | true   |
+        | "Event2"                     | 1         |  2 | true   |
+        | "Event3"                     | 1         |  3 | true   | 
+        | "Event4"                     | 2         |  4 | true   |
+        | "InvisibleEvent"             | 2         |  5 | false  |
+    And the following "pricegroup" exist:
+        | title                        | id |
+        | "Studenten"                  |  1 |
     When I visit url "/programm"
     Then I should see "Programm"
     And I should see "Event2"
@@ -80,6 +84,8 @@ Feature: Create and manage events
     And I should not see "Event1"
     And I should not see "Event2"
     And I should not see "Event3"
+    And I should not see "InvisibleEvent"
+    
     
   @javascript  
   Scenario: add prices to existing event
@@ -101,6 +107,26 @@ Feature: Create and manage events
     Then I press "Update Event"
     And I should see "Studenten"
     And I should see "10"
+    
+  
+  @javascript  
+  Scenario: add webcode to existing event
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "pricegroup" exist:
+        | title                        | id |
+        | "Studenten"                  |  1 |
+    And the following "events" exist:
+        | title                        | parent_id | id |
+        | "Event"                      |           |  1 |
+    When I go to the admin list of events  
+    Then I click on "Edit" within "tr#event_1"
+    When I click on "Add New Event Pricegroup"
+    And I fill in "Webcode" with "Osterspezial2010"
+    Then I press "Update Event"
+    And I should see "Osterspezial2010"
+    
+    
     
     
 

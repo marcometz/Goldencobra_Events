@@ -5,12 +5,12 @@ end
 
 Goldencobra::ArticlesHelper.module_eval do
   def render_article_events(options={})
-    if @article && @article.event_id.present? && @article.event
+    if @article && @article.event_id.present? && @article.event && @article.event.active
       depth = @article.event_levels || 0
       class_name = options[:class] || ""
       id_name = options[:id] || ""
       content = ""
-      @article.event.children.collect do |child|
+      @article.event.children.active.collect do |child|
         content << event_item_helper(child, depth, 1)
       end
       result = content_tag(:ul, raw(content),:id => "#{id_name}", :class => "#{class_name} #{depth} article_events".squeeze(' ').strip)
@@ -25,7 +25,7 @@ Goldencobra::ArticlesHelper.module_eval do
     current_depth = current_depth + 1
     if child.children && (depth == 0 || current_depth <= depth)
       content_level = ""
-      child.children.each do |subchild|
+      child.children.active.each do |subchild|
           content_level << event_item_helper(subchild, depth, current_depth)
       end
       if content_level.present?
