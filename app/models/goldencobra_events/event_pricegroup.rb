@@ -20,8 +20,15 @@ module GoldencobraEvents
   class EventPricegroup < ActiveRecord::Base
     belongs_to :event
     belongs_to :pricegroup
+    attr_accessor :price_raw
     
     scope :available, where(:available => true)
+
+    before_save convert_price_raw
+
+    def convert_price_raw
+      self.price = :price_raw.to_f
+    end
     
   end
 end

@@ -103,11 +103,11 @@ Feature: Create and manage events
     When I click on "Add New Event Pricegroup"
     Then I should see "Studenten"
     And I should see "Price"
-    And I fill in "Price" with "10,5"
+    And I fill in "Price" with "10.5"
     Then I press "Update Event"
+    And show me the page
     And I should see "Studenten"
     And I should see "10"
-    And show me the page
     
   
   @javascript  
