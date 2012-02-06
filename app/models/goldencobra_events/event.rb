@@ -24,6 +24,7 @@ module GoldencobraEvents
     has_many :articles, :class_name => Goldencobra::Article   #, :foreign_key => "article_id"
     has_many :event_pricegroups
     has_many :pricegroups, :through => :event_pricegroups
+    belongs_to :panel
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
     

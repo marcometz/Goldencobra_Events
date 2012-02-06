@@ -23,6 +23,10 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         m.input :available, :as => :boolean 
       end
     end    
+
+    f.inputs "Panel" do
+      f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true
+    end
     
     f.inputs "Inhalt" do
       f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}
@@ -83,6 +87,14 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       	  end
         end
       end      
+    end
+    if event.panel.present?
+      panel "Panel" do
+        attributes_table_for event.panel do
+          row :title
+          row :description
+        end
+      end
     end
     active_admin_comments
   end
