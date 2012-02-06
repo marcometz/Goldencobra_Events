@@ -6,15 +6,8 @@ Rails.application.routes.draw do
   mount Goldencobra::Engine => "/"  
 end
 #== Route Map
-# Generated on 01 Feb 2012 13:18
+# Generated on 06 Feb 2012 11:45
 #
-#                    admin_events GET        /admin/events(.:format)                         admin/events#index
-#                                 POST       /admin/events(.:format)                         admin/events#create
-#                 new_admin_event GET        /admin/events/new(.:format)                     admin/events#new
-#                edit_admin_event GET        /admin/events/:id/edit(.:format)                admin/events#edit
-#                     admin_event GET        /admin/events/:id(.:format)                     admin/events#show
-#                                 PUT        /admin/events/:id(.:format)                     admin/events#update
-#                                 DELETE     /admin/events/:id(.:format)                     admin/events#destroy
 # mark_as_startpage_admin_article GET        /admin/articles/:id/mark_as_startpage(.:format) admin/articles#mark_as_startpage
 #                  admin_articles GET        /admin/articles(.:format)                       admin/articles#index
 #                                 POST       /admin/articles(.:format)                       admin/articles#create
@@ -23,6 +16,20 @@ end
 #                   admin_article GET        /admin/articles/:id(.:format)                   admin/articles#show
 #                                 PUT        /admin/articles/:id(.:format)                   admin/articles#update
 #                                 DELETE     /admin/articles/:id(.:format)                   admin/articles#destroy
+#                    admin_events GET        /admin/events(.:format)                         admin/events#index
+#                                 POST       /admin/events(.:format)                         admin/events#create
+#                 new_admin_event GET        /admin/events/new(.:format)                     admin/events#new
+#                edit_admin_event GET        /admin/events/:id/edit(.:format)                admin/events#edit
+#                     admin_event GET        /admin/events/:id(.:format)                     admin/events#show
+#                                 PUT        /admin/events/:id(.:format)                     admin/events#update
+#                                 DELETE     /admin/events/:id(.:format)                     admin/events#destroy
+#               admin_pricegroups GET        /admin/pricegroups(.:format)                    admin/pricegroups#index
+#                                 POST       /admin/pricegroups(.:format)                    admin/pricegroups#create
+#            new_admin_pricegroup GET        /admin/pricegroups/new(.:format)                admin/pricegroups#new
+#           edit_admin_pricegroup GET        /admin/pricegroups/:id/edit(.:format)           admin/pricegroups#edit
+#                admin_pricegroup GET        /admin/pricegroups/:id(.:format)                admin/pricegroups#show
+#                                 PUT        /admin/pricegroups/:id(.:format)                admin/pricegroups#update
+#                                 DELETE     /admin/pricegroups/:id(.:format)                admin/pricegroups#destroy
 #                    admin_menues GET        /admin/menues(.:format)                         admin/menues#index
 #                                 POST       /admin/menues(.:format)                         admin/menues#create
 #                 new_admin_menue GET        /admin/menues/new(.:format)                     admin/menues#new
@@ -68,6 +75,7 @@ end
 #                     goldencobra            /                                               Goldencobra::Engine
 # 
 # Routes for GoldencobraEvents::Engine:
+# events_show GET /events/show(.:format) events#show
 # 
 # Routes for Goldencobra::Engine:
 #       /*article_id(.:format) goldencobra/articles#show

@@ -23,6 +23,11 @@ Factory.define :pricegroup, :class => GoldencobraEvents::Pricegroup do |u|
   u.title "Gruppe"
 end
 
+Factory.define :panel, :class => GoldencobraEvents::Panel do |u|
+  u.title "Naturstrom Panel"
+  u.description "Das ist ein Panel"
+  u.link_url "http://www.google.de"
+end
 
 Factory.define :menue, :class => Goldencobra::Menue do |u|
   u.title 'Nachrichten'

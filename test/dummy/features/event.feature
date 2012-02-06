@@ -58,7 +58,7 @@ Feature: Create and manage events
     And I click on "Edit Article"
     And I should see "Event2" within "#article_event_id"
     
-  Scenario: visit an article an look for events 
+  Scenario: visit an article and look for events 
     Given the following "articles" exist:
       | title                        | startpage | id | url_name    | event_id | event_levels | active  |
       | "Programm"                   | false     |  1 | programm    |    1     |   1          | true    |
@@ -125,10 +125,19 @@ Feature: Create and manage events
     And I fill in "Webcode" with "Osterspezial2010"
     Then I press "Update Event"
     And I should see "Osterspezial2010"
-    
-    
-    
-    
 
-    
-  
+  Scenario: add event to an existing panel
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "events" exist:
+      | title                        | parent_id | id |
+      | "Event"                      |           |  1 |
+    And the following "panels" exist:
+      | title                        | id |
+      | "Naturstrom Panel"           |  1 |
+    When I go to the admin list of events  
+    Then I click on "Edit" within "tr#event_1"
+    And I select "Naturstrom Panel" within "#event_panel_id"
+    Then I press "Update Event"
+    And I should see "Naturstrom Panel"
+
