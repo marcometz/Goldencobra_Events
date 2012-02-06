@@ -27,6 +27,6 @@ module GoldencobraEvents
     belongs_to :panel
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
-    
+
   end
 end

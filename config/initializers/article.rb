@@ -1,6 +1,5 @@
 Goldencobra::Article.class_eval do
-  belongs_to :event, :class_name => GoldencobraEvents::Event
-    
+  belongs_to :event, :class_name => GoldencobraEvents::Event, :foreign_key => "event_id"
 end
 
 Goldencobra::ArticlesHelper.module_eval do
@@ -10,10 +9,10 @@ Goldencobra::ArticlesHelper.module_eval do
       class_name = options[:class] || ""
       id_name = options[:id] || ""
       content = ""
-      @article.event.children.active.collect do |child|
+      @article.event.siblings.active.collect do |child|
         content << event_item_helper(child, depth, 1)
       end
-      result = content_tag(:ul, raw(content),:id => "#{id_name}", :class => "#{class_name} #{depth} article_events".squeeze(' ').strip)
+      result = content_tag(:ul, raw(content),:id => "#{id_name}", :class => "#{class_name} depth_#{depth} article_events".squeeze(' ').strip)
       return raw(result)
     end
   end 
@@ -45,8 +44,24 @@ Goldencobra::ArticlesHelper.module_eval do
     content << content_tag(:div, raw(event.type_of_event), :class=> "type_of_event")
     content << content_tag(:div, raw(event.type_of_registration), :class=> "type_of_registration")
     content << content_tag(:div, raw(event.exclusive), :class=> "exclusive")
+    content << content_tag(:div, raw(event.start_date), :class=> "start_date")
+    content << content_tag(:div, raw(event.end_date), :class=> "end_date")
+    
+    pricegroup_items = ""
+    event.event_pricegroups.available.each do |event_pricegroup|
+      event_pricegroup_item = ""
+      event_pricegroup_item << content_tag(:div, event_pricegroup.pricegroup_id, :class => "pricegroup_id" )
+      event_pricegroup_item << content_tag(:div, event_pricegroup.pricegroup.title, :class => "pricegroup_title")
+      event_pricegroup_item << content_tag(:div, event_pricegroup.price, :class => "price")
+      event_pricegroup_item << content_tag(:div, event_pricegroup.max_number_of_participators, :class => "max_number_of_participators")
+      event_pricegroup_item << content_tag(:div, event_pricegroup.cancelation_until, :class => "cancelation_until")
+      event_pricegroup_item << content_tag(:div, event_pricegroup.start_reservation, :class => "start_reservation")
+      event_pricegroup_item << content_tag(:div, event_pricegroup.end_reservation, :class => "end_reservation")
+      pricegroup_items << content_tag(:li, raw(event_pricegroup_item), :class=> "pricegroup_item")
+    end
+    pricegroups = content_tag(:ul, raw(event.end_date), :class=> "pricegroup_list")
+    content << content_tag(:div, raw(pricegroups), :class=> "pricegroups")
     return content_tag(:div, raw(content), :class=>"article_event_content")
   end
     
 end
-
