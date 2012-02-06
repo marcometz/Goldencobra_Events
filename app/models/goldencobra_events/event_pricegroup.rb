@@ -13,11 +13,15 @@
 #  available                   :boolean(1)      default(FALSE)
 #  created_at                  :datetime        not null
 #  updated_at                  :datetime        not null
+#  webcode                     :string(255)
 #
 
 module GoldencobraEvents
   class EventPricegroup < ActiveRecord::Base
     belongs_to :event
     belongs_to :pricegroup
+    
+    scope :available, where(:available => true)
+    
   end
 end

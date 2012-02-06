@@ -13,6 +13,7 @@
 #  available                   :boolean(1)      default(FALSE)
 #  created_at                  :datetime        not null
 #  updated_at                  :datetime        not null
+#  webcode                     :string(255)
 #
 
 require 'test_helper'
