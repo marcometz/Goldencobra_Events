@@ -26,6 +26,30 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
     f.buttons
   end
   
+  
+  show :title => :title do
+    panel "Venue Details" do
+      attributes_table_for venue do
+        row :title
+        row :description
+        row :phone
+        row :email
+        row :link_url
+        row :created_at
+        row :updated_at
+      end
+    end
+    panel "Location" do
+      attributes_table_for venue.location do
+        row :street
+        row :city
+        row :zip
+        row :region
+        row :country
+      end
+    end
+    active_admin_comments
+  end
 
   
   
