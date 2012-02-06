@@ -20,6 +20,10 @@
 
 module GoldencobraEvents
   class Event < ActiveRecord::Base
+
+    EventType = ["No Registration needed", "Registration needed", "Webcode needed", "Private event"]
+    RegistrationType = ["Cancellation required", "No cancellation required"]
+
     has_ancestry :orphan_strategy => :restrict
     has_many :articles, :class_name => Goldencobra::Article   #, :foreign_key => "article_id"
     has_many :event_pricegroups

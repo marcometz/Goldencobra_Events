@@ -8,6 +8,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
       f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
       f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true
+      f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
+      f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
       f.input :active, :hint => "Ist dieser Event online zu sehen?"
     end
     
@@ -24,8 +26,9 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       end
     end    
 
-    f.inputs "Panel" do
+    f.inputs "Information" do
       f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true
+      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => false
     end
     
     f.inputs "Inhalt" do
@@ -58,6 +61,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         row :start_date
         row :end_date
         row :active
+        row :type_of_event
+        row :type_of_registration
         row :created_at
         row :updated_at
       end

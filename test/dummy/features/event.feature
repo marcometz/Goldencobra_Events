@@ -61,7 +61,7 @@ Feature: Create and manage events
   Scenario: visit an article and look for events 
     Given the following "articles" exist:
       | title                        | startpage | id | url_name    | event_id | event_levels | active  |
-      | "Programm"                   | false     |  1 | programm    |    1     |   1          | true    |
+      | "Programm"                   | false     |  1 | programm    |    1     |   2         | true    |
       | "Unterprogramm"              | false     |  2 | subprogramm |    2     |   0          | true    |
     And the following "events" exist:
         | title                        | parent_id | id | active |
@@ -75,14 +75,14 @@ Feature: Create and manage events
         | "Studenten"                  |  1 |
     When I visit url "/programm"
     Then I should see "Programm"
+    And I should see "Event1"
     And I should see "Event2"
     And I should see "Event3"
-    And I should not see "Event1"
     And I should not see "Event4"
     When I visit url "/subprogramm"
     Then I should see "Event4"
+    And I should see "Event2"
     And I should not see "Event1"
-    And I should not see "Event2"
     And I should not see "Event3"
     And I should not see "InvisibleEvent"
     
@@ -107,6 +107,7 @@ Feature: Create and manage events
     Then I press "Update Event"
     And I should see "Studenten"
     And I should see "10"
+    And show me the page
     
   
   @javascript  
@@ -140,4 +141,19 @@ Feature: Create and manage events
     And I select "Naturstrom Panel" within "#event_panel_id"
     Then I press "Update Event"
     And I should see "Naturstrom Panel"
+
+  Scenario: Set event type and registration type for existing event
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "events" exist:
+      | title                        | parent_id | id |
+      | "Event"                      |           |  1 |
+    When I go to the admin list of events
+    Then I click on "Edit" within "tr#event_1"
+    And I select "Registration needed" within "#event_type_of_event"
+    And I select "No cancellation required" within "#event_type_of_registration"
+    Then I press "Update Event"
+    And I should see "Registration needed"
+    And I should see "No cancellation required"
+
 

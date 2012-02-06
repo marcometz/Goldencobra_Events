@@ -9,9 +9,7 @@ Goldencobra::ArticlesHelper.module_eval do
       class_name = options[:class] || ""
       id_name = options[:id] || ""
       content = ""
-      @article.event.siblings.active.collect do |child|
-        content << event_item_helper(child, depth, 1)
-      end
+      content << event_item_helper(@article.event, depth, 1)
       result = content_tag(:ul, raw(content),:id => "#{id_name}", :class => "#{class_name} depth_#{depth} article_events".squeeze(' ').strip)
       return raw(result)
     end
