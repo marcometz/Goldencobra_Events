@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 76442e8f0cf5924a0d253aeabbd194a038059ab5
+  revision: 99364963d5039ac0ca50db3c9bc16b373404812b
   specs:
     goldencobra (0.0.3)
       activeadmin
@@ -100,10 +100,10 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
-    capybara-webkit (0.8.0)
+    capybara-webkit (0.9.0)
       capybara (>= 1.0.0, < 1.2)
       json
-    childprocess (0.3.0)
+    childprocess (0.3.1)
       ffi (~> 1.0.6)
     chunky_png (1.2.5)
     cocaine (0.2.1)
