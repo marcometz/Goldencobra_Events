@@ -19,3 +19,8 @@ test/dummy/tmp/*
 test/dummy/log/test.log
 test/dummy/db/
 test/dummy/db/schema.rb
+
+.DS_Store
+db/.DS_Store
+test/.DS_Store
+test/dummy/.DS_Store
