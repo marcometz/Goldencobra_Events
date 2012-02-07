@@ -21,14 +21,33 @@ module GoldencobraEvents
     belongs_to :event
     belongs_to :pricegroup
     attr_accessor :price_raw
-    
+    attr_accessible :price_raw, :pricegroup_id, :price, 
+      :max_number_of_participators, :cancelation_until, :start_reservation,
+      :end_reservation, :available, :webcode
     scope :available, where(:available => true)
 
-    before_save convert_price_raw
+    before_save :convert_price_raw
 
+    private
     def convert_price_raw
-      self.price = :price_raw.to_f
+      if price_raw.length > 0
+        position_comma = price_raw.index(/[,]/)
+        position_point = price_raw.index(/[.]/)
+        if position_comma && position_point
+          #Checks if number delimiter is european and strips and changes to american format. Finally saves it as float
+          if position_point < position_comma
+            #european delimitter
+            self.price = price_raw.gsub(".","").gsub(",",".").to_f
+          else
+            #american delimitter
+            self.price = price_raw.gsub(",","").to_f
+          end
+        elsif position_comma && !position_point
+          self.price = price_raw.gsub(",",".").to_f
+        else !position_comma && position_point
+          self.price = price_raw.to_f
+        end
+      end
     end
-    
   end
 end
