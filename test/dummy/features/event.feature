@@ -105,7 +105,6 @@ Feature: Create and manage events
     And I should see "Price"
     And I fill in "Price" with "10.5"
     Then I press "Update Event"
-    And show me the page
     And I should see "Studenten"
     And I should see "10"
     
