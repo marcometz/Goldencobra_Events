@@ -22,13 +22,14 @@ module GoldencobraEvents
   class Event < ActiveRecord::Base
 
     EventType = ["No Registration needed", "Registration needed", "Webcode needed", "Private event"]
-    RegistrationType = ["Cancellation required", "No cancellation required"]
+    RegistrationType = ["No cancellation required", "Cancellation required"]
 
     has_ancestry :orphan_strategy => :restrict
     has_many :articles, :class_name => Goldencobra::Article   #, :foreign_key => "article_id"
     has_many :event_pricegroups
     has_many :pricegroups, :through => :event_pricegroups
     belongs_to :panel
+    belongs_to :venue
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
 
