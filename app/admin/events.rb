@@ -16,7 +16,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     f.inputs "Preisgruppen" do
       f.has_many :event_pricegroups do |m|
         m.input :pricegroup, :include_blank => false
-        m.input :price_raw, :input_html => { :class => 'pricegroup_price'}
+        m.input :price_raw, :label => "Price", :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
         m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'} 
         m.input :start_reservation, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
         m.input :end_reservation, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
