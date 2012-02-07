@@ -155,4 +155,18 @@ Feature: Create and manage events
     And I should see "Registration needed"
     And I should see "No cancellation required"
 
-
+  Scenario: Set sponsors for an event
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "events" exist:
+      | title                       | parent_id | id |
+      | "Event"                     |           |  1 |
+    And the following "sponsors" exist:
+      | title              | description | id |
+      | "Audi Deutschland" | "Autos"     |  1 |
+      | "Dr. Oetker"       | "Speisen"   |  2 |
+    When I go to the admin list of events
+    Then I click on "Edit" within "tr#event_1"
+    And I check "Audi Deutschland"
+    Then I press "Update Event"
+    And I should see "Audi Deutschland"

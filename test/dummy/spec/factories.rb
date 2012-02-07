@@ -29,6 +29,14 @@ Factory.define :panel, :class => GoldencobraEvents::Panel do |u|
   u.link_url "http://www.google.de"
 end
 
+Factory.define :sponsor, :class => GoldencobraEvents::Sponsor do |s|
+  s.title "Naturstrom GmbH"
+  s.description "Die Naturstrom GmbH ist ein tolles Unternehmen."
+  s.link_url "http://www.naturstrom.de"
+  s.size_of_sponsorship "Gold"
+  s.type_of_sponsorship "Panel"
+end
+
 Factory.define :menue, :class => Goldencobra::Menue do |u|
   u.title 'Nachrichten'
   u.target 'www.ikusei.de'

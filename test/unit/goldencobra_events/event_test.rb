@@ -16,6 +16,8 @@
 #  exclusive                   :boolean(1)      default(FALSE)
 #  start_date                  :datetime
 #  end_date                    :datetime
+#  panel_id                    :integer(4)
+#  venue_id                    :integer(4)
 #
 
 require 'test_helper'

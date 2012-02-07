@@ -6,9 +6,13 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
       f.input :title, :hint => "Der Titel des Panels, kann Leerzeichen und Sonderzeichen enthalten"
       f.input :description, :hint => "Die Beschreibung des Panels"
       f.input :link_url, :hint => "Link zur Panel-Seite"
-
-      f.buttons
     end
+
+    f.inputs "Informationen" do
+      f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
+    end
+
+    f.buttons
   end
 
   index do
@@ -34,7 +38,21 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
         row :updated_at
       end
     end
-    active_admin_comments
+    panel "Sponsors" do
+     table do
+       [:title, :description, "Size of sponsorship", "Type of sponsorship"].each do |c|
+         th c
+       end
+       event_panel.sponsors.each do |es|
+         tr do
+           [es.title, es.description, es.size_of_sponsorship, es.type_of_sponsorship].each do |esa|
+             td esa
+           end
+         end
+       end
+     end
+   end
+   active_admin_comments
   end
 
 end

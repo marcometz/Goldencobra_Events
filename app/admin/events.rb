@@ -29,6 +29,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     f.inputs "Information" do
       f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true
       f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => false
+      f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
     end
     
     f.inputs "Inhalt" do
@@ -98,6 +99,20 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         attributes_table_for event.panel do
           row :title
           row :description
+        end
+      end
+    end
+    panel "Sponsors" do
+      table do
+        [:title, :description, "Size of sponsorship", "Type of sponsorship"].each do |c|
+          th c
+        end
+        event.sponsors.each do |es|
+          tr do
+            [es.title, es.description, es.size_of_sponsorship, es.type_of_sponsorship].each do |esa|
+              td esa
+            end
+          end
         end
       end
     end

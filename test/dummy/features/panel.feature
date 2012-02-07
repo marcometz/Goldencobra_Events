@@ -13,3 +13,19 @@ Feature: Create and manage panels
     And I fill in "event_panel_title" with "Naturstrom Panel"
     And I press "Create Panel"
     And I should see "Naturstrom Panel" within "#main_content"
+
+  Scenario: Set sponsors for a panel
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "panels" exist:
+      | title                       | id |
+      | "Naturstrom Panel"          |  1 |
+    And the following "sponsors" exist:
+      | title              | description | id |
+      | "Audi Deutschland" | "Autos"     |  1 |
+      | "Dr. Oetker"       | "Speisen"   |  2 |
+    When I go to the admin list of event_panels
+    Then I click on "Edit" within "tr#panel_1"
+    And I check "Audi Deutschland"
+    Then I press "Update Panel"
+    And I should see "Audi Deutschland"
