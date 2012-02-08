@@ -9,7 +9,8 @@ Feature: Create and manage sponsors
     And I am logged in as "admin@test.de" with password "secure12"
     And the following uploads exist:
       | image_file_name | source  | rights |
-      | "Bild1"         | "ikusei"| "alle" |
+      | "Bild1"         | "ikusei" | "alle" |
+      | "Bild2"         | "ikuse2" | "alle" |
     When I go to the admin list of sponsors
     Then I should see "Sponsors"
     When I click on "New Sponsor" within ".action_items"
@@ -24,6 +25,7 @@ Feature: Create and manage sponsors
     And I fill in "sponsor_location_attributes_zip" with "10961"
     And I fill in "sponsor_location_attributes_region" with "Kreuzberg"
     And I fill in "sponsor_location_attributes_country" with "Deutschland"
+    And I select "Bild2" within ".sponsor_logo_image_file"
     And I click on "Add New Sponsor Image"
     And I select "Bild1" within ".sponsor_image_file"
     And I press "Create Sponsor"
@@ -39,6 +41,7 @@ Feature: Create and manage sponsors
     And I should see "Deutschland"
     When I click on "Edit Sponsor"
     Then I should see "Bild1"
+    And I should see "Bild2"
 
   Scenario: Visit a sponsor and look for events and panels
     Given that a confirmed admin exists
