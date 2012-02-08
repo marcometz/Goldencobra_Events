@@ -14,3 +14,4 @@ Feature: Create and manage pricegroups
     And I press "Create Pricegroup"
     And I should see "Studenten" within "#main_content"
     
+  

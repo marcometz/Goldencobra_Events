@@ -18,6 +18,14 @@ Factory.define :event, :class => GoldencobraEvents::Event do |u|
   u.exclusive false
 end
 
+Factory.define :upload, :class => Goldencobra::Upload do |u|
+  u.image_file_name "Bild1"
+  u.description "Dies ist eine Beschreibung zu diesem Bild"
+  u.source "Quelle1"
+  u.rights "Alle Rechte vorhanden"
+end
+
+
 
 Factory.define :pricegroup, :class => GoldencobraEvents::Pricegroup do |u|
   u.title "Gruppe"
