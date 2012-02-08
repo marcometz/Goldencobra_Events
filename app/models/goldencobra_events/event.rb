@@ -34,6 +34,7 @@ module GoldencobraEvents
     has_many :sponsors, :through => :event_sponsors
     belongs_to :panel
     belongs_to :venue
+    belongs_to :teaser_image, :class_name => Goldencobra::Upload, :foreign_key => "teaser_image_id"
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
 
