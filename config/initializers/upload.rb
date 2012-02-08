@@ -5,4 +5,5 @@ Goldencobra::Upload.class_eval do
   
   # this adds al logo-image to an sponsor 
   has_many :logo_sponsors, :class_name => GoldencobraEvents::Sponsor, :foreign_key => "logo_id"
+  has_many :teaser_events, :class_name => GoldencobraEvents::Event, :foreign_key => "teaser_image_id"
 end
