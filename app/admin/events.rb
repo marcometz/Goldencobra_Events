@@ -28,7 +28,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
 
     f.inputs "Information" do
       f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true
-      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => false
+      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true
       f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
     end
     
