@@ -32,6 +32,8 @@ module GoldencobraEvents
     has_many :pricegroups, :through => :event_pricegroups
     has_many :event_sponsors
     has_many :sponsors, :through => :event_sponsors
+    has_many :artist_events
+    has_many :artists, :through => :artist_events
     belongs_to :panel
     belongs_to :venue
     accepts_nested_attributes_for :event_pricegroups

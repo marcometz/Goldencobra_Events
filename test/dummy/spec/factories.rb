@@ -37,6 +37,14 @@ Factory.define :sponsor, :class => GoldencobraEvents::Sponsor do |s|
   s.type_of_sponsorship "Panel"
 end
 
+Factory.define :artist, :class => GoldencobraEvents::Artist do |a|
+  a.title "Bodo Wartke"
+  a.description "Ein Komiker"
+  a.url_link "http://www.bodowartke.de"
+  a.telephone "030 456 77 88"
+  a.email "bodo@wartke.de"
+end
+
 Factory.define :menue, :class => Goldencobra::Menue do |u|
   u.title 'Nachrichten'
   u.target 'www.ikusei.de'
