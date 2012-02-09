@@ -25,6 +25,16 @@ module GoldencobraEvents
     has_many :artist_sponsors
     has_many :artists, :through => :artist_sponsors
     belongs_to :location, :class_name => Goldencobra::Location
+
+    #Imagegallery of an sponsor
+    has_many :images, :through => :sponsor_images, :class_name => Goldencobra::Upload
+    has_many :sponsor_images
+    
+    #a single Image as an Logo
+    belongs_to :logo, :class_name => Goldencobra::Upload, :foreign_key => "logo_id"
+
+    belongs_to :location, :class_name => Goldencobra::Location
+    accepts_nested_attributes_for :sponsor_images    
     accepts_nested_attributes_for :location
  end
 end

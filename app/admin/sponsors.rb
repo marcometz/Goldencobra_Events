@@ -22,6 +22,12 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
           loc.input :lat
           loc.input :lng
         end
+      end      
+    end
+    f.inputs "Bilder" do
+      f.input :logo, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_logo_image_file'} 
+      f.has_many :sponsor_images do |si|
+        si.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_image_file'} 
       end
     end
     f.buttons

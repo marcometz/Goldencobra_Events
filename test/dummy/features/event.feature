@@ -108,6 +108,22 @@ Feature: Create and manage events
     And I should see "Studenten"
     And I should see "10"
     
+    
+  Scenario: add teaser image to existign event
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "events" exist:
+      | title                        | parent_id | id |
+      | "Event"                      |           |  1 |  
+    And the following uploads exist:
+      | image_file_name | source  | rights |
+      | "Bild1"         | "ikusei" | "alle" |
+   When I go to the admin list of events  
+   Then I click on "Edit" within "tr#event_1"
+   And I select "Bild1" within ".teaser_image"
+   Then I press "Update Event"
+   And I click on "Edit Event"
+   And I should see "Bild1"
   
   @javascript  
   Scenario: add webcode to existing event

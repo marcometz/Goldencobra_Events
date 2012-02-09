@@ -34,6 +34,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     end
     
     f.inputs "Inhalt" do
+      f.input :teaser_image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'teaser_image'} 
       f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}
     end
     f.buttons
