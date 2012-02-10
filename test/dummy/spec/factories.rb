@@ -16,6 +16,7 @@ Factory.define :event, :class => GoldencobraEvents::Event do |u|
   u.max_number_of_participators 12
   u.active true
   u.exclusive false
+  u.ancestry ""
 end
 
 Factory.define :upload, :class => Goldencobra::Upload do |u|

@@ -5,12 +5,13 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
-      f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
-      f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
+      f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true
+      f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true
       f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true
       f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
       f.input :active, :hint => "Ist dieser Event online zu sehen?"
+      f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r einer der Kinder muss sich dann entscheiden werden!"
     end
     
     f.inputs "Preisgruppen" do
@@ -31,11 +32,13 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true
       f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
       f.input :artists, :as => :check_boxes, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC")
+      f.input :max_number_of_participators
     end
     
     f.inputs "Inhalt" do
       f.input :teaser_image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'teaser_image'} 
       f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}
+      f.input :external_link
     end
     f.buttons
   end
