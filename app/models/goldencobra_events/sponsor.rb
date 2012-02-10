@@ -22,6 +22,10 @@ module GoldencobraEvents
     has_many :events, :through => :event_sponsors
     has_many :panel_sponsors
     has_many :panels, :through => :panel_sponsors
+    has_many :artist_sponsors
+    has_many :artists, :through => :artist_sponsors
+    belongs_to :location, :class_name => Goldencobra::Location
+
     #Imagegallery of an sponsor
     has_many :images, :through => :sponsor_images, :class_name => Goldencobra::Upload
     has_many :sponsor_images

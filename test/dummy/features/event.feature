@@ -185,3 +185,21 @@ Feature: Create and manage events
     And I check "Audi Deutschland"
     Then I press "Update Event"
     And I should see "Audi Deutschland"
+
+  Scenario: Set artists for an event
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following events exist:
+      | title                        | parent_id | id | active |
+      | "Event1"                     |           |  1 | true   |
+   And the following artists exist:
+      | title             | description | id |
+      | "Bodo Wartke"     | "toll toll" |  1 |
+      | "Mario Barth"     | "Kuenstler" |  2 |
+    When I go to the admin list of events
+    Then I click on "Edit" within "tr#event_1"
+    And I check "Bodo Wartke"
+    And I check "Mario Barth"
+    And I press "Update Event"
+    Then I should see "Bodo Wartke"
+    And I should see "Mario Barth"

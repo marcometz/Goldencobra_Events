@@ -27,5 +27,7 @@ Feature: Create and manage panels
     When I go to the admin list of event_panels
     Then I click on "Edit" within "tr#panel_1"
     And I check "Audi Deutschland"
+    And I check "Dr. Oetker"
     Then I press "Update Panel"
     And I should see "Audi Deutschland"
+    And I should see "Dr. Oetker"
