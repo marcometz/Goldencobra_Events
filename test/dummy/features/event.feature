@@ -108,7 +108,6 @@ Feature: Create and manage events
     And I should see "Studenten"
     And I should see "10"
     
-    
   Scenario: add teaser image to existign event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
