@@ -30,7 +30,7 @@ module GoldencobraEvents
 
     private
     def convert_price_raw
-      if price_raw.length > 0
+      if price_raw.present? && price_raw.length > 0
         position_comma = price_raw.index(/[,]/)
         position_point = price_raw.index(/[.]/)
         if position_comma && position_point

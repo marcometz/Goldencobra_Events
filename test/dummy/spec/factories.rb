@@ -26,10 +26,16 @@ Factory.define :upload, :class => Goldencobra::Upload do |u|
   u.rights "Alle Rechte vorhanden"
 end
 
-
-
 Factory.define :pricegroup, :class => GoldencobraEvents::Pricegroup do |u|
   u.title "Gruppe"
+end
+
+Factory.define :event_pricegroup, :class => GoldencobraEvents::EventPricegroup do |u|
+  u.event_id 1
+  u.pricegroup_id 1
+  u.price 50.0
+  u.max_number_of_participators 500
+  u.available true
 end
 
 Factory.define :panel, :class => GoldencobraEvents::Panel do |u|
