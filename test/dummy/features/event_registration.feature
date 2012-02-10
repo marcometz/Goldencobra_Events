@@ -3,12 +3,12 @@ Feature: See and register events
   As an guest
   I want to see a programm an register myself for an event
 
-  @javascript
-  Scenario: Go to the program site and look for events
+
+  Background:
     Given that I am not logged in
     And the following "articles" exist:
-      | title                        | url_name     |
-      | "Programm"                   | programm     |
+      | title                        | url_name     | event_id | event_levels  |
+      | "Programm"                   | programm     | 1        | 0             |
     And the following "events" exist:
       | title                        | parent_id | id | active | external_link | max_number_of_participators | type_of_event            | exclusive |
       | "Cloudforum"                 |           | 1  | 1      |               |  0                          | "No Registration needed" | 0         |
@@ -22,6 +22,12 @@ Feature: See and register events
       | "Exclusives Abendessen"      |  3        | 11 | 1      |               |  0                          | "No Registration needed" | 1         |
       | "Abendessen Alternative 2"   |  11       | 10 | 1      |               |  0                          | "Registration needed"    | 0         |
       | "Abendessen Alternative 1"   |  11       | 4  | 1      |               |  0                          | "Registration needed"    | 0         |
-    Then I go to the article page "programm"
+      
+  Scenario: Go to the program site and look for events
+    When I go to the article page "programm"
+    Then I should see "Cloudforum"
+    And I should see "Kongress"
+    And I should see "Party"
+    And I should see "Treffen der Generationen"
+    And I should see "Party2"
     
-  
