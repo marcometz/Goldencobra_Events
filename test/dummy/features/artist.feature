@@ -3,9 +3,14 @@ Feature: Create and manage artists
   As an admin
   I want to create and manage some artists
 
+  @javascript
   Scenario: Go to the artist sponsor site and create a new artist
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
+    And the following uploads exist:
+      | image_file_name | source  | rights |
+      | "Bild1"         | "ikusei" | "alle" |
+      | "Bild2"         | "ikuse2" | "alle" |
     When I go to the admin list of artists
     Then I should see "Artists"
     When I click on "New Artist" within ".action_items"
@@ -13,10 +18,14 @@ Feature: Create and manage artists
     And I fill in "artist_title" with "Bodo Wartke"
     And I fill in "artist_description" with "Ein ganz ein wundervoller Kuenstler"
     And I fill in "artist_url_link" with "http://www.bodowartke.de"
+    And I click on "Add New Artist Image"
+    And I select "Bild1" within ".artist_image_file"
     And I press "Create Artist"
     Then I should see "Bodo Wartke" within "#main_content"
     And I should see "Ein ganz ein wundervoller Kuenstler" within "#main_content"
     And I should see "http://www.bodowartke.de" within "#main_content"
+    When I click on "Edit Artist"
+    Then I should see "Bild1"
 
   Scenario: Set sponsors for an artist
     Given that a confirmed admin exists

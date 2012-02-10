@@ -34,7 +34,7 @@ Goldencobra::ArticlesHelper.module_eval do
   
   
   def render_child_block(event)
-    content = ""
+    content = ""  
     content << content_tag(:div, raw(event.title), :class=> "title")
     content << content_tag(:div, raw(event.description), :class=> "description")
     content << content_tag(:div, raw(event.external_link), :class=> "external_link")
@@ -57,7 +57,7 @@ Goldencobra::ArticlesHelper.module_eval do
       event_pricegroup_item << content_tag(:div, event_pricegroup.end_reservation, :class => "end_reservation")
       pricegroup_items << content_tag(:li, raw(event_pricegroup_item), :class=> "pricegroup_item")
     end
-    pricegroups = content_tag(:ul, raw(event.end_date), :class=> "pricegroup_list")
+    pricegroups = content_tag(:ul, raw(pricegroup_items), :class=> "pricegroup_list")
     content << content_tag(:div, raw(pricegroups), :class=> "pricegroups")
     return content_tag(:div, raw(content), :class=>"article_event_content")
   end

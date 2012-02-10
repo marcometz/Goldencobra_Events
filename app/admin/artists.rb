@@ -22,9 +22,13 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
         end
       end
     end
+    f.inputs "" do
+      f.has_many :artist_images do |ai|
+        ai.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'artist_image_file'} 
+      end
+    end
     f.inputs "Informationen" do
       f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
-
     end
     f.buttons
   end

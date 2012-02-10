@@ -21,6 +21,10 @@ module GoldencobraEvents
     has_many :events, :through => :artist_events
     has_many :artist_sponsors
     has_many :sponsors, :through => :artist_sponsors
+    has_many :images, :through => :artist_images, :class_name => Goldencobra::Upload
+    has_many :artist_images
+    accepts_nested_attributes_for :artist_images    
+    
     validates_presence_of :title
 
     def complete_artist_name
