@@ -2,15 +2,30 @@ Feature: Create and manage sponsors
   In order to make a sponsor
   As an admin
   I want to create and manage some sponsors
-
-  @javascript
-  Scenario: Go to the sponsor admin site and create a new sponsor
+  Background:
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
     And the following uploads exist:
       | image_file_name | source  | rights |
       | "Bild1"         | "ikusei" | "alle" |
       | "Bild2"         | "ikuse2" | "alle" |
+    And the following sponsors exist:
+      | title              | description | id |
+      | "Audi Deutschland" | "Autos"     |  1 |
+      | "Dr. Oetker"       | "Speisen"   |  2 |
+    And the following events exist:
+      | title                        | parent_id | id | active | sponsor_ids |
+      | "Event1"                     |           |  1 | true   |           1 |
+      | "Event2"                     | 1         |  2 | true   |           1 |
+      | "Event3"                     | 1         |  3 | true   |           2 |
+      | "Event4"                     | 2         |  4 | true   |             |
+    And the following panels exist:
+      | title                       | id | sponsor_ids |
+      | "Naturstrom Panel"          |  1 |         1,2 |
+      | "Gesund ernaehren Panel"     |  2 |             |
+
+  @javascript
+  Scenario: Go to the sponsor admin site and create a new sponsor
     When I go to the admin list of sponsors
     Then I should see "Sponsors"
     When I click on "New Sponsor" within ".action_items"
@@ -44,24 +59,8 @@ Feature: Create and manage sponsors
     And I should see "Bild2"
 
   Scenario: Visit a sponsor and look for events and panels
-    Given that a confirmed admin exists
-    And I am logged in as "admin@test.de" with password "secure12"
-    And the following sponsors exist:
-      | title              | description | id |
-      | "Audi Deutschland" | "Autos"     |  1 |
-      | "Dr. Oetker"       | "Speisen"   |  2 |
-    And the following events exist:
-      | title                        | parent_id | id | active | sponsor_ids |
-      | "Event1"                     |           |  1 | true   |           1 |
-      | "Event2"                     | 1         |  2 | true   |           1 |
-      | "Event3"                     | 1         |  3 | true   |           2 |
-      | "Event4"                     | 2         |  4 | true   |             |
-    And the following panels exist:
-      | title                       | id | sponsor_ids |
-      | "Naturstrom Panel"          |  1 |         1,2 |
-      | "Gesund ernaehren Panel"     |  2 |             |
-    And I go to the admin list of sponsors
-    When I click on "View" within "tr#sponsor_1"
+    When I go to the admin list of sponsors
+    And I click on "View" within "tr#sponsor_1"
     Then I should see "Event1"
     And I should see "Event2"
     And I should not see "Event3"

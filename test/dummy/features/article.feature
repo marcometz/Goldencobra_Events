@@ -18,10 +18,26 @@ Feature: Display event informations on article page
       |        1 |             1 |  50.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |
     And the following "locations" exist:
       | street         |  city  |  zip  |  region  |  country  |  id |
-      | "Grunerstr. 1" | Berlin | 12345 | "Berlin" | "Germany" |   1 |
+      | Grunerstr. 1   | Berlin | 12345 | "Berlin" | "Germany" |   1 |
+      | Kudamm 1       | Berlin | 12345 | "Berlin" | "Germany" |   2 |
+      | Gneisenau 24   | Berlin | 12345 | "Berlin" | "Germany" |   3 |
     And the following "venues" exist:
       | title            |  description                            | link_url                     | phone            |  email                  |  id | location_id |
       | "Kongresshalle" | "Ein Kongresszentrum am Alexanderplatz" | http://www.kongresshalle.de  | (030) 123 456 77 | "info@kongresshalle.de" |   1 |        1    |
+    And the following "sponsors" exist:
+      | title              | description | id | location_id |
+      | "Audi Deutschland" | "Autos"     |  1 |           2 |
+      | "Dr. Oetker"       | "Speisen"   |  2 |           3 |
+    And the following "event_sponsors" exist:
+      | id | event_id | sponsor_id |
+      |  1 |        1 |          1 |
+      |  2 |        1 |          2 |
+    And the following "artists" exist:
+      | title             | description | id |
+      | "Bodo Wartke"     | "toll toll" |  1 |
+    And the following "artist_events" exist:
+      | id | artist_id | event_id |
+      |  1 |         1 |        1 |
 
   Scenario: Visit new Article in frontend and see event informations
     When I go to the article page "dies-ist-ein-test"
@@ -38,18 +54,25 @@ Feature: Display event informations on article page
      And I should see "2012-01-01 11:00:00" within "div.article_event_content .start_date"
      And I should see "2012-02-02 10:00:00" within "div.article_event_content .end_date"
      # Pricegroup
-     And I should see "1" within ".pricegroup_id"
-     And I should see "Studenten" within "li.pricegroup_item .title"
-     And I should see "50.0" within ".price"
-     And I should see "500" within "li.pricegroup_item .max_number_of_participators"
-     And I should see "2012-02-01 12:00:00" within ".start_reservation"
-     And I should see "2012-04-01 12:00:00" within ".cancelation_until"
-     And I should see "2012-03-01 12:00:00" within ".end_reservation"
+     And I should see "1" within "li.pricegroup_item_1 .pricegroup_id"
+     And I should see "Studenten" within "li.pricegroup_item_1 .title"
+     And I should see "50.0" within "li.pricegroup_item_1 .price"
+     And I should see "500" within "li.pricegroup_item_1 .max_number_of_participators"
+     And I should see "2012-02-01 12:00:00" within "li.pricegroup_item_1 .start_reservation"
+     And I should see "2012-04-01 12:00:00" within "li.pricegroup_item_1 .cancelation_until"
+     And I should see "2012-03-01 12:00:00" within "li.pricegroup_item_1 .end_reservation"
      # Location & Venue
-     And I should see "Kongresshalle"
-     And I should see "Ein Kongresszentrum am Alexanderplatz"
-     And I should see "Grunerstr. 1,, 12345, Berlin"
-     And I should see "http://www.kongresshalle.de"
-     And I should see "(030) 123 456 77"
-     And I should see "info@kongresshalle.de"
-
+     And I should see "Kongresshalle" within "div.venue"
+     And I should see "Ein Kongresszentrum am Alexanderplatz" within "div.venue"
+     And I should see "Grunerstr. 1, 12345, Berlin" within "div.venue"
+     And I should see "http://www.kongresshalle.de" within "div.venue"
+     And I should see "(030) 123 456 77" within "div.venue"
+     And I should see "info@kongresshalle.de" within "div.venue"
+     # Sponsors
+     And I should see "Audi Deutschland" within "li.sponsor_item_1 .title"
+     And I should see "Kudamm 1, 12345, Berlin" within "li.sponsor_item_1 .complete_location"
+     And I should see "Dr. Oetker" within "li.sponsor_item_2 .title"
+     And I should see "Gneisenau 24, 12345, Berlin" within "li.sponsor_item_2 .complete_location"
+     # Artists
+     And I should see "Bodo Wartke" within "li.artist_item_1 .title"
+     And I should see "toll toll" within "li.artist_item_1 .description"

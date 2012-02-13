@@ -68,6 +68,16 @@ Factory.define :sponsor, :class => GoldencobraEvents::Sponsor do |s|
   s.type_of_sponsorship "Panel"
 end
 
+Factory.define :event_sponsor, class: GoldencobraEvents::EventSponsor do |es|
+  es.event_id 1
+  es.sponsor_id 1
+end
+
+Factory.define :artist_event, class: GoldencobraEvents::ArtistEvent do |es|
+  es.event_id 1
+  es.artist 1
+end
+
 Factory.define :artist, :class => GoldencobraEvents::Artist do |a|
   a.title "Bodo Wartke"
   a.description "Ein Komiker"
