@@ -10,7 +10,7 @@
 #  cancelation_until           :datetime
 #  start_reservation           :datetime
 #  end_reservation             :datetime
-#  available                   :boolean(1)      default(FALSE)
+#  available                   :boolean(1)      default(TRUE)
 #  created_at                  :datetime        not null
 #  updated_at                  :datetime        not null
 #  webcode                     :string(255)

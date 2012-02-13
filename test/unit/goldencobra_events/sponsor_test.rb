@@ -4,7 +4,7 @@
 #
 #  id                  :integer(4)      not null, primary key
 #  title               :string(255)
-#  description         :string(255)
+#  description         :text
 #  link_url            :string(255)
 #  size_of_sponsorship :string(255)
 #  type_of_sponsorship :string(255)
@@ -13,6 +13,7 @@
 #  location_id         :integer(4)
 #  telephone           :string(255)
 #  email               :string(255)
+#  logo_id             :integer(4)
 #
 
 require 'test_helper'
