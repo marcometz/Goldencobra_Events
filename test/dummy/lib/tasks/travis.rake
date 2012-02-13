@@ -1,3 +1,4 @@
+desc "testing in travis"
 task :travis do
   ["rspec spec", "rake cucumber"].each do |cmd|
     puts "Starting to run #{cmd}..."

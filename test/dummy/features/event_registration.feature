@@ -31,3 +31,10 @@ Feature: See and register events
     And I should see "Treffen der Generationen"
     And I should see "Party2"
     
+    
+  Scenario: Go to the admin sites and look for registrations
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    When I go to the admin list of registrations
+    Then I should see "Registrations" within "h2"
+    

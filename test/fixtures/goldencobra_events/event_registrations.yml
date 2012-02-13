@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  event_pricegroup_id: 1
+  canceled: false
+  canceled_at: 2012-02-13 15:10:41
+
+two:
+  user_id: 1
+  event_pricegroup_id: 1
+  canceled: false
+  canceled_at: 2012-02-13 15:10:41
