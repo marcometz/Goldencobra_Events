@@ -18,6 +18,7 @@
 #  end_date                    :datetime
 #  panel_id                    :integer(4)
 #  venue_id                    :integer(4)
+#  teaser_image_id             :integer(4)
 #
 
 module GoldencobraEvents
