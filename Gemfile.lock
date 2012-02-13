@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: be32fb358419d75496232c73a60e2b93d3f3e598
+  revision: a89f828f6d1b7073ee7b7da26e0c8273f8930085
   specs:
     goldencobra (0.0.3)
       activeadmin
@@ -207,7 +207,7 @@ GEM
     mime-types (1.17.2)
     multi_json (1.0.4)
     multi_xml (0.4.1)
-    multipart-post (1.1.4)
+    multipart-post (1.1.5)
     mysql2 (0.3.11)
     nokogiri (1.5.0)
     oa-core (0.3.2)
@@ -233,7 +233,7 @@ GEM
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
     orm_adapter (0.0.6)
-    paperclip (2.5.2)
+    paperclip (2.6.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
@@ -293,7 +293,7 @@ GEM
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
     rubyzip (0.9.5)
-    sass (3.1.14)
+    sass (3.1.15)
     sass-rails (3.2.4)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
