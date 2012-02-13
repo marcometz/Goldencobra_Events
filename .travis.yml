@@ -1,5 +1,5 @@
 before_script:
-  - "mysql -e 'create database goldencobra_events_test;'"
+  - "mysql -e 'create database myapp_test;'"
 language: ruby
 rvm:
   - 1.9.2
@@ -8,6 +8,6 @@ rvm:
 # script: bundle exec rspec spec
 mysql:
   adapter: mysql2
-  database: goldencobra_events_test
+  database: myapp_test
   username: root
   encoding: utf8
