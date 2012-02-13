@@ -2,7 +2,7 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - "mysql -e 'create database goldencobra_events_test;'"
-  - "cd test/dummy/ && rake app:goldencobra:install:migrations"
+  - "cd test/dummy/ && rake goldencobra:install:migrations"
   - "rake db:migrate"
 language: ruby
 rvm:
