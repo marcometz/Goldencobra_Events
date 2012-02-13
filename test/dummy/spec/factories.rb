@@ -26,6 +26,22 @@ Factory.define :upload, :class => Goldencobra::Upload do |u|
   u.rights "Alle Rechte vorhanden"
 end
 
+Factory.define :location, class: Goldencobra::Location do |l|
+  l.street "Grunerstr. 1"
+  l.city "Berlin"
+  l.zip "12345"
+  l.region "Berlin"
+  l.country "Germany"
+end
+
+Factory.define:venue, class: GoldencobraEvents::Venue do |v|
+  v.title "Kongresshalle"
+  v.description "Eine Kongresshalle"
+  v.link_url "http://www.kongresshalle.de"
+  v.phone "(030) 123 456 77"
+  v.email "info@kongresshalle.de"
+end
+
 Factory.define :pricegroup, :class => GoldencobraEvents::Pricegroup do |u|
   u.title "Gruppe"
 end
@@ -50,6 +66,16 @@ Factory.define :sponsor, :class => GoldencobraEvents::Sponsor do |s|
   s.link_url "http://www.naturstrom.de"
   s.size_of_sponsorship "Gold"
   s.type_of_sponsorship "Panel"
+end
+
+Factory.define :event_sponsor, class: GoldencobraEvents::EventSponsor do |es|
+  es.event_id 1
+  es.sponsor_id 1
+end
+
+Factory.define :artist_event, class: GoldencobraEvents::ArtistEvent do |es|
+  es.event_id 1
+  es.artist 1
 end
 
 Factory.define :artist, :class => GoldencobraEvents::Artist do |a|
