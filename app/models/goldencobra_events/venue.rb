@@ -18,5 +18,9 @@ module GoldencobraEvents
     
     belongs_to :location, :class_name => Goldencobra::Location
     accepts_nested_attributes_for :location
+
+    def location_values
+      return self.location.complete_location
+    end
   end
 end

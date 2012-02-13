@@ -26,6 +26,22 @@ Factory.define :upload, :class => Goldencobra::Upload do |u|
   u.rights "Alle Rechte vorhanden"
 end
 
+Factory.define :location, class: Goldencobra::Location do |l|
+  l.street "Grunerstr. 1"
+  l.city "Berlin"
+  l.zip "12345"
+  l.region "Berlin"
+  l.country "Germany"
+end
+
+Factory.define:venue, class: GoldencobraEvents::Venue do |v|
+  v.title "Kongresshalle"
+  v.description "Eine Kongresshalle"
+  v.link_url "http://www.kongresshalle.de"
+  v.phone "(030) 123 456 77"
+  v.email "info@kongresshalle.de"
+end
+
 Factory.define :pricegroup, :class => GoldencobraEvents::Pricegroup do |u|
   u.title "Gruppe"
 end

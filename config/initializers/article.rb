@@ -42,7 +42,8 @@ Goldencobra::ArticlesHelper.module_eval do
 
   def render_child_block(event)
     content = render_object(event, :title, :description, :external_link, :max_number_of_participators, :type_of_event, :type_of_registration, :exclusive, :start_date, :end_date)
-    
+    venue = render_object(event.venue, :title, :description, :location_values, :link_url, :phone, :email)
+    content << content_tag(:div, raw(venue), :class => "venue")
     pricegroup_items = ""
     event.event_pricegroups.available.each do |event_pricegroup|
       event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title, :price, :max_number_of_participators, :cancelation_until, :start_reservation, :end_reservation)

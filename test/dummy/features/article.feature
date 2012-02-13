@@ -1,24 +1,33 @@
 Feature: Display event informations on article page
   In order to view event informations
   I go to the article page
-
-  Scenario: Visit new Article in frontend and see event informations
+  
+  Background:
     Given that I am not logged in
     And the following "articles" exist:
-      | title               | url_name          | teaser         | content                   | id | event_id | active |
-      | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert. |  1 |        1 | true   |
+      | title               | url_name          | teaser         | content                    | id | event_id | active |
+      | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert." |  1 |        1 | true   |
     And the following "pricegroups" exist:
       | title       | id |
       | "Studenten" |  1 |
     And the following "events" exist:
-      | title    | description             | id | parent_id | external_link          | max_number_of_participators | type_of_event         | type_of_registration       | exclusive | start_date          | end_date            |
-      | "Event1" | "Ein ganz toller Event" | 1  |           | http://www.google.de |                          25 | "Registration needed" | "No cancellation required" |      true | 2012-01-01 11:00:00 | 2012-02-02 10:00:00 |
+      | title    | description             | id | parent_id | external_link        | max_number_of_participators | type_of_event         | type_of_registration       | exclusive | start_date          | end_date            | venue_id |
+      | "Event1" | "Ein ganz toller Event" | 1  |           | http://www.google.de |                          25 | "Registration needed" | "No cancellation required" |      true | 2012-01-01 11:00:00 | 2012-02-02 10:00:00 |        1 |
     And the following "event_pricegroups" exist:
       | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       |
       |        1 |             1 |  50.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |
-    Then I go to the article page "dies-ist-ein-test"
-     And I should see "Dies ist ein Test" within "h1"
+    And the following "locations" exist:
+      | street         |  city  |  zip  |  region  |  country  |  id |
+      | "Grunerstr. 1" | Berlin | 12345 | "Berlin" | "Germany" |   1 |
+    And the following "venues" exist:
+      | title            |  description                            | link_url                     | phone            |  email                  |  id | location_id |
+      | "Kongresshalle" | "Ein Kongresszentrum am Alexanderplatz" | http://www.kongresshalle.de  | (030) 123 456 77 | "info@kongresshalle.de" |   1 |        1    |
+
+  Scenario: Visit new Article in frontend and see event informations
+    When I go to the article page "dies-ist-ein-test"
+     Then I should see "Dies ist ein Test" within "h1"
      And I should see "Die kleine Maus wandert." within "#article_content"
+     # Event
      And I should see "Event1" within "div.article_event_content .title"
      And I should see "Ein ganz toller Event" within "div.article_event_content .description"
      And I should see "http://www.google.de" within "div.article_event_content .external_link"
@@ -28,6 +37,7 @@ Feature: Display event informations on article page
      And I should see "true" within "div.article_event_content .exclusive"
      And I should see "2012-01-01 11:00:00" within "div.article_event_content .start_date"
      And I should see "2012-02-02 10:00:00" within "div.article_event_content .end_date"
+     # Pricegroup
      And I should see "1" within ".pricegroup_id"
      And I should see "Studenten" within "li.pricegroup_item .title"
      And I should see "50.0" within ".price"
@@ -35,3 +45,11 @@ Feature: Display event informations on article page
      And I should see "2012-02-01 12:00:00" within ".start_reservation"
      And I should see "2012-04-01 12:00:00" within ".cancelation_until"
      And I should see "2012-03-01 12:00:00" within ".end_reservation"
+     # Location & Venue
+     And I should see "Kongresshalle"
+     And I should see "Ein Kongresszentrum am Alexanderplatz"
+     And I should see "Grunerstr. 1,, 12345, Berlin"
+     And I should see "http://www.kongresshalle.de"
+     And I should see "(030) 123 456 77"
+     And I should see "info@kongresshalle.de"
+

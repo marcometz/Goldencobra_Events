@@ -151,7 +151,7 @@ GEM
       rails (~> 3.0)
     friendly_id (4.0.0)
     fssm (0.2.8.1)
-    gherkin (2.7.6)
+    gherkin (2.7.7)
       json (>= 1.4.6)
     git-pivotal (0.2.3)
       builder
@@ -241,10 +241,10 @@ GEM
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
-    pry (0.9.8.1)
+    pry (0.9.8.2)
       coderay (~> 1.0.5)
       method_source (~> 0.7)
-      slop (>= 2.4.3, < 3)
+      slop (>= 2.4.4, < 3)
     rack (1.4.1)
     rack-cache (1.1)
       rack (>= 0.4)
@@ -292,18 +292,18 @@ GEM
     ruby-openid (2.1.8)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
-    rubyzip (0.9.5)
+    rubyzip (0.9.6.1)
     sass (3.1.15)
     sass-rails (3.2.4)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.18.0)
+    selenium-webdriver (2.19.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0.9)
       multi_json (~> 1.0.4)
       rubyzip
-    slop (2.4.3)
+    slop (2.4.4)
     sprockets (2.1.2)
       hike (~> 1.2)
       rack (~> 1.0)
@@ -331,7 +331,7 @@ DEPENDENCIES
   capybara
   capybara-webkit
   cucumber
-  cucumber-rails
+  cucumber-rails (~> 1.2.1)
   database_cleaner
   factory_girl (~> 2.3.2)
   factory_girl_rails (~> 1.4.0)
