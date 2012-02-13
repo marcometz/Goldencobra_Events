@@ -28,6 +28,10 @@ module GoldencobraEvents
 
     before_save :convert_price_raw
 
+    def title
+      self.pricegroup.title
+    end
+
     private
     def convert_price_raw
       if price_raw.present? && price_raw.length > 0
