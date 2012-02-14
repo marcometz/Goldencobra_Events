@@ -1,4 +1,5 @@
 <% if @event_to_register %>
+	<a href="#" class="close" id="goldencobra_events_event_popup_close">close</a>
 	<h2><%= @event_to_register.title %></h2>
 	<p><%= @event_to_register.description %></p>
 	<% if @registered_event_price_group %>
@@ -9,7 +10,7 @@
 				<h3>Dieser Event besitzt mehrere Preisgruppen zur Auswahl:</h3>
 				<ul>
 					<% @event_to_register.event_pricegroups.each do |e_pricegroup| %>
-						<li>
+						<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
 							<%= radio_button "event", "event_pricegroup", e_pricegroup.id %>
 							<%= e_pricegroup.id %>: <%= e_pricegroup.pricegroup.title %> <%= e_pricegroup.price %> 
 						</li>

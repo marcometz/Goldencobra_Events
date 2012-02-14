@@ -24,5 +24,9 @@ $(document).ready(function() {
 			},
 		closeOnClick: true
 	});
+	$('#goldencobra_events_event_popup a.close').live("click", function(){
+		$('#goldencobra_events_event_popup').overlay().close();
+		return false;
+	});
 	
 });

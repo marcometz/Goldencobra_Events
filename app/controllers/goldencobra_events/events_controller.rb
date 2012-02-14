@@ -6,7 +6,11 @@ module GoldencobraEvents
     def register
       @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])
       if (params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?) || @event_to_register.event_pricegroups.count == 1
-        epg_id = params[:event][:event_pricegroup] || @event_to_register.event_pricegroups.first.id
+        if params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?
+          epg_id = params[:event][:event_pricegroup]
+        else
+          epg_id = @event_to_register.event_pricegroups.first.id
+        end
         @registered_event_price_group = GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
         event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @registered_event_price_group)
         if true #event_registration.registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
@@ -21,8 +25,12 @@ module GoldencobraEvents
       event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @eventpricegroup_to_cancel)
       if true #event_registration.cancelable?(session[:goldencobra_event_registration][:pricegroup_ids])
         @event_pricegroup_ids_to_cancel = @eventpricegroup_to_cancel.event.subtree.map(&:event_pricegroup_ids).flatten.compact
-        session[:goldencobra_event_registration][:pricegroup_ids] = session[:goldencobra_event_registration][:pricegroup_ids].delete_if{|a| @event_pricegroup_ids_to_cancel.include?(a) }
-        @events_removed = true
+        if @event_pricegroup_ids_to_cancel && @event_pricegroup_ids_to_cancel.count > 0
+          session[:goldencobra_event_registration][:pricegroup_ids] = session[:goldencobra_event_registration][:pricegroup_ids].delete_if{|a| @event_pricegroup_ids_to_cancel.include?(a) }
+          @events_removed = true
+        else
+          raise "list of event_pricegroup_ids_to_cancel is empty"
+        end
       end
     end
     

@@ -52,12 +52,21 @@ Then /^show me the page$/ do
 end
 
 Then /^I click on "([^"]*)" within "([^"]*)"$/ do |arg1, arg2|
-  find(arg2).click_link(arg1)
+  find(arg2).find_link(arg1).click
 end
 
 Then /^I check "([^"]*)"$/ do |arg1|
   check(arg1)
 end
+
+Then /^I check "([^"]*)" within "([^"]*)"$/ do |arg1, arg2|
+  find(arg2).check(arg1)
+end
+
+Then /^I choose "([^"]*)" within "([^"]*)"$/ do |arg1, arg2|
+  find(arg2).choose(arg1)
+end
+
 
 Given /^the following "([^"]*)" exist:$/ do |arg1, table|
   table.hashes.each do |data|
@@ -67,4 +76,8 @@ end
 
 Then /^I should see the image "(.+)" with id "([^\"]*)"$/ do |image, id|
     page.should have_xpath("//img[@src=\"/system/images/#{id}/thumb/#{image}\"]")
+end
+
+Then /^I close the popup_window "([^\"]*)"$/ do |arg1|
+  page.execute_script("$('##{arg1}').overlay().close();")
 end

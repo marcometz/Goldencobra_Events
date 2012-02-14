@@ -1,6 +1,7 @@
 <% if @events_removed %>
 	<% @event_pricegroup_ids_to_cancel.each do |eid| %>
 		$('#goldencobra_events_registration_basket_item_<%= eid %>').fadeOut();
+		$('#goldencobra_events_registration_basket_item_<%= eid %>').remove();
 	<% end %>
 <% end %>
 
