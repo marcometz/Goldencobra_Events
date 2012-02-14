@@ -32,6 +32,10 @@ module GoldencobraEvents
       self.pricegroup.title
     end
 
+    def max_number_of_participants_reached?
+      
+    end
+
     private
     def convert_price_raw
       if price_raw.present? && price_raw.length > 0

@@ -45,5 +45,50 @@ module GoldencobraEvents
       self.type_of_event == "Registration needed"
     end
 
+    def is_registerable?(id_to_check, list_of_registrations)
+      #
+      # receives array of event_pricegroup_ids and checks them for 
+      #
+
+      #
+      # is registration date valid?
+      #
+
+      #
+      # is registration possible or is event mutually exclusive?
+      #
+
+      #
+      # max number of (event) participants reached?
+      #
+      
+      #
+      # max number of (pricegroup) participants reached?
+      #
+
+      #
+      # parent needs_registration? && registration_done?
+      #
+    end
+
+    def registration_date_valid
+      # Check if current date is valid for registration
+      return start_date < Time.now && end_date > Time.now
+    end
+
+    def registration_possible?
+      # If siblings exist and if they are exclusive
+      # Then check their registered? status
+      
+    end
+
+    def max_number_of_participants_reached?
+      
+    end
+
+    def parent_registration_done?
+      
+    end
+
   end
 end
