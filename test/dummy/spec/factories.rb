@@ -68,6 +68,11 @@ Factory.define :sponsor, :class => GoldencobraEvents::Sponsor do |s|
   s.type_of_sponsorship "Panel"
 end
 
+Factory.define :sponsor_image, class: GoldencobraEvents::SponsorImage do |si|
+  si.sponsor_id 1
+  si.image_id 2
+end
+
 Factory.define :event_sponsor, class: GoldencobraEvents::EventSponsor do |es|
   es.event_id 1
   es.sponsor_id 1
@@ -76,6 +81,11 @@ end
 Factory.define :artist_event, class: GoldencobraEvents::ArtistEvent do |es|
   es.event_id 1
   es.artist 1
+end
+
+Factory.define :artist_image, class: GoldencobraEvents::ArtistImage do |ai|
+  ai.artist_id 1
+  ai.image_id 2
 end
 
 Factory.define :artist, :class => GoldencobraEvents::Artist do |a|

@@ -10,9 +10,17 @@ Feature: Display event informations on article page
     And the following "pricegroups" exist:
       | title       | id |
       | "Studenten" |  1 |
+    And the following "uploads" exist:
+      | id | image_file_name     |
+      |  1 |          Bild_1.jpg |
+      |  2 |          Bild_2.jpg |
+      |  3 |          Bild_3.jpg |
+      |  4 |          Bild_4.jpg |
+      |  5 |          Bild_5.jpg |
+      |  6 |          Bild_6.jpg |
     And the following "events" exist:
-      | title    | description             | id | parent_id | external_link        | max_number_of_participators | type_of_event         | type_of_registration       | exclusive | start_date          | end_date            | venue_id |
-      | "Event1" | "Ein ganz toller Event" | 1  |           | http://www.google.de |                          25 | "Registration needed" | "No cancellation required" |      true | 2012-01-01 11:00:00 | 2012-02-02 10:00:00 |        1 |
+      | title    | description             | id | parent_id | external_link        | max_number_of_participators | type_of_event         | type_of_registration       | exclusive | start_date          | end_date            | venue_id | teaser_image_id |
+      | "Event1" | "Ein ganz toller Event" | 1  |           | http://www.google.de |                          25 | "Registration needed" | "No cancellation required" |      true | 2012-01-01 11:00:00 | 2012-02-02 10:00:00 |        1 |               6 |
     And the following "event_pricegroups" exist:
       | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       |
       |        1 |             1 |  50.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |
@@ -25,9 +33,13 @@ Feature: Display event informations on article page
       | title            |  description                            | link_url                     | phone            |  email                  |  id | location_id |
       | "Kongresshalle" | "Ein Kongresszentrum am Alexanderplatz" | http://www.kongresshalle.de  | (030) 123 456 77 | "info@kongresshalle.de" |   1 |        1    |
     And the following "sponsors" exist:
-      | title              | description | id | location_id |
-      | "Audi Deutschland" | "Autos"     |  1 |           2 |
-      | "Dr. Oetker"       | "Speisen"   |  2 |           3 |
+      | title              | description | id | location_id | logo_id |
+      | "Audi Deutschland" | "Autos"     |  1 |           2 |       5 |
+      | "Dr. Oetker"       | "Speisen"   |  2 |           3 |         |
+    And the following "sponsor_images" exist:
+      | id | sponsor_id | image_id |
+      |  1 |          1 |        3 |
+      |  2 |          1 |        4 |
     And the following "event_sponsors" exist:
       | id | event_id | sponsor_id |
       |  1 |        1 |          1 |
@@ -38,6 +50,10 @@ Feature: Display event informations on article page
     And the following "artist_events" exist:
       | id | artist_id | event_id |
       |  1 |         1 |        1 |
+    And the following "artist_images" exist:
+      | id | artist_id | image_id |
+      |  1 |         1 |        1 |
+      |  2 |         1 |        2 |
 
   Scenario: Visit new Article in frontend and see event informations
     When I go to the article page "dies-ist-ein-test"
@@ -53,6 +69,7 @@ Feature: Display event informations on article page
      And I should see "true" within "div.article_event_content .exclusive"
      And I should see "2012-01-01 11:00:00" within "div.article_event_content .start_date"
      And I should see "2012-02-02 10:00:00" within "div.article_event_content .end_date"
+     And I should see the image "Bild_6.jpg" with id "6"
      # Pricegroup
      And I should see "1" within "li.pricegroup_item_1 .pricegroup_id"
      And I should see "Studenten" within "li.pricegroup_item_1 .title"
@@ -73,6 +90,11 @@ Feature: Display event informations on article page
      And I should see "Kudamm 1, 12345, Berlin" within "li.sponsor_item_1 .complete_location"
      And I should see "Dr. Oetker" within "li.sponsor_item_2 .title"
      And I should see "Gneisenau 24, 12345, Berlin" within "li.sponsor_item_2 .complete_location"
+     And I should see the image "Bild_3.jpg" with id "3"
+     And I should see the image "Bild_4.jpg" with id "4"
+     And I should see the image "Bild_5.jpg" with id "5"
      # Artists
      And I should see "Bodo Wartke" within "li.artist_item_1 .title"
      And I should see "toll toll" within "li.artist_item_1 .description"
+     And I should see the image "Bild_1.jpg" with id "1"
+     And I should see the image "Bild_2.jpg" with id "2"

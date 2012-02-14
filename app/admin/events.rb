@@ -11,7 +11,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
       f.input :active, :hint => "Ist dieser Event online zu sehen?"
-      f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r einer der Kinder muss sich dann entscheiden werden!"
+      f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r eines der Kinder muss sich dann entscheiden werden!"
     end
     
     f.inputs "Preisgruppen" do
