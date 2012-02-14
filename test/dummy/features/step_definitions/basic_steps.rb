@@ -64,3 +64,7 @@ Given /^the following "([^"]*)" exist:$/ do |arg1, table|
     Factory(arg1.singularize.to_sym ,data)
   end
 end
+
+Then /^I should see the image "(.+)" with id "([^\"]*)"$/ do |image, id|
+    page.should have_xpath("//img[@src=\"/system/images/#{id}/thumb/#{image}\"]")
+end
