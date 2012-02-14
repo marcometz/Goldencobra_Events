@@ -3,14 +3,23 @@ Feature: Create and manage artists
   As an admin
   I want to create and manage some artists
 
-  @javascript
-  Scenario: Go to the artist sponsor site and create a new artist
+  Background:
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
     And the following uploads exist:
       | image_file_name | source  | rights |
       | "Bild1"         | "ikusei" | "alle" |
       | "Bild2"         | "ikuse2" | "alle" |
+    And the following "sponsors" exist:
+      | title              | description | id |
+      | "Audi Deutschland" | "Autos"     |  1 |
+      | "Dr. Oetker"       | "Speisen"   |  2 |
+    And the following artists exist:
+      | title             | description | id |
+      | "Bodo Wartke"     | "toll toll" |  1 |
+
+  @javascript
+  Scenario: Go to the artist sponsor site and create a new artist
     When I go to the admin list of artists
     Then I should see "Artists"
     When I click on "New Artist" within ".action_items"
@@ -28,15 +37,6 @@ Feature: Create and manage artists
     Then I should see "Bild1"
 
   Scenario: Set sponsors for an artist
-    Given that a confirmed admin exists
-    And I am logged in as "admin@test.de" with password "secure12"
-    And the following "sponsors" exist:
-      | title              | description | id |
-      | "Audi Deutschland" | "Autos"     |  1 |
-      | "Dr. Oetker"       | "Speisen"   |  2 |
-   And the following artists exist:
-      | title             | description | id |
-      | "Bodo Wartke"     | "toll toll" |  1 |
     When I go to the admin list of artists
     Then I click on "Edit" within "tr#artist_1"
     And I check "Audi Deutschland"
