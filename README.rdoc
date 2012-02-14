@@ -6,4 +6,5 @@
 		:depth => 0,1,2,3
 		:class => "basdf"
 		:id => "asdf"
+		:registration_links => true,false
 	

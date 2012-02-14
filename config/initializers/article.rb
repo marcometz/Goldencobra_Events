@@ -3,13 +3,14 @@ Goldencobra::Article.class_eval do
 end
 
 Goldencobra::ArticlesHelper.module_eval do
+  
   def render_article_events(options={})
     if @article && @article.event_id.present? && @article.event && @article.event.active
       depth = @article.event_levels || 0
       class_name = options[:class] || ""
       id_name = options[:id] || ""
       content = ""
-      content << event_item_helper(@article.event, depth, 1)
+      content << event_item_helper(@article.event, depth, 1, options)
       result = content_tag(:ul, raw(content),:id => "#{id_name}", :class => "#{class_name} depth_#{depth} article_events".squeeze(' ').strip)
       return raw(result)
     end
@@ -17,13 +18,13 @@ Goldencobra::ArticlesHelper.module_eval do
   
   
   private
-  def event_item_helper(child, depth, current_depth)
-    child_block = render_child_block(child)
+  def event_item_helper(child, depth, current_depth, options)
+    child_block = render_child_block(child, options)
     current_depth = current_depth + 1
     if child.children && (depth == 0 || current_depth <= depth)
       content_level = ""
       child.children.active.each do |subchild|
-          content_level << event_item_helper(subchild, depth, current_depth)
+          content_level << event_item_helper(subchild, depth, current_depth, options)
       end
       if content_level.present?
         child_block = child_block + content_tag(:ul, raw(content_level), :class => "level_#{current_depth}" )
@@ -40,9 +41,12 @@ Goldencobra::ArticlesHelper.module_eval do
     return content
   end
 
-  def render_child_block(event)
+  def render_child_block(event, options)
     content = render_object(event, :title, :description, :external_link, :max_number_of_participators, :type_of_event, :type_of_registration, :exclusive, :start_date, :end_date)
-    
+    if event.needs_registration? && options[:registration_links] != false
+      reg_link = link_to("Anmelden", "/goldencobra_events/event/#{event.id}/register" ,:remote => true)
+      content << content_tag(:div, reg_link, :class => "register_for_event register_for_event_#{event.id}", "data-id" => event.id)
+    end
     pricegroup_items = ""
     event.event_pricegroups.available.each do |event_pricegroup|
       event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title, :price, :max_number_of_participators, :cancelation_until, :start_reservation, :end_reservation)
