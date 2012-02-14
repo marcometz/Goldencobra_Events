@@ -1,0 +1,13 @@
+<% session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank? %>
+<% pricegroup_ids = session[:goldencobra_event_registration][:pricegroup_ids] %>
+<% if pricegroup_ids.present? %>
+  <% @event_pricegroups = GoldencobraEvents::EventPricegroup.find(pricegroup_ids) %>
+	<ul>
+		<% @event_pricegroups.each do |pricegroup| %>
+			<li>
+				<%= pricegroup.id %>: <%= pricegroup.event.title %> 
+			</li>
+		<% end %>	
+	</ul>
+<% end %> 
+

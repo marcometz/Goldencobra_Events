@@ -10,3 +10,19 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+
+$(document).ready(function() {
+	
+	
+	//Initialize popup for event Registration: Select of Pricegroup
+	$('body').append("<div id='goldencobra_events_event_popup' style='display:none'></div>");
+	$('#goldencobra_events_event_popup').overlay({
+		mask:{
+				color: '#ebecff',
+				loadSpeed: 200,
+				opacity: 0.9
+			},
+		closeOnClick: false
+	});
+	
+});

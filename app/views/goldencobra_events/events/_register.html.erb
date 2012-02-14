@@ -1,2 +1,20 @@
-<h1>Events#register</h1>
-<p>Find me in app/views/goldencobra_events/events/register.html.erb</p>
+<% if @event_to_register %>
+	<h2><%= @event_to_register.title %></h2>
+	<p><%= @event_to_register.description %></p>
+	<% if @event_to_register.event_pricegroups.count > 0 %>
+		<%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
+			<h3>Dieser Event besitzt mehrere Preisgruppen zur Auswahl:</h3>
+			<ul>
+				<% @event_to_register.event_pricegroups.each do |e_pricegroup| %>
+					<li>
+						<%= radio_button "event", "event_pricegroup", e_pricegroup.id %>
+						<%= e_pricegroup.id %>: <%= e_pricegroup.pricegroup.title %> <%= e_pricegroup.price %> 
+					</li>
+				<% end %>
+			</ul>
+			<%= submit_tag "Absenden" %>
+		<% end %>
+	<% else %>
+		<p>Es wurden für diesen Event keine Preisgruppen angelegt</p>
+	<% end %>	
+<% end %>

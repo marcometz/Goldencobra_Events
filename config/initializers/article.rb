@@ -8,9 +8,8 @@ Goldencobra::ArticlesHelper.module_eval do
     if @article && @article.event_id.present? && @article.event && @article.event.active
       depth = @article.event_levels || 0
       class_name = options[:class] || ""
-      id_name = options[:id] || ""
+      id_name = options[:id] || "goldencobra_events_article_events"
       content = ""
-
       content << event_item_helper(@article.event, depth, 1, options)
       result = content_tag(:ul, raw(content),:id => "#{id_name}", :class => "#{class_name} depth_#{depth} article_events".squeeze(' ').strip)
       return raw(result)

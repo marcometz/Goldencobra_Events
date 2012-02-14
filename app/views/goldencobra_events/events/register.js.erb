@@ -1,1 +1,2 @@
-alert("Test");
+$('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>");
+$('#goldencobra_events_event_popup').overlay().load();

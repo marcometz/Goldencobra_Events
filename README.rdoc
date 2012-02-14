@@ -13,6 +13,12 @@
   		<%= javascript_include_tag "application" %>	
   		<%= csrf_meta_tags %>
 	</head>
+	
+	
+	Remove:
+		//= require jquery
+		//= require jquery_ujs
+		from your assets/application.js
 
 
 == Usage
@@ -22,4 +28,7 @@
 		:class => "basdf"
 		:id => "asdf"
 		:registration_links => true,false
-	
+		
+		
+	render_registration_basket({})
+		
