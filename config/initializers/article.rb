@@ -74,7 +74,7 @@ Goldencobra::ArticlesHelper.module_eval do
     content = render_object(event, :title, :description, :external_link, :max_number_of_participators, :type_of_event, :type_of_registration, :exclusive, :start_date, :end_date)
     content << render_object_image(event, "teaser_image")
     if event.needs_registration? && options[:registration_links] != false
-      reg_link = link_to("Register", "/goldencobra_events/event/#{event.id}/register" ,:remote => true)
+      reg_link = link_to("Anmelden", "/goldencobra_events/event/#{event.id}/register" ,:remote => true)
       content << content_tag(:div, reg_link, :class => "register_for_event register_for_event_#{event.id}", "data-id" => event.id)
     end
     

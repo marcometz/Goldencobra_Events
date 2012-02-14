@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 4d2040874de5cd47dd74f52695801a3a499c44b4
+  revision: f5def898adf3308927ab6cf78735291d2b724258
   specs:
     goldencobra (0.0.3)
       activeadmin
