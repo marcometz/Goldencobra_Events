@@ -22,7 +22,7 @@ $(document).ready(function() {
 				loadSpeed: 200,
 				opacity: 0.9
 			},
-		closeOnClick: false
+		closeOnClick: true
 	});
 	
 });
