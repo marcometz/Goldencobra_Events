@@ -1,0 +1,7 @@
+goldencobra_events:
+    event:
+        registration_basket:
+            submit_text: "Anmeldung abschließen"
+            remove_text: "entfernen"        
+        article_events:
+            register_text: "Anmelden"

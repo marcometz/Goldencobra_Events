@@ -1,3 +1,4 @@
 require "goldencobra_events/engine"
-module GoldencobraEvents
+module GoldencobraEvents  
+  
 end

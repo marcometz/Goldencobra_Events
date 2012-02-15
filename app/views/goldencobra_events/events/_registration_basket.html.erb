@@ -5,11 +5,15 @@
 	  <% @event_pricegroups = GoldencobraEvents::EventPricegroup.find(pricegroup_ids) %>
 		<ul>
 			<% @event_pricegroups.each do |pricegroup| %>
-				<li id="goldencobra_events_registration_basket_item_<%= pricegroup.id %>">
-					<%= pricegroup.id %>: <%= pricegroup.event.title %> <%= link_to "entfernen", "/goldencobra_events/event/#{pricegroup.id}/cancel", :remote => true %>
+				<li id="goldencobra_events_registration_basket_item_<%= pricegroup.id %>" >
+					<%= pricegroup.id %>: <%= pricegroup.event.title %> 
+					<%= link_to s("goldencobra_events.event.registration_basket.remove_text"), "/goldencobra_events/event/#{pricegroup.id}/cancel", :remote => true, :class => "remove" %>
 				</li>
 			<% end %>	
 		</ul>
-	<% end %> 	
+	<% end %>
+	<div>
+		<%= link_to s("goldencobra_events.event.registration_basket.submit_text") %>
+	</div> 	
 </div>
 
