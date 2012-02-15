@@ -17,7 +17,6 @@ module GoldencobraEvents
       end
     end 
 
-
     private
     def event_item_helper(child, depth, current_depth, options)
       child_block = render_child_block(child, options)
@@ -115,6 +114,7 @@ module GoldencobraEvents
 
       return content_tag(:div, raw(content), class: "article_event_content")
     end
+
     
     
   end
