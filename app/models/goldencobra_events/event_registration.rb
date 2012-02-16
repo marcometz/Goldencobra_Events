@@ -53,7 +53,7 @@ module GoldencobraEvents
           if epricegroup.max_number_of_participants_reached?
             error_msgs[:num_of_pricegroup_part_reached] = "Maximum number of participants reached for pricegroup '#{epricegroup.title}'"
           end
-          
+
           # parent needs_registration? && registration_done?
           rtn_val = epricegroup.event.check_for_parent_registrations(list_of_ids) if epricegroup.event.present?
           error_msgs[:parent_error] = rtn_val unless rtn_val == true

@@ -1,4 +1,4 @@
 require "goldencobra_events/engine"
-require "devise"
+#require "devise"
 module GoldencobraEvents
 end
