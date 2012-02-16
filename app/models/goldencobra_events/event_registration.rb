@@ -66,5 +66,11 @@ module GoldencobraEvents
       end
       return error_msgs.length > 0 ? error_msgs : true
     end
+
+    def self.create_batch(list_of_pricegroup_ids, user)
+      ev_reg = GoldencobraEvents::EventRegistration.new
+      result = ev_reg.is_registerable?(list_of_pricegroup_ids)
+      return result
+    end
   end
 end
