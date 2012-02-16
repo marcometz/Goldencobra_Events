@@ -45,5 +45,44 @@ module GoldencobraEvents
       self.type_of_event == "Registration needed"
     end
 
+    def get_list_of_events_from_event_pricegroup_ids(list_of_event_pricegroup_ids)
+      GoldencobraEvents::Event.joins(:event_pricegroups).where("goldencobra_events_event_pricegroups.id in (?)", list_of_event_pricegroup_ids).select("goldencobra_events_events.id")
+    end
+
+    def check_for_parent_registrations(list_of_ids)
+      # does parent need a registration? Is registration already in system?
+      errors = []
+      list_of_event_ids = get_list_of_events_from_event_pricegroup_ids(list_of_ids)
+      self.ancestors.each do |a|
+        if a.needs_registration?
+          errors << a.id unless list_of_event_ids.include?(a.id)
+        end
+      end
+      return errors.blank? ? true : errors
+    end
+
+    def max_number_of_participants_reached?
+      if GoldencobraEvents::EventRegistration.joins(:event_pricegroup)
+                                             .where("goldencobra_events_event_pricegroups.event_id = #{self.id}")
+                                             .select("goldencobra_events_event_registrations.id")
+                                             .count <= self.max_number_of_participators
+        return false
+      else
+        return true
+      end
+    end
+
+    def siblings_exclusive?(list_of_ids)
+      errors = []
+      if self.parent.present? && self.parent.exclusive && self.has_siblings?
+        list_of_event_ids = get_list_of_events_from_event_pricegroup_ids(list_of_ids)
+        self.siblings.each do |s|
+          if s.exclusive?
+            errors << s.id unless list_of_event_ids.include?(s.id)
+          end
+        end
+      end
+      return errors.blank? ? true : errors
+    end
   end
 end

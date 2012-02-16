@@ -17,6 +17,54 @@ module GoldencobraEvents
     belongs_to :event_pricegroup
     
     scope :active, where(:canceled => false)
-    
+
+    before_save :is_registerable?
+
+    def is_registerable?(list_of_pricegroup_ids=nil)
+      # receives array of event_pricegroup_ids and checks them for 
+      list_of_ids = []
+      if list_of_pricegroup_ids == nil
+        if self.user && self.user.present? && self.user.event_registration_ids
+          list_of_ids << self.user.event_registrations.map(&:event_pricegroup_id)
+        end
+        list_of_ids << self.event_pricegroup_id
+      else
+        list_of_ids << list_of_pricegroup_ids
+      end
+
+      list_of_ids = list_of_ids.flatten.uniq
+
+      error_msgs = {}
+      mybool = true
+      list_of_ids.each do |event_pricg|
+        epricegroup = GoldencobraEvents::EventPricegroup.find_by_id(event_pricg)
+        if epricegroup
+          # is registration date valid?
+          unless epricegroup.registration_date_valid
+            error_msgs[:date_error] = "Registration date is not valid"
+          end
+
+          # max number of (event) participants reached?
+          if epricegroup.event.present? && epricegroup.event.max_number_of_participants_reached?
+            error_msgs[:num_of_ev_part_reached] = "Maximum number of participants reached for event '#{epricegroup.event.title}'"
+          end
+
+          # max number of (pricegroup) participants reached?
+          if epricegroup.max_number_of_participants_reached?
+            error_msgs[:num_of_pricegroup_part_reached] = "Maximum number of participants reached for pricegroup '#{epricegroup.title}'"
+          end
+          
+          # parent needs_registration? && registration_done?
+          rtn_val = epricegroup.event.check_for_parent_registrations(list_of_ids) if epricegroup.event.present?
+          error_msgs[:parent_error] = rtn_val unless rtn_val == true
+
+          # is registration possible or is event mutually exclusive?
+          sib_ex = epricegroup.event.siblings_exclusive?(list_of_ids) if epricegroup.event.present?
+          error_msgs[:exclusivity_error] = sib_ex unless sib_ex == true
+        end
+
+      end
+      return error_msgs.length > 0 ? error_msgs : true
+    end
   end
 end
