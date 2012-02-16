@@ -22,7 +22,15 @@ $(document).ready(function() {
 				loadSpeed: 200,
 				opacity: 0.9
 			},
-		closeOnClick: false
+		closeOnClick: true
+	});
+	$('#goldencobra_events_event_popup a.close').live("click", function(){
+		$('#goldencobra_events_event_popup').overlay().close();
+		return false;
+	});
+	$('#goldencobra_events_event_popup div.next_step a').live("click", function(){
+		$('#goldencobra_events_event_popup ul a.current').parent().next().find("a").trigger("click");
+		return false;
 	});
 	
 });

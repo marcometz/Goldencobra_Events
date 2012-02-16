@@ -1,2 +1,8 @@
 $('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>");
 $('#goldencobra_events_event_popup').overlay().load();
+
+<% if @registered_event_price_group %>
+	$('#goldencobra_events_registration_basket').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/registration_basket' ))%>");
+<% end %>
+
+

@@ -1,0 +1,63 @@
+goldencobra_events:
+    event:
+        registration_basket:
+            headline: "Sie haben gewählt:"
+            submit_text: "Anmeldung abschließen"
+            remove_text: "entfernen"    
+            description: "Um Ihre Reservierung abzuschließen, bitte hier klicken..."    
+        article_events:
+            register_text: "Anmelden"
+        registration:
+            added:
+                headline: "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
+            to_add:
+                headline: "Dieser Event besitzt mehrere Preisgruppen zur Auswahl"
+                submit: "Auswahl übernehmen"
+            errors:
+                no_events_selected: "Es wurden noch keine Event gewählt"            
+                no_user_selected: "Bitte füllen Sie Ihre Benutzerdaten aus"
+                user_not_exists: "Diesen Benutzer gibt es nicht"
+                no_price_groups_defined: "Es wurden für diesen Event keine Preisgruppen angelegt"
+            user_form:
+                headline: "Bitte füllen Sie Ihre Benutzerdaten aus"
+                sub_headline: "Personeninformationen und Firmendaten"
+                description: "wir behandeln Ihre Daten vertraulich und nutzen diese nur im für diese Veranstaltung"
+                user_fieldset_name: "Benutzerdaten"
+                user_info_fieldset_name: "Detailinformationen"
+                company_fieldset_name: "Firmendaten"
+                company_adress_fieldset_name: "Adresse"
+                next_step_label: "weiter ..."
+                submit: "Absenden"
+                user_label:
+                    gender: "Anrede"
+                    gender_male: "Herr"
+                    gender_female: "Frau"
+                    title: "Titel"
+                    firstname: "Vorname"
+                    lastname: "Nachname"
+                    function: "Function"
+                    email: "Email"
+                    phone: "Telefon"
+                    fax: "Fax"
+                    googleplus: "Google+"
+                    xing: "Xing"
+                    linkedin: "LinkedIn"
+                    twitter: "Twitter"
+                    facebook: "Facebook"
+                company_label:
+                    title: "Name"
+                    legal_form: "Rechtsform"
+                    phone: "Telefon"
+                    fax: "Fax"
+                    homepage: "Homepage"
+                    street: "Strasse"
+                    zip: "Postleitzahl"
+                    city: "Ort"
+                    region: "Bezirk"
+                    country: "Land"
+                    sector: "Branche"
+                    
+                    
+
+                
+                      
