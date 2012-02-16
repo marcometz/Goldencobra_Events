@@ -22,12 +22,27 @@ goldencobra_events:
                 headline: "Bitte füllen Sie Ihre Benutzerdaten aus"
                 sub_headline: "Personeninformationen und Firmendaten"
                 description: "wir behandeln Ihre Daten vertraulich und nutzen diese nur im für diese Veranstaltung"
+                account_description: "Melden Sie sich später mit Ihrer Email und folgendem Passwort an:"
                 user_fieldset_name: "Benutzerdaten"
                 user_info_fieldset_name: "Detailinformationen"
                 company_fieldset_name: "Firmendaten"
+                account_fieldset_name: "Accountdaten"
                 company_adress_fieldset_name: "Adresse"
                 next_step_label: "weiter ..."
                 submit: "Absenden"
+                errors:
+                    firstname: "Vorname muss ausgefüllt sein"
+                    lastname: "Nachname muss ausgefüllt sein"
+                    email: "Email muss ausgefüllt sein"
+                    phone: "Telefon muss ausgefüllt sein"
+                    fax: "Faxnummer muss ausgefüllt sein"
+                    company_title: "Firmenname muss ausgefüllt sein"
+                    company_street: "Strasse muss ausgefüllt sein"
+                    company_city: "Stadt muss ausgefüllt sein"
+                    company_zip: "PLZ muss ausgefüllt sein"                                                            
+                    company_country: "Land muss ausgefüllt sein"      
+                    password: "Das Passwort muss mindestens aus 6 Zeichen bestehen"
+                    password_confirmation: "Passwort und die Wiederholung müssen übereinstimmen"
                 user_label:
                     gender: "Anrede"
                     gender_male: "Herr"
@@ -56,6 +71,9 @@ goldencobra_events:
                     region: "Bezirk"
                     country: "Land"
                     sector: "Branche"
+                account_label:
+                    password: "Passwort"
+                    confirm_password: "Passwort wiederholen"
                     
                     
 

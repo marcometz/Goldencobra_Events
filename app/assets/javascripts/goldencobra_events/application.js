@@ -17,6 +17,7 @@ $(document).ready(function() {
 	//Initialize popup for event Registration: Select of Pricegroup
 	$('body').append("<div id='goldencobra_events_event_popup' style='display:none'></div>");
 	$('#goldencobra_events_event_popup').overlay({
+		fixed:false,
 		mask:{
 				color: '#ebecff',
 				loadSpeed: 200,

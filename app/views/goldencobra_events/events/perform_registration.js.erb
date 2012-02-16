@@ -1,15 +1,20 @@
 <% if @errors.present? %>
-	<% if @errors.include?("no_user_selected")%>
+	<% if @errors.include?("user_invalid") %>
+		//alert("jippi");
+	<% elsif @errors.include?("no_user_selected")%>
 		$('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/user' ))%>");
-		$("#goldencobra_events_event_popup form").validator();
 		$("#goldencobra_events_event_popup ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
+		$('#goldencobra_events_event_popup').overlay().load();
 	<% elsif @errors.include?("no_events_selected") %>
 		$('#goldencobra_events_event_popup').html("<%= s("goldencobra_events.event.registration.errors.no_events_selected") %>");	
+		$('#goldencobra_events_event_popup').overlay().load();
 	<% elsif @errors.include?("user_not_exists") %>
 		$('#goldencobra_events_event_popup').html("<%= s("goldencobra_events.event.registration.errors.user_not_exists") %>");	
+		$('#goldencobra_events_event_popup').overlay().load();
 	<% else %>
 		$('#goldencobra_events_event_popup').html("es ist ein unbekannter Fehler aufgetreten");
+		$('#goldencobra_events_event_popup').overlay().load();
 	<% end %>
 <% end %>
 
-$('#goldencobra_events_event_popup').overlay().load();
+

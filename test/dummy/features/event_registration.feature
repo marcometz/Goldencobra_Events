@@ -136,18 +136,7 @@ Feature: See and register events
   #  Then I should be asked to make register for parent event
   #  And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
   #  And I should see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"
-
-  @javascript
-  Scenario: Go to the program site, add an event and complete registration
-    When I go to the article page "programm"
-    And I should see "Anmelden" within ".register_for_event_1"
-    And I click on "Anmelden" within ".register_for_event_1"
-    Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
-    And I go to the article page "programm"
-    And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
-    And I should see "Anmeldung abschließen" within "#goldencobra_events_registration_basket"
-    Then I click on "Anmeldung abschließen"
-    And I should see "Bitte füllen Sie Ihre Benutzerdaten aus"
+    
     
   Scenario: Go to the admin sites and look for registrations
     Given that a confirmed admin exists

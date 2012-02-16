@@ -39,6 +39,10 @@ module GoldencobraEvents
       @errors = []
       @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
       @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank?
+      if params[:registration] && params[:registration].present?
+        #Create User and Company
+        @errors << "user_invalid" 
+      end
       if @errors.blank?
         user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
         if user
