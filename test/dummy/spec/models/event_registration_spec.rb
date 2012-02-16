@@ -39,19 +39,46 @@ describe GoldencobraEvents::EventRegistration do
       before(:each) do
         @second_reg = GoldencobraEvents::EventRegistration.new
         @second_reg.event_pricegroup = @event_pricegroup
-        @second_reg.user = @user2
         @second_reg.save
       end
-      it "should reject a registration if the maximum number of participants (event) is reached" do
-        @new_registration.is_registerable?.should == true
-        @event.update_attributes(:max_number_of_participators => 1)
-        @second_reg.is_registerable?.should == {:num_of_ev_part_reached => "Maximum number of participants reached for #{@event.title}"}
+
+      describe "from a different user" do
+        before(:each) do
+          @second_reg.update_attributes(:user => @user2)
+        end
+      
+        it "should reject a registration if the maximum number of participants (event) is reached" do
+          @new_registration.is_registerable?.should == true
+          @event.update_attributes(:max_number_of_participators => 1)
+          @second_reg.is_registerable?.should == {:num_of_ev_part_reached => "Maximum number of participants reached for event '#{@event.title}'"}
+        end
+    
+        it "should reject a registration if the pricegroup's maximum number of participants is reached" do
+          @new_registration.is_registerable?.should == true
+          @event_pricegroup.update_attributes(:max_number_of_participators => 1)
+          @second_reg.is_registerable?.should == {:num_of_pricegroup_part_reached => "Maximum number of participants reached for pricegroup '#{@event_pricegroup.pricegroup.title}'"}
+        end
       end
-  
-      it "should reject a registration if the pricegroup's maximum number of participants is reached" do
-        @new_registration.is_registerable?.should == true
-        @event_pricegroup.update_attributes(:max_number_of_participators => 1)
-        @second_reg.is_registerable?.should == {:num_of_pricegroup_part_reached => "Maximum number of participants reached for #{@event_pricegroup.pricegroup.title}"}
+
+      describe "that is exclusive" do
+        before(:each) do
+          @parent_event = GoldencobraEvents::Event.create(:type_of_event => "No registration needed", :exclusive => true)
+          @second_event = GoldencobraEvents::Event.create!(:exclusive => true, :ancestry => "#{@parent_event.id}")
+          pricegroup = GoldencobraEvents::Pricegroup.create(:title => "Studenten")
+          @second_event_event_pricegroup = GoldencobraEvents::EventPricegroup.create
+          @second_event_event_pricegroup.pricegroup_id = pricegroup.id
+          @second_event_event_pricegroup.event_id = @second_event.id
+          @second_reg.update_attributes(:user => @user, :event_pricegroup => @second_event_event_pricegroup)
+          @event.update_attributes(:ancestry => "#{@parent_event.id}")
+        end
+        it "should reject a registration if its parent is exclusive" do
+          @new_registration.is_registerable?.should == {:exclusivity_error => [@second_event.id]}
+        end
+
+        it "should accept a registration if parent is not exclusive" do
+          @parent_event.update_attributes(:exclusive => false)
+          @new_registration.is_registerable?.should == true
+        end
       end
     end
 
@@ -73,7 +100,7 @@ describe GoldencobraEvents::EventRegistration do
         @grandfather_event = GoldencobraEvents::Event.create(:type_of_event => "Registration needed")
         @parent_event.update_attributes(:ancestry => "#{@grandfather_event.id}", :type_of_event => "Registration needed")
         @event.update_attributes(:ancestry => "#{@grandfather_event.id}/#{@parent_event.id}")
-        @new_registration.is_registerable?.should == {:parent_error => [@parent_event.id, @grandfather_event.id]}
+        @new_registration.is_registerable?.should == {:parent_error => [@grandfather_event.id, @parent_event.id]}
       end
     end
   end
