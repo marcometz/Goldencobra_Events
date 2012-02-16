@@ -104,4 +104,38 @@ describe GoldencobraEvents::EventRegistration do
       end
     end
   end
+
+  describe "batch registration" do
+    before(:each) do
+      @list_of_ids = []
+      @pricegroup = GoldencobraEvents::Pricegroup.create(:title => "Studenten")
+      10.times do
+        event = GoldencobraEvents::Event.create
+        pg = GoldencobraEvents::EventPricegroup.create
+        pg.event_id = event.id
+        pg.pricegroup_id = @pricegroup.id
+        pg.save
+        @list_of_ids << pg.id
+      end
+    end
+
+    it "should create many event_registrations" do
+      GoldencobraEvents::EventRegistration.create_batch(@list_of_ids, @user).should == true
+    end
+
+    it "should throw a registration needed error when parent is not included in list" do
+      parent_event = GoldencobraEvents::Event.create(:type_of_event=>"Registration needed")
+      child_event = GoldencobraEvents::Event.create(:type_of_event=>"Registration needed", :ancestry => "#{parent_event.id}")
+      pg = GoldencobraEvents::EventPricegroup.create
+      pg.event_id = child_event.id
+      pg.pricegroup_id = @pricegroup.id
+      pg.save
+      @list_of_ids << pg.id
+      GoldencobraEvents::EventRegistration.create_batch(@list_of_ids, @user).should == {:parent_error => [parent_event.id]}
+    end
+
+    it "should do nothing when the list is empty" do
+      GoldencobraEvents::EventRegistration.create_batch(nil, @user).should be_true
+    end
+  end
 end
