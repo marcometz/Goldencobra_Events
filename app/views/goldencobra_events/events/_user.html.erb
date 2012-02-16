@@ -1,7 +1,127 @@
+<a href="#" class="close" id="goldencobra_events_event_popup_close">close</a>
 <h2><%= s("goldencobra_events.event.registration.user_form.headline") %></h2>
 <p><%= s("goldencobra_events.event.registration.user_form.description") %></p>
-<%= form_tag "/goldencobra_events/events/registration", :remote => true do %>
+<%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration" do %>
 	<h3><%= s("goldencobra_events.event.registration.user_form.sub_headline") %></h3>
+	<ul class="tabs">
+		<li><a href="#"><%= s("goldencobra_events.event.registration.user_form.user_fieldset_name") %></a></li>
+		<li><a href="#"><%= s("goldencobra_events.event.registration.user_form.user_info_fieldset_name") %></a></li>
+		<li><a href="#"><%= s("goldencobra_events.event.registration.user_form.company_fieldset_name") %></a></li>
+	</ul>
+	<div class="panes">
+	<%= field_set_tag s("goldencobra_events.event.registration.user_form.user_fieldset_name") do %>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.label.gender") %></label>
+			<%= radio_button "registration[user]", "gender", true %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
+			<%= radio_button "registration[user]", "gender", false %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
+			<%= text_field_tag "registration[user][title]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %></label>
+			<%= text_field_tag "registration[user][firstname]", "", :required => true %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.lastname") %></label>
+			<%= text_field_tag "registration[user][lastname]", "", :required => true %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.function") %></label>
+			<%= text_field_tag "registration[user][function]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %></label>
+			<%= text_field_tag "registration[user][email]", "", :required => true %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.phone") %></label>
+			<%= text_field_tag "registration[user][phone]", "", :required => true %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.fax") %></label>
+			<%= text_field_tag "registration[user][fax]", "", :required => true %>
+		</p>
+		<div class="next_step">
+			<%= link_to s("goldencobra_events.event.registration.user_form.next_step_label"), "#" %>
+		</div>	
+	<% end %>
+	<%= field_set_tag s("goldencobra_events.event.registration.user_form.user_info_fieldset_name") do %>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.facebook") %></label>
+			<%= text_field_tag "registration[user][facebook]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.twitter") %></label>
+			<%= text_field_tag "registration[user][twitter]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.linkedin") %></label>
+			<%= text_field_tag "registration[user][linkedin]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.xing") %></label>
+			<%= text_field_tag "registration[user][xing]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.googleplus") %></label>
+			<%= text_field_tag "registration[user][googleplus]", "", :required => false %>
+		</p>	
+		<div class="next_step">
+			<%= link_to s("goldencobra_events.event.registration.user_form.next_step_label"), "#" %>
+		</div>	
+	<% end %>
+	<%= field_set_tag s("goldencobra_events.event.registration.user_form.company_fieldset_name") do %>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.company_label.title") %></label>
+			<%= text_field_tag "registration[company][title]", "", :required => true %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.company_label.legal_form") %></label>
+			<%= text_field_tag "registration[company][legal_form]", "", :required => false %>
+		</p>
+		<div class="address">
+			<div class="legend"><%= s("goldencobra_events.event.registration.user_form.company_adress_fieldset_name") %></div>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.street") %></label>
+				<%= text_field_tag "registration[company][address][street]", "", :required => false %>
+			</p>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %></label>
+				<%= text_field_tag "registration[company][address][zip]", "", :required => false %>
+			</p>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
+				<%= text_field_tag "registration[company][address][city]", "", :required => false %>
+			</p>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.region") %></label>
+				<%= text_field_tag "registration[company][address][region]", "", :required => false %>
+			</p>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
+				<%= text_field_tag "registration[company][address][country]", "", :required => false %>
+			</p>
+		</div>	
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.company_label.phone") %></label>
+			<%= text_field_tag "registration[company][phone]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.company_label.fax") %></label>
+			<%= text_field_tag "registration[company][fax]", "", :required => false %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.company_label.homepage") %></label>
+			<%= text_field_tag "registration[company][homepage]", "", :required => false %>
+		</p>		
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.company_label.sector") %></label>
+			<%= text_field_tag "registration[company][sector]", "", :required => false %>
+		</p>
+		<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>		
+	<% end %>
+	</div>
 	
-	<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>
 <% end %>

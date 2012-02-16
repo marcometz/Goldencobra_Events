@@ -2,15 +2,98 @@
 	border: 1px solid black;
 }
 
-#goldencobra_events_event_popup .close {
-	background-image:url("/assets/goldencobra/close.png");
-	position:absolute;
-	right:-7px;
-	top:-7px;
-	cursor:pointer;
-	height:14px;
-	width:14px;
-	text-indent:-999999px;
+#goldencobra_events_event_popup {
+	background-color:#fff;
+	box-shadow:5px 5px 5px grey;
+	padding:10px;
+	.close {
+		background-image:url("/assets/goldencobra/close.png");
+		position:absolute;
+		right:-7px;
+		top:-7px;
+		cursor:pointer;
+		height:14px;
+		width:14px;
+		text-indent:-999999px;	
+	}
+	form {
+		fieldset{
+			margin:0px;
+			border-top:0px;
+			border-left:1px solid grey;
+			border-right:1px solid grey;
+			border-bottom:1px solid grey;
+			legend{
+				display:none;
+			}
+		}
+		&.user_registration{
+			div.legend{
+
+			}
+			div.next_step{
+				float:right;
+				a{
+					text-decoration:none;
+				}
+			}
+			input[type="submit"]{
+				float:right;
+			}
+			ul.tabs { 
+			    list-style:none; 
+			    margin:0 !important; 
+			    padding:0;  
+			    border-bottom:1px solid #666;   
+			    height:30px;
+				li { 
+				    float:left;  
+				    text-indent:0;
+				    padding:0;
+				    margin:0 !important;
+				    list-style-image:none !important; 
+				}
+				 a { 
+				    background: url("/assets/goldencobra/tools/tabs/blue.png") no-repeat -420px 0;
+				    font-size:11px;
+				    display:block;
+				    height: 30px;  
+				    line-height:30px;
+				    width: 134px;
+				    text-align:center;  
+				    text-decoration:none;
+				    color:#333;
+				    padding:0px;
+				    margin:0px; 
+				    position:relative;
+				    top:1px;
+					&:active {
+					    outline:none;       
+					}
+					&:hover {
+					    background-position: -420px -31px;  
+					    color:#fff; 
+					}
+				}
+				a.current, a.current:hover, li.current a {
+				    background-position: -420px -62px;      
+				    cursor:default !important; 
+				    color:#000 !important;
+				}
+				
+			}
+			p{	
+				label{
+					display:inline-block;
+					width:200px;
+				}
+				input[type="text"]{
+					width:300px;
+				}
+				height:10px;
+			}
+		}	
+	}
 }
 
 #goldencobra_events_registration_basket{
