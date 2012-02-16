@@ -1,7 +1,7 @@
 module GoldencobraEvents
   class EventsController < ApplicationController
     
-    around_filter :init_registration_session
+    around_filter :init_registration_session, :only => [:register, :cancel, :perform_registration]
     
     def register
       @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])
@@ -30,6 +30,22 @@ module GoldencobraEvents
           @events_removed = true
         else
           raise "list of event_pricegroup_ids_to_cancel is empty"
+        end
+      end
+    end
+    
+    
+    def perform_registration
+      @errors = []
+      @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
+      @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank?
+      if @errors.blank?
+        user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
+        if user
+          @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], user)
+          @errors << @result if @result != true
+        else
+          @errors << "user_not_exists"
         end
       end
     end

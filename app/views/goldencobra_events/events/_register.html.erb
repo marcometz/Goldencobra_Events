@@ -3,11 +3,11 @@
 	<h2><%= @event_to_register.title %></h2>
 	<p><%= @event_to_register.description %></p>
 	<% if @registered_event_price_group %>
-		<h3>Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt</h3>
+		<h3><%= s("goldencobra_events.event.registration.added.headline") %></h3>
 	<% else %>
 		<% if @event_to_register.event_pricegroups.count > 0 %>
 			<%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
-				<h3>Dieser Event besitzt mehrere Preisgruppen zur Auswahl:</h3>
+				<h3><%= s("goldencobra_events.event.registration.to_add.headline") %></h3>
 				<ul>
 					<% @event_to_register.event_pricegroups.each do |e_pricegroup| %>
 						<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
@@ -16,10 +16,10 @@
 						</li>
 					<% end %>
 				</ul>
-				<%= submit_tag "Absenden" %>
+				<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit" %>
 			<% end %>
 		<% else %>
-			<p>Es wurden für diesen Event keine Preisgruppen angelegt</p>
+			<p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
 		<% end %>
 	<% end %>	
 <% end %>

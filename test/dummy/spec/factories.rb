@@ -1,5 +1,11 @@
 require 'factory_girl'
 
+Factory.define :setting, :class => Goldencobra::Setting do |u|
+  u.title "Name1"
+  u.value "Wert1"
+end
+
+
 Factory.define :article, :class => Goldencobra::Article do |u|
   u.title "Article Title"
   u.url_name "short-title"

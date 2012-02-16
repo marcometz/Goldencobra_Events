@@ -1,0 +1,13 @@
+<% if @errors.present? %>
+	<% if @errors.include?("no_user_selected")%>
+		$('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/user' ))%>");
+	<% elsif @errors.include?("no_events_selected") %>
+		$('#goldencobra_events_event_popup').html("<%= s("goldencobra_events.event.registration.errors.no_events_selected") %>");	
+	<% elsif @errors.include?("user_not_exists") %>
+		$('#goldencobra_events_event_popup').html("<%= s("goldencobra_events.event.registration.errors.user_not_exists") %>");	
+	<% else %>
+		$('#goldencobra_events_event_popup').html("es ist ein unbekannter Fehler aufgetreten");
+	<% end %>
+<% end %>
+
+$('#goldencobra_events_event_popup').overlay().load();

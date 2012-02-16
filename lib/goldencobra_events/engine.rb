@@ -3,8 +3,9 @@ module GoldencobraEvents
     isolate_namespace GoldencobraEvents
     config.to_prepare do
       ApplicationController.helper(GoldencobraEvents::ApplicationHelper)      
+      ActionController::Base.helper(GoldencobraEvents::ApplicationHelper)  
+      
       ApplicationController.helper(GoldencobraEvents::EventsHelper)
-      ActionController::Base.helper(GoldencobraEvents::ApplicationHelper)      
       ActionController::Base.helper(GoldencobraEvents::EventsHelper)      
     end
   end

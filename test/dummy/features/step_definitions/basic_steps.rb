@@ -81,3 +81,7 @@ end
 Then /^I close the popup_window "([^\"]*)"$/ do |arg1|
   page.execute_script("$('##{arg1}').overlay().close();")
 end
+
+Given /^default settings exists$/ do
+  Goldencobra::Setting.import_default_settings(GoldencobraEvents::Engine.root + "config/settings.yml")
+end

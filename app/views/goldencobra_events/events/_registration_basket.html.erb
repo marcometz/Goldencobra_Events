@@ -1,4 +1,5 @@
 <div id="goldencobra_events_registration_basket">
+	<p><%= s("goldencobra_events.event.registration_basket.headline") %></p>
 	<% session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank? %>
 	<% pricegroup_ids = session[:goldencobra_event_registration][:pricegroup_ids] %>
 	<% if pricegroup_ids.present? %>
@@ -13,7 +14,8 @@
 		</ul>
 	<% end %>
 	<div>
-		<%= link_to s("goldencobra_events.event.registration_basket.submit_text") %>
+		<%= s("goldencobra_events.event.registration_basket.description") %>
+		<%= link_to s("goldencobra_events.event.registration_basket.submit_text"), "/goldencobra_events/events/registration", :remote => true, :class => "submit" %>
 	</div> 	
 </div>
 

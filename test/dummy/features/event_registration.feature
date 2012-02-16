@@ -5,6 +5,7 @@ Feature: See and register events
 
   Background:
     Given that I am not logged in
+    And default settings exists
     And the following "articles" exist:
       | title                        | url_name     | event_id | event_levels  |
       | "Programm"                   | programm     | 1        | 0             |
@@ -43,8 +44,8 @@ Feature: See and register events
     And I should see "Party"
     And I should see "Treffen der Generationen"
     And I should see "Party2"
-    And I should see "register_text" within ".register_for_event_5"
-    When I click on "register_text" within ".register_for_event_5"
+    And I should see "Anmelden" within ".register_for_event_5"
+    When I click on "Anmelden" within ".register_for_event_5"
     Then I should see "Studenten" within "#goldencobra_events_event_popup"
     And I should see "50" within ".goldencobra_events_event_price_group_item_for_select_5"
     And I should not see "30" within ".goldencobra_events_event_price_group_item_for_select_5"
@@ -52,11 +53,11 @@ Feature: See and register events
     And I should see "30" within ".goldencobra_events_event_price_group_item_for_select_6"
     And I should not see "Senioren" within "#goldencobra_events_event_popup"
     When I choose "event_event_pricegroup_5" within "#goldencobra_events_event_popup"
-    And I press "Absenden"
+    And I press "goldencobra_events_registration_to_add_submit"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     And I should see "Party" within "#goldencobra_events_registration_basket"
-    When I should see "register_text" within ".register_for_event_10"
-    And I click on "register_text" within ".register_for_event_10"
+    When I should see "Anmelden" within ".register_for_event_10"
+    And I click on "Anmelden" within ".register_for_event_10"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     And I should see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"
     
@@ -65,8 +66,8 @@ Feature: See and register events
   Scenario: Go to the program site and register for the main event
     When I go to the article page "programm"
     Then I should see "Cloudforum"
-    And I should see "register_text" within ".register_for_event_1"
-    When I click on "register_text" within ".register_for_event_1"
+    And I should see "Anmelden" within ".register_for_event_1"
+    When I click on "Anmelden" within ".register_for_event_1"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
 
@@ -74,13 +75,13 @@ Feature: See and register events
   Scenario: Go to the program site and register first for the main event and then for an subevent
     When I go to the article page "programm"
     Then I should see "Cloudforum"
-    And I should see "register_text" within ".register_for_event_1"
-    When I click on "register_text" within ".register_for_event_1"
+    And I should see "Anmelden" within ".register_for_event_1"
+    When I click on "Anmelden" within ".register_for_event_1"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
     When I click on "close" within "#goldencobra_events_event_popup"
-    When I should see "register_text" within ".register_for_event_10"
-    And I click on "register_text" within ".register_for_event_10"
+    When I should see "Anmelden" within ".register_for_event_10"
+    And I click on "Anmelden" within ".register_for_event_10"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     When I click on "close" within "#goldencobra_events_event_popup"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
@@ -90,19 +91,19 @@ Feature: See and register events
   Scenario: Go to the program site, add the main event, then add a subevent, then remove the main event
     When I go to the article page "programm"
     Then I should see "Cloudforum"
-    And I should see "register_text" within ".register_for_event_1"
-    When I click on "register_text" within ".register_for_event_1"
+    And I should see "Anmelden" within ".register_for_event_1"
+    When I click on "Anmelden" within ".register_for_event_1"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
-    When I should see "register_text" within ".register_for_event_10"
-    And I click on "register_text" within ".register_for_event_10"
+    When I should see "Anmelden" within ".register_for_event_10"
+    And I click on "Anmelden" within ".register_for_event_10"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
     And I should see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"
     When I go to the article page "programm"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
     And I should see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"
-    Then I click on "remove_text" within "#goldencobra_events_registration_basket_item_8"
+    Then I click on "entfernen" within "#goldencobra_events_registration_basket_item_8"
     And I should not see "Cloudforum" within "#goldencobra_events_registration_basket"
     And I should not see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"
 
@@ -111,18 +112,18 @@ Feature: See and register events
   Scenario: Go to the program site, add the main event, then add a subevent, then remove the subevent
     When I go to the article page "programm"
     Then I should see "Cloudforum"
-    And I should see "register_text" within ".register_for_event_1"
-    When I click on "register_text" within ".register_for_event_1"
+    And I should see "Anmelden" within ".register_for_event_1"
+    When I click on "Anmelden" within ".register_for_event_1"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     When I go to the article page "programm"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
-    When I should see "register_text" within ".register_for_event_10"
-    And I click on "register_text" within ".register_for_event_10"
+    When I should see "Anmelden" within ".register_for_event_10"
+    And I click on "Anmelden" within ".register_for_event_10"
     Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
     When I go to the article page "programm"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
     And I should see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"
-    When I click on "remove_text" within "#goldencobra_events_registration_basket_item_7"
+    When I click on "entfernen" within "#goldencobra_events_registration_basket_item_7"
     And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
     And I should not see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"
 
@@ -130,8 +131,8 @@ Feature: See and register events
   #@javascript
   #Scenario: Go to the program site,  add a subevent, and parrent events should be to add as an mandatory option
   #  When I go to the article page "programm"
-  #  And I should see "register_text" within ".register_for_event_10"
-  #  And I click on "register_text" within ".register_for_event_10"
+  #  And I should see "Anmelden" within ".register_for_event_10"
+  #  And I click on "Anmelden" within ".register_for_event_10"
   #  Then I should be asked to make register for parent event
   #  And I should see "Cloudforum" within "#goldencobra_events_registration_basket"
   #  And I should see "Abendessen Alternative 2" within "#goldencobra_events_registration_basket"

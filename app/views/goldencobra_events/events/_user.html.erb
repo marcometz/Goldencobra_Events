@@ -1,0 +1,7 @@
+<h2><%= s("goldencobra_events.event.registration.user_form.headline") %></h2>
+<p><%= s("goldencobra_events.event.registration.user_form.description") %></p>
+<%= form_tag "/goldencobra_events/events/registration", :remote => true do %>
+	<h3><%= s("goldencobra_events.event.registration.user_form.sub_headline") %></h3>
+	
+	<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>
+<% end %>
