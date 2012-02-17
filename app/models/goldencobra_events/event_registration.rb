@@ -15,7 +15,7 @@ module GoldencobraEvents
   class EventRegistration < ActiveRecord::Base
     belongs_to :user, :class_name => User
     belongs_to :event_pricegroup
-    
+    attr_accessor :session_list_of_ids 
     scope :active, where(:canceled => false)
 
     before_save :is_registerable?
@@ -27,12 +27,15 @@ module GoldencobraEvents
         if self.user && self.user.present? && self.user.event_registration_ids
           list_of_ids << self.user.event_registrations.map(&:event_pricegroup_id)
         end
+        if self.session_list_of_ids.present?
+          list_of_ids << self.session_list_of_ids
+        end
         list_of_ids << self.event_pricegroup_id
       else
         list_of_ids << list_of_pricegroup_ids
       end
 
-      list_of_ids = list_of_ids.flatten.uniq
+      list_of_ids = list_of_ids.flatten.uniq.compact
 
       error_msgs = {}
       mybool = true
@@ -72,14 +75,23 @@ module GoldencobraEvents
     end
 
     def self.create_batch(list_of_pricegroup_ids, user)
-      ev_reg = GoldencobraEvents::EventRegistration.new
-      result = ev_reg.is_registerable?(list_of_pricegroup_ids)
-      if result == true && list_of_pricegroup_ids.present? && list_of_pricegroup_ids.count > 0
-        list_of_pricegroup_ids.each do |reg_id|
-            GoldencobraEvents::EventRegistration.find_or_create_by_event_pricegroup_id_and_user_id(reg_id,user.id )
+      if list_of_pricegroup_ids.present? && list_of_pricegroup_ids.count > 0
+        ev_reg = GoldencobraEvents::EventRegistration.new
+        result = ev_reg.is_registerable?(list_of_pricegroup_ids)
+        if result == true 
+          list_of_pricegroup_ids.each do |reg_id|
+            reg = GoldencobraEvents::EventRegistration.find_by_event_pricegroup_id_and_user_id(reg_id,user.id)
+            unless reg
+              if GoldencobraEvents::EventRegistration.create(:event_pricegroup_id => reg_id, :user_id => user.id, :session_list_of_ids => list_of_pricegroup_ids)
+                result = true
+              end
+            end
+          end
         end
+        return result
+      else
+        return false
       end
-      return result
     end
   end
 end

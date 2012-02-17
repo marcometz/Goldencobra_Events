@@ -87,23 +87,23 @@
 			<div class="legend"><%= s("goldencobra_events.event.registration.user_form.company_adress_fieldset_name") %></div>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.street") %></label>
-				<%= text_field_tag "registration[company][address][street]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
+				<%= text_field_tag "registration[company][location_attributes][street]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %></label>
-				<%= text_field_tag "registration[company][address][zip]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
+				<%= text_field_tag "registration[company][location_attributes][zip]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
-				<%= text_field_tag "registration[company][address][city]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
+				<%= text_field_tag "registration[company][location_attributes][city]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.region") %></label>
-				<%= text_field_tag "registration[company][address][region]", "", :required => false %>
+				<%= text_field_tag "registration[company][location_attributes][region]", "", :required => false %>
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
-				<%= text_field_tag "registration[company][address][country]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
+				<%= text_field_tag "registration[company][location_attributes][country]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
 			</p>
 		</div>	
 		<p>

@@ -63,10 +63,11 @@ Feature: See and register events
     Then I click on "Firmendaten"
     When I fill in "registration_company_title" with "ikusei GmbH"
     And I fill in "registration_company_legal_form" with "GmbH"
-    And I fill in "registration_company_address_street" with "Zossenerstrasse 55"
-    And I fill in "registration_company_address_zip" with "10961"
-    And I fill in "registration_company_address_region" with "Kreuzberg"
-    And I fill in "registration_company_address_country" with "Deutschland"
+    And I fill in "registration_company_location_attributes_street" with "Zossenerstrasse 55"
+    And I fill in "registration_company_location_attributes_city" with "Berlin"
+    And I fill in "registration_company_location_attributes_zip" with "10961"
+    And I fill in "registration_company_location_attributes_region" with "Kreuzberg"
+    And I fill in "registration_company_location_attributes_country" with "Deutschland"
     And I fill in "registration_company_phone" with "03012341234"
     And I fill in "registration_company_fax" with "03012345697"
     And I fill in "registration_company_homepage" with "www.ikusei.de"
@@ -90,5 +91,19 @@ Feature: See and register events
       | linkedin | "myLinkdid" |
       | xing | "xingID" |
       | googleplus | "googleaccount" |
-      
+    And I should have a "GoldencobraEvents::Company" stored with following attributes:
+      | title | "ikusei GmbH" |
+      | legal_form | "GmbH" |
+      | phone | "03012341234" |
+      | fax | "03012345697" |
+      | homepage | "www.ikusei.de" |
+      | sector | "IT, Web, Design" |
+    And I should have a "Goldencobra::Location" stored with following attributes:
+      | street | "Zossenerstrasse 55" |
+      | city | "Berlin" |
+      | zip | "10961" |
+      | region | "Kreuzberg" |
+      | country | "Deutschland" |
+    And I should have a "GoldencobraEvents::EventRegistration" stored with following attributes:
+      | event_pricegroup_id | 8 |
       

@@ -18,11 +18,15 @@ describe GoldencobraEvents::EventRegistration do
     @new_registration = GoldencobraEvents::EventRegistration.new
     @new_registration.event_pricegroup = @event_pricegroup
     @user = User.create!(:email=>"test@test.de",
+                         :firstname => "Tim",
+                         :lastname => "Test",
                          :password=>"secure12",
                          :password_confirmation=>"secure12")
     @new_registration.user = @user
     @new_registration.save
     @user2 = User.create!(:email=>"second_tester@test.de",
+                         :firstname => "Tina",
+                         :lastname => "Test",
                          :password=>"secure123",
                          :password_confirmation=>"secure123")
   end
@@ -149,7 +153,7 @@ describe GoldencobraEvents::EventRegistration do
     end
 
     it "should do nothing when the list is empty" do
-      GoldencobraEvents::EventRegistration.create_batch(nil, @user).should be_true
+      GoldencobraEvents::EventRegistration.create_batch(nil, @user).should be_false
     end
   end
 end

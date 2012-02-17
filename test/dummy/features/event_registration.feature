@@ -142,9 +142,9 @@ Feature: See and register events
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
     And the following "guest_users" exist:
-      | id | email         | password  | password_confirmation |
-      |  2 | test1@test.de | 123456ABC | 123456ABC             |
-      |  3 | test2@test.de | 123456ABC | 123456ABC             |
+      | id | email         | password  | password_confirmation | firstname | lastname |
+      |  2 | test1@test.de | 123456ABC | 123456ABC             | Tim       | Test     |
+      |  3 | test2@test.de | 123456ABC | 123456ABC             | Tina      | Test     |
     And the following "event_registrations" exist:
       | id | event_pricegroup_id | user_id |
       |  1 |                   5 |       2 |

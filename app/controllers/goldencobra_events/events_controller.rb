@@ -41,8 +41,15 @@ module GoldencobraEvents
       @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
       @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present?
+          #Create user
           user = User.create(params[:registration][:user])
-          user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations")
+          #Add default user Role für event Registrators
+          user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
+          #Add Company to user if data provided
+          if user && params[:registration][:company].present?
+            company = Company.create(params[:registration][:company])
+            user.company = company if company
+          end
           if user.present? && user.id.present?
               session[:goldencobra_event_registration][:user_id] = user.id
           else
