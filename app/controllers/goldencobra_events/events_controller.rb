@@ -47,7 +47,8 @@ module GoldencobraEvents
           user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
           #Add Company to user if data provided
           if user && params[:registration][:company].present?
-            if Company.create(params[:registration][:company])
+            company = Company.create(params[:registration][:company])
+            if company.present && company.id.present?
               user.company_id = company.id
               user.save
             end
