@@ -1,6 +1,11 @@
 <div id="goldencobra_events_registration_basket">
 	<p><%= s("goldencobra_events.event.registration_basket.headline") %></p>
 	<% session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank? %>
+	<% if @current_user %>
+		<div class="greeting">
+			<%= s("goldencobra_events.event.registration_basket.greeting") %><%= @current_user.firstname %> <%= @current_user.lastname %>
+		</div>
+	<% end %>
 	<% pricegroup_ids = session[:goldencobra_event_registration][:pricegroup_ids] %>
 	<% if pricegroup_ids.present? %>
 	  <% @event_pricegroups = GoldencobraEvents::EventPricegroup.find(pricegroup_ids) %>
@@ -8,7 +13,7 @@
 			<% @event_pricegroups.each do |pricegroup| %>
 				<li id="goldencobra_events_registration_basket_item_<%= pricegroup.id %>" >
 					<span class="title"><%= pricegroup.event.title %></span>
-					<span class="price"><%= pricegroup.price %></span>
+					<span class="price"><%= number_to_currency(pricegroup.price) %></span>
 					<% if !@current_user || (@already_registered_ids && !@already_registered_ids.include?(pricegroup.id) ) %>
 						<%= link_to s("goldencobra_events.event.registration_basket.remove_text"), "/goldencobra_events/event/#{pricegroup.id}/cancel", :remote => true, :class => "remove" %>
 					<% end %>

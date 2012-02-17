@@ -2,6 +2,7 @@ goldencobra_events:
     event:
         registration_basket:
             headline: "Sie haben gewählt:"
+            greeting: "Hallo "
             submit_text: "Anmeldung abschließen"
             remove_text: "entfernen"    
             description: "Um Ihre Reservierung abzuschließen, bitte hier klicken..."    

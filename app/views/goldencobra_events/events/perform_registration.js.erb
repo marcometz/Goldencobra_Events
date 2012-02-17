@@ -1,12 +1,12 @@
 <% if @errors.present? && @errors.count > 0%>
 	<% if @errors.include?("user_invalid") %>
 		$('#goldencobra_events_event_popup div.errormessages').html("<%= @errors.inspect %>");
+	<% elsif @errors.include?("no_events_selected") %>
+		$('#goldencobra_events_event_popup').html("<%= s("goldencobra_events.event.registration.errors.no_events_selected") %>");	
+		$('#goldencobra_events_event_popup').overlay().load();		
 	<% elsif @errors.include?("no_user_selected")%>
 		$('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/user' ))%>");
 		$("#goldencobra_events_event_popup ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
-		$('#goldencobra_events_event_popup').overlay().load();
-	<% elsif @errors.include?("no_events_selected") %>
-		$('#goldencobra_events_event_popup').html("<%= s("goldencobra_events.event.registration.errors.no_events_selected") %>");	
 		$('#goldencobra_events_event_popup').overlay().load();
 	<% elsif @errors.include?("user_not_exists") %>
 		$('#goldencobra_events_event_popup').html("<%= s("goldencobra_events.event.registration.errors.user_not_exists") %>");	

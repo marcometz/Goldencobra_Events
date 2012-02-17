@@ -42,7 +42,7 @@ module GoldencobraEvents
       @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present?
           user = User.create(params[:registration][:user])
-          user.roles << Role.find_by_name("EventRegistrations")
+          user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations")
           if user.present? && user.id.present?
               session[:goldencobra_event_registration][:user_id] = user.id
           else

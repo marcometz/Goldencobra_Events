@@ -75,7 +75,7 @@ Feature: See and register events
     When I fill in "registration_user_password" with "geheim1234"
     And I fill in "registration_user_password_confirmation" with "geheim1234"
     Then I press "Absenden"
-    And show me the page
+    And I should see "Ihre Registrierung wurde erfolgreich abgeschlossen! Sie erhalten zusätzliche eine Email" within "#goldencobra_events_event_popup"
     And I should have a "User" stored with following attributes:
       | gender | true |
       | title | "Dr." |
@@ -90,15 +90,5 @@ Feature: See and register events
       | linkedin | "myLinkdid" |
       | xing | "xingID" |
       | googleplus | "googleaccount" |
-    And I should see "Anmeldung erfolgreich"
       
       
-      
-      
-      
-      
-      
-      
-      
-    
-    

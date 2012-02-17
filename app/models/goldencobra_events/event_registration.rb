@@ -74,9 +74,9 @@ module GoldencobraEvents
     def self.create_batch(list_of_pricegroup_ids, user)
       ev_reg = GoldencobraEvents::EventRegistration.new
       result = ev_reg.is_registerable?(list_of_pricegroup_ids)
-      if result == true
-        list_of_pricegroup_ids.each do |reg|
-            ev_reg = GoldencobraEvents::EventRegistration.find_or_create_by_event_pricegroup_id_and_user_id(reg,user.id )
+      if result == true && list_of_pricegroup_ids.present? && list_of_pricegroup_ids.count > 0
+        list_of_pricegroup_ids.each do |reg_id|
+            GoldencobraEvents::EventRegistration.find_or_create_by_event_pricegroup_id_and_user_id(reg_id,user.id )
         end
       end
       return result
