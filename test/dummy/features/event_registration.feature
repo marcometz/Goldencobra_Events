@@ -152,6 +152,6 @@ Feature: See and register events
       |  3 |                   6 |       3 |
       |  4 |                   5 |       3 |
       |  5 |                   7 |       3 |
-    When I go to the admin list of registrations
-    Then I should see "Registrations" within "h2"
+    When I go to the admin list of applicants
+    
     
