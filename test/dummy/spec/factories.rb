@@ -64,6 +64,11 @@ Factory.define :event_pricegroup, :class => GoldencobraEvents::EventPricegroup d
   u.end_reservation Date.today + 1.week
 end
 
+Factory.define :event_registration, :class => GoldencobraEvents::EventRegistration do |u|
+  u.event_pricegroup_id 1
+  u.user_id 1
+end
+
 Factory.define :panel, :class => GoldencobraEvents::Panel do |u|
   u.title "Naturstrom Panel"
   u.description "Das ist ein Panel"
