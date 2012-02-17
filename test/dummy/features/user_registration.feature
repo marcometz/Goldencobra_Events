@@ -29,11 +29,11 @@ Feature: See and register events
       | Abendessen Alternative 2   |  11       | 10 | 1      |               |  0                          | Registration needed     | 0         |
       | Abendessen Alternative 1   |  11       | 4  | 1      |               |  0                          | Registration needed     | 0         |
     And the following "event_pricegroups" exist:
-      | id | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       |
-      | 5  |        5 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |  
-      | 6  |        5 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |  
-      | 7  |       10 |             3 |  80.0 |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |  
-      | 8  |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |
+      | id | event_id | pricegroup_id | price | max_number_of_participators | available | 
+      | 5  |        5 |             1 |  50.0 |                         500 |      true | 
+      | 6  |        5 |             2 |  30.0 |                         200 |      true | 
+      | 7  |       10 |             3 |  80.0 |                         100 |      true | 
+      | 8  |        1 |             1 |  80.0 |                         500 |      true | 
 
   @javascript
   Scenario: Go to the program site, add an event and complete registration with all data needed
@@ -55,7 +55,7 @@ Feature: See and register events
     And I fill in "registration_user_phone" with "030755667523"
     And I fill in "registration_user_fax" with "030755667529"  
     Then I click on "Detailinformationen"
-    When I fill in "registration_user_facebook" with "123456"
+    When I fill in "registration_user_facebook" with "facebook_id"
     And I fill in "registration_user_twitter" with "marcometz"
     And I fill in "registration_user_linkedin" with "myLinkdid"
     And I fill in "registration_user_xing" with "xingID"                        
@@ -75,5 +75,30 @@ Feature: See and register events
     When I fill in "registration_user_password" with "geheim1234"
     And I fill in "registration_user_password_confirmation" with "geheim1234"
     Then I press "Absenden"
+    And show me the page
+    And I should have a "User" stored with following attributes:
+      | gender | true |
+      | title | "Dr." |
+      | firstname | "Tim" |
+      | lastname | "Test" |
+      | function | "Developer" |
+      | email | "tim.test@tester.de" |
+      | phone | "030755667523" |
+      | fax | "030755667529" |
+      | facebook | "facebook_id" |
+      | twitter | "marcometz" |
+      | linkedin | "myLinkdid" |
+      | xing | "xingID" |
+      | googleplus | "googleaccount" |
+    And I should see "Anmeldung erfolgreich"
+      
+      
+      
+      
+      
+      
+      
+      
+      
     
     

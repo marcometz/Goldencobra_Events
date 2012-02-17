@@ -85,3 +85,10 @@ end
 Given /^default settings exists$/ do
   Goldencobra::Setting.import_default_settings(GoldencobraEvents::Engine.root + "config/settings.yml")
 end
+
+Then /^I should have a "([^"]*)" stored with following attributes:$/ do |arg1, table|
+  # table is a Cucumber::Ast::Table
+  data = table.raw.map{|a| ":#{a[0]} => #{a[1]}"}.join(', ')
+  model_obj = eval("#{arg1}.where(#{data})")
+  model_obj.count.should == 1 
+end

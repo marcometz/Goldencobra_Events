@@ -8,7 +8,9 @@ describe GoldencobraEvents::EventRegistration do
                                               :max_number_of_participators => 10)
     pricegroup = GoldencobraEvents::Pricegroup.create(:title => "Studenten")
 
-    @event_pricegroup = GoldencobraEvents::EventPricegroup.create(:max_number_of_participators => 10)
+    @event_pricegroup = GoldencobraEvents::EventPricegroup.create(:max_number_of_participators => 10, 
+                                                                  :start_reservation => Date.today - 1.week,
+                                                                  :end_reservation => Date.today + 1.week )
     @event_pricegroup.event_id = @event.id
     @event_pricegroup.pricegroup_id = pricegroup.id
     @event_pricegroup.save
@@ -26,10 +28,22 @@ describe GoldencobraEvents::EventRegistration do
   end
 
   describe "Registration" do
-    it "should reject a registration if the date is invalid" do
-      @event.update_attributes(:end_date => (Date.today - 1.day))
-      @new_registration.is_registerable?.should == {:date_error => "Registration date is not valid"}
+    it "should reject a registration if the pricegroup start-date is later" do
+      @event_pricegroup.update_attributes(:start_reservation => (Date.today + 1.day))
+      @new_registration.is_registerable?.should == {:date_error => "Registration date of pricegroup is not valid"}
     end
+
+    it "should reject a registration if the pricegroup end-date is too early" do
+      @event_pricegroup.update_attributes(:end_reservation => (Date.today - 1.day))
+      @new_registration.is_registerable?.should == {:date_error => "Registration date of pricegroup is not valid"}
+    end
+
+
+    it "should reject a registration if the event date is invalid" do
+      @event.update_attributes(:end_date => (Date.today - 1.day))
+      @new_registration.is_registerable?.should == {:date_error => "Registration date of event is not valid"}
+    end
+
 
     it "should accept a registration if the date is valid" do
       @new_registration.is_registerable?.should == true

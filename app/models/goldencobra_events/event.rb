@@ -48,6 +48,16 @@ module GoldencobraEvents
     def get_list_of_events_from_event_pricegroup_ids(list_of_event_pricegroup_ids)
       GoldencobraEvents::Event.joins(:event_pricegroups).where("goldencobra_events_event_pricegroups.id in (?)", list_of_event_pricegroup_ids).select("goldencobra_events_events.id")
     end
+    
+    def registration_date_valid
+      # Check if current date is valid for registration
+      if self.end_date
+        return self.end_date > Time.now 
+      else
+        return true
+      end
+    end
+    
 
     def check_for_parent_registrations(list_of_ids)
       # does parent need a registration? Is registration already in system?
@@ -62,10 +72,10 @@ module GoldencobraEvents
     end
 
     def max_number_of_participants_reached?
-      if GoldencobraEvents::EventRegistration.joins(:event_pricegroup)
+      if self.max_number_of_participators == 0 || GoldencobraEvents::EventRegistration.joins(:event_pricegroup)
                                              .where("goldencobra_events_event_pricegroups.event_id = #{self.id}")
                                              .select("goldencobra_events_event_registrations.id")
-                                             .count <= self.max_number_of_participators
+                                             .count < self.max_number_of_participators
         return false
       else
         return true

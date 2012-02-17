@@ -34,9 +34,8 @@ module GoldencobraEvents
 
     def registration_date_valid
       # Check if current date is valid for registration
-      if self.event && self.event.start_date && self.event.end_date
-        return self.event.start_date < Time.now && 
-          self.event.end_date > Time.now 
+      if self.start_reservation && self.end_reservation
+        return self.start_reservation < Time.now && self.end_reservation > Time.now 
       else
         return true
       end
@@ -44,9 +43,9 @@ module GoldencobraEvents
 
 
     def max_number_of_participants_reached?
-      if GoldencobraEvents::EventRegistration.where("event_pricegroup_id = #{self.id}")
+      if self.max_number_of_participators == 0 || GoldencobraEvents::EventRegistration.where("event_pricegroup_id = #{self.id}")
                                              .select("goldencobra_events_event_registrations.id")
-                                             .count <= self.max_number_of_participators
+                                             .count < self.max_number_of_participators
         return false
       else
         return true

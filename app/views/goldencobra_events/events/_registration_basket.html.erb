@@ -7,8 +7,11 @@
 		<ul>
 			<% @event_pricegroups.each do |pricegroup| %>
 				<li id="goldencobra_events_registration_basket_item_<%= pricegroup.id %>" >
-					<%= pricegroup.id %>: <%= pricegroup.event.title %> 
-					<%= link_to s("goldencobra_events.event.registration_basket.remove_text"), "/goldencobra_events/event/#{pricegroup.id}/cancel", :remote => true, :class => "remove" %>
+					<span class="title"><%= pricegroup.event.title %></span>
+					<span class="price"><%= pricegroup.price %></span>
+					<% if !@current_user || (@already_registered_ids && !@already_registered_ids.include?(pricegroup.id) ) %>
+						<%= link_to s("goldencobra_events.event.registration_basket.remove_text"), "/goldencobra_events/event/#{pricegroup.id}/cancel", :remote => true, :class => "remove" %>
+					<% end %>
 				</li>
 			<% end %>	
 		</ul>

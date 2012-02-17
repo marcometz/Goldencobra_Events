@@ -5,9 +5,11 @@ goldencobra_events:
             submit_text: "Anmeldung abschließen"
             remove_text: "entfernen"    
             description: "Um Ihre Reservierung abzuschließen, bitte hier klicken..."    
+            completed: "Anmeldung abgeschlossen"
         article_events:
             register_text: "Anmelden"
         registration:
+            completed: "Ihre Registrierung wurde erfolgreich abgeschlossen! Sie erhalten zusätzliche eine Email"
             added:
                 headline: "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
             to_add:

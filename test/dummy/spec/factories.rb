@@ -23,6 +23,8 @@ Factory.define :event, :class => GoldencobraEvents::Event do |u|
   u.active true
   u.exclusive false
   u.ancestry ""
+  u.start_date (Date.today + 1.week)
+  u.end_date (Date.today + 2.weeks)
 end
 
 Factory.define :upload, :class => Goldencobra::Upload do |u|
@@ -58,6 +60,8 @@ Factory.define :event_pricegroup, :class => GoldencobraEvents::EventPricegroup d
   u.price 50.0
   u.max_number_of_participators 500
   u.available true
+  u.start_reservation Date.today - 1.week
+  u.end_reservation Date.today + 1.week
 end
 
 Factory.define :panel, :class => GoldencobraEvents::Panel do |u|

@@ -41,7 +41,11 @@ module GoldencobraEvents
         if epricegroup
           # is registration date valid?
           unless epricegroup.registration_date_valid
-            error_msgs[:date_error] = "Registration date is not valid"
+            error_msgs[:date_error] = "Registration date of pricegroup is not valid"
+          end
+
+          if epricegroup.event.present? && !epricegroup.event.registration_date_valid
+            error_msgs[:date_error] = "Registration date of event is not valid"
           end
 
           # max number of (event) participants reached?
@@ -70,6 +74,11 @@ module GoldencobraEvents
     def self.create_batch(list_of_pricegroup_ids, user)
       ev_reg = GoldencobraEvents::EventRegistration.new
       result = ev_reg.is_registerable?(list_of_pricegroup_ids)
+      if result == true
+        list_of_pricegroup_ids.each do |reg|
+            ev_reg = GoldencobraEvents::EventRegistration.find_or_create_by_event_pricegroup_id_and_user_id(reg,user.id )
+        end
+      end
       return result
     end
   end
