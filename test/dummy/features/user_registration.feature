@@ -106,4 +106,5 @@ Feature: See and register events
       | country | "Deutschland" |
     And I should have a "GoldencobraEvents::EventRegistration" stored with following attributes:
       | event_pricegroup_id | 8 |
+    
       

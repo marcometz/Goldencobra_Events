@@ -7,19 +7,14 @@ ActiveAdmin.register User, :as => "Applicant" do
   filter :lastname
   filter :email
 
-  index :as => :block do |u|
-    table do
-      ["Firstname", "Lastname", "Email", "Total price", ""].each do |h|
-        th h
-      end
-      tr :for => u do
-        td u.firstname
-        td u.lastname
-        td u.email
-        td number_to_currency(u.total_price)
-        td link_to("Details", admin_applicant_path(u))
-      end
+  index do
+    column :firstname
+    column :lastname
+    column :email
+    column "total Price" do |u|
+      number_to_currency(u.total_price)
     end
+    default_actions
   end
 
   show :title => :lastname do
@@ -30,6 +25,22 @@ ActiveAdmin.register User, :as => "Applicant" do
         end
       end
     end #end panel applicant
+    panel "Company" do
+      if applicant.company
+        attributes_table_for applicant.company do
+          [:title, :legal_form, :phone, :fax, :homepage, :sector].each do |aa|
+            row aa
+          end
+        end  
+        if applicant.company.location 
+          attributes_table_for applicant.company.location do
+            [:street, :zip, :city, :region, :country].each do |aa|
+              row aa
+            end
+          end   
+        end
+      end   
+    end
     panel "Registrations" do
       table do
         tr do
