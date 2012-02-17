@@ -48,8 +48,8 @@ module GoldencobraEvents
           #Add Company to user if data provided
           if user && params[:registration][:company].present?
             company = Company.create(params[:registration][:company])
-            if company.present && company.id.present?
-              user.company_id = company.id
+            if company.present? && company.id.present?
+              user.company = company
               user.save
             end
           end
