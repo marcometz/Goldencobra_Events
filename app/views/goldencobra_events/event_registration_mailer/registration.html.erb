@@ -1,0 +1,119 @@
+<html>
+<head>
+	<title>Cloudforum 2012 - eine Veranstaltung des Tagesspiegels</title>
+	<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+</head>
+<body style="marginheight:0; topmargin:0; marginwidth:0; bgcolor:#c5c5c5; leftmargin:0; ">
+<table cellspacing="0" border="0" style="background-image: url(http://cloudforum.tagesspiegel.de/assets/ol.png); background-position: left;" cellpadding="0" width="100%" >
+	<tr>
+		<td valign="top">
+			<table  cellspacing="0" border="0" align="center" style="background: #fff; border-right: 1px solid #ccc; border-left: 1px solid #ccc;" cellpadding="0" width="680">
+				<tr>
+					<td valign="top">
+						<!-- header -->
+						<table cellspacing="0" border="0" height="157" cellpadding="0" width="680">
+							<tr>
+								<td ><img src="http://cloudforum.tagesspiegel.de/assets/cloudforum-logo.jpg" alt="cloudforum-logo" /><img src="http://cloudforum.tagesspiegel.de/assets/tagesspiegel-logo.png" alt="tagesspiegel-logo" />
+								</td>
+							</tr>
+							<tr>
+								<td >
+                  <h1 class="headline">Cloudforum 2012 - eine Veranstaltung des Tagesspiegels</h1>
+                </td>
+							</tr>
+						</table>
+						<!-- / header -->
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<!-- content -->
+						<table>
+							<tr>
+								<td >
+									<h2>Ihre Agenda f&uuml;r das Cloudforum</h2>
+								</td>
+							</tr>
+							<tr>
+								<td height="20" valign="top" width="680" colspan="2">
+									<img src="http://cloudforum.tagesspiegel.de/assets/breaker.jpg" height="20" alt="" style="border: 0;" width="680" />
+								</td>
+							</tr>
+							<tr>
+								<td><p>
+									F&uuml;r folgende Events haben Sie sich angemeldet:</p>
+								</td>
+							</tr>
+              <% if @user.event_registrations && @user.event_registrations.present? %>
+                <% @user.event_registrations.each do |ep| %>
+                  <tr>
+                    <td>
+                      <h3><%= ep.event_pricegroup.event.title %></h3>
+                      <% if ep.event_pricegroup.event.start_date.present? && ep.event_pricegroup.event.end_date.present? %>
+                        <p><%= ep.event_pricegroup.event.start_date %> - <%= ep.event_pricegroup.event.end_date %></p>
+                      <% end -%>
+                      <p>Ihre reservierte Preisgruppe: <%= ep.event_pricegroup.title %>, <%= number_to_currency(ep.event_pricegroup.price) %></p>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+						</table>
+						<!--  / content -->
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<!-- footer -->
+						<table>
+							<tr>
+								<td valign="top">
+									<table >
+							<tr>
+								<td height="20" valign="top" width="680" colspan="2">
+									<img src="http://cloudforum.tagesspiegel.de/assets/breaker.jpg" height="20" alt="" style="border: 0;" width="680" />
+								</td>
+							</tr>
+										<tr>
+											<td ><p style="font-size: 85%;">
+												Sie erhalten diese E-Mail da Sie sich auf <a href="http://cloudforum.tagesspiegel.de">http://cloudforum.tagesspiegel.de</a> f&uuml;r verschiedene Events angemeldet haben. Sollte dies nicht der Fall sein, k&ouml;nnen Sie sich gern unter <a href="#">LINK ZUR EVENT VERWALTUNG EINF?GEN</a> wieder abmelden.</p>
+											</td>
+											<td valign="top">
+												<table >
+													<tr>
+														<td valign="top">
+															<!--button-->
+															<table >
+															<tr>
+																<td><br /></td>
+															</tr>
+															</table><!--/button-->
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td height="20" valign="top" width="680" colspan="2">
+									<img src="http://cloudforum.tagesspiegel.de/assets/breaker.jpg" height="20" alt="" style="border: 0;" width="680" />
+								</td>
+							</tr>
+							<tr>
+								<td ><p style="font-size: 85%;">
+									Verlag Der Tagesspiegel GmbH<br />
+									Abteilung Cloudforum<br />
+									Askanischer Platz 3 | 10961 Berlin</p>
+								</td>
+							</tr>
+						</table>
+						<!-- / end footer -->
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</body>
+</html>
