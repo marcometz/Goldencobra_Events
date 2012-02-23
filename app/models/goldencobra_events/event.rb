@@ -58,6 +58,10 @@ module GoldencobraEvents
       end
     end
     
+    def registration_css_class
+      self.type_of_event.to_s.underscore.strip.gsub(" ", "_")
+    end
+    
 
     def check_for_parent_registrations(list_of_ids)
       # does parent need a registration? Is registration already in system?

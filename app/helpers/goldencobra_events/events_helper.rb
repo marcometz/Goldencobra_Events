@@ -30,7 +30,7 @@ module GoldencobraEvents
           child_block = child_block + content_tag(:ul, raw(content_level), class: "level_#{current_depth}" )
         end
       end  
-      return content_tag(:li, raw(child_block), class: "article_event_item")
+      return content_tag(:li, raw(child_block), class: "article_event_item #{child.registration_css_class}")
     end
 
     def render_object(model, *args)
@@ -72,6 +72,7 @@ module GoldencobraEvents
       # Event
       content = render_object(event, :title, :description, :external_link, :max_number_of_participators, :type_of_event, :type_of_registration, :exclusive, :start_date, :end_date)
       content << render_object_image(event, "teaser_image")
+      #Anmeldelink anzeigen
       if event.needs_registration? && options[:registration_links] != false
         reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true)
         content << content_tag(:div, reg_link, :class => "register_for_event register_for_event_#{event.id}", "data-id" => event.id)
@@ -96,7 +97,7 @@ module GoldencobraEvents
         event_sponsor_item << render_object(event_sponsor.sponsor.location, :complete_location)
         event_sponsor_item << render_object_image(event_sponsor.sponsor, "logo")
         event_sponsor_item << render_object_image(event_sponsor.sponsor, "images")
-        sponsors_items << content_tag(:li, raw(event_sponsor_item), class: "sponsor_item_#{event_sponsor.sponsor.id}")
+        sponsors_items << content_tag(:li, raw(event_sponsor_item), class: "sponsor_item sponsor_item_#{event_sponsor.sponsor.id}")
       end
       sponsors = content_tag(:ul, raw(sponsors_items), class: "sponsor_list")
       content << content_tag(:div, raw(sponsors), class: "sponsors")
