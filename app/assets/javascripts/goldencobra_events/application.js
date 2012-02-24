@@ -34,4 +34,13 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	
+	
+	//Event Registration site	
+	$('#goldencobra_events_article_events li .article_event_content .title').bind("click", function(){
+		$(this).closest("li").children("ul").slideToggle("fast");
+		$(this).toggleClass("active");
+	});
+	//$('#goldencobra_events_article_events .article_event_content .title').trigger("click");
+	
 });

@@ -23,6 +23,7 @@ group :development do
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
   gem 'guard-annotate'
   gem 'pry'
+  gem 'rails-pry'
   gem 'git-pivotal'
 end
 

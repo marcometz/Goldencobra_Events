@@ -13,6 +13,7 @@ Factory.define :article, :class => Goldencobra::Article do |u|
   u.active true
   u.event_id nil
   u.event_levels 0
+  u.eventmoduletype "program"
 end
 
 Factory.define :event, :class => GoldencobraEvents::Event do |u|

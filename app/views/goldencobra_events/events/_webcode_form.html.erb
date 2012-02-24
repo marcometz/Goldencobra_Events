@@ -1,0 +1,16 @@
+<% if params[:webcode].blank? && session[:goldencobra_events_webcode].blank? %>
+	<h2><%= s("goldencobra_events.event.registration.webcode.title") %></h2>
+	<%= form_tag "/goldencobra_events/events/webcode", :remote => true, :class=>"webcode_authentification" do %>
+		<%= text_field_tag :webcode, "", :placeholder => "Webcode eingeben"%>
+		<% if @article.present? %>
+			<%= hidden_field_tag :article_id, @article.id %>
+		<% end %>
+		<%= submit_tag s("goldencobra_events.event.registration.webcode.submit") %>		
+	<% end %>
+<% end %>
+<% if session[:goldencobra_events_webcode].present? %>
+	<p class="valide_webcode">Webcode: <%= session[:goldencobra_events_webcode] %></p>
+<% end %>
+<div id="goldencobra_events_webcode_error">
+	
+</div>

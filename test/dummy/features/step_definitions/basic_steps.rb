@@ -33,6 +33,17 @@ Then /^I should see "([^\"]*)"$/ do |arg1|
   page.should have_content(arg1)
 end
 
+Then /the text "([^"]*)"(?: within "([^"]*)")? should be visible/ do |text, nodes| 
+  scope = nodes ? nodes : '//*' 
+  page.find(:xpath, "#{scope}[contains(text(), '#{text}')]").visible?.should be_true 
+end
+
+Then /the text "([^"]*)"(?: within "([^"]*)")? should not be visible/ do |text, nodes| 
+  scope = nodes ? nodes : '//*' 
+  page.find(:xpath, "#{scope}[contains(text(), '#{text}')]").visible?.should be_false
+end
+
+
 Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |arg1, content_posistion|
   find(content_posistion).should have_content(arg1)
 end

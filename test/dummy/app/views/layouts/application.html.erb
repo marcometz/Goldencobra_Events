@@ -27,11 +27,10 @@
 	<%= yield(:article_summary) %>	
 	<%= yield(:article_content) %>	
 	<%= yield(:article_teaser) %>	
-	<%= render_article_events({:registration_links => true}) %>
+	<%= render_article_events() %>
 </div>
 
 <div id="sidebar">
-	<%= render_registration_basket() %>
 </div>
 
 <%= navigation_menu(2) %>	

@@ -10,6 +10,10 @@ goldencobra_events:
         article_events:
             register_text: "Anmelden"
         registration:
+            exclusive_description: "Bitte wählen Sie zwischen einer dieser Optionen"
+            webcode:
+                title: "Webcode eingeben"
+                submit: "absenden"
             completed: "Ihre Registrierung wurde erfolgreich abgeschlossen! Sie erhalten zusätzliche eine Email"
             added:
                 headline: "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"

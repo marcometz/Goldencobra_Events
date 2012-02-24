@@ -6,31 +6,48 @@ module GoldencobraEvents
     end
     
     def render_article_events(options={})
+      if params[:webcode] && GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
+        session[:goldencobra_events_webcode] = params[:webcode] 
+      end
       if @article && @article.event_id.present? && @article.event && @article.event.active
         depth = @article.event_levels || 0
         class_name = options[:class] || ""
-        id_name = options[:id] || "goldencobra_events_article_events"
         content = ""
         content << event_item_helper(@article.event, depth, 1, options)
-        result = content_tag(:ul, raw(content),:id => "#{id_name}", :class => "#{class_name} depth_#{depth} article_events".squeeze(' ').strip)
-        return raw(result)
+        result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
+        result = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> @article.eventmoduletype)
+        return_content = content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
+        return_content += result
+        return raw(return_content)
+      else
+        #TODO: mandatory article event fields als option parameters if no article exist (a.eventmoduletype, a.event_levels, ) => Article.new(options...)
+        "no Article and therefore no event Selected"
       end
     end 
 
     private
     def event_item_helper(child, depth, current_depth, options)
-      child_block = render_child_block(child, options)
-      current_depth = current_depth + 1
-      if child.children && (depth == 0 || current_depth <= depth)
-        content_level = ""
-        child.children.active.each do |subchild|
-            content_level << event_item_helper(subchild, depth, current_depth, options)
-        end
-        if content_level.present?
-          child_block = child_block + content_tag(:ul, raw(content_level), class: "level_#{current_depth}" )
-        end
-      end  
-      return content_tag(:li, raw(child_block), class: "article_event_item #{child.registration_css_class}")
+      if @article.eventmoduletype == "program" || (@article.eventmoduletype == "registration" && (child.has_registerable_childrens? || child.needs_registration?)) 
+        child_block = render_child_block(child, options) 
+        current_depth = current_depth + 1
+        if child.children && (depth == 0 || current_depth <= depth)
+          content_level = ""
+          if (@article.eventmoduletype == "registration" && child.has_registerable_childrens?)  || @article.eventmoduletype == "program"
+            child.children.active.each do |subchild|
+                if subchild.is_visible?({:webcode => session[:goldencobra_events_webcode], :article => @article})
+                  content_level << event_item_helper(subchild, depth, current_depth, options)
+                end
+            end
+          end
+          if content_level.present?
+            css_style = @article.eventmoduletype == "registration" ? "display:none" : ""
+            child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
+          end
+        end  
+        return content_tag(:li, raw(child_block), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
+      else
+        return ""
+      end
     end
 
     def render_object(model, *args)
@@ -70,22 +87,38 @@ module GoldencobraEvents
 
     def render_child_block(event, options)
       # Event
-      content = render_object(event, :title, :description, :external_link, :max_number_of_participators, :type_of_event, :type_of_registration, :exclusive, :start_date, :end_date)
-      content << render_object_image(event, "teaser_image")
-      #Anmeldelink anzeigen
-      if event.needs_registration? && options[:registration_links] != false
-        reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true)
-        content << content_tag(:div, reg_link, :class => "register_for_event register_for_event_#{event.id}", "data-id" => event.id)
+      content = render_object(event, :title)
+      event_options = render_object(event, :number_of_participators_label, :type_of_registration)
+      if event.needs_registration? && @article.eventmoduletype == "registration"
+        event_options << render_object(event, :type_of_event)
+      else
+        event_options << render_object(event, :type_of_event)
       end
+      if event.exclusive
+        event_options << render_object(event, :exclusive)
+      end
+      content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
+      content << render_object(event, :description, :external_link,  :start_date, :end_date)
+      content << render_object_image(event, "teaser_image")
 
       # Venue
       venue = render_object(event.venue, :title, :description, :location_values, :link_url, :phone, :email)
       content << content_tag(:div, raw(venue), class: "venue")
+      
+      #Anmeldelink anzeigen
+      if event.needs_registration? && @article.eventmoduletype == "registration"
+        reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true)
+        content << content_tag(:div, reg_link, :class => "register_for_event register_for_event_#{event.id}", "data-id" => event.id)
+      end
+
+      
       # Pricegroups
       pricegroup_items = ""
       event.event_pricegroups.available.each do |event_pricegroup|
-        event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title, :price, :max_number_of_participators, :cancelation_until, :start_reservation, :end_reservation)
-        pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id}")
+        event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title)
+        event_pricegroup_item << content_tag(:div, number_to_currency(event_pricegroup.price), :class => "price")
+        event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
+        pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
       end
       pricegroups = content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
       content << content_tag(:div, raw(pricegroups), class: "pricegroups")
@@ -112,11 +145,22 @@ module GoldencobraEvents
       end
       artists = content_tag(:ul, raw(artists_items), class: "artist_list")
       content << content_tag(:div, raw(artists), class: "artists")
-
-      return content_tag(:div, raw(content), class: "article_event_content")
+      
+      if @article.eventmoduletype == "registration"
+        if event.needs_registration?
+          return content_tag(:div, raw(content), class: "article_event_content")          
+        else
+          if event.exclusive
+            return content_tag(:div, raw(s("goldencobra_events.event.registration.exclusive_description")), class: "article_event_content")
+          else
+            return content_tag(:div, "", class: "article_event_content")
+          end
+        end
+      else
+          return content_tag(:div, raw(content), class: "article_event_content")
+      end
     end
 
-    
-    
+      
   end
 end

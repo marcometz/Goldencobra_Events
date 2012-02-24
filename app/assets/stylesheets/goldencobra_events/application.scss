@@ -1,3 +1,163 @@
+
+#goldencobra_events_article_events{
+	ul{
+		padding:0;
+		margin:0;
+		li{
+			padding:0;
+			margin:0;
+		}		
+	}
+	div.article_event_content{
+		border:1px solid black;
+	}
+	
+	li.article_event_item.completed > div.article_event_content{
+		opacity:0.5;
+	}
+	li.article_event_item.has_exclusive_children{
+		border: 3px solid red;
+	}
+	
+	&.program{
+		.article_event_content{
+			.pricegroups{
+				margin:0 0 0 100px;
+				ul{
+					li{
+						list-style:none;	
+						.pricegroup_id{
+							display:none;
+						}
+						.title{
+							display:inline-block;
+						}
+						.price{
+							display:inline-block;
+							margin:0 0 0 10px;
+						}
+						.number_of_participators_label{
+							display:inline-block;
+							margin:0 0 0 20px;
+						}
+						.cancelation_until{
+							display:none;
+						}
+						.start_reservation{
+							display:none
+						}
+						.end_reservation{
+							display:none;
+						}
+					}
+				}
+					
+			}
+		}
+	}
+	
+	&.registration{
+		.article_event_content{
+			overflow:hidden;
+			.title{
+				display:inline-block;
+			}
+			.pricegroups{
+				display:none;
+			}
+			.start_date{
+				display:none;
+			}
+			.end_date{
+				display:none;
+			}
+			.goldencobra_events_event_teaser_image_image_link{
+				display:none;
+			}
+			.sponsors{
+				display:none;
+			}
+			.artists{
+				display:none;
+			}
+			.event_reservation_options{
+				div{
+					min-width:20px;
+					padding:1px 2px;
+				}
+				display:inline-block;
+				float:right;
+				.number_of_participators_label{
+					float:right;
+					border:1px solid black;
+					background-color:grey;
+					color:white;
+					text-align:center;
+				}
+				.type_of_event{
+					float:right;
+					text-indent:-9999999px;
+					background:url("/assets/goldencobra_events/registration_needed.jpg") no-repeat;
+					width:20px;
+				}
+				.type_of_registration{
+					float:right;
+					display:none;
+				}
+				.exclusive{
+					float:right;
+					text-indent:-9999999px;
+					background:url("/assets/goldencobra_events/exclusive.png") no-repeat;
+					width:20px;
+					
+				}
+				
+			}
+			.venue{
+				margin:0 0 0 10px;
+				font-style:italic;
+			}
+			.register_for_event{
+				display:inline-block;
+				margin:10px;
+				a{
+					border:1px solid black;
+					background-color:grey;
+					color:white;	
+					text-decoration:none;
+					padding:2px;
+					&:hover{
+						background-color:black;
+					}
+				}
+			}
+		}
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Alles unterhalb hiervon kann warscheinlich weg
+
 #goldencobra_events_event_popup{
 	border: 1px solid black;
 }
@@ -114,3 +274,4 @@
 div.error{
 	background-color:red;
 }
+

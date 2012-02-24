@@ -1,7 +1,10 @@
 <h4>Select an event tree to display</h4>
 
-<%= semantic_form_for ["admin", @article] do |f| %>
-	<%= f.input :event_id, :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true %>
-	<%= f.input :event_levels, :hint => "0: Alle Ebenen anzeigen (default)  - 1,2,3...: alle bis zur 1.,2.,3. Ebene anzeigen"  %>
+<%= semantic_form_for ["admin", @article], :html => {:id => "goldencobra_events_article_event_modul"} do |f| %>
+	<ul>
+		<%= f.input :event_id, :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true %>
+		<%= f.input :event_levels, :hint => "0: Alle Ebenen anzeigen (default)  - 1,2,3...: alle bis zur 1.,2.,3. Ebene anzeigen"  %>
+		<%= f.input :eventmoduletype, :as => :select, :collection => GoldencobraEvents::Event::Modultype.map{|a| [a[1], a[0]]}, :include_blank => false %>		
+	</ul>
 	<%= f.submit "Event zuweisen" %>
 <% end %>

@@ -1,10 +1,4 @@
 <% if @event_to_register %>
-	<a href="#" class="close" id="goldencobra_events_event_popup_close">close</a>
-	<h2><%= @event_to_register.title %></h2>
-	<p><%= @event_to_register.description %></p>
-	<% if @registered_event_price_group %>
-		<h3><%= s("goldencobra_events.event.registration.added.headline") %></h3>
-	<% else %>
 		<% if @event_to_register.event_pricegroups.count > 0 %>
 			<%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
 				<h3><%= s("goldencobra_events.event.registration.to_add.headline") %></h3>
@@ -21,5 +15,5 @@
 		<% else %>
 			<p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
 		<% end %>
-	<% end %>	
+
 <% end %>

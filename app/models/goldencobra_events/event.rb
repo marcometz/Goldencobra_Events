@@ -24,8 +24,9 @@
 module GoldencobraEvents
   class Event < ActiveRecord::Base
 
-    EventType = ["No Registration needed", "Registration needed", "Webcode needed", "Private event"]
+    EventType = ["No Registration needed", "Registration needed"]
     RegistrationType = ["No cancellation required", "Cancellation required"]
+    Modultype = {"program" => "Programm", "registration" => "Anmeldung"}
 
     has_ancestry :orphan_strategy => :restrict
     has_many :articles, :class_name => Goldencobra::Article   #, :foreign_key => "article_id"
@@ -40,7 +41,7 @@ module GoldencobraEvents
     belongs_to :teaser_image, :class_name => Goldencobra::Upload, :foreign_key => "teaser_image_id"
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
-
+    
     def needs_registration?
       self.type_of_event == "Registration needed"
     end
@@ -58,8 +59,46 @@ module GoldencobraEvents
       end
     end
     
+    def webcodes
+      self.event_pricegroups.select(:webcode).map(&:webcode).map{|a| a.present? == true ? a : true}
+    end
+    
     def registration_css_class
       self.type_of_event.to_s.underscore.strip.gsub(" ", "_")
+    end
+    
+    def has_registerable_childrens?
+      result = false
+      self.descendants.each do |child|
+        result = true if (child.needs_registration? || child.exclusive)
+      end
+      return result
+    end
+    
+    def number_of_participators_label
+      if max_number_of_participators == 0
+        "&infin;"
+      else
+        "#{GoldencobraEvents::EventRegistration.with_event_id(self.id).select("goldencobra_events_event_registrations.id").count}/#{max_number_of_participators}"
+      end
+    end
+    
+    def is_visible?(options={})
+      result = false
+      if options && options[:article].present?
+        article = options[:article]
+        result = true if article.eventmoduletype == "program"
+        if (article.eventmoduletype == "registration" && (self.has_registerable_childrens? || self.needs_registration?))           
+          if self.webcodes.present? 
+            if (options[:webcode].present? && self.webcodes.include?(options[:webcode])) || self.webcodes.include?(true) 
+              result = true
+            end
+          else
+            result = true
+          end
+        end
+      end
+      return result
     end
     
 

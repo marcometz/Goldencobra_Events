@@ -26,8 +26,6 @@
 	render_article_events({})
 		:depth => 0,1,2,3
 		:class => "basdf"
-		:id => "asdf"
-		:registration_links => true,false
 		
 		
 	render_registration_basket({})

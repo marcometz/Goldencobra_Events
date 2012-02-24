@@ -1,8 +1,28 @@
-$('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>");
-$('#goldencobra_events_event_popup').overlay().load();
-
 <% if @registered_event_price_group %>
-	$('#goldencobra_events_registration_basket').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/registration_basket' ))%>");
+	parent = $('li.event_pricegroup_id_<%= @registered_event_price_group.id%>').closest("li.article_event_item");
+	parent.addClass("completed");
+	parent.find("ul.sub_events").addClass("active").slideDown();
+	$('div.register_for_event_<%= @registered_event_price_group.event_id %>').html("Anmeldung vorgemerkt");
+	$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
+<% else %>
+	<% if @event_to_register %>
+		$('div.register_for_event_<%= @event_to_register.id %>')
+			.closest(".article_event_content")
+			.children(".pricegroups")
+			.html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>")
+			.fadeIn();
+	<% end %>
 <% end %>
+
+<% if @errors.present? %>
+	
+<% end %>
+
+//$('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>");
+//$('#goldencobra_events_event_popup').overlay().load();
+
+<%# if @registered_event_price_group %>
+	//$('#goldencobra_events_registration_basket').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/registration_basket' ))%>");
+<%# end %>
 
 

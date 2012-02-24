@@ -31,6 +31,15 @@ module GoldencobraEvents
     def title
       self.pricegroup.title
     end
+    
+    def number_of_participators_label
+      if max_number_of_participators == 0
+        "&infin;"
+      else
+        "#{GoldencobraEvents::EventRegistration.where("event_pricegroup_id = #{self.id}").select("goldencobra_events_event_registrations.id").count}/#{max_number_of_participators}"
+      end
+      
+    end
 
     def registration_date_valid
       # Check if current date is valid for registration

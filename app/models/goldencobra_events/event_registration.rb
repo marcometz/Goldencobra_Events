@@ -17,6 +17,7 @@ module GoldencobraEvents
     belongs_to :event_pricegroup
     attr_accessor :session_list_of_ids 
     scope :active, where(:canceled => false)
+    scope :with_event_id, lambda { |param| joins(:event_pricegroup).where("goldencobra_events_event_pricegroups.event_id = #{param}") }
 
     before_save :is_registerable?
 

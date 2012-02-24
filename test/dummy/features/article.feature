@@ -5,8 +5,8 @@ Feature: Display event informations on article page
   Background:
     Given that I am not logged in
     And the following "articles" exist:
-      | title               | url_name          | teaser         | content                    | id | event_id | active |
-      | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert." |  1 |        1 | true   |
+      | title               | url_name          | teaser         | content                    | id | event_id | active | eventmoduletype |
+      | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert." |  1 |        1 | true   | program         |
     And the following "pricegroups" exist:
       | title       | id |
       | "Studenten" |  1 |
@@ -63,7 +63,7 @@ Feature: Display event informations on article page
      And I should see "Event1" within "div.article_event_content .title"
      And I should see "Ein ganz toller Event" within "div.article_event_content .description"
      And I should see "http://www.google.de" within "div.article_event_content .external_link"
-     And I should see "25" within "div.article_event_content .max_number_of_participators"
+     And I should see "25" within "div.article_event_content .number_of_participators_label"
      And I should see "Registration needed" within "div.article_event_content .type_of_event"
      And I should see "No cancellation required" within "div.article_event_content .type_of_registration"
      And I should see "true" within "div.article_event_content .exclusive"
@@ -74,7 +74,7 @@ Feature: Display event informations on article page
      And I should see "1" within "li.pricegroup_item_1 .pricegroup_id"
      And I should see "Studenten" within "li.pricegroup_item_1 .title"
      And I should see "50.0" within "li.pricegroup_item_1 .price"
-     And I should see "500" within "li.pricegroup_item_1 .max_number_of_participators"
+     And I should see "500" within "li.pricegroup_item_1 .number_of_participators_label"
      And I should see "2012-02-01 12:00:00" within "li.pricegroup_item_1 .start_reservation"
      And I should see "2012-04-01 12:00:00" within "li.pricegroup_item_1 .cancelation_until"
      And I should see "2012-03-01 12:00:00" within "li.pricegroup_item_1 .end_reservation"

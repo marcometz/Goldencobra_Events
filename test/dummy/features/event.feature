@@ -2,6 +2,8 @@ Feature: Create and manage events
   In order to make an programm
   As an author
   I want to create and manage some events
+  
+  Background:
 
   Scenario: Go to the events admin site
     Given that a confirmed admin exists
@@ -36,7 +38,7 @@ Feature: Create and manage events
     When I click on "Edit Event"
     Then I should see "Event1" within "#event_parent_id"  
     
-  Scenario: add an events to an article 
+  Scenario: add an events to an article as a programm site 
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
     And the following "articles" exist:
@@ -57,6 +59,31 @@ Feature: Create and manage events
     Then I should see "Edit Article" within ".action_items"
     And I click on "Edit Article"
     And I should see "Event2" within "#article_event_id"
+
+  Scenario: add an events to an article as a registration site 
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "articles" exist:
+      | title                        | startpage | id | url_name   |
+      | "Anmeldung"                  | false     |  2 | anmeldung  |
+      | "Startseite"                 | false     |  1 | startseite |
+    And the following "events" exist:
+        | title                        | parent_id | id | type_of_event |
+        | "Event1"                     |           |  1 | Registration needed |
+        | "Event2"                     | 1         |  2 | No Registration needed |
+    When I go to the admin list of articles  
+    Then I click on "Edit" within "tr#article_2"
+    And I should see "Edit Article" within "#page_title"
+    And I select "Event1" within "#article_event_id"
+    And I select "Anmeldung" within "#article_eventmoduletype"
+    When I press "Event zuweisen"
+    Then I should see "Edit Article" within ".action_items"
+    And I click on "Edit Article"
+    And I should see "Event1" within "#article_event_id"
+    And I should see "Anmeldung" within "#article_eventmoduletype"
+    Then I visit url "/anmeldung"
+    And I should see "Event1"
+    And I should not see "Event2"
     
   Scenario: visit an article and look for events 
     Given the following "articles" exist:
@@ -87,6 +114,55 @@ Feature: Create and manage events
     And I should not see "InvisibleEvent"
     
     
+  Scenario: visit an Article program site an check für the programm tree
+    Given that I am not logged in
+    And default settings exists
+    And the following "articles" exist:
+      | title                        | url_name     | event_id | event_levels  | eventmoduletype |
+      | "Programm"                   | programm     | 1        | 0             | program         |
+    And the following "pricegroup" exist:
+      | title                      | id |
+      | Studenten                  |  1 |
+      | Frühbucher                 |  2 |
+      | Senioren                   |  3 |
+      | VIP                        |  4 |
+    And the following "events" exist:
+      | title                      | parent_id | id | active | external_link | max_number_of_participators | type_of_event           | exclusive |
+      | Cloudforum                 |           | 1  | 1      |               |  0                          | Registration needed     | 0         |
+      | Cloudforum-Old             |           | 12 | 0      |               |  0                          | Registration needed     | 0         |
+      | Kongress                   |  1        | 2  | 1      |               |  0                          | No Registration needed  | 0         |
+      | Treffen der Generationen   |  1        | 3  | 1      |               |  0                          | No Registration needed  | 0         |
+      | Party                      |  3        | 5  | 1      |               |  10                         | Registration needed     | 0         |
+      | VIP-Party                  |  3        | 13 | 1      |               |  10                         | Registration needed     | 0         |
+      | Rede                       |  2        | 6  | 1      |               |  0                          | No Registration needed  | 0         |
+      | Party2                     |  2        | 7  | 1      |               |  0                          | Registration needed     | 0         |
+      | Rede 2                     |  2        | 8  | 1      |               |  0                          | No Registration needed  | 0         |
+      | VIP Einzelgespräch         |  8        | 9  | 1      |               |  0                          | No Registration needed  | 0         |
+      | Exclusives Abendessen      |  3        | 11 | 1      |               |  0                          | No Registration needed  | 1         |
+      | Abendessen Alternative 2   |  11       | 10 | 1      |               |  0                          | Registration needed     | 0         |
+      | Abendessen Alternative 1   |  11       | 4  | 1      |               |  0                          | Registration needed     | 0         |
+    And the following "event_pricegroups" exist:
+      | id | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
+      | 5  |        5 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
+      | 6  |        5 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
+      | 7  |       10 |             3 |  80.0 |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
+      | 8  |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
+      | 9  |       13 |             4 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" | OSTERN  |
+  When I visit url "/programm"   
+  Then I should see "Cloudforum"
+  And I should not see "Cloudforum-Old"
+  And I should see "Kongress"
+  And I should see "Treffen der Generationen"
+  And I should see "Party"
+  And I should see "VIP-Party"
+  And I should see "Rede"
+  And I should see "Party2"
+  And I should see "Rede 2"
+  And I should see "VIP Einzelgespräch"
+  And I should see "Exclusives Abendessen"
+  And I should see "Abendessen Alternative 2"
+  And I should see "Abendessen Alternative 1"
+  
   @javascript  
   Scenario: add prices to existing event
     Given that a confirmed admin exists
