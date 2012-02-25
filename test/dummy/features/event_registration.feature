@@ -17,19 +17,19 @@ Feature: See and register events
       | VIP                        |  4 |
     And the following "events" exist:
       | title                      | parent_id | id | active | external_link | max_number_of_participators | type_of_event           | exclusive |
-      | Cloudforum                 |           | 1  | 1      |               |  0                          | Registration needed     | 0         |
-      | Cloudforum-Old             |           | 12 | 0      |               |  0                          | Registration needed     | 0         |
-      | Kongress                   |  1        | 2  | 1      |               |  0                          | No Registration needed  | 0         |
-      | Treffen der Generationen   |  1        | 3  | 1      |               |  0                          | No Registration needed  | 0         |
-      | Party                      |  3        | 5  | 1      |               |  10                         | Registration needed     | 0         |
-      | VIP-Party                  |  3        | 13 | 1      |               |  10                         | Registration needed     | 0         |
-      | Rede                       |  2        | 6  | 1      |               |  0                          | No Registration needed  | 0         |
-      | Party2                     |  2        | 7  | 1      |               |  0                          | Registration needed     | 0         |
-      | Rede 2                     |  2        | 8  | 1      |               |  0                          | No Registration needed  | 0         |
-      | VIP Einzelgespräch         |  8        | 9  | 1      |               |  0                          | No Registration needed  | 0         |
-      | Exclusives Abendessen      |  3        | 11 | 1      |               |  0                          | No Registration needed  | 1         |
-      | Abendessen Alternative 2   |  11       | 10 | 1      |               |  0                          | Registration needed     | 0         |
-      | Abendessen Alternative 1   |  11       | 4  | 1      |               |  0                          | Registration needed     | 0         |
+      | Cloudforum                 |           | 1  | 1      |               |  0                          | Registration needed     | false      |
+      | Cloudforum-Old             |           | 12 | 0      |               |  0                          | Registration needed     | false      |
+      | Kongress                   |  1        | 2  | 1      |               |  0                          | No Registration needed  | false      |
+      | Treffen der Generationen   |  1        | 3  | 1      |               |  0                          | No Registration needed  | false      |
+      | Party                      |  3        | 5  | 1      |               |  10                         | Registration needed     | false      |
+      | VIP-Party                  |  3        | 13 | 1      |               |  10                         | Registration needed     | false      |
+      | Rede                       |  2        | 6  | 1      |               |  0                          | No Registration needed  | false      |
+      | Party2                     |  2        | 7  | 1      |               |  0                          | Registration needed     | false      |
+      | Rede 2                     |  2        | 8  | 1      |               |  0                          | No Registration needed  | false      |
+      | VIP Einzelgespräch         |  8        | 9  | 1      |               |  0                          | No Registration needed  | false      |
+      | Exclusives Abendessen      |  3        | 11 | 1      |               |  0                          | No Registration needed  | true       |
+      | Abendessen Alternative 2   |  11       | 10 | 1      |               |  0                          | Registration needed     | false      |
+      | Abendessen Alternative 1   |  11       | 4  | 1      |               |  0                          | Registration needed     | false      |
     And the following "event_pricegroups" exist:
       | id | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
       | 5  |        5 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
@@ -63,7 +63,7 @@ Feature: See and register events
     And I should not see "VIP Einzelgespräch"
 
   @javascript
-  Scenario: Go to the program site and and register some events
+  Scenario: Go to the program site and register all events
     When I visit url "/anmeldung?webcode=OSTERN"
     Then I should see "Cloudforum"
     And I should see "Anmelden"
@@ -78,10 +78,17 @@ Feature: See and register events
     And the text "Abendessen Alternative 1" should be visible
     And the text "Abendessen Alternative 2" should be visible     
     And the text "Bitte wählen Sie zwischen einer dieser Optionen" should be visible 
-    When I click on "Anmelden" within "#register_for_event_7"
-    Then I should see "Anmeldung vorgemerkt" within "div#register_for_event_7" 
     When I click on "Anmelden" within "#register_for_event_5"
     Then I should see "Dieser Event besitzt mehrere Preisgruppen zur Auswahl"
+    And the text "Studenten" should be visible
+    And the text "Frühbucher" should be visible
+    And show me the page 
+    And I choose "2" within "#goldencobra_events_event_price_group_item_for_select_2"
+    And I press "Auswahl übernehmen"
+    #When I click on "Anmelden" within "#register_for_event_5"
+    #Then I should see "Anmeldung vorgemerkt" within "div#register_for_event_5" 
+    #When I click on "Anmelden" within "#register_for_event_7"
+    #Then I should see "Anmeldung vorgemerkt" within "div#register_for_event_7" 
     
      
      
