@@ -63,20 +63,26 @@ Feature: See and register events
     And I should not see "VIP Einzelgespräch"
 
   @javascript
-    Scenario: Go to the program site and and register some events
+  Scenario: Go to the program site and and register some events
     When I visit url "/anmeldung?webcode=OSTERN"
     Then I should see "Cloudforum"
     And I should see "Anmelden"
     And I should not see "Kongress"
-    When I click on "Anmelden" within ".register_for_event_1"
-    Then the text "Party2" should be visible
+    When I click on "Anmelden" within "#register_for_event_1"
+    Then I should see "Anmeldung vorgemerkt"
+    And I should see "Party"
+    And I should see "Party2"
+    And the text "Party2" should be visible
     And the text "Party" should be visible    
-    And the text "Kongress" should not be visible
     And I should not see "Treffen der Generationen"
     And the text "Abendessen Alternative 1" should be visible
     And the text "Abendessen Alternative 2" should be visible     
     And the text "Bitte wählen Sie zwischen einer dieser Optionen" should be visible 
-     
+    When I click on "Anmelden" within "#register_for_event_7"
+    Then I should see "Anmeldung vorgemerkt" within "div#register_for_event_7" 
+    When I click on "Anmelden" within "#register_for_event_5"
+    Then I should see "Dieser Event besitzt mehrere Preisgruppen zur Auswahl"
+    
      
      
      
