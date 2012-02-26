@@ -14,6 +14,10 @@
 	<% end %>
 <% end %>
 
+<% if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:pricegroup_ids].present? %>
+	$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
+<% end %>
+
 <% if @errors.present? %>
 	
 <% end %>

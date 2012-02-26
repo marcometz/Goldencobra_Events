@@ -42,6 +42,13 @@ module GoldencobraEvents
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
     
+    after_save :init_default_pricegroup
+    def init_default_pricegroup
+      if self.event_pricegroups.count == 0
+        self.event_pricegroups << EventPricegroup.create(:price => 0, :max_number_of_participators => 0)
+      end
+    end
+    
     def needs_registration?
       self.type_of_event == "Registration needed"
     end

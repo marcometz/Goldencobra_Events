@@ -8,6 +8,7 @@
 	<% end %>
 	<% pricegroup_ids = session[:goldencobra_event_registration][:pricegroup_ids] %>
 	<% if pricegroup_ids.present? %>
+	  <% summme = 0%>
 	  <% @event_pricegroups = GoldencobraEvents::EventPricegroup.find(pricegroup_ids) %>
 		<ul>
 			<% @event_pricegroups.each do |pricegroup| %>
@@ -18,12 +19,15 @@
 						<%= link_to s("goldencobra_events.event.registration_basket.remove_text"), "/goldencobra_events/event/#{pricegroup.id}/cancel", :remote => true, :class => "remove" %>
 					<% end %>
 				</li>
+				<% summme += pricegroup.price %>
 			<% end %>	
 		</ul>
 	<% end %>
+	<div class="goldebcobra_events_registration_basket_sum">
+		<%= number_to_currency(summme) %>
+	</div>
 	<div>
 		<%= s("goldencobra_events.event.registration_basket.description") %>
-		<%= link_to s("goldencobra_events.event.registration_basket.submit_text"), "/goldencobra_events/events/registration", :remote => true, :class => "submit" %>
 	</div> 	
 </div>
 

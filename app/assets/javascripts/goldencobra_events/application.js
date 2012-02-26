@@ -29,18 +29,23 @@ $(document).ready(function() {
 		$('#goldencobra_events_event_popup').overlay().close();
 		return false;
 	});
-	$('#goldencobra_events_event_popup div.next_step a').live("click", function(){
-		$('#goldencobra_events_event_popup ul a.current').parent().next().find("a").trigger("click");
+	$('#goldencobra_events_enter_account_data_form div.next_step a').live("click", function(){
+		$('#goldencobra_events_enter_account_data_form ul a.current').parent().next().find("a").trigger("click");
 		return false;
 	});
 	
 	
 	
 	//Event Registration site	
-	$('#goldencobra_events_article_events li .article_event_content .title').bind("click", function(){
-		$(this).closest("li").children("ul").slideToggle("fast");
-		$(this).toggleClass("active");
-	});
+	//$('#goldencobra_events_article_events li .article_event_content .title').bind("click", function(){
+	//	$(this).closest("li").children("ul").slideToggle("fast");
+	//	$(this).toggleClass("active");
+	//});
 	//$('#goldencobra_events_article_events .article_event_content .title').trigger("click");
+	
+	$('#goldencobra_events_enter_account_data').bind("click", function(){
+		$('#goldencobra_events_enter_account_data_form').fadeIn();
+		$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
+	});
 	
 });

@@ -16,7 +16,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     
     f.inputs "Preisgruppen" do
       f.has_many :event_pricegroups do |m|
-        m.input :pricegroup, :include_blank => false
+        m.input :pricegroup, :include_blank => "default"
         m.input :price_raw, :label => "Price", :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
         m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'} 
         m.input :start_reservation, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
@@ -87,7 +87,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         end
         event.event_pricegroups.each do |epg|
       	  tr do
-      	    td epg.pricegroup.title
+      	    td epg.title
             td number_to_currency(epg.price)
       	    td epg.max_number_of_participators
       	    td epg.start_reservation
@@ -143,6 +143,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   controller do 
     def new 
       @event = GoldencobraEvents::Event.new
+      @event.event_pricegroups << GoldencobraEvents::EventPricegroup.new(:price => 0, :max_number_of_participators => 0)
       if params[:parent] && params[:parent].present? 
         @parent = GoldencobraEvents::Event.find(params[:parent])
         @event.parent_id = @parent.id

@@ -18,6 +18,8 @@ module GoldencobraEvents
         result = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> @article.eventmoduletype)
         return_content = content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
         return_content += result
+        return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
+        return_content += content_tag(:div, render(:partial => "goldencobra_events/events/user"), :style => "display:none", :id => "goldencobra_events_enter_account_data_form")
         return raw(return_content)
       else
         #TODO: mandatory article event fields als option parameters if no article exist (a.eventmoduletype, a.event_levels, ) => Article.new(options...)

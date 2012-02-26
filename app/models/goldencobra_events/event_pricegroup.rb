@@ -29,7 +29,7 @@ module GoldencobraEvents
     before_save :convert_price_raw
 
     def title
-      self.pricegroup.title
+      self.pricegroup.title if self.pricegroup
     end
     
     def number_of_participators_label

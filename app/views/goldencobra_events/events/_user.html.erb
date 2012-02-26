@@ -1,6 +1,6 @@
-<a href="#" class="close" id="goldencobra_events_event_popup_close">close</a>
 <h2><%= s("goldencobra_events.event.registration.user_form.headline") %></h2>
 <p><%= s("goldencobra_events.event.registration.user_form.description") %></p>
+<%= render :partial => "goldencobra_events/events/registration_basket"%>
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
 	<h3><%= s("goldencobra_events.event.registration.user_form.sub_headline") %></h3>
 	<div class="errormessages"></div>

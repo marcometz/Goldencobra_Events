@@ -5,11 +5,12 @@ goldencobra_events:
             greeting: "Hallo "
             submit_text: "Anmeldung abschließen"
             remove_text: "entfernen"    
-            description: "Um Ihre Reservierung abzuschließen, bitte hier klicken..."    
+            description: "Bitte füllen Sie noch Ihre Benutezrdaten aus..."    
             completed: "Anmeldung abgeschlossen"
         article_events:
             register_text: "Anmelden"
         registration:
+            enter_user_data: "Mit Anmeldung fortfahren"
             exclusive_description: "Bitte wählen Sie zwischen einer dieser Optionen"
             webcode:
                 title: "Webcode eingeben"

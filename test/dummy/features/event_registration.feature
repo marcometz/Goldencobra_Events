@@ -80,11 +80,10 @@ Feature: See and register events
     And the text "Bitte wählen Sie zwischen einer dieser Optionen" should be visible 
     When I click on "Anmelden" within "#register_for_event_5"
     Then I should see "Dieser Event besitzt mehrere Preisgruppen zur Auswahl"
-    And the text "Studenten" should be visible
-    And the text "Frühbucher" should be visible
-    And show me the page 
-    And I choose "2" within "#goldencobra_events_event_price_group_item_for_select_2"
-    And I press "Auswahl übernehmen"
+    #And the text "Studenten" should be visible
+    #And the text "Frühbucher" should be visible
+    #And I choose "2" within "#goldencobra_events_event_price_group_item_for_select_2"
+    #And I press "Auswahl übernehmen"
     #When I click on "Anmelden" within "#register_for_event_5"
     #Then I should see "Anmeldung vorgemerkt" within "div#register_for_event_5" 
     #When I click on "Anmelden" within "#register_for_event_7"

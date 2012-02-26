@@ -6,7 +6,7 @@
 					<% @event_to_register.event_pricegroups.each do |e_pricegroup| %>
 						<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
 							<%= radio_button "event", "event_pricegroup", e_pricegroup.id %>
-							<%= e_pricegroup.pricegroup.title %> <%= number_to_currency(e_pricegroup.price) %> 
+							<%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price) %> 
 						</li>
 					<% end %>
 				</ul>
