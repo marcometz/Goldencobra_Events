@@ -14,7 +14,7 @@
 			<% @event_pricegroups.each do |pricegroup| %>
 				<li id="goldencobra_events_registration_basket_item_<%= pricegroup.id %>" >
 					<span class="title"><%= pricegroup.event.title %></span>
-					<span class="price"><%=t number_to_currency(pricegroup.price) %></span>
+          <span class="price"><%= number_to_currency(pricegroup.price, :locale => :de) %></span>
 					<% if !@current_user || (@already_registered_ids && !@already_registered_ids.include?(pricegroup.id) ) %>
 						<%= link_to s("goldencobra_events.event.registration_basket.remove_text"), "/goldencobra_events/event/#{pricegroup.id}/cancel", :remote => true, :class => "remove" %>
 					<% end %>
@@ -24,7 +24,7 @@
 		</ul>
 	<% end %>
 	<div class="goldebcobra_events_registration_basket_sum">
-		<%=t number_to_currency(summme) %>
+    <%= number_to_currency(summme, :locale => :de) %>
 	</div>
 	<div>
 		<%= s("goldencobra_events.event.registration_basket.description") %>
