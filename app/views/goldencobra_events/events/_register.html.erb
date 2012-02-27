@@ -1,7 +1,7 @@
 <% if @event_to_register %>
 		<% if @event_to_register.event_pricegroups.count > 0 %>
 			<%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
-				<h3><%= s("goldencobra_events.event.registration.to_add.headline") %></h3>
+				<p><%= s("goldencobra_events.event.registration.to_add.headline") %></p>
 				<ul id="select_pricegroup_<%= @event_to_register.event_pricegroup_ids.join('_')%>">
 					<% @event_to_register.event_pricegroups.each do |e_pricegroup| %>
 						<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
