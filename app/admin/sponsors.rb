@@ -33,6 +33,10 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
     f.buttons
   end
 
+  action_item :only => :show do
+    link_to('New Sponsor', new_admin_sponsor_path)
+  end
+
   show :title => :title do
     panel "Sponsor Details" do
       attributes_table_for sponsor do

@@ -26,6 +26,9 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
     f.buttons
   end
   
+  action_item :only => :show do
+    link_to('New Venue', new_admin_venue_path)
+  end
   
   show :title => :title do
     panel "Venue Details" do

@@ -29,6 +29,11 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
     end
   end
 
+  action_item :only => :show do
+    link_to('New Panel', new_admin_panel_path)
+  end
+
+
   show :title => :title do
     panel "Panel Details" do
       attributes_table_for event_panel do
