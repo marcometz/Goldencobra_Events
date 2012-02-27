@@ -90,7 +90,7 @@ module GoldencobraEvents
     def render_child_block(event, options)
       # Event
       content = render_object(event, :title)
-      #event_options = render_object(event, :number_of_participators_label, :type_of_registration)
+      event_options = render_object(event, :number_of_participators_label, :type_of_registration)
       if event.needs_registration? && @article.eventmoduletype == "registration"
         event_options << render_object(event, :type_of_event)
       else
