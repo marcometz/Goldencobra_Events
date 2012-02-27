@@ -23,7 +23,7 @@ module GoldencobraEvents
         return raw(return_content)
       else
         #TODO: mandatory article event fields als option parameters if no article exist (a.eventmoduletype, a.event_levels, ) => Article.new(options...)
-        "no Article and therefore no event Selected"
+        ""#"no Article and therefore no event Selected"
       end
     end 
 
