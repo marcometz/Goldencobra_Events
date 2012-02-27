@@ -44,7 +44,7 @@ module GoldencobraEvents
             end
           end
           if content_level.present?
-            css_style = @article.eventmoduletype == "registration" ? "display:none" : ""
+            css_style = @article.eventmoduletype == "registration" ? "display:block" : ""
             child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
           end
         end  
@@ -124,8 +124,7 @@ module GoldencobraEvents
         event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
         pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
       end
-      pricegroups = content_tag(:p, "Available Pricegroups", class: "pricegroup_header")
-      pricegroups << content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
+      pricegroups = content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
       content << content_tag(:div, raw(pricegroups), class: "pricegroups")
 
       # Sponsors
