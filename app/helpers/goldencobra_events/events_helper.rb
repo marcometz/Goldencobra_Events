@@ -90,13 +90,13 @@ module GoldencobraEvents
     def render_child_block(event, options)
       # Event
       content = render_object(event, :title)
-      event_options = render_object(event, :number_of_participators_label, :type_of_registration)
+      #event_options = render_object(event, :number_of_participators_label, :type_of_registration)
       if event.needs_registration? && @article.eventmoduletype == "registration"
         event_options << render_object(event, :type_of_event)
       else
         event_options << render_object(event, :type_of_event)
       end
-      if event.exclusive
+      if event.exclusive == true
         event_options << render_object(event, :exclusive)
       end
       content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
@@ -122,7 +122,8 @@ module GoldencobraEvents
         event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
         pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
       end
-      pricegroups = content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
+      pricegroups = content_tag(:p, "Available Pricegroups", class: "pricegroup_header")
+      pricegroups << content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
       content << content_tag(:div, raw(pricegroups), class: "pricegroups")
 
       # Sponsors
