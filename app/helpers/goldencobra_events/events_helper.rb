@@ -20,7 +20,7 @@ module GoldencobraEvents
         return_content = content_tag(:div, raw(title_content), :class => "article_title")
         return_content << content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
         return_content += result
-        return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
+        return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data", :class => "button"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
         return_content += content_tag(:div, render(:partial => "goldencobra_events/events/user"), :style => "display:none", :id => "goldencobra_events_enter_account_data_form")
         return raw(return_content)
       else
@@ -111,7 +111,7 @@ module GoldencobraEvents
       
       #Anmeldelink anzeigen
       if event.needs_registration? && @article.eventmoduletype == "registration"
-        reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link")
+        reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
         content << content_tag(:div, reg_link, :class => "register_for_event", "data-id" => event.id, :id => "register_for_event_#{event.id}")
       end
 
