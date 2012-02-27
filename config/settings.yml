@@ -8,14 +8,14 @@ goldencobra_events:
             description: "Bitte füllen Sie noch Ihre Benutzerdaten aus..."    
             completed: "Anmeldung abgeschlossen"
         article_events:
-            register_text: "Anmelden"
+            register_text: "Für diese Veranstaltung anmelden"
         registration:
             enter_user_data: "Mit Anmeldung fortfahren"
             exclusive_description: "Bitte wählen Sie zwischen einer dieser Optionen"
             webcode:
                 title: "Webcode eingeben"
                 description: "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
-                submit: "absenden"
+                submit: "Absenden"
             completed: "Ihre Registrierung wurde erfolgreich abgeschlossen! Sie erhalten zusätzliche eine Email"
             added:
                 headline: "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
