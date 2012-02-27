@@ -1,5 +1,5 @@
 <% if @registered_event_price_group %>
-	parent = $('li.event_pricegroup_id_<%= @registered_event_price_group.id%>').closest("li.article_event_item");
+	parent = $('li.article_event_id_<%= @registered_event_price_group.id%>');
 	parent.addClass("completed");
 	parent.find("ul.sub_events").addClass("active").slideDown();
 	$('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("Anmeldung vorgemerkt");

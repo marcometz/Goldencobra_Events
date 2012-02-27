@@ -44,7 +44,7 @@ module GoldencobraEvents
             end
           end
           if content_level.present?
-            css_style = @article.eventmoduletype == "registration" ? "display:block" : ""
+            css_style = @article.eventmoduletype == "registration" ? "display:none" : ""
             child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
           end
         end  
