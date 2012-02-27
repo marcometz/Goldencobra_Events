@@ -13,11 +13,12 @@ module GoldencobraEvents
         depth = @article.event_levels || 0
         class_name = options[:class] || ""
         content = ""
-        content << content_tag(:h2, "#{@article.title}", :class => "boxheader")
         content << event_item_helper(@article.event, depth, 1, options)
         result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
         result = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> @article.eventmoduletype)
-        return_content = content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
+        title_content = content_tag(:h2, "#{@article.title}", :class => "boxheader")
+        return_content = content_tag(:div, raw(title_content), :class => "article_title")
+        return_content << content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
         return_content += result
         return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
         return_content += content_tag(:div, render(:partial => "goldencobra_events/events/user"), :style => "display:none", :id => "goldencobra_events_enter_account_data_form")
