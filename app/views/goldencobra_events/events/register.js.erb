@@ -1,7 +1,7 @@
 <% if @registered_event_price_group %>
-	parent = $('li.article_event_id_<%= @registered_event_price_group.id%>');
-	parent.addClass("completed");
-	parent.find("ul.sub_events").addClass("active").slideDown();
+	// parent = $('li.article_event_id_<%= @registered_event_price_group.id%>');
+	$('li.article_event_id_<%= @registered_event_price_group.event_id%>').addClass("completed").find("ul.sub_events").addClass("active").slideDown();
+	// $('li.article_event_id_<%= @registered_event_price_group.id%>').find("ul.sub_events").addClass("active").slideDown();
 	$('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("Anmeldung vorgemerkt");
 	$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
 <% else %>
