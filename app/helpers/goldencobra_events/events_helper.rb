@@ -90,8 +90,17 @@ module GoldencobraEvents
     end
 
     def render_child_block(event, options)
+      
+      content = ""
+      
+      #Anmeldelink anzeigen
+      if event.needs_registration? && @article.eventmoduletype == "registration"
+        reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
+        content << content_tag(:div, reg_link, :class => "register_for_event", "data-id" => event.id, :id => "register_for_event_#{event.id}")
+      end
+      
       # Event
-      content = render_object(event, :title)
+      content << render_object(event, :title)
       event_options = render_object(event, :number_of_participators_label, :type_of_registration)
       if event.needs_registration? && @article.eventmoduletype == "registration"
         event_options << render_object(event, :type_of_event)
@@ -109,11 +118,7 @@ module GoldencobraEvents
       venue = render_object(event.venue, :title, :description, :location_values, :link_url, :phone, :email)
       content << content_tag(:div, raw(venue), class: "venue")
       
-      #Anmeldelink anzeigen
-      if event.needs_registration? && @article.eventmoduletype == "registration"
-        reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
-        content << content_tag(:div, reg_link, :class => "register_for_event", "data-id" => event.id, :id => "register_for_event_#{event.id}")
-      end
+
 
       
       # Pricegroups
