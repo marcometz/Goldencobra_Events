@@ -52,4 +52,11 @@ $(document).ready(function() {
 	$('#register_without_webcode').live("click", function(){
 		$('#article_event_webcode_form').hide();
 	});
+	
+	// Mit Anmeldung fortfahren und DIVs darüber ausblenden
+	$('#goldencobra_events_enter_account_data').live("click", function() {
+		$('#goldencobra_events_article_events').fadeOut('slow', function(){
+			
+		});
+	});
 });
