@@ -12,6 +12,13 @@
 <% end %>
 <% if session[:goldencobra_events_webcode].present? %>
 	<p class="valide_webcode">Webcode: <%= session[:goldencobra_events_webcode] %></p>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			// Webcode ist gültig, also weiter
+			$('#goldencobra_events_article_events').removeClass("hidden");
+		});
+
+	</script>
 <% end %>
 <div id="goldencobra_events_webcode_error">
 	
