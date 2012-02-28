@@ -30,7 +30,7 @@
 	<div class="panes">
 	<%#= field_set_tag s("goldencobra_events.event.registration.user_form.user_fieldset_name") do %>
 		
-		<p>
+		<p class="userform-section">
 			<%= s("goldencobra_events.event.registration.user_form.user_fieldset_name") %>
 		</p>
 		<p>
@@ -94,7 +94,7 @@
 		</div>	
 	<%# end %> -->
 	<%#= field_set_tag s("goldencobra_events.event.registration.user_form.company_fieldset_name") do %>
-		<p class="address">
+		<p class="userform-section">
 			<%= s("goldencobra_events.event.registration.user_form.company_fieldset_name") %>
 		</p>
 		<p>
@@ -125,7 +125,7 @@
 		</div>	 -->
 	<%# end %>
 	<%#= field_set_tag s("goldencobra_events.event.registration.user_form.account_fieldset_name") do %>
-		<p class="address">
+		<p class="userform-section">
 			<%= s("goldencobra_events.event.registration.user_form.account_description") %>
 		</p>
 		<p>
@@ -135,8 +135,11 @@
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.account_label.confirm_password") %></label>
 			<%= password_field_tag "registration[user][password_confirmation]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password_confirmation") %>
+		</p>
+		<p>
+			<label></label>
+			<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>	
 		</p>	
-		<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>		
 	<%# end %>
 	</div>
 	
