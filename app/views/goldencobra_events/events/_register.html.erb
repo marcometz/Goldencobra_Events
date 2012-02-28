@@ -7,7 +7,7 @@
 					<% @event_to_register.pricegroups_with_webcode("#{session[:goldencobra_events_webcode]}").each do |e_pricegroup| %>
 						<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
 							<%= radio_button "event", "event_pricegroup", e_pricegroup.id %>
-							<%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price) %> 
+							<%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> 
 						</li>
 					<% end %>
 				<% else %>
@@ -15,7 +15,7 @@
 					<% @event_to_register.event_pricegroups.publicly_available.each do |e_pricegroup| %>
 						<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
 							<%= radio_button "event", "event_pricegroup", e_pricegroup.id %>
-							<%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price) %> 
+							<%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> 
 						</li>
 					<% end %>
 				<% end %>

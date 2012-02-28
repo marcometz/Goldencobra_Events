@@ -124,7 +124,7 @@ module GoldencobraEvents
       pricegroup_items = ""
       event.event_pricegroups.available.each do |event_pricegroup|
         event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title)
-        event_pricegroup_item << content_tag(:div, number_to_currency(event_pricegroup.price), :class => "price")
+        event_pricegroup_item << content_tag(:div, number_to_currency(event_pricegroup.price, :locale => :de), :class => "price")
         event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
         pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
       end
