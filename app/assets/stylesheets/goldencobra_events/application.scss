@@ -28,7 +28,6 @@
 		    background: url("/assets/goldencobra/tools/tabs/blue.png") no-repeat -420px 0;
 		    font-size:11px;
 		    display:block;
-		    height: 30px;  
 		    line-height:30px;
 		    width: 134px;
 		    text-align:center;  
@@ -60,7 +59,6 @@
 		input[type="text"],input[type="password"],input[type="email"],input[type="url"]{
 			width:300px;
 		}
-		height:10px;
 	}
 }
 
@@ -223,7 +221,7 @@
 
 
 //Alles unterhalb hiervon kann warscheinlich weg
-
+/*
 #goldencobra_events_event_popup{
 	border: 1px solid black;
 }
@@ -340,4 +338,4 @@
 div.error{
 	background-color:red;
 }
-
+*/
