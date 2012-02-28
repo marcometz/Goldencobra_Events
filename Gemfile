@@ -25,6 +25,7 @@ group :development do
   gem 'pry'
   gem 'rails-pry'
   gem 'git-pivotal'
+  gem 'hirb'
 end
 
 group :test do
