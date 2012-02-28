@@ -25,7 +25,7 @@ module GoldencobraEvents
       :max_number_of_participators, :cancelation_until, :start_reservation,
       :end_reservation, :available, :webcode
     scope :available, where(:available => true)
-
+    scope :publicly_available, where(:webcode => "")
     before_save :convert_price_raw
 
     def title

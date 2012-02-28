@@ -70,6 +70,13 @@ module GoldencobraEvents
       end
     end
     
+    def pricegroups_with_webcode(webcode)
+      pricegroups = []
+      pricegroups << self.event_pricegroups.where(:webcode => "")
+      pricegroups << self.event_pricegroups.where(:webcode => webcode)
+      return pricegroups.flatten
+    end
+    
     def webcodes
       self.event_pricegroups.select(:webcode).map(&:webcode).map{|a| a.present? == true ? a : true}
     end
