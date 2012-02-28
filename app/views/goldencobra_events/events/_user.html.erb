@@ -1,6 +1,6 @@
 <h2><%= s("goldencobra_events.event.registration.user_form.headline") %></h2>
 <p><%= s("goldencobra_events.event.registration.user_form.description") %></p>
-<%= render :partial => "goldencobra_events/events/registration_basket"%>
+<%#= render :partial => "goldencobra_events/events/registration_basket"%>
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
 	<p><%= s("goldencobra_events.event.registration.user_form.sub_headline") %></p>
 	<div class="errormessages"></div>
