@@ -1,20 +1,19 @@
 <h2><%= s("goldencobra_events.event.registration.user_form.headline") %></h2>
 <p><%= s("goldencobra_events.event.registration.user_form.description") %></p>
 <%#= render :partial => "goldencobra_events/events/registration_basket"%>
+
+<p>Haben Sie bereits ein Konto?</p>
+<%= form_for(resource, :as => resource_name, :url => user_session_path) do |f| %>
+  <%= f.text_field :email %>
+  <%= f.password_field :password %>
+  <%= f.check_box :remember_me %>
+  <%= f.label :remember_me %>
+  <%= f.submit 'Sign in' %>
+  <%= link_to "Forgot your password?", new_password_path('user') %>
+<% end %>
+
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
 	<!-- <p><%#= s("goldencobra_events.event.registration.user_form.sub_headline") %></p> -->
-	<div class="already_registered">
-		<p>Haben Sie bereits ein Konto?</p>
-		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %></label>
-			<%= text_field_tag "registration[user][email]", "", :required => false, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
-		</p>
-		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.account_label.password") %></label>
-			<%= password_field_tag "registration[user][password]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password") %>
-		</p>
-		<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>		
-	</div>
 	<div class="errormessages"></div>
 	<ul class="tabs">
 		<li><a href="#"><%= s("goldencobra_events.event.registration.user_form.user_fieldset_name") %></a></li>

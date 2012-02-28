@@ -30,6 +30,18 @@ module GoldencobraEvents
       end
     end 
 
+    def resource_name
+      :user
+    end
+ 
+    def resource
+      @resource ||= User.new
+    end
+ 
+    def devise_mapping
+      @devise_mapping ||= Devise.mappings[:user]
+    end
+      
     private
     def event_item_helper(child, depth, current_depth, options)
       if @article.eventmoduletype == "program" || (@article.eventmoduletype == "registration" && (child.has_registerable_childrens? || child.needs_registration?)) 
