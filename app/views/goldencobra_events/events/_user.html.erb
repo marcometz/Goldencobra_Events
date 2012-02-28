@@ -44,8 +44,8 @@
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %> <%= s("goldencobra_events.event.registration.user_form.user_label.lastname") %></label>
-			<%= text_field_tag "registration[user][firstname]", "", :required => true, :class="shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
-			<%= text_field_tag "registration[user][lastname]", "", :required => true, :class="shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
+			<%= text_field_tag "registration[user][firstname]", "", :required => true, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
+			<%= text_field_tag "registration[user][lastname]", "", :required => true, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.function") %></label>
@@ -112,8 +112,8 @@
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
-				<%= text_field_tag "registration[company][location_attributes][zip]", "", :required => false, :class="shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
-				<%= text_field_tag "registration[company][location_attributes][city]", "", :required => false, :class="shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
+				<%= text_field_tag "registration[company][location_attributes][zip]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
+				<%= text_field_tag "registration[company][location_attributes][city]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
