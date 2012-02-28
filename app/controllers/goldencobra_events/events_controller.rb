@@ -54,7 +54,7 @@ module GoldencobraEvents
       @result = nil
       @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
       @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
-      if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present?
+      if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == 1
         #Create or find user
         user = User.find_for_authentication(:email => params[:registration][:user][:email])
         if user == nil
@@ -79,6 +79,8 @@ module GoldencobraEvents
             @errors << user.errors.messages
             @errors << "user_invalid"
         end
+      else
+          @errors << "agb not accepted"
       end
       if @errors.blank? && session[:goldencobra_event_registration][:user_id].present? && session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:pricegroup_ids].present?
         user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
