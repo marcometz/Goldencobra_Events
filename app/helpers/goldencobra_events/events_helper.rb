@@ -159,7 +159,7 @@ module GoldencobraEvents
           return content_tag(:div, raw(content), class: "article_event_content")          
         else
           if event.exclusive
-            return content_tag(:div, raw(s("goldencobra_events.event.registration.exclusive_description")), class: "article_event_content")
+            return content_tag(:div, raw(s("goldencobra_events.event.registration.exclusive_description")), class: "article_event_content exclusive_description")
           else
             return content_tag(:div, "", class: "article_event_content")
           end
