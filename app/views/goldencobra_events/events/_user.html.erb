@@ -5,15 +5,17 @@
 	<!-- <p><%#= s("goldencobra_events.event.registration.user_form.sub_headline") %></p> -->
 	<div class="already_registered">
 		<p>Haben Sie bereits ein Konto?</p>
-		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %></label>
-			<%= text_field_tag "registration[user][email]", "", :required => false, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
-		</p>
-		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.account_label.password") %></label>
-			<%= password_field_tag "registration[user][password]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password") %>
-		</p>
-		<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>		
+		<%= field_set_tag s("goldencobra_events.event.registration.user_form.user_fieldset_name") do %>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %></label>
+				<%= text_field_tag "registration[user][email]", "", :required => false, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
+			</p>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.account_label.password") %></label>
+				<%= password_field_tag "registration[user][password]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password") %>
+			</p>
+			<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>		
+		<% end %>
 	</div>
 	<div class="errormessages"></div>
 	<ul class="tabs">
