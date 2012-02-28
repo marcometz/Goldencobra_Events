@@ -43,8 +43,8 @@ module GoldencobraEvents
 
     def registration_date_valid
       # Check if current date is valid for registration
-      if self.start_reservation && self.end_reservation
-        return self.start_reservation < Time.now && self.end_reservation > Time.now 
+      if self.start_reservation != self.end_reservation
+        return self.start_reservation <= Time.now && Time.now <= self.end_reservation
       else
         return true
       end
