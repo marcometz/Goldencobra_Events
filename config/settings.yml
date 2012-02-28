@@ -39,8 +39,11 @@ goldencobra_events:
                 company_adress_fieldset_name: "Adresse"
                 next_step_label: "weiter ..."
                 submit: "Absenden"
-                teilnahmebedingungen: "Teilnahmebedingungen:"
-                teilnahmebedingungen_lang: "Der Teilnahmebetrag für diese Veranstaltung inklusive Mittagessen, Dinner-Veranstaltung am 26. April und Pausengetränken pro Person zzgl. MwSt ist nach Erhalt der Rechnung fällig. Nach Eingang Ihrer Anmeldung erhalten Sie eine Bestätigung. Die Stornierung (nur schriftlich) ist bis 14 Tage vor Veranstaltungsbeginn kostenlos möglich, danach wird die Hälfte des Teilnahmebetrags erhoben. Bei Nichterscheinen oder Stornierung am Veranstaltungstag wird der gesamte Teilnahmebetrag fällig. Gerne akzeptieren wir ohne zusätzliche Kosten einen Ersatzteilnehmer. Programmänderungen aus dringendem Anlass behält sich der Veranstalter vor."
+                teilnahmebedingungen1: "Der Teilnahmebetrag für diese Veranstaltung inklusive Mittagessen, Dinner-Veranstaltung am 26. April und Pausengetränken pro Person zzgl. MwSt ist nach Erhalt der Rechnung fällig. Nach Eingang Ihrer Anmeldung erhalten Sie eine Bestätigung."
+                teilnahmebedingungen2: "Die Stornierung (nur schriftlich) ist bis 14 Tage vor Veranstaltungsbeginn kostenlos möglich, danach wird die Hälfte des Teilnahmebetrags erhoben. Bei Nichterscheinen oder Stornierung am Veranstaltungstag wird der gesamte Teilnahmebetrag fällig."
+                teilnahmebedingungen3: "Gerne akzeptieren wir ohne zusätzliche Kosten einen Ersatzteilnehmer. Programmänderungen aus dringendem Anlass behält sich der Veranstalter vor."
+                newsletter: "Newsletter"
+                agb: "AGB"
                 errors:
                     firstname: "Vorname muss ausgefüllt sein"
                     lastname: "Nachname muss ausgefüllt sein"
