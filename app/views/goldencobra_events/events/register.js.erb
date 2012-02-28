@@ -1,10 +1,23 @@
 <% if @registered_event_price_group %>
-	// parent = $('li.article_event_id_<%= @registered_event_price_group.id%>');
+	// Elternelement als 'registriert' kennzeichnen & Kinder einblenden 
 	$('li.article_event_id_<%= @registered_event_price_group.event_id%>').addClass("completed").find("ul.sub_events").addClass("active").show();
-	// $('li.article_event_id_<%= @registered_event_price_group.id%>').find("ul.sub_events").addClass("active").slideDown();
+	
+	// Event als vorgemerkt kennzeichnen
 	$('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("Anmeldung vorgemerkt");
+	
+	// Preisgruppen ausblenden, da Wahl getroffen wurde
 	$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
+	
+	// Button 'Mit Anmeldung fortfahren' einblenden
 	$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
+	
+	<% @registered_event_price_group.event.siblings.each do |sibling| %>
+		$('#register_for_event_<%= sibling.id %>_link').fadeOut(400, function(){});
+		$('li.article_event_id_<%= sibling.id %>').addClass("completed");
+	<% end %>
+
+	// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
+
 <% else %>
 	<% if @event_to_register %>
 		$('div#register_for_event_<%= @event_to_register.id %>')

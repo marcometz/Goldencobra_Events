@@ -47,6 +47,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     column :title
     column :active
     column :exclusive
+    column :type_of_event
     column :updated_at
     column "" do |event|
       result = ""

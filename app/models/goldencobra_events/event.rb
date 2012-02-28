@@ -24,7 +24,7 @@
 module GoldencobraEvents
   class Event < ActiveRecord::Base
 
-    EventType = ["No Registration needed", "Registration needed"]
+    EventType = ["No Registration needed", "Registration needed", "Registration optional"]
     RegistrationType = ["No cancellation required", "Cancellation required"]
     Modultype = {"program" => "Programm", "registration" => "Anmeldung"}
 
@@ -52,6 +52,10 @@ module GoldencobraEvents
     def needs_registration?
       self.type_of_event == "Registration needed"
     end
+    
+    def registration_optional?
+      self.type_of_event == "Registration optional"
+    end
 
     def get_list_of_events_from_event_pricegroup_ids(list_of_event_pricegroup_ids)
       GoldencobraEvents::Event.joins(:event_pricegroups).where("goldencobra_events_event_pricegroups.id in (?)", list_of_event_pricegroup_ids).select("goldencobra_events_events.id")
@@ -77,7 +81,7 @@ module GoldencobraEvents
     def has_registerable_childrens?
       result = false
       self.descendants.each do |child|
-        result = true if (child.needs_registration? || child.exclusive)
+        result = true if (child.needs_registration? || child.exclusive || child.registration_optional?)
       end
       return result
     end
@@ -95,7 +99,7 @@ module GoldencobraEvents
       if options && options[:article].present?
         article = options[:article]
         result = true if article.eventmoduletype == "program"
-        if (article.eventmoduletype == "registration" && (self.has_registerable_childrens? || self.needs_registration?))           
+        if (article.eventmoduletype == "registration" && (self.has_registerable_childrens? || self.needs_registration? || self.registration_optional?))           
           if self.webcodes.present? 
             if (options[:webcode].present? && self.webcodes.include?(options[:webcode])) || self.webcodes.include?(true) 
               result = true
@@ -113,9 +117,14 @@ module GoldencobraEvents
       # does parent need a registration? Is registration already in system?
       errors = []
       list_of_event_ids = get_list_of_events_from_event_pricegroup_ids(list_of_ids)
+      list_of_ids_as_array = []
       self.ancestors.each do |a|
         if a.needs_registration?
-          errors << a.id unless list_of_event_ids.include?(a.id)
+          list_of_event_ids.each do |b|
+            list_of_ids_as_array << b.id
+          end
+          list_of_ids_as_array = list_of_ids_as_array.flatten.uniq
+          errors << a.id unless list_of_ids_as_array.include?(a.id)
         end
       end
       return errors.blank? ? true : errors

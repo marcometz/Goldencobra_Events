@@ -30,7 +30,7 @@ module GoldencobraEvents
 
     private
     def event_item_helper(child, depth, current_depth, options)
-      if @article.eventmoduletype == "program" || (@article.eventmoduletype == "registration" && (child.has_registerable_childrens? || child.needs_registration?)) 
+      if @article.eventmoduletype == "program" || (@article.eventmoduletype == "registration" && (child.has_registerable_childrens? || child.needs_registration? || child.registration_optional?)) 
         child_block = render_child_block(child, options) 
         current_depth = current_depth + 1
         if child.children && (depth == 0 || current_depth <= depth)
@@ -93,7 +93,7 @@ module GoldencobraEvents
       content = ""
       
       #Anmeldelink anzeigen
-      if event.needs_registration? && @article.eventmoduletype == "registration"
+      if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
         reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
         content << content_tag(:div, reg_link, :class => "register_for_event", "data-id" => event.id, :id => "register_for_event_#{event.id}")
       end
@@ -101,7 +101,7 @@ module GoldencobraEvents
       # Event
       content << render_object(event, :title)
       event_options = render_object(event, :number_of_participators_label, :type_of_registration)
-      if event.needs_registration? && @article.eventmoduletype == "registration"
+      if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
         event_options << render_object(event, :type_of_event)
       else
         event_options << render_object(event, :type_of_event)
@@ -155,7 +155,7 @@ module GoldencobraEvents
       content << content_tag(:div, raw(artists), class: "artists")
       
       if @article.eventmoduletype == "registration"
-        if event.needs_registration?
+        if (event.needs_registration? || event.registration_optional?)
           return content_tag(:div, raw(content), class: "article_event_content")          
         else
           if event.exclusive

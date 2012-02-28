@@ -1,19 +1,18 @@
 <% if @event_to_register %>
-		<% if @event_to_register.event_pricegroups.count > 0 %>
-			<%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
-				<p><%= s("goldencobra_events.event.registration.to_add.headline") %></p>
-				<ul id="select_pricegroup_<%= @event_to_register.event_pricegroup_ids.join('_')%>">
-					<% @event_to_register.event_pricegroups.each do |e_pricegroup| %>
-						<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
-							<%= radio_button "event", "event_pricegroup", e_pricegroup.id %>
-							<%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price) %> 
-						</li>
-					<% end %>
-				</ul>
-				<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit" %>
-			<% end %>
-		<% else %>
-			<p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
+	<% if @event_to_register.event_pricegroups.count > 0 %>
+		<%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
+			<p><%= s("goldencobra_events.event.registration.to_add.headline") %></p>
+			<ul id="select_pricegroup_<%= @event_to_register.event_pricegroup_ids.join('_')%>">
+				<% @event_to_register.event_pricegroups.each do |e_pricegroup| %>
+					<li class="goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
+						<%= radio_button "event", "event_pricegroup", e_pricegroup.id %>
+						<%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price) %> 
+					</li>
+				<% end %>
+			</ul>
+			<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit" %>
 		<% end %>
-
+	<% else %>
+		<p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
+	<% end %>
 <% end %>
