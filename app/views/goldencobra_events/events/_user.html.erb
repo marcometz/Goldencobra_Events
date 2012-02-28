@@ -99,7 +99,7 @@
 		</p>
 		<p>
 			<label>Newsletter</label>
-			<%= check_box_tag "registration[user][newsletter]", "registration[user][newsletter]", false, :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.newsletter")%>
+			<%= check_box("newsletter", "subscribe" ) %>
 		</p>
 		<p>
 			<label>AGB</label>

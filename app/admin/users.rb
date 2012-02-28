@@ -14,6 +14,7 @@ ActiveAdmin.register User, :as => "Applicant" do
     column "total Price" do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
+    column :newsletter
     default_actions
   end
 

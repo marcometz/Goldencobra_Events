@@ -69,6 +69,10 @@ module GoldencobraEvents
               user.save
             end
           end
+          if user && params[:newsletter][:subscribe].present? && params[:newsletter][:subscribe] == 1
+            user.newsletter = true
+            user.save
+          end
         else
           user = user.valid_password?(params[:registration][:user][:password]) ? user : nil
         end
