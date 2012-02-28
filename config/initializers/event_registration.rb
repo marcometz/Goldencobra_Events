@@ -4,7 +4,7 @@ Rails.application.config.to_prepare do
     scope :event_applicants, joins(:roles).where("goldencobra_roles.name = 'EventRegistrations'")
     has_many :event_registrations, class_name: GoldencobraEvents::EventRegistration
     belongs_to :company, :class_name => GoldencobraEvents::Company
-    attr_accessible :company_id
+    attr_accessible :company_id, :newsletter
     
     def total_price
       total_price = 0
