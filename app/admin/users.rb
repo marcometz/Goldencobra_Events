@@ -12,7 +12,7 @@ ActiveAdmin.register User, :as => "Applicant" do
     column :lastname
     column :email
     column "total Price" do |u|
-      number_to_currency(u.total_price)
+      number_to_currency(u.total_price, :locale => :de)
     end
     default_actions
   end
@@ -50,7 +50,7 @@ ActiveAdmin.register User, :as => "Applicant" do
         end
         applicant.event_registrations.each do |ereg|
           tr do
-            [ereg.event_pricegroup.event.title, ereg.event_pricegroup.title, number_to_currency(ereg.event_pricegroup.price), ereg.created_at].each do |esa|
+            [ereg.event_pricegroup.event.title, ereg.event_pricegroup.title, number_to_currency(ereg.event_pricegroup.price, :locale => :de), ereg.created_at].each do |esa|
               td esa
             end
           end
@@ -58,7 +58,7 @@ ActiveAdmin.register User, :as => "Applicant" do
         tr :class => "total" do
           td ""
           td ""
-          td number_to_currency(applicant.total_price)
+          td number_to_currency(applicant.total_price, :locale => :de)
           td ""
         end
       end

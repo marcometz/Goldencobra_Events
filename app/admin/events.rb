@@ -92,7 +92,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         event.event_pricegroups.each do |epg|
       	  tr do
       	    td epg.title
-            td number_to_currency(epg.price)
+            td number_to_currency(epg.price, :locale => :de)
       	    td epg.max_number_of_participators
       	    td epg.start_reservation
       	    td epg.end_reservation
