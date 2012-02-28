@@ -15,9 +15,7 @@ module GoldencobraEvents
         content = ""
         content << event_item_helper(@article.event, depth, 1, options)
         result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
-        result = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> @article.eventmoduletype)
-        # title_content = content_tag(:h2, "#{@article.title}", :class => "boxheader")
-        # return_content = content_tag(:div, raw(title_content), :class => "article_title")
+        result = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> "#{@article.eventmoduletype} hidden")
         
         return_content = content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
         return_content += result
@@ -30,18 +28,6 @@ module GoldencobraEvents
       end
     end 
 
-    def resource_name
-      :user
-    end
- 
-    def resource
-      @resource ||= User.new
-    end
- 
-    def devise_mapping
-      @devise_mapping ||= Devise.mappings[:user]
-    end
-      
     private
     def event_item_helper(child, depth, current_depth, options)
       if @article.eventmoduletype == "program" || (@article.eventmoduletype == "registration" && (child.has_registerable_childrens? || child.needs_registration?)) 

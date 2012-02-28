@@ -51,6 +51,7 @@ $(document).ready(function() {
 	// Ohne Webcode weiter
 	$('#register_without_webcode').live("click", function(){
 		$('#article_event_webcode_form').hide();
+		$('#goldencobra_events_article_events').removeClass("hidden");
 	});
 	
 	// Mit Anmeldung fortfahren und DIVs darüber ausblenden
