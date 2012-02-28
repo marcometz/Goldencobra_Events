@@ -57,9 +57,7 @@ module GoldencobraEvents
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present?
           #Create or find user
           user = User.find_for_authentication(:email => params[:registration][:user][:email])
-          if user
-            user.valid_password?(params[:registration][:user][:password])
-          else
+          if user == nil
             user = User.create(params[:registration][:user])
             #Add default user Role für event Registrators
             user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
@@ -71,6 +69,8 @@ module GoldencobraEvents
                 user.save
               end
             end
+          else
+            user = user.valid_password?(params[:registration][:user][:password]) ? user : nil
           end
           if user.present? && user.id.present?
               session[:goldencobra_event_registration][:user_id] = user.id

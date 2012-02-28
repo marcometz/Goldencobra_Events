@@ -5,7 +5,7 @@
 	<!-- <p><%#= s("goldencobra_events.event.registration.user_form.sub_headline") %></p> -->
 	<div class="already_registered">
 		<p>Haben Sie bereits ein Konto?</p>
-		<%= field_set_tag s("goldencobra_events.event.registration.user_form.user_fieldset_name") do %>
+		<%= field_set_tag "loginform" do %>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %></label>
 				<%= text_field_tag "registration[user][email]", "", :required => false, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
