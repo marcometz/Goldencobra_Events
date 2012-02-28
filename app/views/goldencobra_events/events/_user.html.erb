@@ -22,8 +22,12 @@
 			<%= text_field_tag "registration[user][title]", "", :required => false %>
 		</p>
 		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %></label><%= text_field_tag "registration[user][firstname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
-			<label><%= s("goldencobra_events.event.registration.user_form.user_label.lastname") %></label><%= text_field_tag "registration[user][lastname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %></label>
+			<%= text_field_tag "registration[user][firstname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
+		</p>
+		<p>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.lastname") %></label>
+			<%= text_field_tag "registration[user][lastname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.function") %></label>
