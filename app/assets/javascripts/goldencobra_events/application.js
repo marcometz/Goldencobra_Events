@@ -56,7 +56,7 @@ $(document).ready(function() {
 	// Mit Anmeldung fortfahren und DIVs darüber ausblenden
 	$('#goldencobra_events_enter_account_data').live("click", function() {
 		$('#goldencobra_events_article_events').fadeOut('slow', function(){
-			
+			$('#goldencobra_events_enter_account_data').hide();
 		});
 	});
 });
