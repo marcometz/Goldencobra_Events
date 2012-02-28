@@ -29,6 +29,7 @@
 	</ul> -->
 	<div class="panes">
 	<%#= field_set_tag s("goldencobra_events.event.registration.user_form.user_fieldset_name") do %>
+	<%= s("goldencobra_events.event.registration.user_form.user_fieldset_name") %>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.label.gender") %></label>
 			<%= radio_button "registration[user]", "gender", true , :id => "male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
@@ -93,6 +94,9 @@
 		</div>	
 	<%# end %> -->
 	<%#= field_set_tag s("goldencobra_events.event.registration.user_form.company_fieldset_name") do %>
+		<p>
+			<%= s("goldencobra_events.event.registration.user_form.company_fieldset_name") %>
+		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.company_label.title") %></label>
 			<%= text_field_tag "registration[company][title]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_title") %>
