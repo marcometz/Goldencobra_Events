@@ -48,4 +48,8 @@ $(document).ready(function() {
 		$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
 	});
 	
+	// Ohne Webcode weiter
+	$('#register_without_webcode').live("click", function(){
+		$('#article_event_webcode_form').hide();
+	});
 });

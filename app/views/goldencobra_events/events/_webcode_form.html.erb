@@ -6,7 +6,8 @@
 		<% if @article.present? %>
 			<%= hidden_field_tag :article_id, @article.id %>
 		<% end %>
-		<%= submit_tag s("goldencobra_events.event.registration.webcode.submit") %>		
+		<%= submit_tag s("goldencobra_events.event.registration.webcode.submit") %>
+		<%= link_to "Weiter ohne Webcode", "#", class: "button", id: "register_without_webcode" %>	
 	<% end %>
 <% end %>
 <% if session[:goldencobra_events_webcode].present? %>
