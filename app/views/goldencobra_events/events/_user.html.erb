@@ -17,21 +17,13 @@
 			<%= radio_button "registration[user]", "gender", true , :id => "male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
 			<%= radio_button "registration[user]", "gender", false, :id => "female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
 		</p>
-	<div class="mc-field-group">
-		<label><%= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
-		<%= text_field_tag "registration[user][title]", "", :required => false, id: "mce-MMERGE4" %>
-	</div>
-		<!-- <p>
-			<label><%#= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
-			<%#= text_field_tag "registration[user][title]", "", :required => false %>
-		</p> -->
 		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %></label>
-			<%= text_field_tag "registration[user][firstname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
+			<%= text_field_tag "registration[user][title]", "", :required => false %>
 		</p>
 		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.user_label.lastname") %></label>
-			<%= text_field_tag "registration[user][lastname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %></label><%= text_field_tag "registration[user][firstname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
+			<label><%= s("goldencobra_events.event.registration.user_form.user_label.lastname") %></label><%= text_field_tag "registration[user][lastname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.function") %></label>
