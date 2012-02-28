@@ -117,7 +117,7 @@
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
-				<%= text_field_tag "registration[company][location_attributes][country]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
+				<%= text_field_tag "registration[company][location_attributes][country]", "", :autocomplete => "off", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
 			</p>
 		</div>	
 		<!-- <div class="next_step">
@@ -130,7 +130,7 @@
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.account_label.password") %></label>
-			<%= password_field_tag "registration[user][password]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password") %>
+			<%= password_field_tag "registration[user][password]", "", :autocomplete => "off", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password") %>
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.account_label.confirm_password") %></label>
