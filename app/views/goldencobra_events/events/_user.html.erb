@@ -136,7 +136,17 @@
 			<label><%= s("goldencobra_events.event.registration.user_form.account_label.confirm_password") %></label>
 			<%= password_field_tag "registration[user][password_confirmation]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password_confirmation") %>
 		</p>
+		<p class="userform-section">
+			<label><%= s("goldencobra_events.event.registration.user_form.teilnahmebedingungen") %></label>
+			<%= s("goldencobra_events.event.registration.user_form.teilnahmebedingungen_lang") %>
+		</p>
 		<p>
+			<label>Newsletter</label>
+		</p>
+		<p>
+			<label>AGB</label>
+		</p>
+		<p style="padding:25px 0 25px 15px;">
 			<label></label>
 			<%= submit_tag s("goldencobra_events.event.registration.user_form.submit") %>	
 		</p>	
