@@ -55,30 +55,30 @@ module GoldencobraEvents
       @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
       @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present?
-          #Create or find user
-          user = User.find_for_authentication(:email => params[:registration][:user][:email])
-          if user == nil
-            user = User.create(params[:registration][:user])
-            #Add default user Role für event Registrators
-            user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
-            #Add Company to user if data provided
-            if user && params[:registration][:company].present?
-              company = Company.create(params[:registration][:company])
-              if company.present? && company.id.present?
-                user.company = company
-                user.save
-              end
+        #Create or find user
+        user = User.find_for_authentication(:email => params[:registration][:user][:email])
+        if user == nil
+          user = User.create(params[:registration][:user])
+          #Add default user Role für event Registrators
+          user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
+          #Add Company to user if data provided
+          if user && params[:registration][:company].present?
+            company = Company.create(params[:registration][:company])
+            if company.present? && company.id.present?
+              user.company = company
+              user.save
             end
-          else
-            user = user.valid_password?(params[:registration][:user][:password]) ? user : nil
           end
-          if user.present? && user.id.present?
-              session[:goldencobra_event_registration][:user_id] = user.id
-          else
-              session[:goldencobra_event_registration][:user_id] = nil
-              @errors << user.errors.messages
-              @errors << "user_invalid"
-          end
+        else
+          user = user.valid_password?(params[:registration][:user][:password]) ? user : nil
+        end
+        if user.present? && user.id.present?
+            session[:goldencobra_event_registration][:user_id] = user.id
+        else
+            session[:goldencobra_event_registration][:user_id] = nil
+            @errors << user.errors.messages
+            @errors << "user_invalid"
+        end
       end
       if @errors.blank? && session[:goldencobra_event_registration][:user_id].present? && session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:pricegroup_ids].present?
         user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
