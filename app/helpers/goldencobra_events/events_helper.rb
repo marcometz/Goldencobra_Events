@@ -114,7 +114,7 @@ module GoldencobraEvents
       content << render_object_image(event, "teaser_image")
 
       # Venue
-      venue = render_object(event.venue, :title, :description, :location_values, :link_url, :phone, :email)
+      venue = render_object(event.venue, :title, :description, :location_values)
       content << content_tag(:div, raw(venue), class: "venue")
       
 

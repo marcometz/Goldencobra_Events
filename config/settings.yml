@@ -13,14 +13,14 @@ goldencobra_events:
             enter_user_data: "Mit Anmeldung fortfahren"
             exclusive_description: "Bitte wählen Sie zwischen einer dieser Optionen"
             webcode:
-                title: "Webcode eingeben"
+                title: "Gutschein-Code eingeben"
                 description: "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
                 submit: "Absenden"
             completed: "Ihre Registrierung wurde erfolgreich abgeschlossen! Sie erhalten zusätzliche eine Email"
             added:
                 headline: "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
             to_add:
-                headline: "Dieser Event besitzt mehrere Preisgruppen zur Auswahl"
+                headline: "Bitte wählen Sie die passende Preisgruppe:"
                 submit: "Auswahl übernehmen"
             errors:
                 no_events_selected: "Es wurden noch keine Event gewählt"            
@@ -38,7 +38,7 @@ goldencobra_events:
                 account_fieldset_name: "Accountdaten"
                 company_adress_fieldset_name: "Adresse"
                 next_step_label: "weiter ..."
-                submit: "Absenden"
+                submit: "Verbindlich bestellen"
                 teilnahmebedingungen1: "Der Teilnahmebetrag für diese Veranstaltung inklusive Mittagessen, Dinner-Veranstaltung am 26. April und Pausengetränken pro Person zzgl. MwSt ist nach Erhalt der Rechnung fällig. Nach Eingang Ihrer Anmeldung erhalten Sie eine Bestätigung."
                 teilnahmebedingungen2: "Die Stornierung (nur schriftlich) ist bis 14 Tage vor Veranstaltungsbeginn kostenlos möglich, danach wird die Hälfte des Teilnahmebetrags erhoben. Bei Nichterscheinen oder Stornierung am Veranstaltungstag wird der gesamte Teilnahmebetrag fällig."
                 teilnahmebedingungen3: "Gerne akzeptieren wir ohne zusätzliche Kosten einen Ersatzteilnehmer. Programmänderungen aus dringendem Anlass behält sich der Veranstalter vor."
@@ -62,7 +62,7 @@ goldencobra_events:
                     gender_male: "Herr"
                     gender_female: "Frau"
                     title: "Titel"
-                    firstname: "Vorname"
+                    firstname: "Vor- &"
                     lastname: "Nachname"
                     function: "Function"
                     email: "Email"
@@ -80,7 +80,7 @@ goldencobra_events:
                     fax: "Fax"
                     homepage: "Homepage"
                     street: "Strasse"
-                    zip: "Postleitzahl"
+                    zip: "PLZ"
                     city: "Ort"
                     region: "Bezirk"
                     country: "Land"
