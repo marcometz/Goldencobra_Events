@@ -22,8 +22,7 @@
 		// $('#goldencobra_events_event_popup').html("<%#= s("goldencobra_events.event.registration.completed") %>");
 		// $('#goldencobra_events_registration_basket').append("<%#= s("goldencobra_events.event.registration_basket.completed") %>");
     // $.get('/goldencobra_events/events/confirmation_registration');
-<%#= render :partial => "goldencobra_events/events/registration_basket"%>//goldencobra_events/events/confirmation'
-		$('#article_content').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/registration_basket' ))%>");
+		$('#article_content').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/confirmation' ))%>");
 	<% else %>
 		$('#goldencobra_events_event_popup').html("<%= @result.inspect %>");	
 	<% end %>
