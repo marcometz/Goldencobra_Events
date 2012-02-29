@@ -112,7 +112,9 @@ module GoldencobraEvents
       end
       
       # Event
+      content << render_object_image(event, "teaser_image")
       content << render_object(event, :title)
+      content << render_object(event, :description)
       event_options = render_object(event, :number_of_participators_label, :type_of_registration)
       if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
         event_options << render_object(event, :type_of_event)
@@ -123,8 +125,7 @@ module GoldencobraEvents
         event_options << render_object(event, :exclusive)
       end
       content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
-      content << render_object(event, :description, :external_link,  :start_date, :end_date)
-      content << render_object_image(event, "teaser_image")
+      content << render_object(event, :external_link,  :start_date, :end_date)
 
       # Venue
       venue = render_object(event.venue, :title, :description, :location_values)
