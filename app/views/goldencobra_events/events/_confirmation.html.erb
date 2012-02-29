@@ -1,25 +1,9 @@
 <div id="registration_confirmation">
   <h3>Vielen Dank für Ihre Registrierung!</h3>
   <p class="confirmation_description">Wir senden Ihnen die Details zu Ihrer Bestellung zus&auml;tzlich per E-Mail.</p>
-  <table class="confirmation">
-    <tr>
-      <th>Veranstaltung</th>
-      <th>Ihr Preis</th>
-    </tr>
-    <% @user = User.find_by_id(session[:goldencobra_event_registration][:user_id]) %>
-    <% @user.event_registrations.each do |reg| %>
-      <tr>
-        <td><%= reg.event_pricegroup.event.title %></td>
-        <% if reg.event_pricegroup.pricegroup && reg.event_pricegroup.pricegroup.present? %>
-          <td><%= reg.event_pricegroup.pricegroup.title %>(<%= number_to_currency(reg.event_pricegroup.price) %>)</td>
-        <% else %>
-          <td>&nbsp;</td>
-        <% end %>
-      </tr>
-    <% end %>
-    <tr>
-      <td>&nbsp;</td>
-      <td class="sum">Summe: <%= number_to_currency(@user.total_price) %></td>
-    </tr>
-  </table>
+  <p>Ihre weiteren Optionen:</p>
+  <ul>
+    <li><%= link_to "zurück zur Startseite", "/" %></li>
+    <li><%= link_to "Programmübersicht", "/programm" %></li>
+    <li><%= link_to "Hotelempfehlungen", "/hotels" %></li>
 </div>
