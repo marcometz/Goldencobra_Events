@@ -97,6 +97,10 @@ module GoldencobraEvents
       end
     end
     
+    def confirm_registration
+      redirect_to '/goldencobra_events/events/confirmation'
+      #render(:partial => '/goldencobra_events/events/confirmation')
+    end
     
     private
     def init_registration_session
