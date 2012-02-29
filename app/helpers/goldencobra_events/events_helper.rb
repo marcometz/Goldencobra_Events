@@ -69,7 +69,11 @@ module GoldencobraEvents
     def render_object(model, *args)
       content = ""
       args.each do |a|
-        content << content_tag(:div, raw(model.send(a)), class: a) if model && model.respond_to?(a)
+        if a == ("start_date" || "end_date")
+          content << content_tag(:div, raw(localize(model.send(a), :format => :long)), class: a) if model && model.respond_to?(a)
+        else
+          content << content_tag(:div, raw(model.send(a)), class: a) if model && model.respond_to?(a)
+        end
       end
       return content
     end
