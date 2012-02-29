@@ -69,8 +69,8 @@ module GoldencobraEvents
     def render_object(model, *args)
       content = ""
       args.each do |a|
-        if a == ("start_date" || "end_date")
-          content << content_tag(:div, raw(localize(model.send(a), :format => :long)), class: a) if model && model.respond_to?(a)
+        if a == :start_date
+          content << content_tag(:div, raw(localize(model.start_date, :format => :long)), class: a) if model && model.respond_to?(a)
         else
           content << content_tag(:div, raw(model.send(a)), class: a) if model && model.respond_to?(a)
         end
@@ -129,7 +129,9 @@ module GoldencobraEvents
         event_options << render_object(event, :exclusive)
       end
       content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
-      content << render_object(event, :external_link,  :start_date, :end_date)
+      content << render_object(event, :external_link)
+      content << content_tag(:div, raw( localize(event.start_date, format: :long) )) if event.start_date
+      content << content_tag(:div, raw(localize(event.end_date, :format => :long))) if event.end_date
 
       # Venue
       venue = render_object(event.venue, :title, :description, :location_values)
