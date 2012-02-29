@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   devise_for :users, ActiveAdmin::Devise.config
   mount GoldencobraEvents::Engine => "/goldencobra_events"
-  mount Goldencobra::Engine => "/"  
+  mount Goldencobra::Engine => "/"
 end
 #== Route Map
 # Generated on 06 Feb 2012 11:45

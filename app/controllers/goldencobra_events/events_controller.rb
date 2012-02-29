@@ -111,7 +111,7 @@ module GoldencobraEvents
         end
       end
       yield
-      # session[:goldencobra_event_registration][:pricegroup_ids] = session[:goldencobra_event_registration][:pricegroup_ids].uniq.compact
+      session[:goldencobra_event_registration][:pricegroup_ids] = session[:goldencobra_event_registration][:pricegroup_ids].uniq.compact
     end
     
   end
