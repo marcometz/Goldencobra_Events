@@ -89,17 +89,12 @@ module GoldencobraEvents
       if @errors.blank? && session[:goldencobra_event_registration][:user_id].present? && session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:pricegroup_ids].present?
         user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
         if user.present?
-          @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], user)
+          @result = GoldencobraEvents::EventRegistration.create_batch(bbsession[:goldencobra_event_registration][:pricegroup_ids], user)
           @errors << @result if @result != true
         else
           @errors << "user_not_exists"
         end
       end
-    end
-    
-    def confirm_registration
-      redirect_to '/goldencobra_events/events/confirmation'
-      #render(:partial => '/goldencobra_events/events/confirmation')
     end
     
     private
