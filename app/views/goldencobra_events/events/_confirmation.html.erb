@@ -10,7 +10,11 @@
     <% @user.event_registrations.each do |reg| %>
       <tr>
         <td><%= reg.event_pricegroup.event.title %></td>
-        <td><%= reg.event_pricegroup.pricegroup.title %>(<%= number_to_currency(reg.event_pricegroup.price) %>)</td>
+        <% if reg.event_pricegroup.pricegroup && reg.event_pricegroup.pricegroup.present? %>
+          <td><%= reg.event_pricegroup.pricegroup.title %>(<%= number_to_currency(reg.event_pricegroup.price) %>)</td>
+        <% else %>
+          <td>&nbsp;</td>
+        <% end %>
       </tr>
     <% end %>
     <tr>
