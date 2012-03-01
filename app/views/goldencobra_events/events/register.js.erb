@@ -10,6 +10,8 @@
 	
 	// Button 'Mit Anmeldung fortfahren' einblenden
 	$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
+
+	$('#article_event_webcode_form').hide();
 	
 	<% @registered_event_price_group.event.siblings.each do |sibling| %>
 		$('#register_for_event_<%= sibling.id %>_link').fadeOut(400, function(){});
@@ -17,7 +19,7 @@
 	<% end %>
 
 	// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
-
+	<% @show_panels = true %>
 <% else %>
 	<% if @event_to_register %>
 		$('div#register_for_event_<%= @event_to_register.id %>')
