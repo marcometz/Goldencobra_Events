@@ -33,6 +33,41 @@ module GoldencobraEvents
       end
     end
     
+    def summary
+      @errors = []
+      @result = nil
+      @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
+      @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
+      @errors << "agb can't be blank" unless params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
+      if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
+        #Create user
+        generated_password = Devise.friendly_token.first(6)
+        params[:registration][:user][:password] = generated_password
+        params[:registration][:user][:password_confirmation] = generated_password
+        logger.info "#{params[:registration]}"
+        user = User.create(params[:registration][:user])
+        #Add default user Role für event Registrators
+        user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
+        #Add Company to user if data provided
+        if user && params[:registration][:company].present?
+          company = Company.create(params[:registration][:company])
+          if company.present? && company.id.present?
+            user.company = company
+            user.save
+          end
+        end
+        if user.present? && user.id.present?
+            session[:goldencobra_event_registration][:user_id] = user.id
+        else
+            session[:goldencobra_event_registration][:user_id] = nil
+            @errors << user.errors.messages
+            @errors << "user_invalid"
+        end
+      else
+          @errors << "agb not accepted"
+      end
+    end
+    
     def cancel
       @eventpricegroup_to_cancel = GoldencobraEvents::EventPricegroup.find_by_id(params[:id])
       @events_removed = false
@@ -50,43 +85,12 @@ module GoldencobraEvents
     
     
     def perform_registration
-      @errors = []
-      @result = nil
-      @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
-      @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
-      @errors << "agb can't be blank" unless params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
-      if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
-        #Create user
-        generated_password = Devise.friendly_token.first(6)
-        user = User.create(params[:registration][:user], :password => generated_password, :password_confirmation => generated_password)
-        #Add default user Role für event Registrators
-        user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
-        #Add Company to user if data provided
-        if user && params[:registration][:company].present?
-          company = Company.create(params[:registration][:company])
-          if company.present? && company.id.present?
-            user.company = company
-            user.save
-          end
-        end
-        if user && params[:newsletter][:subscribe].present? && params[:newsletter][:subscribe] == "1"
-          user.update_attributes(:newsletter => true)
-        end
-        if user.present? && user.id.present?
-            session[:goldencobra_event_registration][:user_id] = user.id
-        else
-            session[:goldencobra_event_registration][:user_id] = nil
-            @errors << user.errors.messages
-            @errors << "user_invalid"
-        end
-      else
-          @errors << "agb not accepted"
-      end
       if @errors.blank? && session[:goldencobra_event_registration][:user_id].present? && session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:pricegroup_ids].present?
         user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
         if user.present?
           @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], user)
           @errors << @result if @result != true
+          reset_session
         else
           @errors << "user_not_exists"
         end
@@ -106,7 +110,7 @@ module GoldencobraEvents
         end
       end
       yield
-      session[:goldencobra_event_registration][:pricegroup_ids] = session[:goldencobra_event_registration][:pricegroup_ids].uniq.compact
+      # session[:goldencobra_event_registration][:pricegroup_ids] = session[:goldencobra_event_registration][:pricegroup_ids].uniq.compact
     end
     
   end
