@@ -74,8 +74,7 @@ module GoldencobraEvents
           end
         end  
 
-        c_start = "<div>Ich melde mich f&uuml;r eins der folgende Panels an (bitte ausw&auml;hlen):</div>"
-        c_start << content_tag(:div, raw(child.title ), class: 'child-title') if !child.is_root? && @article.eventmoduletype == "registration" && child.has_children?
+        c_start = content_tag(:div, raw(child.title ), class: 'child-title') if !child.is_root? && @article.eventmoduletype == "registration" && child.has_children?
         
         cp = ""
         cp << content_tag(:div, raw(c_start), class: 'parent_title') if !child.is_root? && child.parent.start_date && @article.eventmoduletype == "registration" && child.has_children?
