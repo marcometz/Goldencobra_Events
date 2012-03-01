@@ -1,6 +1,6 @@
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
 	<div id="registration_summary">
-	  <h1>Zusammenfassung Anmeldung</h1>
+	  <h1 class="Headline">Zusammenfassung Anmeldung</h1>
 	  <div class="anschrift">
 		  <h2>Rechnungsanschrift</h2>
 		  <% @user = User.find(session[:goldencobra_event_registration][:user_id]) if session[:goldencobra_event_registration][:user_id] && session[:goldencobra_event_registration][:user_id].present? %>
