@@ -73,10 +73,11 @@ module GoldencobraEvents
             child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
           end
         end  
-        c_start = content_tag(:div, raw(child.title )) if !child.is_root? && @article.eventmoduletype == "registration" && child.has_children?
+
+        c_start = content_tag(:div, raw(child.title ), class: 'child-title')) if !child.is_root? && @article.eventmoduletype == "registration" && child.has_children?
         cp = ""
-        cp << content_tag(:p, raw(c_start), class: 'parent_title') if !child.is_root? && child.parent.start_date && @article.eventmoduletype == "registration" && child.has_children?
-        cp << content_tag(:p, "#{raw(child.start_date.strftime('%H:%M'))} bis #{raw(child.end_date.strftime('%H:%M'))}", class: 'start_to_end_time_child') if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
+        cp << content_tag(:div, raw(c_start), class: 'parent_title') if !child.is_root? && child.parent.start_date && @article.eventmoduletype == "registration" && child.has_children?
+        cp << content_tag(:div, "#{raw(child.start_date.strftime('%H:%M'))} bis #{raw(child.end_date.strftime('%H:%M'))}", class: 'start_to_end_time_child') if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
         cp << content_tag(:li, raw(child_block), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
         return cp
       else
