@@ -3,7 +3,7 @@
 	$('li.article_event_id_<%= @registered_event_price_group.event_id%>').addClass("completed").find("ul.sub_events").addClass("active").show();
 	
 	// Event als vorgemerkt kennzeichnen
-	$('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("hinzugef&uuml;gt");
+	$('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("vorgemerkt");
 	
 	// Preisgruppen ausblenden, da Wahl getroffen wurde
 	$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
