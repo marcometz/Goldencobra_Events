@@ -1,7 +1,8 @@
+<% @event_to_register = @article.event %>
 <% if @webcode %>
 	$('#article_event_webcode_form #goldencobra_events_webcode_error').hide();
 	$('#article_event_webcode_form').html("<p class='success'>Webcode ist gültig: <%= session[:goldencobra_events_webcode]%></p>");
-	$('#goldencobra_events_article_events').slideUp().html("<%= escape_javascript(render_article_events()) %>").fadeIn();
+  $('div.pricegroups').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register')) %>");
 <% else %>
 	$('#article_event_webcode_form #goldencobra_events_webcode_error').html("<p class='error'>Der eingegebene Webcode ist ungültig</p>");
 	$('#article_event_webcode_form #goldencobra_events_webcode_error').effect("highlight", {}, 3000);
