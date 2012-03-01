@@ -34,7 +34,7 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	
+	$('#goldencobra_events_user_registration_form').validator();
 	
 	//Event Registration site	
 	//$('#goldencobra_events_article_events li .article_event_content .title').bind("click", function(){
@@ -56,8 +56,8 @@ $(document).ready(function() {
 	
 	// Mit Anmeldung fortfahren und DIVs darüber ausblenden
 	$('#goldencobra_events_enter_account_data').live("click", function() {
-		$('#goldencobra_events_article_events').fadeOut('slow', function(){
-			$('#goldencobra_events_enter_account_data').hide();
-		});
+		$('#goldencobra_events_article_events').fadeOut('slow');
+    $('#goldencobra_events_enter_account_data').fadeOut('slow');
+    $('#article_event_webcode_form').fadeOut('slow');
 	});
 });

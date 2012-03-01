@@ -81,17 +81,6 @@
 				<%= text_field_tag "registration[company][location_attributes][country]", "", :autocomplete => "off", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
 			</p>
 		</div>	
-		<p class="userform-section">
-			<%= s("goldencobra_events.event.registration.user_form.account_description") %>
-		</p>
-		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.account_label.password") %></label>
-			<%= password_field_tag "registration[user][password]", "", :autocomplete => "off", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password") %>
-		</p>
-		<p>
-			<label><%= s("goldencobra_events.event.registration.user_form.account_label.confirm_password") %></label>
-			<%= password_field_tag "registration[user][password_confirmation]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.password_confirmation") %>
-		</p>
 		<p>
 			<%= s("goldencobra_events.event.registration.user_form.teilnahmebedingungen1") %>
 			<%= s("goldencobra_events.event.registration.user_form.teilnahmebedingungen2") %>
@@ -103,7 +92,7 @@
 		</p>
 		<p>
 			<label>AGB</label>
-			<%= check_box("AGB","accepted") %>
+      <%= check_box("AGB","accepted", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.agb")) %>
 		</p>
 		<p style="padding:25px 0 25px 15px;">
 			<label></label>

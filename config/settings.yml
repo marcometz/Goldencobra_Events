@@ -57,6 +57,7 @@ goldencobra_events:
                     company_country: "Land muss ausgefüllt sein"      
                     password: "Das Passwort muss mindestens aus 6 Zeichen bestehen"
                     password_confirmation: "Passwort und die Wiederholung müssen übereinstimmen"
+                    agb: "Die AGBs müssen akzeptiert werden"
                 user_label:
                     gender: "Anrede"
                     gender_male: "Herr"

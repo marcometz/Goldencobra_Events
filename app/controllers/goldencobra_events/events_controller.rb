@@ -56,25 +56,21 @@ module GoldencobraEvents
       @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
       @errors << "agb can't be blank" unless params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
-        #Create or find user
-        user = User.find_for_authentication(:email => params[:registration][:user][:email])
-        if user == nil
-          user = User.create(params[:registration][:user])
-          #Add default user Role für event Registrators
-          user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
-          #Add Company to user if data provided
-          if user && params[:registration][:company].present?
-            company = Company.create(params[:registration][:company])
-            if company.present? && company.id.present?
-              user.company = company
-              user.save
-            end
+        #Create user
+        generated_password = Devise.friendly_token.first(6)
+        user = User.create(params[:registration][:user], :password => generated_password, :password_confirmation => generated_password)
+        #Add default user Role für event Registrators
+        user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
+        #Add Company to user if data provided
+        if user && params[:registration][:company].present?
+          company = Company.create(params[:registration][:company])
+          if company.present? && company.id.present?
+            user.company = company
+            user.save
           end
-          if user && params[:newsletter][:subscribe].present? && params[:newsletter][:subscribe] == "1"
-            user.update_attributes(:newsletter => true)
-          end
-        else
-          user = user.valid_password?(params[:registration][:user][:password]) ? user : nil
+        end
+        if user && params[:newsletter][:subscribe].present? && params[:newsletter][:subscribe] == "1"
+          user.update_attributes(:newsletter => true)
         end
         if user.present? && user.id.present?
             session[:goldencobra_event_registration][:user_id] = user.id
