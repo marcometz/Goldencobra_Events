@@ -158,7 +158,7 @@ module GoldencobraEvents
       venue = render_object(event.venue, :title, :description, :location_values) if !@article.eventmoduletype == "registration"
       content << content_tag(:div, raw(venue), class: "venue") if !@article.eventmoduletype == "registration"
 
-      if event.is_root?
+      if event.is_root? && @article.eventmoduletype == "registration"
         @event_to_register = @article.event
         content << content_tag(:div, render(:partial => "goldencobra_events/events/register"), class: 'new_pricegroups')
       end
