@@ -130,7 +130,7 @@ module GoldencobraEvents
       
       #Anmeldelink anzeigen
       if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration" && !event.is_root?
-        reg_link = link_to(s("goldencobra_events.event.article_events.register_text"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
+        reg_link = link_to("Hinzufügen", "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
         content << content_tag(:div, reg_link, :class => "register_for_event", "data-id" => event.id, :id => "register_for_event_#{event.id}")
       end
 
