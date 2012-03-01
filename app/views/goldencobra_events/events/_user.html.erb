@@ -33,7 +33,7 @@
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
-			<%= text_field_tag "registration[user][title]", "", :required => false %>
+			<%= text_field_tag "registration[user][title]", "", :required => true %>
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %></label>
@@ -54,12 +54,12 @@
 		<div class="address">
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.street") %></label>
-				<%= text_field_tag "registration[company][location_attributes][street]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
+				<%= text_field_tag "registration[company][location_attributes][street]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
-				<%= text_field_tag "registration[company][location_attributes][zip]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
-				<%= text_field_tag "registration[company][location_attributes][city]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
+				<%= text_field_tag "registration[company][location_attributes][zip]", "", :required => true, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
+				<%= text_field_tag "registration[company][location_attributes][city]", "", :required => true, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
 			</p>
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
