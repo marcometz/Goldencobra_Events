@@ -74,11 +74,6 @@
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %> <span class="asterix">*</span></label>
 			<%= text_field_tag "registration[user][email]", "", :required => true, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
 		</p>
-		<%# 2. Emaileingabe zur Überprüfung der Adresse %>
-		<p>
-			<label><%#= s("goldencobra_events.event.registration.user_form.user_label.email2") %></label>
-			<%#= text_field_tag "registration[user][email]", "", :required => true, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
-		</p>
 		<p>
 			<label>AGB <span class="asterix">*</span></label>
       		<%= check_box("AGB","accepted", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.agb")) %>
