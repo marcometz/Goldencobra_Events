@@ -247,7 +247,16 @@
 		<%= @user.company.location.street %><br>
 		<%= @user.company.location.zip %> <%= @user.company.location.city %><br>
 	<% end %>
-	<br>
+  <br>
+  <p>Sie haben sich f&uuml;r folgende Panels angemeldet:</p>
+  <table class="events">
+    <%= @user.event_registrations.each do |erg| %>
+      <tr>
+        <td><%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %></td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
 	<strong>Teilnahmegebühr:</strong><br>
 	<% event_pg = @user.event_registrations.first.event_pricegroup %>
 	Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %><br>
