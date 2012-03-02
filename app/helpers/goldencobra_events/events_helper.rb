@@ -78,7 +78,7 @@ module GoldencobraEvents
         
         cp = ""
         if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
-          cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}")
+          cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}", class: 'reg_info')
           c_start = ""
           c_start << content_tag(:div, raw(child.title ), class: 'child-title') if child.title.present?
           cp << content_tag(:div, raw(c_start), class: 'parent_title')

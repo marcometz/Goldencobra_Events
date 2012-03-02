@@ -48,7 +48,7 @@ $(document).ready(function() {
     id = $(this).attr("data-id")
     $("a#register_for_event_" + id + "_link").trigger("click")
     $(this).parent().parent().siblings().children().children("input").hide();
-    $(this).replaceWith('vorgemerkt: ');
+    $(this).parent().find(".title").append('(vorgemerkt)');
   });
 	
   //$('.register_for_event_checkbox').live("click", function(){
