@@ -80,9 +80,9 @@
 			<%#= text_field_tag "registration[user][email]", "", :required => true, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
 		</p>
 		<p>
-			<label></label>
-      		<%= check_box("AGB (*)","accepted", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.agb")) %>
-			Ich habe die <a href="/agb" target="_blank" style="margin:0;">AGB</a> gelesen.
+			<label>AGB (*)</label>
+      		<%= check_box("AGB","accepted", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.agb")) %>
+			Ich habe die <a href="/agb" target="_blank" style="margin:0;">AGB</a> gelesen und akzeptiert.
 		</p>
 		<p>
 			<label>(*) – Pflichtangabe</label>
