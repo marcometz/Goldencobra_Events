@@ -59,10 +59,10 @@ $(document).ready(function() {
   //  $('.register_for_event_checkbox').parent().find("div.register_for_event").children("a#register_for_event_" + id + "_link").trigger("click")
   //});
 
-	$('#goldencobra_events_enter_account_data').bind("click", function(){
-		$('#goldencobra_events_enter_account_data_form').fadeIn();
-		$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
-	});
+	// $('#goldencobra_events_enter_account_data').bind("click", function(){
+	// 	$('#goldencobra_events_enter_account_data_form').fadeIn();
+	// 	$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
+	// });
 	
 	// Ohne Webcode weiter
 	$('#register_without_webcode').live("click", function(){

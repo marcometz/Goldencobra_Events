@@ -12,7 +12,7 @@
 	$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
 	
 	// Button 'Mit Anmeldung fortfahren' einblenden
-	// $('#goldencobra_events_enter_account_data_wrapper').fadeIn();
+	$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
 
 	$('#article_event_webcode_form').hide();
 	
@@ -23,9 +23,9 @@
 
 	$('#goldencobra_events_enter_account_data_form').fadeIn();
 	$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
-	$('#goldencobra_events_article_events').fadeOut('slow');
-    $('#goldencobra_events_enter_account_data').fadeOut('slow');
-    $('#article_event_webcode_form').fadeOut('slow');
+	$('div.new_pricegroups').fadeOut('slow');
+   $('#goldencobra_events_enter_account_data').fadeOut('slow');
+   $('#article_event_webcode_form').fadeOut('slow');
 
 	// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
 	<% @show_panels = true %>
