@@ -13,9 +13,9 @@ module GoldencobraEvents
       @user = user
       if @user && @user.present?
         if email != nil
-          mail to: email#, css: "http://cloudforum.tagesspiegel.de/assets/email.css"
+          mail to: email, bcc: 'holger@ikusei.de'#, css: "http://cloudforum.tagesspiegel.de/assets/email.css"
         else
-          mail to: user.email#, css: "http://cloudforum.tagesspiegel.de/assets/email.css"
+          mail to: user.email, bcc: 'holger@ikusei.de'#, css: "http://cloudforum.tagesspiegel.de/assets/email.css"
         end
       end
     end
