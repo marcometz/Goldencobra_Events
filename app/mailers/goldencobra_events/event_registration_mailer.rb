@@ -1,6 +1,6 @@
 module GoldencobraEvents
   class EventRegistrationMailer < ActionMailer::Base
-    default from: "holger@ikusei.de"
+    default from: "cloudforum@tagesspiegel.de"
   
     # Subject can be set in your I18n file at config/locales/en.yml
     # with the following lookup:

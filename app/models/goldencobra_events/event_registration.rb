@@ -84,8 +84,6 @@ module GoldencobraEvents
             reg = GoldencobraEvents::EventRegistration.find_by_event_pricegroup_id_and_user_id(reg_id,user.id)
             unless reg
               if GoldencobraEvents::EventRegistration.create(:event_pricegroup_id => reg_id, :user_id => user.id, :session_list_of_ids => list_of_pricegroup_ids)
-                m = GoldencobraEvents::EventRegistrationMailer
-                m.registration_email(user).deliver
                 result = true
               end
             end
