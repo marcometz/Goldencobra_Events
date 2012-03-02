@@ -28,6 +28,8 @@
 			.html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>")
 			.fadeIn();
 		$('#register_for_event_<%= @event_to_register.id %>_link').fadeOut(400, function(){});
+    $('.registration_informations').show();
+    $('p.price_informations').fadeOut('slow');
 	<% end %>
 <% end %>
 
