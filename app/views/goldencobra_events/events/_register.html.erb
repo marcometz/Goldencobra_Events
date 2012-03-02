@@ -22,8 +22,8 @@
 			</ul>
 		
 		<% if params[:webcode].blank? && session[:goldencobra_events_webcode].blank? %>
-			<p><%= s("goldencobra_events.event.registration.webcode.description") %></p>
-		  	<%= text_field_tag :webcode, "", :placeholder => "Webcode eingeben"%>
+			<p><%= s("goldencobra_events.event.registration.webcode.description") %>
+		  	<%= text_field_tag :webcode, "", :placeholder => "Aktionscode eingeben"%></p>
 			<% if @article.present? %>
 				<%= hidden_field_tag :article_id, @article.id %>
 			<% end %>
