@@ -28,13 +28,9 @@ module GoldencobraEvents
         # Darstellung des Anmeldeformulars
         else
           result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
+          result << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.price_informations"))}", class: "price_informations")
           return_content = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> "#{@article.eventmoduletype}")
-          
-          # Preisinformationen injecten
-          price_informations = content_tag(:p, "#{raw(s("goldencobra_events.event.registration.price_informations"))}", class: "price_informations")
-          price_informations += render(:partial => "goldencobra_events/events/webcode_form")
-          
-          return_content += content_tag(:div, price_informations, :id => "article_event_webcode_form" )
+          # return_content += content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
           return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data", :class => "button"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
           return_content += content_tag(:div, render(:partial => "goldencobra_events/events/user"), :style => "display:none", :id => "goldencobra_events_enter_account_data_form")
         end
@@ -44,20 +40,6 @@ module GoldencobraEvents
         ""#"no Article and therefore no event Selected"
       end
     end 
-
-    def render_event_pricegroups(event)
-      # Pricegroups
-      pricegroup_items = ""
-      event.event_pricegroups.available.each do |event_pricegroup|
-        event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title)
-        event_pricegroup_item << content_tag(:div, number_to_currency(event_pricegroup.price, :locale => :de), :class => "price")
-        event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
-        pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
-      end
-      pricegroups = content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
-      content = content_tag(:div, raw(pricegroups), class: "pricegroups")
-      return raw(content)
-    end
 
     private
     def event_item_helper(child, depth, current_depth, options)
@@ -145,10 +127,8 @@ module GoldencobraEvents
         content << content_tag(:input, "", type: "checkbox", :id => "register_for_event_#{event.id}_checkbox", "data-id" => event.id, class: "register_for_event_checkbox")
       end
 
-
       # Event
       content << render_object_image(event, "teaser_image") if !event.is_root?
-
 
       content << render_object(event, :title) if !event.is_root?
 
