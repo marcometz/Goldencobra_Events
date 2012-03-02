@@ -134,7 +134,7 @@ module GoldencobraEvents
       return content
     end
 
-    def render_child_block(event, options)
+    def render_child_block(event, options=nil)
       
       content = ""
       
