@@ -9,7 +9,7 @@
 			<% if @user %>
 			  <p><%= @user.title if @user.title.present? %> <%= @user.firstname %> <%= @user.lastname %></p>
 				<% if @user.company && @user.company.title.present? %>
-				  <p><%= @user.company.title %></p>
+				  <p><%= @user.company.title if @user.company.title != "privat Person"%></p>
 				  <p><%= @user.company.location.street %></p>
 				  <p><%= @user.company.location.zip %> <%= @user.company.location.city %></p>
 				<% end %>
