@@ -20,27 +20,29 @@ module GoldencobraEvents
       if params[:article_id] && params[:article_id].present?
         @article = Goldencobra::Article.find(params[:article_id])
       end
+      
       if params[:webcode] && params[:webcode].present? && GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
         session[:goldencobra_events_webcode] = params[:webcode] 
         @webcode = true
+      else
+        @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])
+        if (params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?) || @event_to_register.event_pricegroups.count == 1
+          if params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?
+            epg_id = params[:event][:event_pricegroup]
+          else
+            epg_id = @event_to_register.event_pricegroups.first.id
+          end
+          @registered_event_price_group = GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
+          event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @registered_event_price_group)
+          check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
+          if check
+            session[:goldencobra_event_registration][:pricegroup_ids] << @registered_event_price_group.id
+          else
+            @errors = check
+          end
+        end
       end
       
-      @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])
-      if (params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?) || @event_to_register.event_pricegroups.count == 1
-        if params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?
-          epg_id = params[:event][:event_pricegroup]
-        else
-          epg_id = @event_to_register.event_pricegroups.first.id
-        end
-        @registered_event_price_group = GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
-        event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @registered_event_price_group)
-        check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
-        if check
-          session[:goldencobra_event_registration][:pricegroup_ids] << @registered_event_price_group.id
-        else
-          @errors = check
-        end
-      end
     end
     
     def summary
