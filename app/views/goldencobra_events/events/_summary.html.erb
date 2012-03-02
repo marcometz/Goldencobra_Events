@@ -1,5 +1,6 @@
 <h2 class="boxheader">Anmeldung</h2>
 <h1 class="headline">Zusammenfassung</h1>
+<p>Anmeldung Cloud Forum am 26. und 27. April 2012 in Berlin</p>
 
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
 	<div id="registration_summary">
@@ -28,6 +29,6 @@
 				<% end %>
 		</table>
 	  </div>
-		<p><%= link_to "Ändern", "/anmeldung", class: "button" %>&nbsp;	<%= submit_tag "Verbindlich anmelden" %></p>
+		<p><%= submit_tag "Verbindlich anmelden" %> oder <%= link_to "Ändern", "/anmeldung" %></p>
 	</div>
 <% end %>

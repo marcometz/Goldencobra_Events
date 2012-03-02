@@ -29,8 +29,12 @@ module GoldencobraEvents
         else
           result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
           return_content = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> "#{@article.eventmoduletype}")
-          return_content += content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
-          return_content += content_tag(:p, "#{raw(s("goldencobra_events.event.registration.price_informations"))}", class: "price_informations")
+          
+          # Preisinformationen injecten
+          price_informations = content_tag(:p, "#{raw(s("goldencobra_events.event.registration.price_informations"))}", class: "price_informations")
+          price_informations += render(:partial => "goldencobra_events/events/webcode_form")
+          
+          return_content += content_tag(:div, price_informations, :id => "article_event_webcode_form" )
           return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data", :class => "button"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
           return_content += content_tag(:div, render(:partial => "goldencobra_events/events/user"), :style => "display:none", :id => "goldencobra_events_enter_account_data_form")
         end
@@ -78,7 +82,7 @@ module GoldencobraEvents
         
         cp = ""
         if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
-          cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}")
+          cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}", class: 'reg_info')
           c_start = ""
           c_start << content_tag(:div, raw(child.title ), class: 'child-title') if child.title.present?
           cp << content_tag(:div, raw(c_start), class: 'parent_title')
