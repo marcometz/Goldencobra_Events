@@ -38,8 +38,8 @@ module GoldencobraEvents
       @result = nil
       @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
       @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
-      @errors << "agb can't be blank" unless params["AGB (*)"][:accepted] && params["AGB (*)"][:accepted].present? && params["AGB (*)"][:accepted] == "1"
-      if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params["AGB (*)"][:accepted] && params["AGB (*)"][:accepted].present? && params["AGB (*)"][:accepted] == "1"
+      @errors << "agb can't be blank" unless params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
+      if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
         #Create user
         generated_password = Devise.friendly_token.first(6)
         params[:registration][:user][:password] = generated_password
