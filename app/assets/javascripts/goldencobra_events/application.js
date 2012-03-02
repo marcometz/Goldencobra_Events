@@ -43,7 +43,17 @@ $(document).ready(function() {
 	//	$(this).toggleClass("active");
 	//});
 	//$('#goldencobra_events_article_events .article_event_content .title').trigger("click");
+
+  $('.register_for_event_checkbox').bind("click", function() {
+    id = $(this).attr("data-id")
+    $("a#register_for_event_" + id + "_link").trigger("click")
+  });
 	
+  //$('.register_for_event_checkbox').live("click", function(){
+  //  id = $('.register_for_event_checkbox').attr("data-id")
+  //  $('.register_for_event_checkbox').parent().find("div.register_for_event").children("a#register_for_event_" + id + "_link").trigger("click")
+  //});
+
 	$('#goldencobra_events_enter_account_data').bind("click", function(){
 		$('#goldencobra_events_enter_account_data_form').fadeIn();
 		$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
