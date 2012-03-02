@@ -1,4 +1,4 @@
-<% @event_to_register = @article.event %>
+<% @event_to_register = @article.event if @article.present? %>
 
 
 <% if @registered_event_price_group %>
@@ -25,10 +25,10 @@
 	<% @show_panels = true %>
 <% else %>
 	<% if @event_to_register %>
-		$('div#register_for_event_<%= @event_to_register.id %>')
-			.closest(".article_event_content")
-			.children(".pricegroups")
-			.html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>")
+		//$('div#register_for_event_<%= @event_to_register.id %>')
+		//	.closest(".article_event_content")
+		//	.children(".new_pricegroups")
+			$('li.article_event_id_<%= @event_to_register.id %>').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>")
 			.fadeIn();
 		$('#register_for_event_<%= @event_to_register.id %>_link').fadeOut(400, function(){});
     $('.registration_informations').show();
