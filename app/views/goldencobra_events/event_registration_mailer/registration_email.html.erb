@@ -243,7 +243,7 @@
 	<strong>Rechnungsanschrift</strong><br>
 	<%= @user.title %> <%= @user.firstname %> <%= @user.lastname %><br>
 	<% if @user.company.present? && @user.company.location.present? %>
-		<%= @user.company.title %><br>
+	<%= @user.company.title if @user.company.title != "privat Person"%><br>
 		<%= @user.company.location.street %><br>
 		<%= @user.company.location.zip %> <%= @user.company.location.city %><br>
 	<% end %>
