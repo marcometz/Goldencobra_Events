@@ -10,6 +10,7 @@ goldencobra_events:
         article_events:
             register_text: "Für diese Veranstaltung anmelden"
         registration:
+			email_subject: "Anmeldebestätigung Cloud Forum 2012"
             enter_user_data: "Mit Anmeldung fortfahren"
             chose_event: "Auswählen"
             exclusive_description: "Bitte wählen Sie zwischen einer dieser Optionen"
@@ -90,7 +91,6 @@ goldencobra_events:
                 account_label:
                     password: "Passwort"
                     confirm_password: "Passwort wiederholen"
-			email_subject: "Anmeldebestätigung Cloud Forum 2012"
                     
                     
 
