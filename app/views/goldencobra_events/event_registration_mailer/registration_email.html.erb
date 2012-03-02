@@ -6,7 +6,7 @@
         
         <title>eMobility Summit Mai 2012</title>
 		
-	<style type="text/css">
+	<style type="text/css" data-immutable="true">
 		#outlook a{
 			padding:0;
 		}
@@ -228,30 +228,31 @@
                                                             <div style="color: #505050;font-family: Arial;font-size: 14px;line-height: 150%;text-align: left;"><h1 style="font-family: georgia,serif;color: #5dabd3;display: block;font-size: 34px;font-weight: bold;line-height: 100%;margin-top: 0;margin-right: 0;margin-bottom: 10px;margin-left: 0;text-align: left;" class="h1">
 	Anmeldebestätigung<br>
 	Cloud Forum 2012</h1>
-	<% user = User.find_by_id(session[:goldencobra_event_registration][:user_id]) %>
+	<%# @user = @user.find_by_id(session[:goldencobra_event_registration][:@user_id]) %>
 <p style="font-family:georgia,serif;">
 	<br>
-	<% if user.gender == true %>
-	Sehr geehrter Herr <%= user.firstname %> <%= user.lastname %>,<br>
+	<% if @user.gender == true %>
+	Sehr geehrter Herr <%= @user.firstname %> <%= @user.lastname %>,<br>
 	<% else %>
-	Sehr geehrte Frau <%= user.firstname %> <%= user.lastname %>,<br>
+	Sehr geehrte Frau <%= @user.firstname %> <%= @user.lastname %>,<br>
 	<% end %>
 	<br>
 	vielen Dank für Ihre Anmeldung zum Tagesspiegel Cloud Forum am 26. und 27. April 2012 in Berlin.
 	Die Einzelheiten finden Sie hier noch einmal in der Übersicht:<br>
 	<br>
 	<strong>Rechnungsanschrift</strong><br>
-	<%= user.title %> <%= user.firstname %> <%= user.lastname %><br>
-	<% if user.company.present? && user.company.location.present? %>
-	<%= user.company.title %><br>
-	<%= user.company.location.street %><br>
-	<%= user.company.location.zip %> <%= user.company.location.city %><br>
+	<%= @user.title %> <%= @user.firstname %> <%= @user.lastname %><br>
+	<% if @user.company.present? && @user.company.location.present? %>
+		<%= @user.company.title %><br>
+		<%= @user.company.location.street %><br>
+		<%= @user.company.location.zip %> <%= @user.company.location.city %><br>
+	<% end %>
 	<br>
 	<strong>Teilnahmegebühr:</strong><br>
-	<% event_pg = user.event_registrations.first.event_pricegroup %>
-	Preis netto: <%= (event_pg.price) Euro<br>
+	<% event_pg = @user.event_registrations.first.event_pricegroup %>
+	Preis netto: <%= (event_pg.price) %> Euro<br>
 	zzgl. MwSt: <%= event_pg.price/100*19 %> Euro<br>
-	Preis brutto: <%= (event_pg.price + (event_pg.price/100*19) %> Euro<br>
+	Preis brutto: <%= (event_pg.price + (event_pg.price/100*19)) %> Euro<br>
 	Zahlungsart: Rechnung<br>
 	<br>
 	<strong> Bitte überweisen Sie die Teilnahmegebühr nach Erhalt der Rechnung. Ihre Kongressunterlagen liegen auf dem Cloud Forum für Sie bereit. Bitte registrieren Sie sich vor Ort mit Ihrem Namen beim Anmeldecounter.</strong><br>

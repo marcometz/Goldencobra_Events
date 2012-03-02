@@ -50,6 +50,9 @@ module GoldencobraEvents
         user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
         #Add Company to user if data provided
         if user && params[:registration][:company].present?
+          if params[:registration][:company][:title].blank?
+            params[:registration][:company][:title] = "privat Person"
+          end
           company = Company.create(params[:registration][:company])
           if company.present? && company.id.present?
             user.company = company
@@ -90,8 +93,7 @@ module GoldencobraEvents
         if user.present?
           @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], user)
           @errors << @result if @result != true
-          m = GoldencobraEvents::EventRegistrationMailer
-          m.registration_email(user).deliver
+          GoldencobraEvents::EventRegistrationMailer.registration_email(user).deliver
           reset_session
         else
           @errors << "user_not_exists"
