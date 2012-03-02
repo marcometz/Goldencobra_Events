@@ -49,7 +49,7 @@ $(document).ready(function() {
   $('.register_for_event_checkbox').bind("click", function() {
     id = $(this).attr("data-id")
     $("a#register_for_event_" + id + "_link").trigger("click")
-    $(this).parent().parent().siblings().children("article_event_content").children("input").hide();
+    $(this).parent().parent().siblings().children().children("input").hide();
     $(this).parent().find(".title").append(' (vorgemerkt)');
 	$(this).hide();
   });
