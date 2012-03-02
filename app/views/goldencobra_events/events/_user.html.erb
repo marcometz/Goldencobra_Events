@@ -28,8 +28,8 @@
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.label.gender") %> <span class="asterix">*</span></label>
-			<%= radio_button "registration[user]", "gender", :required => true, true , :id => "male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
-			<%= radio_button "registration[user]", "gender", :required => true, false, :id => "female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
+			<%= radio_button "registration[user]", "gender", true , :id => "male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
+			<%= radio_button "registration[user]", "gender", false, :id => "female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
 		</p>
 		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
