@@ -90,6 +90,7 @@ goldencobra_events:
                 account_label:
                     password: "Passwort"
                     confirm_password: "Passwort wiederholen"
+			email_subject: "Anmeldebestätigung Cloud Forum 2012"
                     
                     
 
