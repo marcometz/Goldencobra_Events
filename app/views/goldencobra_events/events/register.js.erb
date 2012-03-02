@@ -3,13 +3,15 @@
 	$('li.article_event_id_<%= @registered_event_price_group.event_id%>').addClass("completed").find("ul.sub_events").addClass("active").show();
 	
 	// Event als vorgemerkt kennzeichnen
-	$('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("Anmeldung vorgemerkt");
+	$('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("vorgemerkt");
 	
 	// Preisgruppen ausblenden, da Wahl getroffen wurde
 	$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
 	
 	// Button 'Mit Anmeldung fortfahren' einblenden
 	$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
+
+	$('#article_event_webcode_form').hide();
 	
 	<% @registered_event_price_group.event.siblings.each do |sibling| %>
 		$('#register_for_event_<%= sibling.id %>_link').fadeOut(400, function(){});
@@ -17,7 +19,7 @@
 	<% end %>
 
 	// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
-
+	<% @show_panels = true %>
 <% else %>
 	<% if @event_to_register %>
 		$('div#register_for_event_<%= @event_to_register.id %>')

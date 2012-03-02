@@ -51,6 +51,9 @@ module Dummy
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # roadie gem configuration options => https://github.com/Mange/roadie
+    #config.action_mailer.default_url_options
   end
 end
 
