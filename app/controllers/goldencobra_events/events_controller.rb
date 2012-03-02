@@ -90,6 +90,8 @@ module GoldencobraEvents
         if user.present?
           @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], user)
           @errors << @result if @result != true
+          m = GoldencobraEvents::EventRegistrationMailer
+          m.registration_email(user).deliver
           reset_session
         else
           @errors << "user_not_exists"

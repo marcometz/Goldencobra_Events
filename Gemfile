@@ -19,6 +19,11 @@ gem 'goldencobra', :git => "git://github.com/ikusei/Goldencobra.git"
 
 gem "rspec-rails", :group => [:test, :development] # rspec in dev so the rake tasks run properly
 
+# gem 'roadie'
+gem 'premailer-rails3'
+gem 'hpricot', "0.8.6"
+#gem 'hrpicot'#, '~> 0.8.6', git: 'git://github.com/hpricot/hpricot.git'
+
 group :development do
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
   gem 'guard-annotate'

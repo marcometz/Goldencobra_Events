@@ -1,0 +1,16 @@
+Cloudforum 2012 - eine Veranstaltung des Tagesspiegels
+Ihre Agenda für das Cloudforum
+
+F&uuml;r folgende Events haben Sie sich angemeldet:
+<% if @user.event_registrations && @user.event_registrations.present? %>
+  <% @user.event_registrations.each do |ep| %>
+    -------------------------------
+    <%= ep.event_pricegroup.event.title %>
+    <% if ep.event_pricegroup.event.start_date.present? && ep.event_pricegroup.event.end_date.present? %>
+     <%= ep.event_pricegroup.event.start_date %> - <%= ep.event_pricegroup.event.end_date %>
+    <% end %>
+    Ihre reservierte Preisgruppe: <%= ep.event_pricegroup.title %>, <%= number_to_currency(ep.event_pricegroup.price) %></p>
+    -------------------------------
+  <% end %>
+<% end %>
+
