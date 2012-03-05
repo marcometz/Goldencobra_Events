@@ -20,7 +20,8 @@
       Sie haben sich f&uuml;r folgende Panels angemeldet:
       <table class="events">
         <% event_titles = [] %>
-        <%  session[:goldencobra_event_registration][:pricegroup_ids].each do |erg| %>
+        <%  session[:goldencobra_event_registration][:pricegroup_ids].each do |ep| %>
+		<% erg = GoldencobraEvents::EventPricegroup.find(ep) %>
           <% unless erg.event.is_root? || erg.event.parent.title.blank? || event_titles.include?(erg.event.parent.title) %>
             <tr>
               <td><strong><%= erg.event.parent.title %>&nbsp;(<%= erg.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong></td>
