@@ -20,7 +20,7 @@
       Sie haben sich f&uuml;r folgende Panels angemeldet:
       <table class="events">
         <% event_titles = [] %>
-        <%  session[:goldencobra_event_registration][:pricegroup_ids].each do |ep| %>
+        <%  session[:goldencobra_event_registration][:pricegroup_ids].flatten.uniq.each do |ep| %>
 		<% erg = GoldencobraEvents::EventPricegroup.find(ep) %>
           <% unless erg.event.is_root? || erg.event.parent.title.blank? || event_titles.include?(erg.event.parent.title) %>
             <tr>
