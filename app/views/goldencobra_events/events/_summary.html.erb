@@ -16,24 +16,23 @@
 				<% end %>
 			<% end %>
 	  </div>
-<!--    <div class="panel_summary">
+    <div class="panel_summary">
       Sie haben sich f&uuml;r folgende Panels angemeldet:
       <table class="events">
-        <#% event_titles = [] %>
-        <%#= session[:goldencobra_event_registrations] %><br />
-        <%# session[:goldencobra_event_registrations].each do |erg| %>
-          <%# unless erg.event_pricegroup.event.is_root? || erg.event_pricegroup.event.parent.title.blank? || event_titles.include?(erg.event_pricegroup.event.parent.title) %>
+        <% event_titles = [] %>
+        <%  session[:goldencobra_event_registration][:pricegroup_ids].each do |erg| %>
+          <% unless erg.event.is_root? || erg.event.parent.title.blank? || event_titles.include?(erg.event.parent.title) %>
             <tr>
-              <td><strong><%#= erg.event_pricegroup.event.parent.title %>&nbsp;(<%#= erg.event_pricegroup.event.parent.start_date.strftime('%H:%M') %> - <%#= erg.event_pricegroup.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong></td>
-              <%# event_titles << erg.event_pricegroup.event.parent.title %>
+              <td><strong><%= erg.event.parent.title %>&nbsp;(<%= erg.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong></td>
+              <% event_titles << erg.event.parent.title %>
             </tr>
-        <%# end %>
+        <% end %>
           <tr>
-            <td><%#= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %></td>
+            <td><%= erg.event.title unless erg.event.is_root? %></td>
           </tr>
-        <%# end %>
+        <% end %>
       </table>
-    </div> -->
+    </div>
 	  <div class="gebuehren">
 		  <h2>Teilnahmegeb&uuml;hr</h2>
 		<table>
