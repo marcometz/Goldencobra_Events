@@ -250,7 +250,7 @@
   <br>
   <p>Sie haben sich f&uuml;r folgende Panels angemeldet:</p>
   <table class="events">
-    <%= @user.event_registrations.each do |erg| %>
+    <% @user.event_registrations.each do |erg| %>
       <tr>
         <td><%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %></td>
       </tr>
