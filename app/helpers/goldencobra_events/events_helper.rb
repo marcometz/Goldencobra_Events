@@ -28,8 +28,9 @@ module GoldencobraEvents
         # Darstellung des Anmeldeformulars
         else
           result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
+          result << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.price_informations"))}", class: "price_informations")
           return_content = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> "#{@article.eventmoduletype}")
-          return_content += content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
+          # return_content += content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
           return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data", :class => "button"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
           return_content += content_tag(:div, render(:partial => "goldencobra_events/events/user"), :style => "display:none", :id => "goldencobra_events_enter_account_data_form")
         end
@@ -39,20 +40,6 @@ module GoldencobraEvents
         ""#"no Article and therefore no event Selected"
       end
     end 
-
-    def render_event_pricegroups(event)
-      # Pricegroups
-      pricegroup_items = ""
-      event.event_pricegroups.available.each do |event_pricegroup|
-        event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title)
-        event_pricegroup_item << content_tag(:div, number_to_currency(event_pricegroup.price, :locale => :de), :class => "price")
-        event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
-        pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
-      end
-      pricegroups = content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
-      content = content_tag(:div, raw(pricegroups), class: "pricegroups")
-      return raw(content)
-    end
 
     private
     def event_item_helper(child, depth, current_depth, options)
@@ -73,11 +60,16 @@ module GoldencobraEvents
             child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
           end
         end  
-        c_start = content_tag(:div, raw(localize(child.parent.start_date, format: :long) )) if !child.is_root? && child.parent.start_date && @article.eventmoduletype == "registration" && child.has_children?
-        c_end   = content_tag(:div, raw(localize(child.parent.end_date, :format => :long))) if !child.is_root? && child.parent.end_date && @article.eventmoduletype == "registration" && child.has_children?
+
+        
         cp = ""
-        cp << content_tag(:p, raw(c_start), class: 'start_date_time') if !child.is_root? && child.parent.start_date && @article.eventmoduletype == "registration" && child.has_children?
-        cp << content_tag(:p, "#{raw(localize(child.parent.start_date.time, :format => :short))} bis #{raw(localize(child.parent.end_date.time, :format => :short))}", class: 'start_to_end_time_child') if !child.is_root? && child.parent.start_date && child.parent.end_date && @article.eventmoduletype == "registration" && child.has_children?
+        if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
+          cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}", class: 'reg_info')
+          c_start = ""
+          c_start << content_tag(:div, raw(child.title ), class: 'child-title') if child.title.present?
+          cp << content_tag(:div, raw(c_start), class: 'parent_title')
+          cp << content_tag(:div, "#{raw(child.start_date.strftime('%H:%M'))} bis #{raw(child.end_date.strftime('%H:%M'))}", class: 'start_to_end_time_child')
+        end
         cp << content_tag(:li, raw(child_block), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
         return cp
       else
@@ -124,19 +116,19 @@ module GoldencobraEvents
       return content
     end
 
-    def render_child_block(event, options)
+    def render_child_block(event, options=nil)
       
       content = ""
       
       #Anmeldelink anzeigen
       if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration" && !event.is_root?
-        reg_link = link_to("Auswahl merken", "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
+        reg_link = link_to(s("goldencobra_events.event.registration.chose_event"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
         content << content_tag(:div, reg_link, :class => "register_for_event", "data-id" => event.id, :id => "register_for_event_#{event.id}")
+        content << content_tag(:input, "", type: "checkbox", :id => "register_for_event_#{event.id}_checkbox", "data-id" => event.id, class: "register_for_event_checkbox")
       end
 
       # Event
       content << render_object_image(event, "teaser_image") if !event.is_root?
-
 
       content << render_object(event, :title) if !event.is_root?
 
@@ -159,7 +151,7 @@ module GoldencobraEvents
       venue = render_object(event.venue, :title, :description, :location_values) if !@article.eventmoduletype == "registration"
       content << content_tag(:div, raw(venue), class: "venue") if !@article.eventmoduletype == "registration"
 
-      if event.is_root?
+      if event.is_root? && @article.eventmoduletype == "registration"
         @event_to_register = @article.event
         content << content_tag(:div, render(:partial => "goldencobra_events/events/register"), class: 'new_pricegroups')
       end

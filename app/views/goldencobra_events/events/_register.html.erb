@@ -20,6 +20,17 @@
 					<% end %>
 				<% end %>
 			</ul>
+		
+		<% if params[:webcode].blank? && session[:goldencobra_events_webcode].blank? %>
+			<p><%= s("goldencobra_events.event.registration.webcode.description") %>
+		  	<%= text_field_tag :webcode, "", :placeholder => "Aktionscode eingeben"%></p>
+			<% if @article.present? %>
+				<%= hidden_field_tag :article_id, @article.id %>
+			<% end %>
+		
+			<div id="goldencobra_events_webcode_error"></div>	
+		<% end %>
+			
 			<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit" %>
 		<% end %>
 	<% else %>

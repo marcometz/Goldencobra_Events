@@ -10,7 +10,10 @@ goldencobra_events:
         article_events:
             register_text: "Für diese Veranstaltung anmelden"
         registration:
+            price_informations: "Der Preis beinhaltet bestimmte Sachen."
+            child_registration_informations: "Ich melde mich für folgende Unterevents an:"
             enter_user_data: "Mit Anmeldung fortfahren"
+            chose_event: "Auswählen"
             exclusive_description: "Bitte wählen Sie zwischen einer dieser Optionen"
             webcode:
                 title: "Gutschein-Code eingeben"

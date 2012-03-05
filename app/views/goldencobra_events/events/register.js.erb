@@ -1,3 +1,6 @@
+<% @event_to_register = @article.event if @article.present? %>
+
+
 <% if @registered_event_price_group %>
 	// Elternelement als 'registriert' kennzeichnen & Kinder einblenden 
 	$('li.article_event_id_<%= @registered_event_price_group.event_id%>').addClass("completed").find("ul.sub_events").addClass("active").show();
@@ -18,16 +21,23 @@
 		$('li.article_event_id_<%= sibling.id %>').addClass("completed");
 	<% end %>
 
+	// $('#goldencobra_events_enter_account_data_form').fadeIn();
+	// $("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
+	$('div.new_pricegroups').fadeOut('slow');
+   // $('#goldencobra_events_enter_account_data').fadeOut('slow');
+   $('#article_event_webcode_form').fadeOut('slow');
+
 	// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
 	<% @show_panels = true %>
 <% else %>
 	<% if @event_to_register %>
-		$('div#register_for_event_<%= @event_to_register.id %>')
-			.closest(".article_event_content")
-			.children(".pricegroups")
-			.html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>")
+			$('li.article_event_id_<%= @event_to_register.id %> div.new_pricegroups').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>")
 			.fadeIn();
 		$('#register_for_event_<%= @event_to_register.id %>_link').fadeOut(400, function(){});
+	    $('.registration_informations').show();
+		<% if @webcode == true %>
+		    $('p.price_informations').fadeOut('slow');
+		<% end %>
 	<% end %>
 <% end %>
 

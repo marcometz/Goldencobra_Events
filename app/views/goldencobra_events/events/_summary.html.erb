@@ -1,28 +1,50 @@
+<h2 class="boxheader">Anmeldung</h2>
+<h1 class="headline">Zusammenfassung</h1>
+<p>Anmeldung Cloud Forum am 26. und 27. April 2012 in Berlin</p>
+
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
 	<div id="registration_summary">
-	  <h3>Zusammenfassung Anmeldung</h3>
 	  <div class="anschrift">
-		  <h4>Rechnungsanschrift</h4>
+		  <h2>Rechnungsanschrift</h2>
 		  <% @user = User.find(session[:goldencobra_event_registration][:user_id]) if session[:goldencobra_event_registration][:user_id] && session[:goldencobra_event_registration][:user_id].present? %>
 			<% if @user %>
 			  <p><%= @user.title if @user.title.present? %> <%= @user.firstname %> <%= @user.lastname %></p>
 				<% if @user.company && @user.company.title.present? %>
-				  <p><%= @user.company.title %></p>
-				  <p><%= @user.company.location.street %></p>
-				  <p><%= @user.company.location.zip %> <%= @user.company.location.city %></p>
+				  <p><%= @user.company.title if @user.company.title != "privat Person"%><br>
+				  <%= @user.company.location.street %><br>
+				  <%= @user.company.location.zip %> <%= @user.company.location.city %></p>
 				<% end %>
 			<% end %>
 	  </div>
+    <div class="panel_summary">
+      Sie haben sich f&uuml;r folgende Panels angemeldet:
+      <table class="events" style="font-family:georgia,serif;">
+        <% @event_titles = [] %>
+        <% @user.event_registrations.each do |erg| %>
+          <% unless erg.event_pricegroup.event.is_root? || erg.event_pricegroup.event.parent.title.blank? || @event_titles.include?(erg.event_pricegroup.event.parent.title) %>
+            <tr>
+              <td><strong><%= erg.event_pricegroup.event.parent.title %>&nbsp;(<%= erg.event_pricegroup.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event_pricegroup.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong></td>
+              <% @event_titles << erg.event_pricegroup.event.parent.title %>
+            </tr>
+        <% end %>
+          <tr>
+            <td><%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
 	  <div class="gebuehren">
-		  <h4>Teilnahmegeb&uuml;hr</h4>
-			<% if session[:goldencobra_event_registration].present? %>
-				<% erg = session[:goldencobra_event_registration] %>
-				<% event_pg = GoldencobraEvents::EventPricegroup.find(session[:goldencobra_event_registration][:pricegroup_ids].first) %>
-				<p>Preis netto: <%= number_to_currency(event_pg.price) %></p>
-				<p>zzgl MwSt: <%= number_to_currency(event_pg.price/100*19) %></p>
-				<p>Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19)) %></p>
-			<% end %>
+		  <h2>Teilnahmegeb&uuml;hr</h2>
+		<table>
+				<% if session[:goldencobra_event_registration].present? %>
+					<% erg = session[:goldencobra_event_registration] %>
+					<% event_pg = GoldencobraEvents::EventPricegroup.find(session[:goldencobra_event_registration][:pricegroup_ids].first) %>
+					<tr><td>Preis netto: </td><td> <%= number_to_currency(event_pg.price, :locale => :de) %></td></tr>
+					<tr><td>zzgl MwSt: </td><td> <%= number_to_currency(event_pg.price/100*19, :locale => :de) %></td></tr>
+					<tr><td>Preis brutto: </td><td> <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %></td></tr>
+				<% end %>
+		</table>
 	  </div>
-		<p><%= link_to "Aendern", "/anmeldung", class: "button" %>&nbsp;	<%= submit_tag "Verbindlich anmelden" %></p>
+		<p><%= submit_tag "Verbindlich anmelden" %> oder <%= link_to "Ändern", "/anmeldung" %></p>
 	</div>
 <% end %>
