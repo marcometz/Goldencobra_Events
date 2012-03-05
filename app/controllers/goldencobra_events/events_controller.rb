@@ -36,6 +36,8 @@ module GoldencobraEvents
           event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @registered_event_price_group)
           check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
           if check
+            session[:goldencobra_event_registrations] = [] if session[:goldencobra_event_registrations] == nil
+            session[:goldencobra_event_registrations] << session[:goldencobra_event_registration]
             session[:goldencobra_event_registration][:pricegroup_ids] << @registered_event_price_group.id
           else
             @errors = check
