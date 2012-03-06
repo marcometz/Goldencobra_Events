@@ -44,40 +44,14 @@ Feature: See and register events
     When I go to the article page "anmeldung"
     Then I should see "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
     And I should not see "Webcode: OSTERN"
-    And show me the page
-    And I should not see "VIP-Party"
+    And the text "VIP-Party" should not be visible
     When I fill in "webcode" with "falscher Webcode"
     And I press "absenden"
     Then I should see "Der eingegebene Webcode ist ungültig"
     When I fill in "webcode" with "OSTERN"
-    And I press "absenden"
+    And I press "Auswahl Übernehmen"
     Then I should see "Webcode ist gültig: OSTERN"
     And I should not see "Der eingegebene Webcode ist ungültig"
     And I should see "VIP-Party"  
 
-  @javascript
-  Scenario: Go to the program site and look for events with an url parameter and see all events
-    When I visit url "/anmeldung?webcode=OSTERN"
-    Then I should not see "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
-    And I should see "Webcode: OSTERN"
-    And I should see "VIP-Party"
-    And I should not see "VIP Einzelgespräch"
 
-  @javascript
-  Scenario: Go to the program site and register all events
-    When I visit url "/anmeldung?webcode=OSTERN"
-    Then I should see "Cloudforum"
-    And I should see "Anmelden"
-    And I should not see "Kongress"
-    When I click on "Anmelden" within "#register_for_event_1"
-    Then I should see "Anmeldung vorgemerkt"
-    And I should see "Party"
-    And I should see "Party2"
-    And the text "Party2" should be visible
-    And the text "Party" should be visible    
-    And I should not see "Treffen der Generationen"
-    And the text "Abendessen Alternative 1" should be visible
-    And the text "Abendessen Alternative 2" should be visible     
-    And the text "Bitte wählen Sie zwischen einer dieser Optionen" should be visible 
-    When I click on "Anmelden" within "#register_for_event_5"
-    Then I should see "Dieser Event besitzt mehrere Preisgruppen zur Auswahl"
