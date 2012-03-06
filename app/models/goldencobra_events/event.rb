@@ -94,10 +94,10 @@ module GoldencobraEvents
     end
     
     def number_of_participators_label
-      if max_number_of_participators == 0
+      if self.max_number_of_participators == 0
         "&infin;"
       else
-        "#{GoldencobraEvents::EventRegistration.with_event_id(self.id).select("goldencobra_events_event_registrations.id").count}/#{max_number_of_participators}"
+        "#{GoldencobraEvents::EventRegistration.with_event_id(self.id).select("goldencobra_events_event_registrations.id").count}/#{self.max_number_of_participators}"
       end
     end
     

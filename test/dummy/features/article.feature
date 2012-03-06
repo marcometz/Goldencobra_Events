@@ -63,6 +63,7 @@ Feature: Display event informations on article page
      And I should see "Event1" within "div.article_event_content .title"
      And I should see "Ein ganz toller Event" within "div.article_event_content .description"
      And I should see "http://www.google.de" within "div.article_event_content .external_link"
+     And show me the page
      And I should see "25" within "div.article_event_content .number_of_participators_label"
      And I should see "Registration needed" within "div.article_event_content .type_of_event"
      And I should see "No cancellation required" within "div.article_event_content .type_of_registration"
