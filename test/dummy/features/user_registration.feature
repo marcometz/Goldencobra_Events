@@ -38,16 +38,6 @@ Feature: See and register events
   @javascript
   Scenario: Go to the program site, add an event and complete registration with all data needed
     When I go to the article page "anmeldung"
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 #    And I should see "Anmelden" within ".register_for_event_1"
 #    And I click on "Anmelden" within ".register_for_event_1"
 #    Then I should see "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
