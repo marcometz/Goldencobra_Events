@@ -11,8 +11,9 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
     f.inputs "Informationen" do
       f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
     end
-
-    f.buttons
+    f.inputs "" do
+      f.actions
+    end
   end
 
   index do
@@ -30,7 +31,7 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
   end
 
   action_item :only => :show do
-    link_to('New Panel', new_admin_panel_path)
+    link_to('New Panel', new_admin_event_panel_path)
   end
 
 
