@@ -29,11 +29,11 @@ Feature: See and register events
       | Abendessen Alternative 2   |  11       | 10 | 1      |               |  0                          | Registration needed     | 0         |
       | Abendessen Alternative 1   |  11       | 4  | 1      |               |  0                          | Registration needed     | 0         |
     And the following "event_pricegroups" exist:
-      | id | event_id | pricegroup_id | price | max_number_of_participators | available | 
-      | 5  |        5 |             1 |  50.0 |                         500 |      true | 
-      | 6  |        5 |             2 |  30.0 |                         200 |      true | 
-      | 7  |       10 |             3 |  80.0 |                         100 |      true | 
-      | 8  |        1 |             1 |  80.0 |                         500 |      true | 
+      | event_id | pricegroup_id | price | max_number_of_participators | available | 
+      |        5 |             1 |  50.0 |                         500 |      true | 
+      |        5 |             2 |  30.0 |                         200 |      true | 
+      |       10 |             3 |  80.0 |                         100 |      true | 
+      |        1 |             1 |  80.0 |                         500 |      true | 
 
   @javascript
   Scenario: Go to the program site, add an event and complete registration with all data needed
