@@ -7,6 +7,8 @@
   (in goldencobra_events/test/dummy/) rake db:migrate
   cd ../..
   (in goldencobra_events/) rake db:migrate
+  cd test/dummy
+  (in goldencobra_events/test/dummy) rake db:test:prepare
 
 
 == Setup
