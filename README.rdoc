@@ -1,5 +1,13 @@
 = GoldencobraEvents
 
+== Installation
+
+  cd test/dummy  
+  (in goldencobra_events/test/dummy/) rake goldencobra:install:migrations
+  (in goldencobra_events/test/dummy/) rake db:migrate
+  cd ../..
+  (in goldencobra_events/) rake db:migrate
+
 
 == Setup
 
