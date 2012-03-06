@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 05bf96fb4274ecc854d929b246ec3b79829177f2
+  revision: 8515e17bddb45147706124124c44b191b637cfc2
   specs:
     goldencobra (0.0.3)
       activeadmin
@@ -151,7 +151,7 @@ GEM
       rack (~> 1.1)
     fastercsv (1.5.4)
     ffi (1.0.11)
-    formtastic (2.1.0)
+    formtastic (2.1.1)
       actionpack (~> 3.0)
     friendly_id (4.0.1)
     fssm (0.2.8.1)
@@ -198,11 +198,11 @@ GEM
     launchy (2.0.5)
       addressable (~> 2.2.6)
     libv8 (3.3.10.4)
-    mail (2.4.1)
+    mail (2.4.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    meta-tags (1.2.4)
+    meta-tags (1.2.6)
       actionpack
     meta_search (1.1.3)
       actionpack (~> 3.1)
@@ -232,7 +232,7 @@ GEM
     oauth2 (0.5.2)
       faraday (~> 0.7)
       multi_json (~> 1.0)
-    omniauth (1.0.2)
+    omniauth (1.0.3)
       hashie (~> 1.2)
       rack
     omniauth-openid (1.0.1)
@@ -252,7 +252,7 @@ GEM
       method_source (~> 0.7)
       slop (>= 2.4.4, < 3)
     rack (1.4.1)
-    rack-cache (1.1)
+    rack-cache (1.2)
       rack (>= 0.4)
     rack-openid (1.3.1)
       rack (>= 1.1.0)
@@ -328,7 +328,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.31)
+    tzinfo (0.3.32)
     warden (1.1.1)
       rack (>= 1.0)
     xpath (0.1.4)
