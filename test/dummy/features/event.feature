@@ -185,7 +185,7 @@ Feature: Create and manage events
     And I fill in "Price" with "10.5"
     Then I press "Update Event"
     And I should see "Studenten"
-    And I should see "10"
+    And I should see "10.50"
     
   Scenario: add teaser image to existign event
     Given that a confirmed admin exists

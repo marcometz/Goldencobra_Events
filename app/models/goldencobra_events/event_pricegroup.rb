@@ -21,9 +21,9 @@ module GoldencobraEvents
     belongs_to :event
     belongs_to :pricegroup
     attr_accessor :price_raw
-    attr_accessible :price_raw, :pricegroup_id, :price, 
-      :max_number_of_participators, :cancelation_until, :start_reservation,
-      :end_reservation, :available, :webcode
+    #attr_accessible :price_raw, :pricegroup_id, :price, 
+    #  :max_number_of_participators, :cancelation_until, :start_reservation,
+    #  :end_reservation, :available, :webcode, :event_id
     scope :available, where(:available => true)
     scope :publicly_available, where(:webcode => "")
     before_save :convert_price_raw
