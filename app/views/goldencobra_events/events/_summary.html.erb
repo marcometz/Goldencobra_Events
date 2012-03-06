@@ -8,14 +8,33 @@
 		  <h2>Rechnungsanschrift</h2>
 		  <% @user = User.find(session[:goldencobra_event_registration][:user_id]) if session[:goldencobra_event_registration][:user_id] && session[:goldencobra_event_registration][:user_id].present? %>
 			<% if @user %>
-			  <p><%= @user.title if @user.title.present? %> <%= @user.firstname %> <%= @user.lastname %></p>
+			  <p><%= @user.title if @user.title.present? %> <%= @user.firstname %> <%= @user.lastname %><br>
 				<% if @user.company && @user.company.title.present? %>
-				  <p><%= @user.company.title if @user.company.title != "privat Person"%><br>
+				  <%= @user.company.title if @user.company.title != "privat Person"%><br>
 				  <%= @user.company.location.street %><br>
-				  <%= @user.company.location.zip %> <%= @user.company.location.city %></p>
+				  <%= @user.company.location.zip %> <%= @user.company.location.city %>
 				<% end %>
+			  </p>
 			<% end %>
 	  </div>
+    <div class="anschrift">
+      <h2>Sie haben sich f&uuml;r folgende Panels angemeldet:</h2>
+      <table class="events">
+        <% event_titles = [] %>
+        <%  session[:goldencobra_event_registration][:pricegroup_ids].flatten.uniq.each do |ep| %>
+		<% erg = GoldencobraEvents::EventPricegroup.find(ep) %>
+          <% unless erg.event.is_root? || erg.event.parent.title.blank? || event_titles.include?(erg.event.parent.title) %>
+            <tr>
+              <td><strong><%= erg.event.parent.title %>&nbsp;(<%= erg.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong></td>
+              <% event_titles << erg.event.parent.title %>
+            </tr>
+        <% end %>
+          <tr>
+            <td><%= erg.event.title unless erg.event.is_root? %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
 	  <div class="gebuehren">
 		  <h2>Teilnahmegeb&uuml;hr</h2>
 		<table>
