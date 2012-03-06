@@ -113,7 +113,7 @@ module GoldencobraEvents
           content << content_tag(:a, raw(img_content), href: "#{model.send(type).image.url(:large)}", class: "#{model.class.to_s.underscore.gsub('/','_')}_#{type}_image_link")
         end
       end
-      return content
+      return content_tag(:div,raw(content), :style => options[:style], :class => options[:class])
     end
 
     def render_child_block(event, options=nil)
@@ -128,22 +128,18 @@ module GoldencobraEvents
       end
 
       # Event
-      content << render_object_image(event, "teaser_image") if !event.is_root?
-
-      content << render_object(event, :title) if !event.is_root?
-
-      content << render_object(event, :description) if !@article.eventmoduletype == "registration"
-      # event_options = render_object(event, :number_of_participators_label, :type_of_registration)
-      # if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
-      #   event_options << render_object(event, :type_of_event)
-      # else
-      #   event_options << render_object(event, :type_of_event)
-      # end
-      # if event.exclusive == true
-      #   event_options << render_object(event, :exclusive)
-      # end
-      # content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
-      content << render_object(event, :external_link) if !@article.eventmoduletype == "registration"
+      content << render_object_image(event, "teaser_image")
+      content << render_object(event, :title, :description, :external_link)
+      event_options = render_object(event, :number_of_participators_label, :type_of_registration)
+      if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
+        event_options << render_object(event, :type_of_event)
+      else
+        event_options << render_object(event, :type_of_event)
+      end
+      if event.exclusive == true
+        event_options << render_object(event, :exclusive)
+      end
+      content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
       content << content_tag(:div, raw( localize(event.start_date, format: :long) )) if event.start_date && !@article.eventmoduletype == "registration"
       content << content_tag(:div, raw(localize(event.end_date, :format => :long))) if event.end_date && !@article.eventmoduletype == "registration"
 

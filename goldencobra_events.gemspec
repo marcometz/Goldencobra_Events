@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["CC-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.1"
+  s.add_dependency "rails", "~> 3.2.2"
   s.add_dependency "goldencobra"
   s.add_development_dependency "mysql2"
   s.add_development_dependency 'annotate'
