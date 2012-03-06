@@ -8,12 +8,13 @@
 		  <h2>Rechnungsanschrift</h2>
 		  <% @user = User.find(session[:goldencobra_event_registration][:user_id]) if session[:goldencobra_event_registration][:user_id] && session[:goldencobra_event_registration][:user_id].present? %>
 			<% if @user %>
-			  <p><%= @user.title if @user.title.present? %> <%= @user.firstname %> <%= @user.lastname %></p>
+			  <p><%= @user.title if @user.title.present? %> <%= @user.firstname %> <%= @user.lastname %><br>
 				<% if @user.company && @user.company.title.present? %>
-				  <p><%= @user.company.title if @user.company.title != "privat Person"%><br>
+				  <%= @user.company.title if @user.company.title != "privat Person"%><br>
 				  <%= @user.company.location.street %><br>
-				  <%= @user.company.location.zip %> <%= @user.company.location.city %></p>
+				  <%= @user.company.location.zip %> <%= @user.company.location.city %>
 				<% end %>
+			  </p>
 			<% end %>
 	  </div>
     <div class="anschrift">
