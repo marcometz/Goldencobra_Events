@@ -180,7 +180,7 @@ Feature: Create and manage events
     Then I click on "Edit" within "tr#event_1"
     And I should see "Edit Event" within "#page_title"
     When I click on "Add New Event Pricegroup"
-    Then I should see "Studenten"
+    Then I select "Studenten" within ".pricegroup_pricegroup" 
     And I should see "Price"
     And I fill in "Price" with "10.5"
     Then I press "Update Event"
