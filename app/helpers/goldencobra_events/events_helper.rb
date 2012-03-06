@@ -140,12 +140,12 @@ module GoldencobraEvents
         event_options << render_object(event, :exclusive)
       end
       content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
-      content << content_tag(:div, raw( localize(event.start_date, format: :long) )) if event.start_date && !@article.eventmoduletype == "registration"
-      content << content_tag(:div, raw(localize(event.end_date, :format => :long))) if event.end_date && !@article.eventmoduletype == "registration"
+      content << content_tag(:div, raw( localize(event.start_date, format: :long) ), :class => "start_date") if event.start_date
+      content << content_tag(:div, raw( localize(event.end_date, :format => :long)), :class => "end_date") if event.end_date
 
       # Venue
-      venue = render_object(event.venue, :title, :description, :location_values) if !@article.eventmoduletype == "registration"
-      content << content_tag(:div, raw(venue), class: "venue") if !@article.eventmoduletype == "registration"
+      venue = render_object(event.venue, :title, :description, :location_values, :link_url, :phone, :email)
+      content << content_tag(:div, raw(venue), class: "venue")
 
       if event.is_root? && @article.eventmoduletype == "registration"
         @event_to_register = @article.event
