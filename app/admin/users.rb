@@ -1,5 +1,5 @@
 ActiveAdmin.register User, :as => "Applicant" do
-  menu :parent => "Event-Management"
+  menu :parent => "Event-Management", :label => "Besucher"
   
   scope :event_applicants, :default => true
 

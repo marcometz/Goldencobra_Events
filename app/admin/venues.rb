@@ -1,6 +1,6 @@
 ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
   
-  menu :parent => "Event-Management"
+  menu :parent => "Event-Management", :label => "Veranstaltungsorte"
   
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs "Allgemein" do

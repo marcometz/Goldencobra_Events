@@ -1,5 +1,5 @@
 ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
-  menu :parent => "Event-Management", :label => "K&uuml;nstler"
+  menu :parent => "Event-Management", :label => "Kuenstler"
 
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs "Allgemein" do

@@ -1,6 +1,6 @@
 ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
   
-  menu :parent => "Event-Management"
+  menu :parent => "Event-Management", :label => "Sponsoren"
   
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs "Allgemein" do
