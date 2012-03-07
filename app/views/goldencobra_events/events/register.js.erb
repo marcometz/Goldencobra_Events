@@ -20,11 +20,8 @@
 		$('#register_for_event_<%= sibling.id %>_link').fadeOut(400, function(){});
 		$('li.article_event_id_<%= sibling.id %>').addClass("completed");
 	<% end %>
-
-	// $('#goldencobra_events_enter_account_data_form').fadeIn();
-	// $("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
-	$('div.new_pricegroups').fadeOut('slow');
-   // $('#goldencobra_events_enter_account_data').fadeOut('slow');
+   $('p.price_informations').hide();
+   $('div.new_pricegroups').fadeOut('slow');
    $('#article_event_webcode_form').fadeOut('slow');
 
 	// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
