@@ -94,7 +94,7 @@ module GoldencobraEvents
       # Use options={:size => :thumb|:small|:medium|:large|:original} to specify
       # different sizes. It's embedded within an <ahref> and links to the original image
       if options[:size].blank?
-        options = {:size => :thumb}
+        options[:size] = :thumb
       end
 
       content = ""
@@ -129,7 +129,7 @@ module GoldencobraEvents
 
       # Event
       content << render_object(event, :title)
-      content << render_object_image(event, "teaser_image", {:class => "teaser_image"})
+      content << render_object_image(event, "teaser_image", {:class => "teaser_image"} )
       content << render_object(event, :description, :external_link)
       event_options = render_object(event, :number_of_participators_label, :type_of_registration)
       if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
