@@ -24,7 +24,7 @@ goldencobra_events:
                 headline: "Dieser Event wurde zu Ihrer Buchungsliste hinzugefügt"
             to_add:
                 headline: "Bitte wählen Sie die passende Preisgruppe:"
-                submit: "Auswahl übernehmen"
+                submit: "Weiter"
             errors:
                 no_events_selected: "Es wurden noch keine Event gewählt"            
                 no_user_selected: "Bitte füllen Sie Ihre Benutzerdaten aus"
