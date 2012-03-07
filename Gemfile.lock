@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 7edd9cdeb5c47aaf0aa46471500cdd72262fc4a2
+  revision: 4a4f25f727232b9c1e79eb99f76cca6cd75677fe
   specs:
     goldencobra (0.0.3)
       activeadmin
@@ -32,7 +32,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/active_admin.git
-  revision: 9b3a18e774be705ddc0a343538a0bde638cdc94a
+  revision: 48c316f17478a7b58eb5f1cbdaa9e08b7370f9c2
   specs:
     activeadmin (0.4.2)
       bourbon (>= 1.0.0)
