@@ -18,10 +18,13 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.2"
   s.add_dependency "goldencobra"
+  s.add_dependency "sass-rails"
+  s.add_dependency "compass-rails"
   s.add_development_dependency "mysql2"
   s.add_development_dependency 'annotate'
   s.add_development_dependency 'guard-annotate'
   s.add_development_dependency 'pry'
+
   
 
 end

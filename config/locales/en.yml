@@ -1,0 +1,12 @@
+en:
+  active_admin:
+    resource:
+      event: "Event"
+      article: "Article"
+      menue: "Menue"
+      setting: "Setting"      
+      venue: "Venue"
+      event_panel: "Event Panel"
+      sponsor: "Sponsor"
+      pricegroup: "Pricegroup"
+      panel: "Panel"
