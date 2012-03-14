@@ -1,0 +1,16 @@
+<h4>Which event's artists do you want to display?</h4>
+
+<%= semantic_form_for ["admin", @article], :html => {:id => "goldencobra_events_article_artist_list_modul"} do |f| %>
+	<ul>
+		<%= f.input :event_for_artists_id, :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true, id: "article_event_artistlist_id" %>
+		<%= f.input :event_for_artists_levels, :hint => "0: Alle Unterevents waehlen (default)  - 1,2,3...: alle bis zur 1.,2.,3. Ebene waehlen"  %>
+    <% if @article.event_for_artists_id %>
+      <br />
+      <h5>Sort artists</h5>
+      <% GoldencobraEvents::Event.find_by_id(@article.event_for_artists_id).artists.each do |artist| %>
+        <%= artist.title %><%= text_field_tag "article[artist_list_values[#{artist.id}]]", @article.get_artist_sorter(artist.id) %>
+      <% end %>
+    <% end %>
+	</ul>
+	<%= f.submit "Event auswaehlen" %>
+<% end %>

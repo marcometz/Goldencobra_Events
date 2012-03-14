@@ -98,3 +98,14 @@ Feature: Display event informations on article page
      And I should see "toll toll" within "li.artist_item_1 .description"
      And I should see the image "Bild_1.jpg" with id "1"
      And I should see the image "Bild_2.jpg" with id "2"
+
+  Scenario: Edit article in backend and select artist-list as module
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "articles" exist:
+      | title               | url_name          | teaser         | content                    | id | event_id | active | eventmoduletype |
+      | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert." |  2 |        1 | true   | |
+    When I go to the admin list of articles
+    And I click on "Edit" within "tr#article_1"
+    And I select "Event1" within "#article_event_for_artists_id"
+    And I press "Event auswaehlen"
