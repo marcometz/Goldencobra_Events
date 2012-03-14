@@ -6,10 +6,11 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 0966be25f4ffd1c83580c8d7961030b85e1dcfef
+  revision: f3c6067b08c98dc45501e2008aea68b8e6f7d3cf
   specs:
     goldencobra (0.0.3)
       activeadmin
+      activeadmin-cancan
       ancestry
       cancan
       compass-rails
@@ -33,9 +34,9 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/active_admin.git
-  revision: 48c316f17478a7b58eb5f1cbdaa9e08b7370f9c2
+  revision: 5932d53f8ab797771d09af65d85bf727baf952f2
   specs:
-    activeadmin (0.4.2)
+    activeadmin (0.4.3)
       bourbon (>= 1.0.0)
       devise (>= 1.1.2)
       fastercsv
@@ -79,6 +80,10 @@ GEM
       rack-cache (~> 1.1)
       rack-test (~> 0.6.1)
       sprockets (~> 2.1.2)
+    activeadmin-cancan (0.1.1)
+      activeadmin (>= 0.4.0)
+      cancan (>= 1.6.2)
+      rails (>= 3.0)
     activemodel (3.2.2)
       activesupport (= 3.2.2)
       builder (~> 3.0.0)
@@ -117,12 +122,12 @@ GEM
     chunky_png (1.2.5)
     cocaine (0.2.1)
     coderay (1.0.5)
-    compass (0.12.rc.1)
+    compass (0.12.1)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-    compass-rails (1.0.0.rc.3)
-      compass (~> 0.12.rc.0)
+    compass-rails (1.0.0)
+      compass (~> 0.12.0)
     css_parser (1.2.6)
       addressable
       rdoc
@@ -163,7 +168,7 @@ GEM
     ffi (1.0.11)
     formtastic (2.1.1)
       actionpack (~> 3.0)
-    friendly_id (4.0.1)
+    friendly_id (4.0.2)
     fssm (0.2.8.1)
     gherkin (2.9.0)
       json (>= 1.4.6)
@@ -208,7 +213,7 @@ GEM
     launchy (2.0.5)
       addressable (~> 2.2.6)
     libv8 (3.3.10.4)
-    mail (2.4.3)
+    mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -224,7 +229,7 @@ GEM
     multi_json (1.1.0)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
-    nokogiri (1.5.0)
+    nokogiri (1.5.2)
     oa-core (0.0.5)
       rack (~> 1.1)
     oa-oauth (0.0.1)
