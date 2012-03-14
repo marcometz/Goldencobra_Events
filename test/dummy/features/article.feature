@@ -107,5 +107,5 @@ Feature: Display event informations on article page
       | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert." |  2 |        1 | true   | |
     When I go to the admin list of articles
     And I click on "Edit" within "tr#article_1"
-    And I select "Event1" within "#article_event_artistlist_id"
-    And I click on "Event zuweisen"
+    And I select "Event1" within "#article_event_for_artists_id"
+    And I press "Event auswaehlen"

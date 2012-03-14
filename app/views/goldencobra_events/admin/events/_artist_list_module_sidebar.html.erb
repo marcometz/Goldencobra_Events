@@ -2,7 +2,7 @@
 
 <%= semantic_form_for ["admin", @article], :html => {:id => "goldencobra_events_article_artist_list_modul"} do |f| %>
 	<ul>
-		<%= f.input :event_for_artists_id, :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true %>
+		<%= f.input :event_for_artists_id, :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true, id: "article_event_artistlist_id" %>
 		<%= f.input :event_for_artists_levels, :hint => "0: Alle Unterevents waehlen (default)  - 1,2,3...: alle bis zur 1.,2.,3. Ebene waehlen"  %>
     <% if @article.event_for_artists_id %>
       <br />
@@ -12,5 +12,5 @@
       <% end %>
     <% end %>
 	</ul>
-	<%= f.submit "Event zuweisen" %>
+	<%= f.submit "Event auswaehlen" %>
 <% end %>
