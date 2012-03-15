@@ -42,6 +42,13 @@ module GoldencobraEvents
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true)
     
+    scope :parent_ids_in_eq, lambda { |art_id| subtree_of(art_id) }
+    search_methods :parent_ids_in_eq
+    
+    scope :parent_ids_in, lambda { |art_id| subtree_of(art_id) }
+    search_methods :parent_ids_in
+    
+    
     after_save :init_default_pricegroup
     def init_default_pricegroup
       if self.event_pricegroups.count == 0

@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: f3c6067b08c98dc45501e2008aea68b8e6f7d3cf
+  revision: 9dddc8a146abd87c76df0cdd3527e18ece232135
   specs:
     goldencobra (0.0.3)
       activeadmin
@@ -168,7 +168,7 @@ GEM
     ffi (1.0.11)
     formtastic (2.1.1)
       actionpack (~> 3.0)
-    friendly_id (4.0.2)
+    friendly_id (4.0.3)
     fssm (0.2.8.1)
     gherkin (2.9.0)
       json (>= 1.4.6)

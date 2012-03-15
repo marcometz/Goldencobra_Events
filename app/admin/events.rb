@@ -144,6 +144,11 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     active_admin_comments
   end
   
+  sidebar :overview, only: [:index]  do
+    render :partial => "/goldencobra/admin/shared/overview", :object => GoldencobraEvents::Event.roots, :locals => {:link_name => "title", :url_path => "event" }
+  end
+  
+  
   controller do 
     def new 
       @event = GoldencobraEvents::Event.new
