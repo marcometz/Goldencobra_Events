@@ -2,8 +2,11 @@ module GoldencobraEvents
   module EventsHelper
     
     def event_agb_popup(options={})
-      title = options[:title].present? ? options[:title] : "AGBs anzeigen"
-      link_to(title, "/goldencobra_events/display_agb" , :remote => true, :id => "goldencobra_events_agbpopup_link")
+      art_id = Goldencobra::Setting.find_by_title("agb_article_id")
+      if art_id.present? && art_id.value != "0"
+        title = options[:title].present? ? options[:title] : "AGBs anzeigen"
+        link_to(title, "/goldencobra_events/display_agb" , :remote => true, :id => "goldencobra_events_agbpopup_link")
+      end
     end
     
     def render_registration_basket()
