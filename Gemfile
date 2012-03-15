@@ -12,6 +12,7 @@ gem 'compass-rails'
 
 gem "rspec-rails", :group => [:test, :development] # rspec in dev so the rake tasks run properly
 gem 'roadie'
+gem 'uglifier', '>= 1.0.3'
 #gem 'premailer-rails3'
 
 group :development do
