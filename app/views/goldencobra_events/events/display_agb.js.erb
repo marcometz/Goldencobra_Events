@@ -1,4 +1,4 @@
 <% if @agb %>
-	$('#goldencobra_events_event_popup').html("<a class='close'></a><%= escape_javascript(raw(@agb.content))%> ");
+	$('#goldencobra_events_event_popup').html("<a class='close'></a><h2 class='boxheader'><%= @agb.title %></h2><%= escape_javascript(raw(@agb.content))%> ");
 	$('#goldencobra_events_event_popup').overlay().load();
 <% end %>
