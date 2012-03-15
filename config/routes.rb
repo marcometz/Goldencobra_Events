@@ -7,4 +7,5 @@ GoldencobraEvents::Engine.routes.draw do
   match 'events/registration' => 'events#perform_registration', :as => :perform_events_registration
   match 'events/webcode' => 'events#validate_webcode', :as => :validate_webcode
   match 'events/confirmation_registration' => 'events#confirm_registration'
+  match 'display_agb' => "events#display_agb", :as => :display_agb
 end

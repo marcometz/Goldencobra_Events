@@ -1,5 +1,13 @@
-<h4>Select an event tree to display</h4>
+<% if Goldencobra::Setting.for_key('agb_article_id').blank? || Goldencobra::Setting.for_key('agb_article_id') == "0" %>
+	<h4>Achtung!</h4>
+	<p>
+		<b>Es ist noch kein Artikel ausgewählt, der die AGBs beinhaltet!</b><br/>
+		<%= link_to "Tragen Sie bitte hier die ID des entsprechenden Artikels ein" , edit_admin_setting_path(Goldencobra::Setting.find_by_title("agb_article_id")) %>
+	</p>
+<% end %>
 
+
+<h4>Wähle ein Veranstaltungsbaum aus:</h4>
 <%= semantic_form_for ["admin", @article], :html => {:id => "goldencobra_events_article_event_modul"} do |f| %>
 	<ul>
 		<%= f.input :event_id, :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true %>
