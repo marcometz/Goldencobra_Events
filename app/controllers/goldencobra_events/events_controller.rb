@@ -14,6 +14,14 @@ module GoldencobraEvents
       end
     end
     
+    
+    def display_agb
+      art_id = Goldencobra::Setting.find_by_title("agb_article_id")
+      if art_id.present? && art_id.value != "0"
+        @agb = Goldencobra::Article.find_by_id(art_id.value)
+      end
+    end
+    
     def register
       
       @webcode = false
