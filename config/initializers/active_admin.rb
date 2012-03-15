@@ -1,6 +1,6 @@
-unless Rails.env == "production"
-  ActiveAdmin.setup do |config|
+ActiveAdmin.setup do |config|
+  unless Rails.env == "production"
     config.load_paths << "#{GoldencobraEvents::Engine.root}/app/admin/"
-    config.register_stylesheet 'goldencobra_events/active_admin'
   end
+  config.register_stylesheet 'goldencobra_events/active_admin'
 end
