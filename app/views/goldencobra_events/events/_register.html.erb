@@ -33,6 +33,9 @@
 			
 			<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit" %>
 		<% end %>
+    <script>
+      _gaq.push(['_trackPageview', 'Registrierung - Preisgruppe aussuchen']);
+    </script>
 	<% else %>
 		<p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
 	<% end %>
