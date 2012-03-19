@@ -45,12 +45,64 @@ module GoldencobraEvents
         end
         return raw(return_content)
       else
-        #TODO: mandatory article event fields als option parameters if no article exist (a.eventmoduletype, a.event_levels, ) => Article.new(options...)
-        ""#"no Article and therefore no event Selected"
+        if @article && @article.event_for_artists_id != nil
+          depth = @article.event_for_artists_levels || 0
+          event_for_artist_list = GoldencobraEvents::Event.find_by_id(@article.event_for_artists_id)
+          class_name = options[:class] || ""
+          content = ""
+          content << event_artist_list_helper(event_for_artist_list, depth, 1, options)
+          result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
+          return raw(result)
+        else
+          #TODO: mandatory article event fields als option parameters if no article exist (a.eventmoduletype, a.event_levels, ) => Article.new(options...)
+          ""#"no Article and therefore no event Selected"
+        end
       end
     end 
 
     private
+    def event_artist_list_helper(child, depth, current_depth, options)
+      child_block = render_artists_block(child, options) 
+      current_depth = current_depth + 1
+      if child.children && (depth == 0 || current_depth <= depth)
+        content_level = ""
+        if child.depth == 0
+          child.children.active.order("start_date").each do |subchild|
+              if subchild.is_visible?({:article => @article})
+                content_level << event_artist_list_helper(subchild, depth, current_depth, options)
+              end
+          end
+        else
+          child.children.active.order("title").each do |subchild|
+            if subchild.is_visible?({:article => @article})
+                content_level << event_artist_list_helper(subchild, depth, current_depth, options)
+              end
+          end
+        end
+        # end
+        if content_level.present?
+          css_style = "speaker-list"
+          child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
+        end
+        return child_block
+      else
+        return ""
+      end
+    end
+    
+    def render_artists_block(event, options=nil)
+      artists_items = ""
+      event.artist_events.each do |artist_event|
+        artist_event_item = render_object(artist_event.artist, :title, :description, :url_link, :telephone, :email)
+        artist_event_item << render_object(artist_event.artist.location, :complete_location)
+        artist_event_item << render_object_image(artist_event.artist, "images")
+        artists_items << content_tag(:li, raw(artist_event_item), class: "artist_item_#{artist_event.artist.id}")
+      end
+      artists = content_tag(:ul, raw(artists_items), class: "artist_list")
+      content = content_tag(:div, raw(artists), class: "artists")
+      return content
+    end
+
     def event_item_helper(child, depth, current_depth, options)
       if @article.eventmoduletype == "program" || (@article.eventmoduletype == "registration" && (child.has_registerable_childrens? || child.needs_registration? || child.registration_optional?)) 
         child_block = render_child_block(child, options) 
@@ -78,7 +130,6 @@ module GoldencobraEvents
           end
         end  
 
-        
         cp = ""
         if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
           cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}", class: 'reg_info')
