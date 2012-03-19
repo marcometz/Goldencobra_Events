@@ -92,7 +92,7 @@ module GoldencobraEvents
       end
       list.each do |artist_id|
         artist = GoldencobraEvents::Artist.find(artist_id)
-        artist_event_item = render_object(artist, :title, :description, :url_link, :telephone, :email)
+        artist_event_item = render_artist(artist, :title, :description, :url_link, :telephone, :email)
         artist_event_item << render_object(artist.location, :complete_location)
         artist_event_item << render_object_image(artist, "images")
         artists_items << content_tag(:li, raw(artist_event_item), class: "artist_item_#{artist.id}")
@@ -152,6 +152,15 @@ module GoldencobraEvents
         else
           content << content_tag(:div, raw(model.send(a)), class: a) if model && model.respond_to?(a)
         end
+      end
+      return content
+    end
+
+    def render_artist(model, *args)
+      content = ""
+      args.each do |a|
+        content << content_tag(:span, raw(model.send(a)), class: a) if model && model.respond_to?(a)
+        content << "&nbsp;"
       end
       return content
     end
