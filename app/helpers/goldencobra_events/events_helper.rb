@@ -62,25 +62,16 @@ module GoldencobraEvents
 
     private
     def event_artist_list_helper(child, depth, current_depth, options)
-      child_block = render_artists_block(child, options) 
+      child_block = render_artists_block(@article, options) 
       current_depth = current_depth + 1
       if child.children && (depth == 0 || current_depth <= depth)
         content_level = ""
-        if child.depth == 0
-          child.children.active.order("start_date").each do |subchild|
+          child.children.active.each do |subchild|
               if subchild.is_visible?({:article => @article})
                 content_level << event_artist_list_helper(subchild, depth, current_depth, options)
               end
           end
-        else
-          child.children.active.order("title").each do |subchild|
-            if subchild.is_visible?({:article => @article})
-                content_level << event_artist_list_helper(subchild, depth, current_depth, options)
-              end
-          end
-        end
-        # end
-        if content_level.present?
+          if content_level.present?
           css_style = "speaker-list"
           child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
         end
@@ -90,13 +81,21 @@ module GoldencobraEvents
       end
     end
     
-    def render_artists_block(event, options=nil)
+    def render_artists_block(article, options=nil)
       artists_items = ""
-      event.artist_events.each do |artist_event|
-        artist_event_item = render_object(artist_event.artist, :title, :description, :url_link, :telephone, :email)
-        artist_event_item << render_object(artist_event.artist.location, :complete_location)
-        artist_event_item << render_object_image(artist_event.artist, "images")
-        artists_items << content_tag(:li, raw(artist_event_item), class: "artist_item_#{artist_event.artist.id}")
+      if article.artist_list.present?
+        list = article.artist_list.sort {|a,b| a[1].to_i <=> b[1].to_i}
+        list = list.map{|element| element[0]}
+      else
+        list = article.event.artist_events.map {|artist_event| artist_event.artist.id}
+        list = list.sort
+      end
+      list.each do |artist_id|
+        artist = GoldencobraEvents::Artist.find(artist_id)
+        artist_event_item = render_object(artist, :title, :description, :url_link, :telephone, :email)
+        artist_event_item << render_object(artist.location, :complete_location)
+        artist_event_item << render_object_image(artist, "images")
+        artists_items << content_tag(:li, raw(artist_event_item), class: "artist_item_#{artist.id}")
       end
       artists = content_tag(:ul, raw(artists_items), class: "artist_list")
       content = content_tag(:div, raw(artists), class: "artists")

@@ -4,3 +4,10 @@
 		margin-top:10px;
 	}
 }
+
+.sortable li{
+	cursor:move;
+	&:hover{
+		background-color:yellow;
+	}
+}

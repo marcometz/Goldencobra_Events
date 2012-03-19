@@ -65,4 +65,5 @@ $(document).ready(function() {
     $('#goldencobra_events_enter_account_data').fadeOut('slow');
     $('#article_event_webcode_form').fadeOut('slow');
 	});
+	
 });
