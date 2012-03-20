@@ -16,7 +16,7 @@
 
 module GoldencobraEvents
   class Company < ActiveRecord::Base
-    has_many :users, :class_name => User
+    has_many :users, :class_name => GoldencobraEvents::RegistrationUser
     belongs_to :location, :class_name => Goldencobra::Location
     accepts_nested_attributes_for :location
 

@@ -1,7 +1,6 @@
-ActiveAdmin.register User, :as => "Applicant" do
+ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   menu :parent => "Event-Management", :label => "Besucher"
   
-  scope :event_applicants, :default => true
 
   filter :firstname
   filter :lastname
@@ -14,7 +13,6 @@ ActiveAdmin.register User, :as => "Applicant" do
     column "total Price" do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
-    column :newsletter
     default_actions
   end
 

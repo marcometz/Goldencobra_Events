@@ -13,7 +13,7 @@
 
 module GoldencobraEvents
   class EventRegistration < ActiveRecord::Base
-    belongs_to :user, :class_name => User
+    belongs_to :user, :class_name => GoldencobraEvents::RegistrationUser
     belongs_to :event_pricegroup
     attr_accessor :session_list_of_ids 
     scope :active, where(:canceled => false)

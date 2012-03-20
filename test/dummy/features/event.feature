@@ -35,9 +35,8 @@ Feature: Create and manage events
     Then I should see "Event1" within "#event_parent_id"
     When I fill in "event_title" with "Sub of Event1"
     And I press "Create Event"
-    Then I should see "Sub of Event1" within "table"
-    When I click on "Edit Event"
-    Then I should see "Event1" within "#event_parent_id"  
+    Then I should see "Sub of Event1" 
+    Then I should see "Event1" 
     
   Scenario: add an events to an article as a programm site 
     Given that a confirmed admin exists

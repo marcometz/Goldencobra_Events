@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  gender: false
+  email: MyString
+  title: MyString
+  firstname: MyString
+  lastname: MyString
+  function: MyString
+  phone: MyString
+  agb: false
+  company_id: 1
+
+two:
+  user_id: 1
+  gender: false
+  email: MyString
+  title: MyString
+  firstname: MyString
+  lastname: MyString
+  function: MyString
+  phone: MyString
+  agb: false
+  company_id: 1

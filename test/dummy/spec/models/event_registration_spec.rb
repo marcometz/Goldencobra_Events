@@ -17,18 +17,14 @@ describe GoldencobraEvents::EventRegistration do
 
     @new_registration = GoldencobraEvents::EventRegistration.new
     @new_registration.event_pricegroup = @event_pricegroup
-    @user = User.create!(:email=>"test@test.de",
+    @user = GoldencobraEvents::RegistrationUser.create!(:email=>"test@test.de",
                          :firstname => "Tim",
-                         :lastname => "Test",
-                         :password=>"secure12",
-                         :password_confirmation=>"secure12")
+                         :lastname => "Test")
     @new_registration.user = @user
     @new_registration.save
-    @user2 = User.create!(:email=>"second_tester@test.de",
+    @user2 = GoldencobraEvents::RegistrationUser.create!(:email=>"second_tester@test.de",
                          :firstname => "Tina",
-                         :lastname => "Test",
-                         :password=>"secure123",
-                         :password_confirmation=>"secure123")
+                         :lastname => "Test")
   end
 
   describe "Registration" do

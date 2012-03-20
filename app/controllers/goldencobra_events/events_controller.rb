@@ -95,28 +95,33 @@ module GoldencobraEvents
         #user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
         session[:goldencobra_event_registration][:user_data]
         #Create user
-        generated_password = Devise.friendly_token.first(6)
-        session[:goldencobra_event_registration][:user_data][:password] = generated_password
-        session[:goldencobra_event_registration][:user_data][:password_confirmation] = generated_password
-        user = User.create(session[:goldencobra_event_registration][:user_data])
+        reguser = GoldencobraEvents::RegistrationUser.create(session[:goldencobra_event_registration][:user_data])
+        user = User.find_by_email(reguser.email)
+        unless user 
+          generated_password = Devise.friendly_token.first(6)
+          user = User.create(:email => reguser.email, :password => generated_password, :password_confirmation => generated_password, :firstname => reguser.firstname, :lastname => reguser.lastname)
+          user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations")
+        end
+        reguser.user = user
+        reguser.save
         #Add default user Role für event Registrators
-        user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
+        
         #Add Company to user if data provided
-        if user && session[:goldencobra_event_registration][:user_company_data].present?
+        if reguser && session[:goldencobra_event_registration][:user_company_data].present?
           company = Company.create(session[:goldencobra_event_registration][:user_company_data])
           if company.present? && company.id.present?
-            user.company = company
-            user.save
+            reguser.company = company
+            reguser.save
           end
         end
-        if user.present? && user.id.present?
-            session[:goldencobra_event_registration][:user_id] = user.id
+        if reguser.present? && reguser.id.present?
+            session[:goldencobra_event_registration][:user_id] = reguser.id
         end      
         
-        if user.present?
-          @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], user)
+        if reguser.present?
+          @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], reguser)
           @errors << @result if @result != true
-          GoldencobraEvents::EventRegistrationMailer.registration_email(user).deliver
+          GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver
           reset_session
         else
           @errors << "user_not_exists"
