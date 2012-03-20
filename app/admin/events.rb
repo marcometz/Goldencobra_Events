@@ -148,6 +148,10 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   sidebar :overview, only: [:index]  do
     render :partial => "/goldencobra/admin/shared/overview", :object => GoldencobraEvents::Event.roots, :locals => {:link_name => "title", :url_path => "event" }
   end
+
+  sidebar :timeline, only: [:index]  do
+    render :partial => "/goldencobra_events/admin/events/timeline", :object => GoldencobraEvents::Event.active, :locals => {:link_name => "title", :url_path => "event" }
+  end
   
   
   controller do 
