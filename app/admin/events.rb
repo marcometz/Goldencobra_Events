@@ -5,8 +5,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
-      f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true
-      f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true
+      f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
+      f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
       f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true
       f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
@@ -40,7 +40,9 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}
       f.input :external_link
     end
-    f.buttons
+    f.inputs "" do 
+      f.actions
+    end
   end
   
   index do 
@@ -52,7 +54,6 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     column "" do |event|
       result = ""
       result += link_to("New Subevent", new_admin_event_path(:parent => event), :class => "member_link edit_link")
-      result += link_to("View", admin_event_path(event), :class => "member_link view_link")
       result += link_to("Edit", edit_admin_event_path(event), :class => "member_link edit_link")
       result += link_to("Delete", admin_event_path(event), :method => :DELETE, :confirm => "Realy want to delete this Event?", :class => "member_link delete_link")
       raw(result)
@@ -150,6 +151,13 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   
   
   controller do 
+    
+    def show
+      show! do |format|
+         format.html { redirect_to edit_admin_event_path(@event), :flash => flash }
+      end
+    end
+            
     def new 
       @event = GoldencobraEvents::Event.new
       @event.event_pricegroups << GoldencobraEvents::EventPricegroup.new(:price => 0, :max_number_of_participators => 0)
@@ -157,6 +165,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         @parent = GoldencobraEvents::Event.find(params[:parent])
         @event.parent_id = @parent.id
       end
+      @event.set_start_end_dates if @event.parent
     end 
   end
   

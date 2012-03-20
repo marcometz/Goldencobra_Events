@@ -109,19 +109,11 @@ module GoldencobraEvents
         if child.children && (depth == 0 || current_depth <= depth)
           content_level = ""
           if (@article.eventmoduletype == "registration" && child.has_registerable_childrens?)  || @article.eventmoduletype == "program"
-            if child.depth == 0
-              child.children.active.order("start_date").each do |subchild|
-                  if subchild.is_visible?({:webcode => session[:goldencobra_events_webcode], :article => @article})
-                    content_level << event_item_helper(subchild, depth, current_depth, options)
-                  end
+              child.children.active.each do |subchild|
+                if subchild.is_visible?({:webcode => session[:goldencobra_events_webcode], :article => @article})
+                  content_level << event_item_helper(subchild, depth, current_depth, options)
+                end
               end
-            else
-              child.children.active.order("title").each do |subchild|
-                  if subchild.is_visible?({:webcode => session[:goldencobra_events_webcode], :article => @article})
-                    content_level << event_item_helper(subchild, depth, current_depth, options)
-                  end
-              end
-            end
           end
           if content_level.present?
             css_style = @article.eventmoduletype == "registration" ? "display:none" : ""

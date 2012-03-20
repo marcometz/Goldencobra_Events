@@ -40,7 +40,7 @@ module GoldencobraEvents
     belongs_to :venue
     belongs_to :teaser_image, :class_name => Goldencobra::Upload, :foreign_key => "teaser_image_id"
     accepts_nested_attributes_for :event_pricegroups
-    scope :active, where(:active => true)
+    scope :active, where(:active => true).order(:start_date)
     
     scope :parent_ids_in_eq, lambda { |art_id| subtree_of(art_id) }
     search_methods :parent_ids_in_eq
@@ -48,6 +48,15 @@ module GoldencobraEvents
     scope :parent_ids_in, lambda { |art_id| subtree_of(art_id) }
     search_methods :parent_ids_in
     
+    before_save :set_start_end_dates
+    def set_start_end_dates
+      if self.start_date.blank? && self.parent.present?
+        self.start_date = self.parent.start_date
+      end
+      if self.end_date.blank? && self.parent.present?
+        self.end_date = self.parent.end_date
+      end
+    end
     
     after_save :init_default_pricegroup
     def init_default_pricegroup
