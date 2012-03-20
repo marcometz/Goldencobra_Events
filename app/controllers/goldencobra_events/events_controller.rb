@@ -62,35 +62,13 @@ module GoldencobraEvents
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
         #save user data in session
         session[:goldencobra_event_registration][:user_data] = params[:registration][:user]
-      
-        
-        ##Create user
-        #generated_password = Devise.friendly_token.first(6)
-        #params[:registration][:user][:password] = generated_password
-        #params[:registration][:user][:password_confirmation] = generated_password
-        #user = User.create(params[:registration][:user])
-        ##Add default user Role für event Registrators
-        #user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations") if user
-        ##Add Company to user if data provided
-        if user && params[:registration][:company].present?
-         session[:goldencobra_event_registration][:user_company_data] =  params[:registration][:company]
+        if params[:registration][:company].present?
+          session[:goldencobra_event_registration][:user_company_data] =  params[:registration][:company]
           if params[:registration][:company][:title].blank?
             session[:goldencobra_event_registration][:user_company_data][:title] = "privat Person"
           end
         end
-          #company = Company.create(params[:registration][:company])
-          #if company.present? && company.id.present?
-          #  user.company = company
-          #  user.save
-          #end
         
-        #if user.present? && user.id.present?
-        #    session[:goldencobra_event_registration][:user_id] = user.id
-        #else
-        #    session[:goldencobra_event_registration][:user_id] = nil
-        #    @errors << user.errors.messages
-        #    @errors << "user_invalid"
-        #end
       else
           @errors << "agb not accepted"
       end
