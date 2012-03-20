@@ -14,6 +14,8 @@ module GoldencobraEvents
     end
     
     def render_article_events(options={})
+      #reset der Session damit beim erneuten laden keine alten bestelldaten enthalten sind
+      session[:goldencobra_event_registration] = nil if session[:goldencobra_event_registration]
       if params[:webcode] && GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
         session[:goldencobra_events_webcode] = params[:webcode] 
       end
