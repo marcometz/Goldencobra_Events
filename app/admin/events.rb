@@ -5,8 +5,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
-      f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
-      f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year]
+      f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true
+      f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true
       f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true
       f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
@@ -147,6 +147,10 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   
   sidebar :overview, only: [:index]  do
     render :partial => "/goldencobra/admin/shared/overview", :object => GoldencobraEvents::Event.roots, :locals => {:link_name => "title", :url_path => "event" }
+  end
+
+  sidebar :timeline, only: [:index]  do
+    render :partial => "/goldencobra_events/admin/events/timeline", :object => GoldencobraEvents::Event.active, :locals => {:link_name => "title", :url_path => "event" }
   end
   
   
