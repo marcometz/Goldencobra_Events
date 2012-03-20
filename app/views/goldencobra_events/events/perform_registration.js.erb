@@ -23,7 +23,7 @@
 		// $('#goldencobra_events_registration_basket').append("<%#= s("goldencobra_events.event.registration_basket.completed") %>");
     // $.get('/goldencobra_events/events/confirmation_registration');
 		$('.article_content_cloudforum').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/confirmation' ))%>");
-    _gaq.push(['_trackPageview', 'Registrierung - Bestätigung']);
+    _gaq.push(['_trackPageview', '/registrierung/bestaetigung']);
 	<% else %>
 		$('#goldencobra_events_event_popup').html("<%= @result.inspect %>");	
 	<% end %>
