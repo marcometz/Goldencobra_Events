@@ -254,7 +254,7 @@
     <% @user.event_registrations.each do |erg| %>
       <% unless erg.event_pricegroup.event.is_root? || erg.event_pricegroup.event.parent.title.blank? || @event_titles.include?(erg.event_pricegroup.event.parent.title) %>
         <strong><%= erg.event_pricegroup.event.parent.title %>&nbsp;(<%= erg.event_pricegroup.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event_pricegroup.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong><br />
-        <% @event_titles << erg.event_pricegroup.event.parent.title %>
+        <%# @event_titles << erg.event_pricegroup.event.parent.title %>
     <% end %>
     <%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %><br />
     <% end %>
