@@ -23,4 +23,9 @@ describe GoldencobraEvents::EventPricegroup do
     @new_pricegroup.update_attributes(:price_raw => "1500.23")
     @new_pricegroup.price.should == 1500.23
   end
+
+  it "should convert a price with a point and one digit to a correct price" do
+    @new_pricegroup.update_attributes(:price_raw => "10.5")
+    @new_pricegroup.price.should == 10.50
+  end
 end
