@@ -21,8 +21,9 @@
       <h2>Sie haben sich f&uuml;r folgende Panels angemeldet:</h2>
       <table class="events">
         <% event_titles = [] %>
-        <%  session[:goldencobra_event_registration][:pricegroup_ids].flatten.uniq.each do |ep| %>
-		<% erg = GoldencobraEvents::EventPricegroup.find(ep) %>
+
+		<%= ergs = GoldencobraEvents::EventPricegroup.where("goldencobra_events_event_pricegroups.id in (?)",session[:goldencobra_event_registration][:pricegroup_ids]).sorted %>
+        <%  ergs.each do |erg| %>
           <% unless erg.event.is_root? || erg.event.parent.title.blank? || event_titles.include?(erg.event.parent.title) %>
             <tr>
               <td><strong><%= erg.event.parent.title %>&nbsp;(<%= erg.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong></td>

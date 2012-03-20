@@ -27,6 +27,7 @@ module GoldencobraEvents
     scope :available, where(:available => true)
     scope :publicly_available, where(:webcode => "")
     before_save :convert_price_raw
+    scope :sorted, order("goldencobra_events_events.start_date").joins(:event)
 
     def title
       self.pricegroup.title if self.pricegroup
