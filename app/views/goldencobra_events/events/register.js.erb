@@ -1,6 +1,4 @@
 <% @event_to_register = @article.event if @article.present? %>
-
-
 <% if @registered_event_price_group %>
 	// Elternelement als 'registriert' kennzeichnen & Kinder einblenden 
 	$('li.article_event_id_<%= @registered_event_price_group.event_id%>').addClass("completed").find("ul.sub_events").addClass("active").show();
@@ -40,20 +38,3 @@
 
 var _gaq = _gaq || [];
 _gaq.push(['_trackPageview', 'registrierung/preisgruppe_aussuchen']);
-
-<%# if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:pricegroup_ids].present? %>
-//	$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
-<%# end %>
-
-<% if @errors.present? %>
-	
-<% end %>
-
-//$('#goldencobra_events_event_popup').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>");
-//$('#goldencobra_events_event_popup').overlay().load();
-
-<%# if @registered_event_price_group %>
-	//$('#goldencobra_events_registration_basket').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/registration_basket' ))%>");
-<%# end %>
-
-
