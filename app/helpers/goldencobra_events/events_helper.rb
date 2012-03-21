@@ -97,7 +97,7 @@ module GoldencobraEvents
     private  
     
     def render_sponsors_block(sponsor_id)
-      sponsor = GoldencobraEvents::Artist.find(sponsor_id)
+      sponsor = GoldencobraEvents::Sponsor.find(sponsor_id)
       sponsor_item = render_artist(sponsor, :title, :description, :link_url, :telephone, :email, :size_of_sponsorship, :type_of_sponsorship)
       sponsor_item << render_object(sponsor.location, :complete_location)
       sponsor_item << render_object_image(sponsor, "logo")
