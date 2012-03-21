@@ -18,11 +18,14 @@
 		<% end %>
       <br />
 	  <hr />
-      <p><strong>Sponsoren sortieren</strong></h5>
+      <p><strong>Sponsoren auswählen und sortieren</strong></h5>
 		  <ul class="sortable">
 			<% sponsor_to_display.uniq.sort_by{|a| @article.get_sponsor_sorter(a.id)}.each do |sponsor| %>
 				<li>
-  		      		<%= sponsor.title %><%= hidden_field_tag "article[sponsor_list_values[#{sponsor.id}]]", @article.get_sponsor_sorter(sponsor.id), id: "sorter_#{sponsor.id}" %>
+					<%= hidden_field_tag "article[sponsor_list_display_values[#{sponsor.id}]]", 0 %>
+  		      		<%= check_box_tag "article[sponsor_list_display_values[#{sponsor.id}]]", 1, @article.get_sponsor_display(sponsor.id)  %>
+					<%= sponsor.title %>
+					<%= hidden_field_tag "article[sponsor_list_values[#{sponsor.id}]]", @article.get_sponsor_sorter(sponsor.id), id: "sorter_#{sponsor.id}" %>
   		    	</li>
 			<% end %>
 	  	  </ul>			

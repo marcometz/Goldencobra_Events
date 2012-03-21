@@ -22,7 +22,10 @@
 		<ul class="sortable">
 			<% artist_to_display.uniq.sort_by{|a| @article.get_artist_sorter(a.id)}.each do |artist| %>
 				<li>
-		      		<%= artist.title %><%= hidden_field_tag "article[artist_list_values[#{artist.id}]]", @article.get_artist_sorter(artist.id), id: "sorter_#{artist.id}" %>
+					<%= hidden_field_tag "article[artist_list_display_values[#{artist.id}]]", 0 %>
+  		      		<%= check_box_tag "article[artist_list_display_values[#{artist.id}]]", 1, @article.get_artist_display(artist.id)  %>
+		      		<%= artist.title %>
+					<%= hidden_field_tag "article[artist_list_values[#{artist.id}]]", @article.get_artist_sorter(artist.id), id: "sorter_#{artist.id}" %>
 		    	</li>
 			<% end %>
   		</ul>
