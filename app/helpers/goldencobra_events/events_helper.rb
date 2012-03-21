@@ -20,7 +20,7 @@ module GoldencobraEvents
         content = ""
         if @article.sponsor_list.present?
           list = @article.sponsor_list.sort {|a,b| a[1].to_i <=> b[1].to_i}
-          list = list.map{|element| element[0]}.delete_if{|a| a.include?('display_')}.delete_if{|a| @article.sponsor_list["display_#{a}"] == "0"}
+          list = list.map{|element| element[0]}.delete_if{|a| a.include?('display_')}.delete_if{|a| @article.sponsor_list["display_#{a}"].present? && @article.sponsor_list["display_#{a}"] == "0"}
         else
           list = @article.event.sponsors.map{|a| a.id}
           list = list.sort
@@ -41,7 +41,7 @@ module GoldencobraEvents
         content = ""
         if @article.artist_list.present?
           list = @article.artist_list.sort {|a,b| a[1].to_i <=> b[1].to_i}
-          list = list.map{|element| element[0]}.delete_if{|a| a.include?('display_')}.delete_if{|a| @article.artist_list["display_#{a}"] == "0"}
+          list = list.map{|element| element[0]}.delete_if{|a| a.include?('display_')}.delete_if{|a| @article.artist_list["display_#{a}"].present? && @article.artist_list["display_#{a}"] == "0"}
         else
           list = @article.event.artists.map{|a| a.id}
           list = list.sort

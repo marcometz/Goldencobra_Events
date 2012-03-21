@@ -10,7 +10,7 @@ Rails.application.config.to_prepare do
     
     def get_sponsor_sorter(sponsor_id)
       if self.sponsor_list.present?
-        self.sponsor_list[sponsor_id.to_s]
+        self.sponsor_list[sponsor_id.to_s].to_s
       end
     end
     before_save :convert_sponsor_sorter
@@ -29,7 +29,7 @@ Rails.application.config.to_prepare do
     end
     def get_sponsor_display(sponsor_id)
       if self.sponsor_list.present?
-        if self.sponsor_list["display_#{sponsor_id.to_s}"] == "1"
+        if self.sponsor_list["display_#{sponsor_id.to_s}"].present? && self.sponsor_list["display_#{sponsor_id.to_s}"] == "1"
           true
         else
           false
@@ -46,7 +46,7 @@ Rails.application.config.to_prepare do
     attr_accessor :artist_list_display_values
     def get_artist_sorter(artist_id)
       if self.artist_list.present?
-        self.artist_list[artist_id.to_s]
+        self.artist_list[artist_id.to_s].to_s
       end
     end
     before_save :convert_article_sorter
@@ -65,7 +65,7 @@ Rails.application.config.to_prepare do
     end
     def get_artist_display(artist_id)
       if self.artist_list.present?
-        if self.artist_list["display_#{artist_id.to_s}"] == "1"
+        if self.artist_list["display_#{artist_id.to_s}"].present? && self.artist_list["display_#{artist_id.to_s}"] == "1"
           true
         else
           false
