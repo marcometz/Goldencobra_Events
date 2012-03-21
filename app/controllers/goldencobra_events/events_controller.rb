@@ -49,7 +49,6 @@ module GoldencobraEvents
           end
         end
       end
-      
     end
     
     def summary
