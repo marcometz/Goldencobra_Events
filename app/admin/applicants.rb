@@ -19,7 +19,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   show :title => :lastname do
     panel "Applicant" do
       attributes_table_for applicant do
-        [:firstname, :lastname, :title, :email, :gender, :function, :phone, :fax, :facebook, :twitter, :linkedin, :xing, :googleplus, :created_at, :updated_at].each do |aa|
+        [:firstname, :lastname, :title, :email, :gender, :function, :phone, :created_at, :updated_at].each do |aa|
           row aa
         end
       end
