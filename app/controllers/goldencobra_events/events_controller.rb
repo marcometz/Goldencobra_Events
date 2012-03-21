@@ -23,7 +23,6 @@ module GoldencobraEvents
     end
     
     def register
-      
       @webcode = false
       if params[:article_id] && params[:article_id].present?
         @article = Goldencobra::Article.find(params[:article_id])
