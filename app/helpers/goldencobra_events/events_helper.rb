@@ -13,6 +13,47 @@ module GoldencobraEvents
         render :partial => "goldencobra_events/events/registration_basket"
     end
     
+    def render_article_sponsors(options={})
+      class_name = options[:class] || ""
+      if @article && @article.event_for_sponsor_id.present?
+        depth = @article.event_for_sponsor_levels || 0
+        content = ""
+        if @article.sponsor_list.present?
+          list = @article.sponsor_list.sort {|a,b| a[1].to_i <=> b[1].to_i}
+          list = list.map{|element| element[0]}
+        else
+          list = @article.event.sponsors.map{|a| a.id}
+          list = list.sort
+        end
+        list.each do |sponsor_id|
+          content += content_tag(:li, render_sponsors_block(sponsor_id), class: "sponsor_item_#{sponsor_id}")
+        end
+        result = content_tag(:ul, raw(content), :class => "#{class_name} sponsor_list".squeeze(' ').strip)
+        return raw(result)
+      end
+    end
+    
+    
+    def render_article_artists(options={})
+      class_name = options[:class] || ""
+      if @article && @article.event_for_artists_id.present?
+        depth = @article.event_for_artists_levels || 0
+        content = ""
+        if @article.artist_list.present?
+          list = @article.artist_list.sort {|a,b| a[1].to_i <=> b[1].to_i}
+          list = list.map{|element| element[0]}
+        else
+          list = @article.event.artists.map{|a| a.id}
+          list = list.sort
+        end
+        list.each do |artist_id|
+          content += content_tag(:li, render_artists_block(artist_id), class: "artist_item_#{artist_id}")
+        end
+        result = content_tag(:ul, raw(content), :class => "#{class_name} article_list".squeeze(' ').strip)
+        return raw(result)
+      end
+    end
+    
     def render_article_events(options={})
       #reset der Session damit beim erneuten laden keine alten bestelldaten enthalten sind
       session[:goldencobra_event_registration] = nil if session[:goldencobra_event_registration]
@@ -47,61 +88,29 @@ module GoldencobraEvents
         end
         return raw(return_content)
       else
-        if @article && @article.event_for_artists_id != nil
-          depth = @article.event_for_artists_levels || 0
-          event_for_artist_list = GoldencobraEvents::Event.find_by_id(@article.event_for_artists_id)
-          class_name = options[:class] || ""
-          content = ""
-          content << event_artist_list_helper(event_for_artist_list, depth, 1, options)
-          result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
-          return raw(result)
-        else
+        
           #TODO: mandatory article event fields als option parameters if no article exist (a.eventmoduletype, a.event_levels, ) => Article.new(options...)
           ""#"no Article and therefore no event Selected"
-        end
       end
     end 
 
-    private
-    def event_artist_list_helper(child, depth, current_depth, options)
-      child_block = render_artists_block(@article, options) 
-      current_depth = current_depth + 1
-      if child.children && (depth == 0 || current_depth <= depth)
-        content_level = ""
-          child.children.active.each do |subchild|
-              if subchild.is_visible?({:article => @article})
-                content_level << event_artist_list_helper(subchild, depth, current_depth, options)
-              end
-          end
-          if content_level.present?
-          css_style = "speaker-list"
-          child_block = child_block + content_tag(:ul, raw(content_level), class: "sub_events level_#{current_depth}", :style => css_style )
-        end
-        return child_block
-      else
-        return ""
-      end
-    end
+    private  
     
-    def render_artists_block(article, options=nil)
-      artists_items = ""
-      if article.artist_list.present?
-        list = article.artist_list.sort {|a,b| a[1].to_i <=> b[1].to_i}
-        list = list.map{|element| element[0]}
-      else
-        list = article.event.artist_events.map {|artist_event| artist_event.artist.id}
-        list = list.sort
-      end
-      list.each do |artist_id|
+    def render_sponsors_block(sponsor_id)
+      sponsor = GoldencobraEvents::Artist.find(sponsor_id)
+      sponsor_item = render_artist(sponsor, :title, :description, :link_url, :telephone, :email, :size_of_sponsorship, :type_of_sponsorship)
+      sponsor_item << render_object(sponsor.location, :complete_location)
+      sponsor_item << render_object_image(sponsor, "logo")
+      sponsor_item << render_object_image(sponsor, "images")
+      return raw(sponsor_item)      
+    end
+          
+    def render_artists_block(artist_id)
         artist = GoldencobraEvents::Artist.find(artist_id)
         artist_event_item = render_artist(artist, :title, :description, :url_link, :telephone, :email)
         artist_event_item << render_object(artist.location, :complete_location)
         artist_event_item << render_object_image(artist, "images")
-        artists_items << content_tag(:li, raw(artist_event_item), class: "artist_item_#{artist.id}")
-      end
-      artists = content_tag(:ul, raw(artists_items), class: "artist_list")
-      content = content_tag(:div, raw(artists), class: "artists")
-      return content
+        return raw(artist_event_item)
     end
 
     def event_item_helper(child, depth, current_depth, options)

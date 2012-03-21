@@ -9,5 +9,10 @@ ActiveAdmin.register Goldencobra::Article, :as => "Article" do
   sidebar :artist_list_module, only: [:edit] do
     render "/goldencobra_events/admin/events/artist_list_module_sidebar"
   end
+
+  sidebar :sponsor_list_module, only: [:edit] do
+    render "/goldencobra_events/admin/events/sponsor_module_sidebar"
+  end
+
   
 end

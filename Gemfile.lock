@@ -6,11 +6,12 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 8ea6ea540733c5bbc46d9df688fa607365660e7d
+  revision: 38ecc5ce92d42007bdef0cfbe54dbdca45e4161b
   specs:
     goldencobra (1.0.3)
       activeadmin
       activeadmin-cancan
+      acts-as-taggable-on (~> 2.2.2)
       ancestry
       cancan
       compass-rails
@@ -100,6 +101,8 @@ GEM
     activesupport (3.2.2)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    acts-as-taggable-on (2.2.2)
+      rails (~> 3.0)
     addressable (2.2.7)
     ancestry (1.2.5)
       activerecord (>= 2.2.2)
@@ -229,7 +232,7 @@ GEM
       activesupport (~> 3.1)
       polyamorous (~> 0.5.0)
     method_source (0.7.1)
-    mime-types (1.17.2)
+    mime-types (1.18)
     multi_json (1.1.0)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
