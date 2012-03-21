@@ -57,7 +57,7 @@
 		<p>
 			<label>AGB <span class="asterix">*</span></label>
       		<%= check_box("AGB","accepted", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.agb")) %>
-			Ich habe die <a href="/agb" target="_blank" style="margin:0;">AGB</a> gelesen und akzeptiert.
+			Ich habe die <%= event_agb_popup(:title => "AGB") %> gelesen und akzeptiert.
 		</p>
 		<p>
 			<label><span class="asterix">*</span> – Pflichtangabe</label>
