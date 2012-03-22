@@ -1,0 +1,47 @@
+<h4>Welche Sponsor möchten Sie darstellen?</h4>
+
+<%= semantic_form_for ["admin", @article], :html => {:id => "goldencobra_events_article_artist_list_modul"} do |f| %>
+	<ul>
+		<%= f.input :event_for_sponsor_id, label: "Veranstaltung", :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true, id: "article_event_artistlist_id" %><br />
+		<%= f.input :event_for_sponsor_levels, label: "Ebenen waehlen", :hint => "0: Alle Unterevents waehlen (default)  - 1,2,3...: alle bis zur 1.,2.,3. Ebene waehlen", :default => 0  %>
+	</ul><br />
+	<%= f.submit "Event auswaehlen" %>
+    <% if @article.event_for_sponsor_id %>
+		<% sponsor_to_display = [] %>
+		<% master_event = GoldencobraEvents::Event.find_by_id(@article.event_for_sponsor_id) %>
+		<% master_event.subtree.each do |current_event| %>
+		<% if @article.event_for_sponsor_levels == 0 || (master_event.depth + @article.event_for_sponsor_levels.to_i > current_event.depth) %>
+	    		<% current_event.sponsors.each do |sponsor| %>
+		  		<% sponsor_to_display << sponsor %>
+				<% end %>
+		  <% end %>
+		<% end %>
+      <br />
+	  <hr />
+      <p><strong>Sponsoren auswählen und sortieren</strong></h5>
+		  <ul class="sortable">
+			<% sponsor_to_display.uniq.sort_by{|a| @article.get_sponsor_sorter(a.id)}.each do |sponsor| %>
+				<li>
+					<%= hidden_field_tag "article[sponsor_list_display_values[#{sponsor.id}]]", 0 %>
+  		      		<%= check_box_tag "article[sponsor_list_display_values[#{sponsor.id}]]", 1, @article.get_sponsor_display(sponsor.id)  %>
+					<%= sponsor.title %>
+					<%= hidden_field_tag "article[sponsor_list_values[#{sponsor.id}]]", @article.get_sponsor_sorter(sponsor.id), id: "sorter_#{sponsor.id}" %>
+  		    	</li>
+			<% end %>
+	  	  </ul>			
+		<br />
+		<%= f.submit "Zuordnung Speichern" %>
+    <% end %>
+<% end %>
+
+<script>
+	$(function() {
+		$(".sortable" ).sortable({
+   			update: function(event, ui) { 
+				$('ul.sortable li').each(function(index){
+					$(this).find('input').attr('value', index );
+				});
+			}
+		});
+	});
+</script>
