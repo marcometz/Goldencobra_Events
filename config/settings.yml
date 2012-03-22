@@ -14,7 +14,7 @@ goldencobra_events:
             price_informations: "Der Preis beinhaltet bestimmte Sachen."
             child_registration_informations: "Ich melde mich für folgende Unterevents an:"
             enter_user_data: "Mit Anmeldung fortfahren"
-            chose_event: "Auswählen"
+            choose_event: "Auswaehlen"
             exclusive_description: "Bitte wählen Sie zwischen einer dieser Optionen"
             webcode:
                 title: "Gutschein-Code eingeben"

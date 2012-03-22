@@ -201,9 +201,11 @@ module GoldencobraEvents
       
       #Anmeldelink anzeigen
       if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration" && !event.is_root?
-        reg_link = link_to(s("goldencobra_events.event.registration.chose_event"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
+        reg_link = link_to(s("goldencobra_events.event.registration.choose_event"), "/goldencobra_events/event/#{event.id}/register" ,:remote => true, :id => "register_for_event_#{event.id}_link", :class => "button")
         content << content_tag(:div, reg_link, :class => "register_for_event", "data-id" => event.id, :id => "register_for_event_#{event.id}")
-        content << content_tag(:input, "", type: "checkbox", :id => "register_for_event_#{event.id}_checkbox", "data-id" => event.id, class: "register_for_event_checkbox")
+        #content << content_tag(:input, "", type: "checkbox", :id => "register_for_event_#{event.id}_checkbox", "data-id" => event.id, class: "register_for_event_checkbox")
+        content << content_tag(:input, "", type: "radio", :name => "#{event.parent.id}", :id => "register_for_event_#{event.id}_checkbox", "data-id" => event.id, class: "register_for_event_checkbox")
+        content << content_tag(:label, "#{event.title}", :for => "register_for_event_#{event.id}_checkbox", :class => "event_title_checkbox_label")
       end
 
       # Event

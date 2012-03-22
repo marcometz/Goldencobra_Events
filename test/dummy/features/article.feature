@@ -58,7 +58,7 @@ Feature: Display event informations on article page
   Scenario: Visit new Article in frontend and see event informations
     When I go to the article page "dies-ist-ein-test"
      Then I should see "Dies ist ein Test" within "h1"
-     And I should see "Die kleine Maus wandert." within "#article_content"
+     And I should see "Die kleine Maus wandert." within ".article_content"
      # Event
      And I should see "Event1" within "div.article_event_content .title"
      And I should see "Ein ganz toller Event" within "div.article_event_content .description"

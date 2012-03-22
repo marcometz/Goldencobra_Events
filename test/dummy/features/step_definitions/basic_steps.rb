@@ -28,6 +28,9 @@ Then /^I fill in "([^"]*)" within "([^"]*)"$/ do |arg1, arg2|
   page.execute_script("$('#{arg2}').attr('value', '#{arg1}')")
 end
 
+Then /^I choose "([^"]*)"$/ do |arg1|
+  choose(arg1)
+end
 
 Then /^I should see "([^\"]*)"$/ do |arg1|
   page.should have_content(arg1)

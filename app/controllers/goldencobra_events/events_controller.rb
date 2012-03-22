@@ -40,6 +40,15 @@ module GoldencobraEvents
             epg_id = @event_to_register.event_pricegroups.first.id
           end
           @registered_event_price_group = GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
+          #neue Wahl durch radio_button => event ist exklusiv und alle seine (evt.) bisher registrierten Geschwister müssen entfernt werden
+          if @registered_event_price_group.event.parent && @registered_event_price_group.event.parent.exclusive == true
+            siblings_ids = []
+            @registered_event_price_group.event.siblings.each do |sibling|
+              siblings_ids << GoldencobraEvents::EventPricegroup.find_by_event_id(sibling.id).id
+            end
+            session[:goldencobra_event_registration][:pricegroup_ids] -= siblings_ids
+          end
+          
           event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @registered_event_price_group)
           check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
           if check
