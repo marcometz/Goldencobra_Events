@@ -69,7 +69,9 @@ module GoldencobraEvents
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
         #save user data in session
         session[:goldencobra_event_registration][:user_data] = params[:registration][:user]
+			  @summary_user = GoldencobraEvents::RegistrationUser.new(session[:goldencobra_event_registration][:user_data])
         if params[:registration][:company].present?
+          @summary_company = GoldencobraEvents::Company.new(params[:registration][:company])
           session[:goldencobra_event_registration][:user_company_data] =  params[:registration][:company]
           if params[:registration][:company][:title].blank?
             session[:goldencobra_event_registration][:user_company_data][:title] = "privat Person"
@@ -106,7 +108,7 @@ module GoldencobraEvents
         user = User.find_by_email(reguser.email)
         unless user 
           generated_password = Devise.friendly_token.first(6)
-          user = User.create(:email => reguser.email, :password => generated_password, :password_confirmation => generated_password, :firstname => reguser.firstname, :lastname => reguser.lastname)
+          user = User.create(:email => reguser.email, :password => generated_password, :password_confirmation => generated_password, :firstname => reguser.firstname, :lastname => reguser.lastname, :title => reguser.title)
           user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations")
         end
         reguser.user = user

@@ -6,13 +6,12 @@
 	<div id="registration_summary">
 	  <div class="anschrift">
 		  <h2>Rechnungsanschrift</h2>
-		  <% @user = User.find(session[:goldencobra_event_registration][:user_id]) if session[:goldencobra_event_registration][:user_id] && session[:goldencobra_event_registration][:user_id].present? %>
-			<% if @user %>
-			  <p><%= @user.title if @user.title.present? %> <%= @user.firstname %> <%= @user.lastname %><br>
-				<% if @user.company && @user.company.title.present? %>
-				  <%= @user.company.title if @user.company.title != "privat Person"%><br>
-				  <%= @user.company.location.street %><br>
-				  <%= @user.company.location.zip %> <%= @user.company.location.city %>
+			<% if @summary_user %>
+			  <p><%= @summary_user.title if @summary_user.title %> <%= @summary_user.firstname%> <%= @summary_user.lastname %><br>
+				<% if @summary_company %>
+				  <%= @summary_company.title if @summary_company.title != "privat Person"%><br>
+				  <%= @summary_company.location.street %><br>
+				  <%= @summary_company.location.zip %> <%= @summary_company.location.city %>
 				<% end %>
 			  </p>
 			<% end %>
