@@ -16,13 +16,13 @@
 		$('#goldencobra_events_event_popup div.errormessages').html("es ist ein unbekannter Fehler aufgetreten");
 	<% end %>
 <% end %>
-$('#goldencobra_events_article_events').parent().append('<%= @result %>');
+//$('#main_article').append('<%= @result %>');
 <% if @result.present? %>
 	<% if @result == true %>
 		// $('#goldencobra_events_event_popup').html("<%#= s("goldencobra_events.event.registration.completed") %>");
 		// $('#goldencobra_events_registration_basket').append("<%#= s("goldencobra_events.event.registration_basket.completed") %>");
     // $.get('/goldencobra_events/events/confirmation_registration');
-		$('#goldencobra_events_article_events').parent().html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/confirmation' ))%>");
+		$('#main_article').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/confirmation' ))%>");
     _gaq.push(['_trackPageview', '/registrierung/bestaetigung']);
 	<% else %>
 		$('#goldencobra_events_event_popup').html("<%= @result.inspect %>");	
