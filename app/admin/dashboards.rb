@@ -12,7 +12,7 @@ ActiveAdmin::Dashboards.build do
         tr do
           td "#{applicant.lastname}, #{applicant.firstname}"
           td applicant.email
-          td applicant.created_at
+          td l(applicant.created_at, format: :long)
           td link_to("Details", admin_applicant_path(applicant))
         end        
       end

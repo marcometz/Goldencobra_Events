@@ -67,7 +67,7 @@ Feature: See and register events
     Then I should see "Studenten"
     And I choose "Studenten"
     And I press "Weiter"
-    And I check "Party2"
+    And I choose "Party2"
     And I click on "register_for_event_7_link"
     #And I click on "register_for_event_4_link"
     And I click on "Mit Anmeldung fortfahren" within "#goldencobra_events_enter_account_data_wrapper"
