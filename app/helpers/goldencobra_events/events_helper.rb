@@ -84,7 +84,6 @@ module GoldencobraEvents
           # return_content += content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
           return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data", :class => "button"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
           return_content += content_tag(:div, render(:partial => "goldencobra_events/events/user"), :style => "display:none", :id => "goldencobra_events_enter_account_data_form")
-          #return_content += event_agb_popup(:title => options[:agb_title])
         end
         return raw(return_content)
       else
