@@ -1,7 +1,7 @@
 module GoldencobraEvents
   class EventsController < ApplicationController
     
-    around_filter :init_registration_session, :only => [:register, :cancel, :perform_registration]
+    around_filter :init_registration_session, :only => [:register]#, :cancel, :perform_registration]
     
     def validate_webcode
       @webcode = false
@@ -64,18 +64,18 @@ module GoldencobraEvents
       @errors = []
       @result = nil
       @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
-      @errors << "no_user_selected" if session[:goldencobra_event_registration][:user_id].blank? && params[:registration].blank?
+      @errors << "no_user_selected" if params[:registration][:user].blank? && params[:registration].blank?
       @errors << "agb can't be blank" unless params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
         #save user data in session
         session[:goldencobra_event_registration][:user_data] = params[:registration][:user]
 			  @summary_user = GoldencobraEvents::RegistrationUser.new(session[:goldencobra_event_registration][:user_data])
         if params[:registration][:company].present?
-          @summary_company = GoldencobraEvents::Company.new(params[:registration][:company])
           session[:goldencobra_event_registration][:user_company_data] =  params[:registration][:company]
-          if params[:registration][:company][:title].blank?
+          if session[:goldencobra_event_registration][:user_company_data][:title].blank?
             session[:goldencobra_event_registration][:user_company_data][:title] = "privat Person"
           end
+          @summary_company = GoldencobraEvents::Company.new(session[:goldencobra_event_registration][:user_company_data])
         end
         
       else
@@ -101,19 +101,18 @@ module GoldencobraEvents
     
     def perform_registration
       if @errors.blank? && session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_data].present?  && session[:goldencobra_event_registration][:pricegroup_ids].present?
-        #user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
-        session[:goldencobra_event_registration][:user_data]
+
         #Create user
         reguser = GoldencobraEvents::RegistrationUser.create(session[:goldencobra_event_registration][:user_data])
         user = User.find_by_email(reguser.email)
         unless user 
           generated_password = Devise.friendly_token.first(6)
           user = User.create(:email => reguser.email, :password => generated_password, :password_confirmation => generated_password, :firstname => reguser.firstname, :lastname => reguser.lastname, :title => reguser.title)
+          #Add default user Role für event Registrators
           user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations")
         end
         reguser.user = user
         reguser.save
-        #Add default user Role für event Registrators
         
         #Add Company to user if data provided
         if reguser && session[:goldencobra_event_registration][:user_company_data].present?
@@ -123,15 +122,13 @@ module GoldencobraEvents
             reguser.save
           end
         end
+        
         if reguser.present? && reguser.id.present?
             session[:goldencobra_event_registration][:user_id] = reguser.id
-        end      
-        
-        if reguser.present?
-          @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], reguser)
-          @errors << @result if @result != true
-          GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver
-          reset_session
+            @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], reguser)
+            @errors << @result if @result != true
+            GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+            reset_session
         else
           @errors << "user_not_exists"
         end

@@ -32,11 +32,11 @@ Feature: See and register events
       | Abendessen Alternative 1   |  11       | 4  | 1      |               |  0                          | Registration needed     | false      |
     And the following "event_pricegroups" exist:
       | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
-      |        5 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
-      |        5 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
-      |       10 |             3 |  80.0 |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
-      |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
-      |       13 |             4 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" | OSTERN  |
+      |        5 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2013-03-01 12:00:00" |         |
+      |        5 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |         |
+      |       10 |             3 |  80.0 |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |         |
+      |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |         |
+      |       13 |             4 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" | OSTERN  |
 
 
   @javascript
@@ -90,5 +90,6 @@ Feature: See and register events
     And I should see "Berlin"
     And I should see "80.00"
     #And I should see "Abendessen Alternative 1"
-    And I press "Verbindlich anmelden"
+    And I should see "Aendern"
+    And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
