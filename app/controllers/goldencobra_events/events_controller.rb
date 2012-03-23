@@ -127,7 +127,7 @@ module GoldencobraEvents
             session[:goldencobra_event_registration][:user_id] = reguser.id
             @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], reguser)
             @errors << @result if @result != true
-            GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+            GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver if Rails.env == "production"
             reset_session
         else
           @errors << "user_not_exists"
