@@ -1,16 +1,40 @@
 Cloudforum 2012 - eine Veranstaltung des Tagesspiegels
-Ihre Agenda für das Cloudforum
 
-F&uuml;r folgende Events haben Sie sich angemeldet:
-<% if @user.event_registrations && @user.event_registrations.present? %>
-  <% @user.event_registrations.each do |ep| %>
-    -------------------------------
-    <%= ep.event_pricegroup.event.title %>
-    <% if ep.event_pricegroup.event.start_date.present? && ep.event_pricegroup.event.end_date.present? %>
-     <%= ep.event_pricegroup.event.start_date %> - <%= ep.event_pricegroup.event.end_date %>
+	<% if @user.gender == true %>
+    	Sehr geehrter Herr <%= @user.firstname %> <%= @user.lastname %>,
+	<% else %>
+    	Sehr geehrte Frau <%= @user.firstname %> <%= @user.lastname %>,
+	<% end %>
+
+	vielen Dank für Ihre Anmeldung zum Tagesspiegel Cloud Forum am 26. und 27. April 2012 in Berlin.
+	Die Einzelheiten finden Sie hier noch einmal in der Übersicht:
+
+	Rechnungsanschrift
+	<%= @user.title %> <%= @user.firstname %> <%= @user.lastname %>
+	<% if @user.company.present? && @user.company.location.present? %>
+	<%= @user.company.title if @user.company.title != "privat Person"%>
+		<%= @user.company.location.street %>
+		<%= @user.company.location.zip %> <%= @user.company.location.city %>
+	<% end %>
+
+  Sie haben sich f&uuml;r folgende Panels angemeldet:
+
+    <% @event_titles = [] %>
+    <% @user.event_registrations.each do |erg| %>
+      <% unless erg.event_pricegroup.event.is_root? || erg.event_pricegroup.event.parent.title.blank? || @event_titles.include?(erg.event_pricegroup.event.parent.title) %>
+        <%= erg.event_pricegroup.event.parent.title %>(<%= erg.event_pricegroup.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event_pricegroup.event.parent.end_date.strftime('%H:%M') %> Uhr)
     <% end %>
-    Ihre reservierte Preisgruppe: <%= ep.event_pricegroup.title %>, <%= number_to_currency(ep.event_pricegroup.price) %></p>
-    -------------------------------
-  <% end %>
-<% end %>
-
+    <%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %>
+    <% end %>
+	Teilnahmegebühr:
+	<% event_pg = @user.event_registrations..joins(:event_pricegroup).where("price > 0").order("created_at ASC").last.event_pricegroup %>
+	Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %>
+	zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %>
+	Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %>
+	Zahlungsart: Rechnung
+	
+	Bitte überweisen Sie die Teilnahmegebühr nach Erhalt der Rechnung. Ihre Kongressunterlagen liegen auf dem Cloud Forum für Sie bereit. Bitte registrieren Sie sich vor Ort mit Ihrem Namen beim Anmeldecounter.
+	
+	Wir freuen uns, Sie auf dem Cloud Forum begrüßen zu dürfen!
+	
+	Ihr Verlag Der Tagesspiegel
