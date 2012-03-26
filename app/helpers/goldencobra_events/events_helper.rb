@@ -97,10 +97,29 @@ module GoldencobraEvents
     
     def render_sponsors_block(sponsor_id)
       sponsor = GoldencobraEvents::Sponsor.find(sponsor_id)
-      sponsor_item = render_artist(sponsor, :title, :description, :link_url, :telephone, :email, :size_of_sponsorship, :type_of_sponsorship)
-      sponsor_item << render_object(sponsor.location, :complete_location)
-      sponsor_item << render_object_image(sponsor, "logo")
-      sponsor_item << render_object_image(sponsor, "images")
+
+      sponsor_item = ""
+
+      #image block
+      sponsor_image_content = content_tag(:img, sponsor.logo)
+      sponsor_image = content_tag(:p, raw(sponsor_image_content), class: "sponsor-image")
+      sponsor_item << sponsor-image
+
+      #Adress block
+      sponsor_vcard_content = render_object(sponsor.location, :street, :city, :zip, :country)
+      sponsor_address = content_tag(:p, raw(sponsor_vcard_content), class: "adr")
+
+      #Contact block
+      sponsor_contact_content = render_object(sponsor, :telephone, :email, :link_url)
+      sponsor_contact_infos = content_tag(:p, raw(sponsor_contact_content))
+
+      #Adress + Contact
+      sponsor_item << content_tag(:div, "#{raw(sponsor_address} #{raw(sponsor_contact_infos)}"), :class => "vcard")
+      
+      #sponsor_item << render_artist(sponsor, :title, :description, :link_url, :telephone, :email, :size_of_sponsorship, :type_of_sponsorship)
+      #sponsor_item << render_object(sponsor.location, :complete_location)
+      #sponsor_item << render_object_image(sponsor, "logo")
+      #sponsor_item << render_object_image(sponsor, "images")
       return raw(sponsor_item)      
     end
           
@@ -139,9 +158,22 @@ module GoldencobraEvents
           cp << content_tag(:div, raw(c_start), class: 'parent_title')
           cp << content_tag(:div, "#{raw(child.start_date.strftime('%H:%M'))} bis #{raw(child.end_date.strftime('%H:%M'))}", class: 'start_to_end_time_child')
         end
-        cp << content_tag(:li, raw(child_block), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
-        return cp
-      else
+        cp << child_block
+
+        c = content_tag(:li, raw(cp), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
+        return c
+
+#         cp = ""
+#        if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
+#          cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}", class: 'reg_info')
+#          c_start = ""
+#          c_start << content_tag(:div, raw(child.title ), class: 'child-title') if child.title.present?
+#          cp << content_tag(:div, raw(c_start), class: 'parent_title')
+#          cp << content_tag(:div, "#{raw(child.start_date.strftime('%H:%M'))} bis #{raw(child.end_date.strftime('%H:%M'))}", class: 'start_to_end_time_child')
+#        end
+#        cp << content_tag(:li, raw(child_block), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
+#        return cp
+     else
         return ""
       end
     end
