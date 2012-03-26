@@ -181,10 +181,17 @@ module GoldencobraEvents
     def render_object(model, *args)
       content = ""
       args.each do |a|
-        if a == :start_date
-          content << content_tag(:div, raw(localize(model.start_date, :format => :long)), class: a) if model && model.respond_to?(a)
-        else
-          content << content_tag(:div, raw(model.send(a)), class: a) if model && model.respond_to?(a)
+        if model && model.respond_to?(a)
+          if a == :start_date
+            content << content_tag(:div, raw(localize(model.start_date, :format => :long)), class: a)
+          elsif a == (:link_url || :url || :link)
+            content << content_tag(:a, raw(model.send(a)), class: a)
+          elsif a == :email
+            email_link = "linkto: #{model.send(a)}"
+            content << content_tag(:a, email_link, class: a)
+          else
+            content << content_tag(:div, raw(model.send(a)), class: a)
+          end
         end
       end
       return content
