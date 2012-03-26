@@ -103,7 +103,7 @@ module GoldencobraEvents
       #image block
       sponsor_image_content = content_tag(:img, sponsor.logo)
       sponsor_image = content_tag(:p, raw(sponsor_image_content), class: "sponsor-image")
-      sponsor_item << sponsor-image
+      sponsor_item << sponsor_image
 
       #Adress block
       sponsor_vcard_content = render_object(sponsor.location, :street, :city, :zip, :country)
