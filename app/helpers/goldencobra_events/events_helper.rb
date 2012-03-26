@@ -101,7 +101,7 @@ module GoldencobraEvents
       sponsor_item = ""
 
       #image block
-      sponsor_image_content = content_tag(:img, sponsor.logo)
+      sponsor_image_content = content_tag(:img, '', src: "#{sponsor.logo.image}", class: "sponsor_logo")
       sponsor_image = content_tag(:p, raw(sponsor_image_content), class: "sponsor-image")
       sponsor_item << sponsor_image
 
@@ -116,6 +116,7 @@ module GoldencobraEvents
       #Adress + Contact
       sponsor_item << content_tag(:div, raw(sponsor_items_vcard), :class => "vcard")
       
+      sponsor_item << render_object(sponsor, :description)
       #sponsor_item << render_artist(sponsor, :title, :description, :link_url, :telephone, :email, :size_of_sponsorship, :type_of_sponsorship)
       #sponsor_item << render_object(sponsor.location, :complete_location)
       #sponsor_item << render_object_image(sponsor, "logo")
@@ -185,10 +186,9 @@ module GoldencobraEvents
           if a == :start_date
             content << content_tag(:div, raw(localize(model.start_date, :format => :long)), class: a)
           elsif a == (:link_url || :url || :link)
-            content << content_tag(:a, raw(model.send(a)), class: a)
+            content << content_tag(:a, raw(model.send(a)), href: "#{model.send(a)}", class: a)
           elsif a == :email
-            email_link = "linkto: #{model.send(a)}"
-            content << content_tag(:a, email_link, class: a)
+            content << content_tag(:a, model.send(a), href: "mailto:#{model.send(a)}", class: a)
           else
             content << content_tag(:div, raw(model.send(a)), class: a)
           end
