@@ -27,7 +27,7 @@ Cloudforum 2012 - eine Veranstaltung des Tagesspiegels
     <%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %>
     <% end %>
 	Teilnahmegebühr:
-	<% event_pg = @user.event_registrations..joins(:event_pricegroup).where("price > 0").order("created_at ASC").last.event_pricegroup %>
+	<% event_pg = @user.event_registrations.joins(:event_pricegroup).where("price > 0").order("created_at ASC").last.event_pricegroup %>
 	Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %>
 	zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %>
 	Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %>
