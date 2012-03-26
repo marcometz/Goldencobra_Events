@@ -116,7 +116,8 @@ module GoldencobraEvents
       #Adress + Contact
       sponsor_item << content_tag(:div, raw(sponsor_items_vcard), :class => "vcard")
       
-      sponsor_item << content_tag(:p, raw(sponsor.description), class: "sponsor-description")
+      sponsor_description = content_tag(:p, raw(sponsor.description))
+      sponsor_item << content_tag(:div, raw(sponsor_description), class: "sponsor-description")
       #sponsor_item << render_artist(sponsor, :title, :description, :link_url, :telephone, :email, :size_of_sponsorship, :type_of_sponsorship)
       #sponsor_item << render_object(sponsor.location, :complete_location)
       #sponsor_item << render_object_image(sponsor, "logo")
