@@ -107,14 +107,14 @@ module GoldencobraEvents
 
       #Adress block
       sponsor_vcard_content = render_object(sponsor.location, :street, :city, :zip, :country)
-      sponsor_address = content_tag(:p, raw(sponsor_vcard_content), class: "adr")
+      sponsor_items_vcard = content_tag(:p, raw(sponsor_vcard_content), class: "adr")
 
       #Contact block
       sponsor_contact_content = render_object(sponsor, :telephone, :email, :link_url)
-      sponsor_contact_infos = content_tag(:p, raw(sponsor_contact_content))
+      sponsor_items_vcard << content_tag(:p, raw(sponsor_contact_content))
 
       #Adress + Contact
-      sponsor_item << content_tag(:div, "#{raw(sponsor_address)} #{raw(sponsor_contact_infos)}", :class => "vcard")
+      sponsor_item << content_tag(:div, raw(sponsor_items_vcard), :class => "vcard")
       
       #sponsor_item << render_artist(sponsor, :title, :description, :link_url, :telephone, :email, :size_of_sponsorship, :type_of_sponsorship)
       #sponsor_item << render_object(sponsor.location, :complete_location)
