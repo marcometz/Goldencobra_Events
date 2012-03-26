@@ -185,10 +185,10 @@ module GoldencobraEvents
           if a == :start_date
             content << content_tag(:div, raw(localize(model.start_date, :format => :long)), class: a)
           elsif a == (:link_url || :url || :link)
-            content << content_tag(:a, raw(model.send(a)), raw(model.send(a)), class: a)
+            content << content_tag(:a, raw(model.send(a)), class: a)
           elsif a == :email
             email_link = "linkto: #{model.send(a)}"
-            content << content_tag(:a,  model.send(a), email_link, class: a)
+            content << content_tag(:a, email_link, class: a)
           else
             content << content_tag(:div, raw(model.send(a)), class: a)
           end
