@@ -258,7 +258,7 @@
     <%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %><br />
     <% end %>
 	<strong>Teilnahmegebühr:</strong><br>
-	<% event_pg = @user.event_registrations.last.event_pricegroup %>
+	<% event_pg = @user.event_registrations..joins(:event_pricegroup).where("price > 0").order("created_at ASC").last.event_pricegroup %>
 	Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %><br>
 	zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %><br>
 	Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %><br>
