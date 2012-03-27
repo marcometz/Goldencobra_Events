@@ -109,7 +109,9 @@ module GoldencobraEvents
 
       #Adress block
       if sponsor.location
-        sponsor_vcard_content = render_object(sponsor.location, :street, :zip, :city, :country)
+        sponsor_vcard_content = content_tag(:p, sponsor.location.street)
+        sponsor_vcard_content << content_tag(:p, "#{sponsor.location.zip} #{sponsor.location.city}")
+        sponsor_vcard_content << content_tag(:p, sponsor.location.country)
         sponsor_items_vcard = content_tag(:div, raw(sponsor_vcard_content), class: "adr")
       end
 
