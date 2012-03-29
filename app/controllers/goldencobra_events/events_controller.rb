@@ -28,10 +28,10 @@ module GoldencobraEvents
         @article = Goldencobra::Article.find(params[:article_id])
       end
       
-      if params[:webcode] && params[:webcode].present? && GoldencobraEvents::EventPricegroup.available.select(:webcode).map(&:webcode).include?(params[:webcode])
+      if params[:webcode] && params[:webcode].present?
         session[:goldencobra_events_webcode] = params[:webcode] 
         @webcode = true
-      end
+      end      
       if params[:id] && params[:id].present?
         @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])
         if (params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?) || @event_to_register.event_pricegroups.count == 1
