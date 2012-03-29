@@ -3,10 +3,7 @@
 	// Elternelement als 'registriert' kennzeichnen & Kinder einblenden 
 	// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').addClass("completed").find("ul.sub_events").addClass("active").show();
 	$('li.article_event_id_<%= @registered_event_price_group.event_id%>').find("ul.sub_events").addClass("active").show();
-	
-	// Event als vorgemerkt kennzeichnen und den Anmelden Button entfernen
-	// $('div#register_for_event_<%= @registered_event_price_group.event_id %>').html("vorgemerkt");
-		
+			
 	// Preisgruppen ausblenden, da Wahl getroffen wurde
 	$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
 	
@@ -15,11 +12,6 @@
 
 	$('#article_event_webcode_form').hide();
 	
-	<%# @registered_event_price_group.event.siblings.each do |sibling| %>
-		// $('#register_for_event_<%#= sibling.id %>_link').fadeOut(400, function(){});
-		// $('li.article_event_id_<%#= sibling.id %>').addClass("completed");
-	<%# end %>
-
 	// Wenn radiobuttons genutzt werden, wird hier das vorgemerkt, des bereits gemerkten Events entfernt
 	<% siblings_array = @registered_event_price_group.event.siblings %>
 	<% siblings_array.each do |sibling| %>

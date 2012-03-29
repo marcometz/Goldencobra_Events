@@ -88,8 +88,8 @@ module GoldencobraEvents
     
     def pricegroups_with_webcode(webcode)
       pricegroups = []
-      pricegroups << self.event_pricegroups.where(:webcode => "")
-      pricegroups << self.event_pricegroups.where(:webcode => webcode)
+      pricegroups << self.event_pricegroups.available.where(:webcode => "")
+      pricegroups << self.event_pricegroups.available.where(:webcode => webcode)
       return pricegroups.flatten
     end
     
