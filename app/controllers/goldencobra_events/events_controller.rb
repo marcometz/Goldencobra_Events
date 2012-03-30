@@ -29,8 +29,13 @@ module GoldencobraEvents
       end
       
       if params[:webcode] && params[:webcode].present?
-        session[:goldencobra_events_webcode] = params[:webcode] 
+        session[:goldencobra_events_webcode] = params[:webcode]
         @webcode = true
+        if GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
+          @valid_webcode = true
+        else
+          @valid_webcode = false
+        end
       end      
       if params[:id] && params[:id].present?
         @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])

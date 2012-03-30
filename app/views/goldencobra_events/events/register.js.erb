@@ -37,5 +37,12 @@
 	<% end %>
 <% end %>
 
+// Webcode Validierungsanzeigen
+<% if @valid_webcode == true %>
+	$('#goldencobra_events_webcode_error').append('<p style="color: green;">Webcode ist g&uuml;ltig</p>');
+<% elsif @valid_webcode == false %>
+	$('#goldencobra_events_webcode_error').append('<p style="color: red;">Webcode ist nicht g&uuml;ltig</p>');
+<% end %>
+
 var _gaq = _gaq || [];
 _gaq.push(['_trackPageview', 'registrierung/preisgruppe_aussuchen']);
