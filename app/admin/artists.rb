@@ -4,7 +4,7 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs "Allgemein" do
       f.input :title, :hint => "Required"
-      f.input :description
+      f.input :description, :input_html => { :class =>"tinymce"}
       f.input :url_link, :label => "Homepage Link"
       f.input :email
       f.input :telephone

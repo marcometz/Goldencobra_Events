@@ -5,7 +5,7 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs "Allgemein" do
       f.input :title
-      f.input :description
+      f.input :description, :input_html => { :class =>"tinymce"}
       f.input :link_url, :label => "Homepage Link"
       f.input :size_of_sponsorship, :as => :select, :collection => GoldencobraEvents::Sponsor::SponsorshipSize.map {|c| c}, :include_blank => false
       f.input :email

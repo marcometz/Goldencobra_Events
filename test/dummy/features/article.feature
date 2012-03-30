@@ -73,7 +73,7 @@ Feature: Display event informations on article page
      # Pricegroup
      And I should see "1" within "li.pricegroup_item_1 .pricegroup_id"
      And I should see "Studenten" within "li.pricegroup_item_1 .title"
-     And I should see "50.0" within "li.pricegroup_item_1 .price"
+     And I should see "50,0" within "li.pricegroup_item_1 .price"
      And I should see "500" within "li.pricegroup_item_1 .number_of_participators_label"
      And I should see "2012-02-01 12:00:00" within "li.pricegroup_item_1 .start_reservation"
      And I should see "2012-04-01 12:00:00" within "li.pricegroup_item_1 .cancelation_until"

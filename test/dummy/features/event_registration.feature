@@ -57,7 +57,7 @@ Feature: See and register events
   @javascript
   Scenario: Go to the program site and look for events with an url parameter and see all events
     When I visit url "/anmeldung?webcode=OSTERN"
-    Then I should not see "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
+    #Then I should not see "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
     And I should see "VIP-Party"
     And I should not see "VIP Einzelgespräch"
 
@@ -88,7 +88,7 @@ Feature: See and register events
     And I should see "Zossener Str. 55"
     And I should see "10961"
     And I should see "Berlin"
-    And I should see "80.00"
+    And I should see "80,00"
     #And I should see "Abendessen Alternative 1"
     And I should see "Aendern"
     And I press "Verbindlich bestellen"
