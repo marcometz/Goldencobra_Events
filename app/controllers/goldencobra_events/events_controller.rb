@@ -72,6 +72,10 @@ module GoldencobraEvents
       @errors << "no_events_selected" if session[:goldencobra_event_registration][:pricegroup_ids].blank?
       @errors << "no_user_selected" if params[:registration][:user].blank? && params[:registration].blank?
       @errors << "agb can't be blank" unless params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
+      unless params[:registration][:user][:email] =~ /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/
+        params[:registration][:user] = ""
+        @errors << "email wrong"
+      end
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
         #save user data in session
         session[:goldencobra_event_registration][:user_data] = params[:registration][:user]
