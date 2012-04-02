@@ -2,54 +2,72 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   menu :parent => "Event-Management", :label => "Besucher"
   
 
-  filter :firstname
-  filter :lastname
-  filter :email
+  filter :firstname, :label => "Vorname"
+  filter :lastname, :label => "Nachname"
+  filter :email, :label => "E-Mail"
 
   index do
-    column :firstname
-    column :lastname
-    column :email
-    column "total Price" do |u|
+    column t(:firstname), :sortable => :firstname do |applicant|
+      applicant.firstname
+    end
+    column t(:lastname), :sortable => :lastname do |applicant|
+      applicant.lastname
+    end
+    column t(:email), :sortable => :email do |applicant|
+      applicant.email
+    end
+    
+    column t(:total_price) do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
     default_actions
   end
 
   show :title => :lastname do
-    panel "Applicant" do
+    panel t('active_admin.resource.applicant') do
       attributes_table_for applicant do
-        [:firstname, :lastname, :title, :email, :gender, :function, :phone, :created_at, :updated_at].each do |aa|
-          row aa
-        end
+        row(t('attributes.user.firstname')){applicant.firstname}
+        row(t('attributes.user.lastname')){applicant.lastname}
+        row(t('attributes.user.title')){applicant.title}
+        row(t('attributes.user.gender')){applicant.gender}
+        row(t('attributes.user.function')){applicant.function}
+        row(t('attributes.user.phone')){applicant.phone}
+        row(t('attributes.created_at')){applicant.created_at}
+        row(t('attributes.updated_at')){applicant.updated_at}
       end
     end #end panel applicant
-    panel "Company" do
+    panel t('active_admin.resource.company') do
       if applicant.company
-        attributes_table_for applicant.company do
-          [:title, :legal_form, :phone, :fax, :homepage, :sector].each do |aa|
-            row aa
+          attributes_table_for applicant.company do
+            row(t('attributes.company.title')){applicant.company.title}
+            row(t('attributes.company.legal_form')){applicant.company.legal_form}
+            row(t('attributes.company.phone')){applicant.company.phone}
+            row(t('attributes.company.fax')){applicant.company.fax}
+            row(t('attributes.company.homepage')){applicant.company.homepage}
+            row(t('attributes.company.sector')){applicant.company.sector}
           end
-        end  
         if applicant.company.location 
           attributes_table_for applicant.company.location do
-            [:street, :zip, :city, :region, :country].each do |aa|
-              row aa
-            end
-          end   
+            row(t('attributes.location.street')){applicant.company.location.street}
+            row(t('attributes.location.zip')){applicant.company.location.zip}
+            row(t('attributes.location.city')){applicant.company.location.city}
+            row(t('attributes.location.region')){applicant.company.location.region}
+            row(t('attributes.location.country')){applicant.company.location.country}
+          end
         end
       end   
     end
-    panel "Registrations" do
+    panel t('active_admin.resource.event_registration') do
       table do
         tr do
-          ["Event title", "Pricegroup title", "Price", "Registered at"].each do |sa|
-            th sa
-          end
+          th t('attributes.event.title')
+          th t('attributes.event_pricegroup.title.')
+          th t('attributes.event_pricegroup.price')
+          th t('attributes.created_at')
         end
         applicant.event_registrations.each do |ereg|
           tr do
-            [ereg.event_pricegroup.event.title, ereg.event_pricegroup.title, number_to_currency(ereg.event_pricegroup.price, :locale => :de), ereg.created_at].each do |esa|
+            [ereg.event_pricegroup.event.title, ereg.event_pricegroup.title, number_to_currency(ereg.event_pricegroup.price, :locale => :de), l(ereg.created_at, format: :short)].each do |esa|
               td esa
             end
           end
