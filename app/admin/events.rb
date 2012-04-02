@@ -28,10 +28,10 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     end    
 
     f.inputs "Information" do
-      f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select'}
-      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select'}
-      f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
-      f.input :artists, :as => :check_boxes, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC")
+      f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Panel auswaehlen"}
+      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Ort auswaehlen"}
+      f.input :sponsors, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), :input_html => { :class=>'chzn-select', :style => 'width: 70%;', 'data-placeholder' => "Sponsor auswaehlen" }
+      f.input :artists, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC"), :input_html => { :class=>'chzn-select', :style => 'width: 70%;', 'data-placeholder' => "Redner auswaehlen" }
       f.input :max_number_of_participators
     end
     
