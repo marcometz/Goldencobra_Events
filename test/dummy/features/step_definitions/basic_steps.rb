@@ -10,6 +10,9 @@ When /^I visit url "([^\"]*)"$/ do |arg1|
   visit(arg1)
 end
 
+When /^I click "([^\"]*)"$/ do |arg1|
+  find(arg1).click
+end
 
 When /^I press "([^\"]*)"$/ do |arg1|
   find_button(arg1).click

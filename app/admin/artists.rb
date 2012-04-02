@@ -2,6 +2,9 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   menu :parent => "Event-Management", :label => "Kuenstler"
 
   form :html => { :enctype => "multipart/form-data" } do |f|
+    f.inputs :class => "buttons inputs" do
+      f.actions
+    end
     f.inputs "Allgemein" do
       f.input :title, :hint => "Required"
       f.input :description, :input_html => { :class =>"tinymce"}
@@ -30,7 +33,9 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
     f.inputs "Informationen" do
       f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
     end
-    f.buttons
+    f.inputs :class => "buttons inputs" do
+      f.actions
+    end
   end
 
   action_item :only => :show do

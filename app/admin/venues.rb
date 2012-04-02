@@ -23,7 +23,9 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
         end
       end
     end
-    f.buttons
+    f.inputs :class => "buttons inputs" do
+      f.actions
+    end
   end
   
   action_item :only => :show do
