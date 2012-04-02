@@ -19,10 +19,14 @@ When /^I fill in "([^"]*)" with "([^"]*)"$/ do |arg1, arg2|
   fill_in(arg1, :with => arg2)
 end
 
+Then /^I fill in "([^"]*)" with "([^"]*)" after "([^"]*)" seconds$/ do |arg1, arg2, arg3|
+  sleep arg3.to_i
+  page.execute_script("$('#{arg1}').attr('value', '#{arg2}')")
+end
+
 Then /^I select "([^"]*)" within "([^"]*)"$/ do |arg1, arg2|
   find(arg2).select(arg1)
 end
-
 
 Then /^I fill in "([^"]*)" within "([^"]*)"$/ do |arg1, arg2|
   page.execute_script("$('#{arg2}').attr('value', '#{arg1}')")
@@ -105,4 +109,16 @@ Then /^I should have a "([^"]*)" stored with following attributes:$/ do |arg1, t
   data = table.raw.map{|a| ":#{a[0]} => #{a[1]}"}.join(', ')
   model_obj = eval("#{arg1}.where(#{data})")
   model_obj.count.should == 1 
+end
+
+Then %r{^I should see "([^"]*)" inside ([^"].*)$} do |expected_text, named_element|
+  sleep 15
+  selector = element_for(named_element)
+  within_frame selector do
+    page.should have_content(expected_text)
+  end
+end
+
+Then /^I should see "([^"]*)" within textfield "([^"]*)"$/ do |arg1, arg2|
+  page.find_field("#{arg2}").value.should == "#{arg1}"
 end

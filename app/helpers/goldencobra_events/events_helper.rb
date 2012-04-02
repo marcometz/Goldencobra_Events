@@ -171,16 +171,6 @@ module GoldencobraEvents
         c = content_tag(:li, raw(cp), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
         return c
 
-#         cp = ""
-#        if !child.is_root? && child.start_date && child.end_date && @article.eventmoduletype == "registration" && child.has_children?
-#          cp << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.child_registration_informations"))}", class: 'reg_info')
-#          c_start = ""
-#          c_start << content_tag(:div, raw(child.title ), class: 'child-title') if child.title.present?
-#          cp << content_tag(:div, raw(c_start), class: 'parent_title')
-#          cp << content_tag(:div, "#{raw(child.start_date.strftime('%H:%M'))} bis #{raw(child.end_date.strftime('%H:%M'))}", class: 'start_to_end_time_child')
-#        end
-#        cp << content_tag(:li, raw(child_block), class: "article_event_id_#{child.id} article_event_item #{child.registration_css_class} #{child.exclusive ? 'has_exclusive_children' : ''}")
-#        return cp
      else
         return ""
       end

@@ -76,6 +76,11 @@ module GoldencobraEvents
         params[:registration][:user] = ""
         @errors << "email wrong"
       end
+      
+      unless params[:registration][:company][:location_attributes][:zip].to_s =~ /^\d{5}$/
+        params[:registration][:company] = ""
+        @errors << "zip wrong"
+      end
       if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
         #save user data in session
         session[:goldencobra_event_registration][:user_data] = params[:registration][:user]

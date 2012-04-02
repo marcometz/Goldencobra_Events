@@ -97,7 +97,7 @@ $(document).ready(function() {
     
     if ($('#registration_company_location_attributes_city').attr('value') == '') {
       $('#registration_company_location_attributes_city').append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Pflichtangabe</p>");
-    }
+    } else 
     
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if ($('#registration_user_email').attr('value') == '') {
