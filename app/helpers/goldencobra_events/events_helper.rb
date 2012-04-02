@@ -243,65 +243,75 @@ module GoldencobraEvents
         content << content_tag(:label, "#{event.title}", :for => "register_for_event_#{event.id}_checkbox", :class => "event_title_checkbox_label")
       end
 
-      # Event
-      content << render_object(event, :title)
-      content << render_object_image(event, "teaser_image", {:class => "teaser_image"} )
-      content << render_object(event, :description, :external_link)
-      event_options = render_object(event, :number_of_participators_label, :type_of_registration)
-      if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
-        event_options << render_object(event, :type_of_event)
-      else
-        event_options << render_object(event, :type_of_event)
-      end
-      if event.exclusive == true
-        event_options << render_object(event, :exclusive)
-      end
-      content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
-      content << content_tag(:div, raw( localize(event.start_date, format: :long) ), :class => "start_date") if event.start_date
-      content << content_tag(:div, raw( localize(event.end_date, :format => :long)), :class => "end_date") if event.end_date
+      unless event.is_root?
+        # Event
+        if @article.eventmoduletype == "program" && !event.has_children? 
+          content << content_tag(:p, raw("#{localize(event.start_date, format: '%H:%M')}&mdash;#{localize(event.end_date, format: '%H:%M')}" ), :class => "timeframe") if event.start_date && event.end_date
+        end
+        content << render_object(event, :title)
+        unless event.has_children? #wir wollen nur bei den letzten Kinder-Events diese Infos anzeigen.
+          content << render_object_image(event, "teaser_image", {:class => "teaser_image"} )
+          content << render_object(event, :description, :external_link)
+          event_options = render_object(event, :number_of_participators_label, :type_of_registration)
+          if (event.needs_registration? || event.registration_optional?) && @article.eventmoduletype == "registration"
+            event_options << render_object(event, :type_of_event)
+          else
+            event_options << render_object(event, :type_of_event)
+          end
+          if event.exclusive == true
+            event_options << render_object(event, :exclusive)
+          end
+          content << content_tag(:div,raw(event_options), :class => "event_reservation_options" ) 
+          content << content_tag(:div, raw( localize(event.start_date, format: :long) ), :class => "start_date") if event.start_date
+          content << content_tag(:div, raw( localize(event.end_date, :format => :long)), :class => "end_date") if event.end_date
 
-      # Venue
-      venue = render_object(event.venue, :title, :description, :location_values, :link_url, :phone, :email)
-      content << content_tag(:div, raw(venue), class: "venue")
-
+          # Venue
+          venue = render_object(event.venue, :title, :description, :location_values, :link_url, :phone, :email)
+          content << content_tag(:div, raw(venue), class: "venue")
+        end
+      end
+      
       if event.is_root? && @article.eventmoduletype == "registration"
         @event_to_register = @article.event
         content << content_tag(:div, render(:partial => "goldencobra_events/events/register"), class: 'new_pricegroups')
       end
       
-      # Pricegroups
-      pricegroup_items = ""
-      event.event_pricegroups.available.each do |event_pricegroup|
-        event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title)
-        event_pricegroup_item << content_tag(:div, number_to_currency(event_pricegroup.price, :locale => :de), :class => "price")
-        event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
-        pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
-      end
-      pricegroups = content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
-      content << content_tag(:div, raw(pricegroups), class: "pricegroups")
+      unless event.is_root?
+        unless event.has_children? #wir wollen nur bei den letzten Kinder-Events diese Infos anzeigen.
+          # Pricegroups
+          pricegroup_items = ""
+          event.event_pricegroups.available.each do |event_pricegroup|
+            event_pricegroup_item = render_object(event_pricegroup, :pricegroup_id, :title)
+            event_pricegroup_item << content_tag(:div, number_to_currency(event_pricegroup.price, :locale => :de), :class => "price")
+            event_pricegroup_item << render_object(event_pricegroup, :number_of_participators_label, :cancelation_until, :start_reservation, :end_reservation)
+            pricegroup_items << content_tag(:li, raw(event_pricegroup_item), class: "pricegroup_item_#{event_pricegroup.pricegroup_id} event_pricegroup_id_#{event_pricegroup.id}")
+          end
+          pricegroups = content_tag(:ul, raw(pricegroup_items), class: "pricegroup_list")
+          content << content_tag(:div, raw(pricegroups), class: "pricegroups")
 
-      # Sponsors
-      sponsors_items = ""
-      event.event_sponsors.each do |event_sponsor|
-        event_sponsor_item = render_object(event_sponsor.sponsor, :title, :description, :link_url, :size_of_sponsorship, :type_of_sponsorship, :telephone, :email)
-        event_sponsor_item << render_object(event_sponsor.sponsor.location, :complete_location)
-        event_sponsor_item << render_object_image(event_sponsor.sponsor, "logo")
-        event_sponsor_item << render_object_image(event_sponsor.sponsor, "images")
-        sponsors_items << content_tag(:li, raw(event_sponsor_item), class: "sponsor_item sponsor_item_#{event_sponsor.sponsor.id}")
-      end
-      sponsors = content_tag(:ul, raw(sponsors_items), class: "sponsor_list")
-      content << content_tag(:div, raw(sponsors), class: "sponsors")
+          # Sponsors
+          sponsors_items = ""
+          event.event_sponsors.each do |event_sponsor|
+            event_sponsor_item = render_object(event_sponsor.sponsor, :title, :description, :link_url, :size_of_sponsorship, :type_of_sponsorship, :telephone, :email)
+            event_sponsor_item << render_object(event_sponsor.sponsor.location, :complete_location)
+            event_sponsor_item << render_object_image(event_sponsor.sponsor, "logo")
+            event_sponsor_item << render_object_image(event_sponsor.sponsor, "images")
+            sponsors_items << content_tag(:li, raw(event_sponsor_item), class: "sponsor_item sponsor_item_#{event_sponsor.sponsor.id}")
+          end
+          sponsors = content_tag(:ul, raw(sponsors_items), class: "sponsor_list")
+          content << content_tag(:div, raw(sponsors), class: "sponsors")
 
-      # Artists
-      artists_items = ""
-      event.artist_events.each do |artist_event|
-        artist_event_item = render_object(artist_event.artist, :title, :description, :url_link, :telephone, :email)
-        artist_event_item << render_object(artist_event.artist.location, :complete_location)
-        artist_event_item << render_object_image(artist_event.artist, "images")
-        artists_items << content_tag(:li, raw(artist_event_item), class: "artist_item_#{artist_event.artist.id}")
+          # Artists
+          artists_items = ""
+          event.artist_events.each do |artist_event|
+            artist_event_item = render_object(artist_event.artist, :title, :description, :url_link, :telephone, :email)
+            artist_event_item << render_object(artist_event.artist.location, :complete_location)
+            artist_event_item << render_object_image(artist_event.artist, "images")
+            artists_items << content_tag(:li, raw(artist_event_item), class: "artist_item_#{artist_event.artist.id}")
+          end
+          content << content_tag(:ul, raw(artists_items), class: "artist_list")
+        end
       end
-      artists = content_tag(:ul, raw(artists_items), class: "artist_list")
-      content << content_tag(:div, raw(artists), class: "artists")
       
       if @article.eventmoduletype == "registration"
         if (event.needs_registration? || event.registration_optional?)
