@@ -1,0 +1,50 @@
+de:
+  attributes:
+    user:
+      title: "Titel"
+      firstname: "Vorname"
+      lastname: "Nachname"
+      email: "E-Mail"
+      gender: "Geschlecht"
+      function: "Position"
+      phone: "Telefon"
+    company:
+      title: "Titel"
+      legal_form: "Unternehmensform"
+      phone: "Telefon"
+      fax: "Fax"
+      homepage: "Homepage"
+      sector: "Sektor"
+    location:
+      street: "Straße"
+      zip: "Postleitzahl"
+      city: "Stadt"
+      region: "Bundesland"
+      country: "Land"
+    event:
+      title: "Veranstaltungsname"
+    event_pricegroup:
+      title: "Name der Preisgruppe"
+      price: "Preis"
+    created_at: "Erstellt am"
+    updated_at: "Zuletzt gespeichert am"
+  active_admin:
+    resource:
+      event: "Veranstaltung"
+      article: "Artikel"
+      menue: "Menü"
+      setting: "Einstellung"      
+      venue: "Veranstaltungsort"
+      event_panel: "Veranstaltungspanel"
+      sponsor: "Sponsor"
+      pricegroup: "Preisgruppe"
+      panel: "Panel"
+      artist: "Künstler"
+      applicant: "Gast"
+      company: "Unternehmen"
+      event_registration: "Registrierung"
+  firstname: "Vorname"
+  lastname: "Nachname"
+  email: "E-Mail"
+  total_price: "Gesamtpreis"
+  title: "Titel"
