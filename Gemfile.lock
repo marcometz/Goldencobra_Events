@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: ca34987a367544cfc804e8cb21368c808e9f49ba
+  revision: 0fdd03aa44b1a81c1420071169d6e42ca5fbbf94
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -27,7 +27,7 @@ GIT
       oa-openid
       omniauth
       omniauth-openid
-      paperclip (~> 2.7)
+      paperclip (~> 3.0)
       rails (~> 3.2.2)
       sass-rails
       sass-rails (~> 3.2.1)
@@ -259,9 +259,10 @@ GEM
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
     orm_adapter (0.0.7)
-    paperclip (2.7.0)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
+    paperclip (3.0.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
       cocaine (>= 0.0.2)
       mime-types
     polyamorous (0.5.0)
