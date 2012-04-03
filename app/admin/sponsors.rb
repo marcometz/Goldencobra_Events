@@ -1,36 +1,59 @@
 ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
   
   menu :parent => "Event-Management", :label => "Sponsoren"
+
+  filter :title, label: "Name"
+  filter :email, label: "E-Mail"
+  filter :link_url, label: "Homepage"
   
   form :html => { :enctype => "multipart/form-data" } do |f|
+    f.inputs "" do
+      f.actions
+    end
     f.inputs "Allgemein" do
       f.input :title
       f.input :description, :input_html => { :class =>"tinymce"}
-      f.input :link_url, :label => "Homepage Link"
-      f.input :size_of_sponsorship, :as => :select, :collection => GoldencobraEvents::Sponsor::SponsorshipSize.map {|c| c}, :include_blank => false
-      f.input :email
-      f.input :telephone
+      f.input :link_url, :label => "Homepage"
+      f.input :size_of_sponsorship, :as => :select, :collection => GoldencobraEvents::Sponsor::SponsorshipSize.map {|c| c}, :include_blank => false, label: t('attributes.sponsor.size_of_sponsorship'), :input_html => { :class => 'chzn-select'}
+      f.input :email, label: t('attributes.sponsor.email')
+      f.input :telephone, label: t('attributes.sponsor.telephone')
     end
-    f.inputs "" do
+    f.inputs "Adresse" do
       f.fields_for :location_attributes, f.object.location do |loc|
-        loc.inputs "LocationAttributes" do
-          loc.input :street
-          loc.input :city
-          loc.input :zip
-          loc.input :region
-          loc.input :country, :as => :string
-          loc.input :lat
-          loc.input :lng
+        loc.inputs "" do
+          loc.input :street, label: t('attributes.location.street.one')
+          loc.input :city, label: t('attributes.location.city.one')
+          loc.input :zip, label: t('attributes.location.zip.one')
+          loc.input :region, label: t('attributes.location.region.one')
+          loc.input :country, :as => :string, label: t('attributes.location.country.one')
         end
-      end      
-    end
-    f.inputs "Bilder" do
-      f.input :logo, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_logo_image_file'} 
-      f.has_many :sponsor_images do |si|
-        si.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_image_file'} 
       end
     end
-    f.buttons
+    f.inputs "Bilder" do
+      f.input :logo, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_logo_image_file chzn-select'} 
+      f.has_many :sponsor_images do |si|
+        si.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_image_file chzn-select'}
+      end
+    end
+  end
+
+  index do
+    column t('attributes.sponsor.title'), :sortable => :title do |sponsor|
+      sponsor.title
+    end
+    column t('attributes.sponsor.description') do |sponsor|
+      sponsor.description
+    end
+    column t('attributes.sponsor.email') do |sponsor|
+      sponsor.email
+    end
+    column t('attributes.sponsor.link_url'), :sortable => :link_url do |sponsor|
+      sponsor.link_url
+    end
+    column t('attributes.sponsor.telephone') do |sponsor|
+      sponsor.telephone
+    end
+    default_actions
   end
 
   action_item :only => :show do

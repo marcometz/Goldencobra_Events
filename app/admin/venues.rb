@@ -1,8 +1,15 @@
 ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
   
   menu :parent => "Event-Management", :label => "Veranstaltungsorte"
+
+  filter :title
+  filter :link_url
+  filter :email
   
   form :html => { :enctype => "multipart/form-data" }  do |f|
+    f.inputs "" do
+      f.actions
+    end
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
       f.input :description
@@ -10,20 +17,17 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
       f.input :phone
       f.input :email
     end
-    f.inputs "" do
+    f.inputs "Adresse" do
       f.fields_for :location_attributes, f.object.location do |loc|
-        loc.inputs "LocationAttributes" do
+        loc.inputs "" do
           loc.input :street
           loc.input :city
           loc.input :zip
           loc.input :region
           loc.input :country, :as => :string
-          loc.input :lat
-          loc.input :lng
         end
       end
     end
-    f.buttons
   end
   
   action_item :only => :show do

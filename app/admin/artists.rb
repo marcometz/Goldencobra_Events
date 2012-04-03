@@ -25,35 +25,37 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   end
 
   form :html => { :enctype => "multipart/form-data" } do |f|
-    f.inputs "Allgemein" do
-      f.input :title, :hint => "Required"
-      f.input :description, :input_html => { :class =>"tinymce"}
-      f.input :url_link, :label => "Homepage Link"
-      f.input :email
-      f.input :telephone
-    end
     f.inputs "" do
+      f.actions
+    end
+    f.inputs "Allgemein" do
+      f.input :title, :hint => "Muss ausgefuellt werden", label: t('attributes.artist.title')
+      f.input :description, :input_html => { :class =>"tinymce"}, label: t('attributes.artist.description')
+      f.input :url_link, :label => "Homepage Link", label: t('attributes.artist.url_link')
+      f.input :email, label: t('attributes.artist.email')
+      f.input :telephone, label: t('attributes.artist.telephone')
+    end
+    f.inputs "Adresse" do
       f.fields_for :location_attributes, f.object.location do |loc|
-        loc.inputs "LocationAttributes" do
-          loc.input :street, label: t('attributes.location.street')
-          loc.input :city
-          loc.input :zip
-          loc.input :region
-          loc.input :country, :as => :string
+        loc.inputs "" do
+          loc.input :street, label: t('attributes.location.one.street')
+          loc.input :city, label: t('attributes.location.one.city')
+          loc.input :zip, label: t('attributes.location.one.zip')
+          loc.input :region, label: t('attributes.location.one.region')
+          loc.input :country, :as => :string, label: t('attributes.location.one.country')
           # loc.input :lat
           # loc.input :lng
         end
       end
     end
-    f.inputs "" do
+    f.inputs "Bilder" do
       f.has_many :artist_images do |ai|
         ai.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'artist_image_file'} 
       end
     end
     f.inputs "Informationen" do
-      f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
+      f.input :sponsors, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('attributes.sponsor'), :input_html => { :class => 'chzn-select', 'data-placeholder' => t('active_admin.events.select_sponsor')} 
     end
-    f.buttons
   end
 
   action_item :only => :show do
