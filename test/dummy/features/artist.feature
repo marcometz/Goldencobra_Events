@@ -41,7 +41,7 @@ Feature: Create and manage artists
     When I go to the admin list of artists
     Then I click on "Edit" within "tr#artist_1"
     And I remove jquery chosen
-    And I select "Audi Deutschland" within "#event_sponsors_input"
+    And I select "Audi Deutschland" within "#artist_sponsors_input"
     And I select "Dr. Oetker" within "#event_sponsors_input"
     Then I press "Update Artist"
     And I should see "Audi Deutschland"

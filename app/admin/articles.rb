@@ -13,6 +13,5 @@ ActiveAdmin.register Goldencobra::Article, :as => "Article" do
   sidebar "sponsoren_modul", only: [:edit] do
     render "/goldencobra_events/admin/events/sponsor_module_sidebar"
   end
-
   
 end

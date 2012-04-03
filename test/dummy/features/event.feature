@@ -53,7 +53,7 @@ Feature: Create and manage events
     Then I click on "Edit" within "tr#article_2"
     And I should see "Edit Article" within "#page_title"
     And I should see "Veranstaltungs Modul" within "#sidebar"
-    And I should see "Wähle ein Veranstaltungsbaum aus" within "#event_module_sidebar_section"
+    And I should see "Wähle ein Veranstaltungsbaum aus" within "#veranstaltungs_modul_sidebar_section"
     And I select "Event2" within "#article_event_id"
     When I press "Event zuweisen"
     And I should see "Event2"
