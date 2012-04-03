@@ -1,7 +1,7 @@
 Given /^that a confirmed admin exists$/ do
-  @user = Factory.create(:admin_user)
-  @admin_role = Factory.create(:admin_role)
-  @permission = Factory.create(:admin_permission)
+  @user = create(:admin_user)
+  @admin_role = create(:admin_role)
+  @permission = create(:admin_permission)
   @permission.role = @admin_role
   @permission.save
   @user.roles << @admin_role
@@ -9,8 +9,8 @@ end
 
 
 Given /^that a confirmed guest exists$/ do
-  @user = Factory.create(:guest_user)
-  @user.roles << Factory.create(:guest_role)
+  @user = create(:guest_user)
+  @user.roles << create(:guest_role)
 end
 
 Given /^I am logged in as "([^\"]*)" with password "([^\"]*)"$/ do |email, password|

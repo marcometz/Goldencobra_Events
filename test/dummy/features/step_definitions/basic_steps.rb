@@ -91,7 +91,7 @@ end
 
 Given /^the following "([^"]*)" exist:$/ do |arg1, table|
   table.hashes.each do |data|
-    Factory(arg1.singularize.to_sym ,data)
+    create(arg1.singularize.to_sym ,data)
   end
 end
 
