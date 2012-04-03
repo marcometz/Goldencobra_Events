@@ -251,6 +251,7 @@ Feature: Create and manage events
     And I should see "Registration needed"
     And I should see "No cancellation required"
 
+  @javascript
   Scenario: Set sponsors for an event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -268,6 +269,7 @@ Feature: Create and manage events
     Then I press "Update Event"
     And I should see "Audi Deutschland"
 
+  @javascript
   Scenario: Set artists for an event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -280,6 +282,7 @@ Feature: Create and manage events
       | "Mario Barth"     | "Kuenstler" |  2 |
     When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
+    And I remove jquery chosen
     And I select "Bodo Wartke" within "#event_artists_input"
     And I select "Mario Barth" within "#event_artists_input"
     And I press "Update Event"
