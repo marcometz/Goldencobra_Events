@@ -1,6 +1,29 @@
 ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   menu :parent => "Event-Management", :label => "Kuenstler"
 
+  filter :title, :label => "Name"
+  filter :email, :label => "E-Mail"
+  filter :description, :label => "Beschreibung"
+
+  index do
+    column t('attributes.artist.title'), :sortable => :title do |artist|
+      artist.title
+    end
+    column t('attributes.artist.description') do |artist|
+      artist.description
+    end
+    column t('attributes.artist.email') do |artist|
+      artist.email
+    end
+    column t('attributes.artist.url_link'), :sortable => :url_link do |artist|
+      artist.url_link
+    end
+    column t('attributes.artist.telephone') do |artist|
+      artist.telephone
+    end
+    default_actions
+  end
+
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs "Allgemein" do
       f.input :title, :hint => "Required"
@@ -12,13 +35,13 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
     f.inputs "" do
       f.fields_for :location_attributes, f.object.location do |loc|
         loc.inputs "LocationAttributes" do
-          loc.input :street
+          loc.input :street, label: t('attributes.location.street')
           loc.input :city
           loc.input :zip
           loc.input :region
           loc.input :country, :as => :string
-          loc.input :lat
-          loc.input :lng
+          # loc.input :lat
+          # loc.input :lng
         end
       end
     end

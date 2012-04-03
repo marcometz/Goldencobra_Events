@@ -16,11 +16,24 @@ de:
       homepage: "Homepage"
       sector: "Sektor"
     location:
-      street: "Straße"
-      zip: "Postleitzahl"
-      city: "Stadt"
-      region: "Bundesland"
-      country: "Land"
+      one:
+        street: "Straße"
+        zip: "Postleitzahl"
+        city: "Stadt"
+        region: "Bundesland"
+        country: "Land"
+      other:
+        street: "Straßen"
+        zip: "Postleitzahlen"
+        city: "Städte"
+        region: "Bundesländer"
+        country: "Länder"
+    artist:
+      title: "Name"
+      description: "Beschreibung"
+      email: "E-Mail"
+      url_link: "Homepage"
+      telephone: "Telefon"
     event:
       title: "Veranstaltungsname"
     event_pricegroup:
