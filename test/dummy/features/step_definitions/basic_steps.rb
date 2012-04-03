@@ -125,3 +125,8 @@ end
 Then /^I should see "([^"]*)" within textfield "([^"]*)"$/ do |arg1, arg2|
   page.find_field("#{arg2}").value.should == "#{arg1}"
 end
+
+Then /^I remove jquery chosen$/ do
+  page.execute_script("$('select').removeClass('chzn-done').css('display', 'inline').data('chosen', null);")
+  page.execute_script("$('.chzn-container').remove();")
+end

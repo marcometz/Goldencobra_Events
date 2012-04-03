@@ -19,8 +19,9 @@ Feature: Display event informations on article page
       |  5 |          Bild_5.jpg |
       |  6 |          Bild_6.jpg |
     And the following "events" exist:
-      | title    | description             | id | parent_id | external_link        | max_number_of_participators | type_of_event         | type_of_registration       | exclusive | start_date          | end_date            | venue_id | teaser_image_id |
-      | Event1   | "Ein ganz toller Event" | 1  |           | http://www.google.de |                          25 | "Registration needed" | "No cancellation required" |      true | 2012-01-01 11:00:00 | 2012-02-02 10:00:00 |        1 |               6 |
+      | title    | description             | id | parent_id | external_link        | max_number_of_participators | type_of_event          | type_of_registration       | exclusive | start_date          | end_date            | venue_id | teaser_image_id |
+      | Event    | "Ein ganz toller Event" | 2  |           |                      |                          0  | No Registration needed | "No cancellation required" |    false  | 2012-01-01 11:00:00 | 2012-02-02 10:00:00 |        1 |               6 |
+      | Event1   | "Ein ganz toller Event" | 1  |       2   | http://www.google.de |                          25 | "Registration needed"  | "No cancellation required" |      true | 2012-01-01 11:00:00 | 2012-02-02 10:00:00 |        1 |               6 |
     And the following "event_pricegroups" exist:
       | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       |
       |        1 |             1 |  50.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |

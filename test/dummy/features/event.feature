@@ -61,6 +61,10 @@ Feature: Create and manage events
   Scenario: add an events to an article as a registration site 
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
+    And the following "pricegroup" exist:
+      | title                      | id |
+      | Studenten                  |  1 |
+      | Frühbucher                 |  2 |
     And the following "articles" exist:
       | title                        | startpage | id | url_name   |
       | "Anmeldung"                  | false     |  2 | anmeldung  |
@@ -69,6 +73,10 @@ Feature: Create and manage events
         | title                        | parent_id | id | type_of_event |
         | "Event1"                     |           |  1 | Registration needed |
         | "Event2"                     | 1         |  2 | No Registration needed |
+    And the following "event_pricegroups" exist:
+        | id | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
+        | 5  |        1 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
+        | 6  |        1 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
     When I go to the admin list of articles  
     Then I click on "Edit" within "tr#article_2"
     And I should see "Edit Article" within "#page_title"
@@ -78,7 +86,9 @@ Feature: Create and manage events
     And I should see "Event1" within "#article_event_id"
     And I should see "Anmeldung" within "#article_eventmoduletype"
     Then I visit url "/anmeldung"
-    And I should see "Event1"
+    And show me the page
+    And I should see "50,00"
+    And I should see "Studenten"
     And I should not see "Event2"
     
   Scenario: visit an article and look for events 
@@ -98,7 +108,7 @@ Feature: Create and manage events
         | "Studenten"                  |  1 |
     When I visit url "/programm"
     Then I should see "Programm"
-    And I should see "Event1"
+    And I should not see "Event1"
     And I should see "Event2"
     And I should see "Event3"
     And I should not see "Event4"
@@ -145,7 +155,7 @@ Feature: Create and manage events
       | 8  |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
       | 9  |       13 |             4 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" | OSTERN  |
   When I visit url "/programm"   
-  Then I should see "Cloudforum"
+  Then I should not see "Cloudforum"
   And I should not see "Cloudforum-Old"
   And I should see "Kongress"
   And I should see "Treffen der Generationen"
@@ -241,6 +251,7 @@ Feature: Create and manage events
     And I should see "Registration needed"
     And I should see "No cancellation required"
 
+  @javascript
   Scenario: Set sponsors for an event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -253,12 +264,12 @@ Feature: Create and manage events
       | "Dr. Oetker"       | "Speisen"   |  2 |
     When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
-    And I click "event_sponsor_ids_chzn"
-    And I click "Audi Deutschland"
-    #And I fill in "event_sponsor_ids_chzn" with "Audi Deutschland\n"
+    And I remove jquery chosen
+    And I select "Audi Deutschland" within "#event_sponsors_input"
     Then I press "Update Event"
     And I should see "Audi Deutschland"
 
+  @javascript
   Scenario: Set artists for an event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -271,10 +282,9 @@ Feature: Create and manage events
       | "Mario Barth"     | "Kuenstler" |  2 |
     When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
-    And I click "event_artist_ids_chzn"
-    And I click "Bodo Wartke"
-    And I click "event_artist_ids_chzn"
-    And I click "Mario Barth"
+    And I remove jquery chosen
+    And I select "Bodo Wartke" within "#event_artists_input"
+    And I select "Mario Barth" within "#event_artists_input"
     And I press "Update Event"
     Then I should see "Bodo Wartke"
     And I should see "Mario Barth"
