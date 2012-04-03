@@ -108,7 +108,7 @@ Feature: Create and manage events
         | "Studenten"                  |  1 |
     When I visit url "/programm"
     Then I should see "Programm"
-    And I should see "Event1"
+    And I should not see "Event1"
     And I should see "Event2"
     And I should see "Event3"
     And I should not see "Event4"
