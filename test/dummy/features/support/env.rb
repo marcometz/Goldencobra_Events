@@ -5,7 +5,7 @@
 # files.
 
 require 'cucumber/rails'
-require "factory_girl"
+# require "factory_girl"
 require "factory_girl_rails"
 require "factory_girl/step_definitions"
 require 'capybara/rails'
@@ -65,4 +65,5 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
+World FactoryGirl::Syntax::Methods
 

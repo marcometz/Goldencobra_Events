@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require "factory_girl_rails"
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
@@ -27,6 +28,7 @@ Spork.prefork do
 
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
+    config.include FactoryGirl::Syntax::Methods
 
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
