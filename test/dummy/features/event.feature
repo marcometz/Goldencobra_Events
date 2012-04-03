@@ -155,7 +155,7 @@ Feature: Create and manage events
       | 8  |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
       | 9  |       13 |             4 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" | OSTERN  |
   When I visit url "/programm"   
-  Then I should see "Cloudforum"
+  Then I should not see "Cloudforum"
   And I should not see "Cloudforum-Old"
   And I should see "Kongress"
   And I should see "Treffen der Generationen"
