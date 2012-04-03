@@ -87,7 +87,8 @@ Feature: Create and manage events
     And I should see "Anmeldung" within "#article_eventmoduletype"
     Then I visit url "/anmeldung"
     And show me the page
-    And I should see "Dieser Event besitzt mehrere Preisgruppen zur Auswahl"
+    And I should see "50,00"
+    And I should see "Studenten"
     And I should not see "Event2"
     
   Scenario: visit an article and look for events 
