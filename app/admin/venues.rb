@@ -7,7 +7,7 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
   filter :email
   
   form :html => { :enctype => "multipart/form-data" }  do |f|
-    f.inputs "" do
+    f.inputs :class => "buttons inputs" do
       f.actions
     end
     f.inputs "Allgemein" do

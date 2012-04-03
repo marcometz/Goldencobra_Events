@@ -253,7 +253,9 @@ Feature: Create and manage events
       | "Dr. Oetker"       | "Speisen"   |  2 |
     When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
-    And I check "Audi Deutschland"
+    And I click "event_sponsor_ids_chzn"
+    And I click "Audi Deutschland"
+    #And I fill in "event_sponsor_ids_chzn" with "Audi Deutschland\n"
     Then I press "Update Event"
     And I should see "Audi Deutschland"
 
@@ -269,8 +271,10 @@ Feature: Create and manage events
       | "Mario Barth"     | "Kuenstler" |  2 |
     When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
-    And I check "Bodo Wartke"
-    And I check "Mario Barth"
+    And I click "event_artist_ids_chzn"
+    And I click "Bodo Wartke"
+    And I click "event_artist_ids_chzn"
+    And I click "Mario Barth"
     And I press "Update Event"
     Then I should see "Bodo Wartke"
     And I should see "Mario Barth"

@@ -25,7 +25,7 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   end
 
   form :html => { :enctype => "multipart/form-data" } do |f|
-    f.inputs "" do
+    f.inputs :class => "buttons inputs" do
       f.actions
     end
     f.inputs "Allgemein" do
