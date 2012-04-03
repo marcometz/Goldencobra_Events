@@ -1,40 +1,60 @@
 ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   menu :parent => "Event-Management", :label => "Kuenstler"
 
+  filter :title, :label => "Name"
+  filter :email, :label => "E-Mail"
+  filter :description, :label => "Beschreibung"
+
+  index do
+    column t('attributes.artist.title'), :sortable => :title do |artist|
+      artist.title
+    end
+    column t('attributes.artist.description') do |artist|
+      artist.description
+    end
+    column t('attributes.artist.email') do |artist|
+      artist.email
+    end
+    column t('attributes.artist.url_link'), :sortable => :url_link do |artist|
+      artist.url_link
+    end
+    column t('attributes.artist.telephone') do |artist|
+      artist.telephone
+    end
+    default_actions
+  end
+
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs :class => "buttons inputs" do
       f.actions
     end
     f.inputs "Allgemein" do
-      f.input :title, :hint => "Required"
-      f.input :description, :input_html => { :class =>"tinymce"}
-      f.input :url_link, :label => "Homepage Link"
-      f.input :email
-      f.input :telephone
+      f.input :title, :hint => "Muss ausgefuellt werden", label: t('attributes.artist.title')
+      f.input :description, :input_html => { :class =>"tinymce"}, label: t('attributes.artist.description')
+      f.input :url_link, :label => "Homepage Link", label: t('attributes.artist.url_link')
+      f.input :email, label: t('attributes.artist.email')
+      f.input :telephone, label: t('attributes.artist.telephone')
     end
-    f.inputs "" do
+    f.inputs "Adresse" do
       f.fields_for :location_attributes, f.object.location do |loc|
-        loc.inputs "LocationAttributes" do
-          loc.input :street
-          loc.input :city
-          loc.input :zip
-          loc.input :region
-          loc.input :country, :as => :string
-          loc.input :lat
-          loc.input :lng
+        loc.inputs "" do
+          loc.input :street, label: t('attributes.location.one.street')
+          loc.input :city, label: t('attributes.location.one.city')
+          loc.input :zip, label: t('attributes.location.one.zip')
+          loc.input :region, label: t('attributes.location.one.region')
+          loc.input :country, :as => :string, label: t('attributes.location.one.country')
+          # loc.input :lat
+          # loc.input :lng
         end
       end
     end
-    f.inputs "" do
+    f.inputs "Bilder" do
       f.has_many :artist_images do |ai|
         ai.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'artist_image_file'} 
       end
     end
     f.inputs "Informationen" do
-      f.input :sponsors, :as => :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
-    end
-    f.inputs :class => "buttons inputs" do
-      f.actions
+      f.input :sponsors, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('attributes.sponsor'), :input_html => { :class => 'chzn-select', 'data-placeholder' => t('active_admin.events.select_sponsor')} 
     end
   end
 

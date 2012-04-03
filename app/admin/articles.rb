@@ -2,15 +2,15 @@ ActiveAdmin.register Goldencobra::Article, :as => "Article" do
 
   menu :parent => "Content-Management", :label => "Artikel"
   
-  sidebar :event_module, :only => [:edit] do      
+  sidebar "Veranstaltungs Modul", :only => [:edit] do      #:event_module
     render "/goldencobra_events/admin/events/event_module_sidebar"
   end
 
-  sidebar :artist_list_module, only: [:edit] do
+  sidebar "Rednerlisten Modul", only: [:edit] do
     render "/goldencobra_events/admin/events/artist_list_module_sidebar"
   end
 
-  sidebar :sponsor_list_module, only: [:edit] do
+  sidebar "Sponsoren Modul", only: [:edit] do
     render "/goldencobra_events/admin/events/sponsor_module_sidebar"
   end
 
