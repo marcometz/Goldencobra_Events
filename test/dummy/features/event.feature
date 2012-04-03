@@ -221,6 +221,7 @@ Feature: Create and manage events
     Then I press "Update Event"
     # And I should see "Osterspezial2010" findet den Inhalt nicht, da es kein String ist, sondern Value in einem Input
 
+  @javascript
   Scenario: add event to an existing panel
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -232,7 +233,8 @@ Feature: Create and manage events
       | "Naturstrom Panel"           |  1 |
     When I go to the admin list of events  
     Then I click on "Edit" within "tr#event_1"
-    And I select "Naturstrom Panel" within "#veranstaltungs_modul_sidebar_section"
+    And I remove jquery chosen
+    And I select "Naturstrom Panel" within "#event_panel_id"
     Then I press "Update Event"
     And I should see "Naturstrom Panel"
 
