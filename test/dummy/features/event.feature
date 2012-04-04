@@ -52,8 +52,8 @@ Feature: Create and manage events
     When I go to the admin list of articles  
     Then I click on "Edit" within "tr#article_2"
     And I should see "Edit Article" within "#page_title"
-    And I should see "Event Module" within "#sidebar"
-    And I should see "Wähle ein Veranstaltungsbaum aus" within "#event_module_sidebar_section"
+    And I should see "Veranstaltungs Modul" within "#sidebar"
+    And I should see "Wähle ein Veranstaltungsbaum aus" within "#veranstaltungs_modul_sidebar_section"
     And I select "Event2" within "#article_event_id"
     When I press "Event zuweisen"
     And I should see "Event2"
@@ -86,7 +86,6 @@ Feature: Create and manage events
     And I should see "Event1" within "#article_event_id"
     And I should see "Anmeldung" within "#article_eventmoduletype"
     Then I visit url "/anmeldung"
-    And show me the page
     And I should see "50,00"
     And I should see "Studenten"
     And I should not see "Event2"
@@ -222,6 +221,7 @@ Feature: Create and manage events
     Then I press "Update Event"
     # And I should see "Osterspezial2010" findet den Inhalt nicht, da es kein String ist, sondern Value in einem Input
 
+  @javascript
   Scenario: add event to an existing panel
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -233,6 +233,7 @@ Feature: Create and manage events
       | "Naturstrom Panel"           |  1 |
     When I go to the admin list of events  
     Then I click on "Edit" within "tr#event_1"
+    And I remove jquery chosen
     And I select "Naturstrom Panel" within "#event_panel_id"
     Then I press "Update Event"
     And I should see "Naturstrom Panel"

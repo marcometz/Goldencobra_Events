@@ -35,12 +35,14 @@ Feature: Create and manage artists
     And I should see "http://www.bodowartke.de" within "#main_content"
     When I click on "Edit Artist"
     Then I should see "Bild1"
-
+    
+  @javascript
   Scenario: Set sponsors for an artist
     When I go to the admin list of artists
     Then I click on "Edit" within "tr#artist_1"
-    And I check "Audi Deutschland"
-    And I check "Dr. Oetker"
+    And I remove jquery chosen
+    And I select "Audi Deutschland" within "#artist_sponsors_input"
+    And I select "Dr. Oetker" within "#event_sponsors_input"
     Then I press "Update Artist"
     And I should see "Audi Deutschland"
     And I should see "Dr. Oetker"

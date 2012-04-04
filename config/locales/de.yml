@@ -99,6 +99,8 @@ de:
       one: "Land"
       other: "Länder"
   active_admin:
+    events:
+        select_sponsor: "Sponsor wählen"
     resource:
       event: "Veranstaltung"
       article: "Artikel"
