@@ -63,20 +63,18 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
           th t('attributes.event.title')
           th t('attributes.event_pricegroup.title.')
           th t('attributes.event_pricegroup.price')
-          th t('attributes.created_at')
         end
         applicant.event_registrations.each do |ereg|
           tr do
-            [ereg.event_pricegroup.event.title, ereg.event_pricegroup.title, number_to_currency(ereg.event_pricegroup.price, :locale => :de), l(ereg.created_at, format: :short)].each do |esa|
+            [ereg.event_pricegroup.event.title, ereg.event_pricegroup.title, number_to_currency(ereg.event_pricegroup.price, :locale => :de)].each do |esa|
               td esa
             end
           end
         end
         tr :class => "total" do
           td ""
-          td ""
+          td "Summe:"
           td number_to_currency(applicant.total_price, :locale => :de)
-          td ""
         end
       end
     end #end panel sponsors
