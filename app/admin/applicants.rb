@@ -22,6 +22,66 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
     default_actions
   end
+  
+  form :html => { :enctype => "multipart/form-data" } do |f|
+    f.inputs :class => "buttons inputs" do
+      f.actions
+    end
+    
+    f.inputs "Anmeldung" do
+      f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
+    end
+    
+    f.inputs "Besucher" do
+      f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
+      f.input :email     
+      f.input :title     
+      f.input :firstname 
+      f.input :lastname  
+      f.input :function  
+      f.input :phone     
+      f.input :agb, :label => "AGB akzeptiert"   
+    end
+    
+    f.inputs "" do
+      f.fields_for :company_attributes, f.object.company do |comp|
+        comp.inputs "Firma" do
+          comp.input :title
+          comp.input :legal_form 
+          comp.input :phone      
+          comp.input :fax        
+          comp.input :homepage   
+          comp.input :sector  
+        end 
+         
+        comp.inputs "" do
+          comp.fields_for :location_attributes, comp.object.location do |loc|
+            loc.inputs "Adresse" do
+              loc.input :street, label: t('attributes.location.one.street')
+              loc.input :city, label: t('attributes.location.one.city')
+              loc.input :zip, label: t('attributes.location.one.zip')
+              loc.input :region, label: t('attributes.location.one.region')
+              loc.input :country, :as => :string, label: t('attributes.location.one.country')
+              # loc.input :lat
+              # loc.input :lng
+            end
+          end
+        end
+      end
+    end
+    
+    f.inputs "" do
+      f.has_many :event_registrations do |reg|
+        reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.scoped.map{|a| ["#{a.event.title} (#{a.event.id}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"} 
+        reg.input :_destroy, :as => :boolean 
+      end
+    end
+    
+    
+    f.inputs :class => "buttons inputs" do
+      f.actions
+    end
+  end
 
   show :title => :lastname do
     panel t('active_admin.resource.applicant') do
@@ -48,11 +108,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
           end
         if applicant.company.location 
           attributes_table_for applicant.company.location do
-            row(t('attributes.location.street')){applicant.company.location.street}
-            row(t('attributes.location.zip')){applicant.company.location.zip}
-            row(t('attributes.location.city')){applicant.company.location.city}
-            row(t('attributes.location.region')){applicant.company.location.region}
-            row(t('attributes.location.country')){applicant.company.location.country}
+            row(t('attributes.location.street.one')){applicant.company.location.street}
+            row(t('attributes.location.zip.one')){applicant.company.location.zip}
+            row(t('attributes.location.city.one')){applicant.company.location.city}
+            row(t('attributes.location.region.one')){applicant.company.location.region}
+            row(t('attributes.location.country.one')){applicant.company.location.country}
           end
         end
       end   
@@ -81,4 +141,13 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       end
     end #end panel sponsors
   end
+  
+  controller do     
+    def new       
+      @applicant = GoldencobraEvents::RegistrationUser.new
+      @applicant.company = GoldencobraEvents::Company.new
+      @applicant.company.location = Goldencobra::Location.new
+    end 
+  end
+  
 end

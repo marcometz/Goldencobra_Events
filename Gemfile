@@ -28,7 +28,7 @@ group :test do
   gem 'sqlite3'
   gem 'cucumber'
   gem 'cucumber-rails', '~> 1.3.0' 
-  gem "factory_girl_rails", "~> 3.0.0"
+  gem "factory_girl_rails", "~> 3.0.0", :git => "git://github.com/thoughtbot/factory_girl_rails.git"
   gem 'database_cleaner'
   gem 'capybara'
   gem 'capybara-webkit'
