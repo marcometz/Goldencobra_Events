@@ -1,109 +1,4 @@
 de:
-  attributes:
-    article:
-      title: "Titel"
-    setting:
-      title: "Name"
-      value: "Wert"
-      ancestry: "Abstammung"
-    user:
-      title: "Titel"
-      firstname: "Vorname"
-      lastname: "Nachname"
-      complete_name: "Name"
-      email: "E-Mail"
-      gender: "Geschlecht"
-      function: "Position"
-      phone: "Telefon"
-      created_at: "Datum der Registrierung"
-      details: "Details"
-      link_url: "Blah"
-    company:
-      title: "Titel"
-      legal_form: "Unternehmensform"
-      phone: "Telefon"
-      fax: "Fax"
-      homepage: "Homepage"
-      sector: "Sektor"
-    location:
-      street:
-        one: "Straße"
-        other: "Straßen"
-      zip:
-        one: "Postleitzahl"
-        other: "Postleitzahlen"
-      city:
-        one: "Stadt"
-        other: "Städte"
-      region:
-        one: "Bundesland"
-        other: "Bundesländer"
-      country:
-        one: "Land"
-        other: "Länder"
-    artist:
-      title: "Name"
-      description: "Beschreibung"
-      email: "E-Mail"
-      url_link: "Homepage"
-      telephone: "Telefon"
-    sponsor:
-      size_of_sponsorship: "Sponsoren-Paket"
-      title: "Name"
-      description: "Beschreibung"
-      email: "E-Mail"
-      link_url: "Homepage"
-      telephone: "Telefon"
-    event:
-      title: "Veranstaltungsname"
-      max_number_of_participators: "Maximale Anzahl der Teilnehmer"
-      description: "Beschreibung"
-      external_link: "Link zu externer Website"
-      teaser_image: "Teaser Bild"
-      start_date: "Beginn"
-      end_date: "Ende"
-      parent_id: "Eltern-Veranstaltung"
-      type_of_event: "Art der Anmeldung"
-      type_of_registration: "Art der Stornierung"
-      active: "Kann gebucht werden"
-      exclusive: "Unter-Veranstaltungen sind exklusiv"
-    event_pricegroup:
-      title: "Name der Preisgruppe"
-      price: "Preis"
-      max_number_of_participators: "Max. Anzahl der Teilnehmer"
-      start_reservation: "Reservierungsbeginn"
-      end_reservation: "Reservierungsende"
-      cancelation_until: "Stornierungsende"
-      webcode: "Aktions Code"
-      available: "Kann gebucht werden"
-    panel:
-      title: "Panel Name"
-      description: "Beschreibung"
-      link_url: "Website"
-      sponsors: "Sponsoren"
-    created_at: "Erstellt am"
-    updated_at: "Zuletzt gespeichert am"
-    title: "Titel"
-    description: "Beschreibung"
-    image: "Bild"
-    link_url: "Homepage"
-    email: "E-Mail"
-    phone: "Telefon"
-    street:
-      one: "Straße"
-      other: "Straßen"
-    zip:
-      one: "Postleitzahl"
-      other: "Postleitzahlen"
-    city:
-      one: "Stadt"
-      other: "Städte"
-    region:
-      one: "Bundesland"
-      other: "Bundesländer"
-    country:
-      one: "Land"
-      other: "Länder"
   active_admin:
     events:
         select_sponsor: "Sponsor wählen"
@@ -244,6 +139,112 @@ de:
         title: "Name"
         value: "Wert"
         ancestry: "Abstammung"
+      user:
+        title: "Titel"
+        firstname: "Vorname"
+        lastname: "Nachname"
+        complete_name: "Name"
+        email: "E-Mail"
+        gender: "Geschlecht"
+        function: "Position"
+        phone: "Telefon"
+        created_at: "Datum der Registrierung"
+        details: "Details"
+        link_url: "Blah"
+      company:
+        title: "Titel"
+        legal_form: "Unternehmensform"
+        phone: "Telefon"
+        fax: "Fax"
+        homepage: "Homepage"
+        sector: "Sektor"
+      location:
+        street:
+          one: "Straße"
+          other: "Straßen"
+        zip:
+          one: "Postleitzahl"
+          other: "Postleitzahlen"
+        city:
+          one: "Stadt"
+          other: "Städte"
+        region:
+          one: "Bundesland"
+          other: "Bundesländer"
+        country:
+          one: "Land"
+          other: "Länder"
+      artist:
+        title: "Name"
+        description: "Beschreibung"
+        email: "E-Mail"
+        url_link: "Homepage"
+        telephone: "Telefon"
+      sponsor:
+        size_of_sponsorship: "Sponsoren-Paket"
+        title: "Name"
+        description: "Beschreibung"
+        email: "E-Mail"
+        link_url: "Homepage"
+        telephone: "Telefon"
+      event:
+        one: "Make Formtastic Happy"
+        other: "Make Formtastic more Happy"
+        title: "Veranstaltungsname"
+        max_number_of_participators: "Maximale Anzahl der Teilnehmer"
+        description: "Beschreibung"
+        external_link: "Link zu externer Website"
+        teaser_image: "Teaser Bild"
+        start_date: "Beginn"
+        end_date: "Ende"
+        parent_id: "Eltern-Veranstaltung"
+        type_of_event: "Art der Anmeldung"
+        type_of_registration: "Art der Stornierung"
+        active: "Kann gebucht werden"
+        exclusive: "Unter-Veranstaltungen sind exklusiv"
+      event_pricegroup:
+        title: "Name der Preisgruppe"
+        price: "Preis"
+        max_number_of_participators: "Max. Anzahl der Teilnehmer"
+        start_reservation: "Reservierungsbeginn"
+        end_reservation: "Reservierungsende"
+        cancelation_until: "Stornierungsende"
+        webcode: "Aktions Code"
+        available: "Kann gebucht werden"
+      panel:
+        title: "Panel Name"
+        description: "Beschreibung"
+        link_url: "Website"
+        sponsors: "Sponsoren"
+      created_at: "Erstellt am"
+      updated_at: "Zuletzt gespeichert am"
+      title: "Titel"
+      description: "Beschreibung"
+      image: "Bild"
+      link_url: "Homepage"
+      email: "E-Mail"
+      phone: "Telefon"
+      street:
+        one: "Straße"
+        other: "Straßen"
+      zip:
+        one: "Postleitzahl"
+        other: "Postleitzahlen"
+      city:
+        one: "Stadt"
+        other: "Städte"
+      region:
+        one: "Bundesland"
+        other: "Bundesländer"
+      country:
+        one: "Land"
+        other: "Länder"
+      ticle:
+      title: "Titel"
+      tting:
+      title: "Name"
+      value: "Wert"
+      ancestry: "Abstammung"
   date:
     abbr_day_names:
     - So
