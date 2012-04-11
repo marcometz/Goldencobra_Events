@@ -36,14 +36,6 @@ GIT
       uglifier
 
 GIT
-  remote: git://github.com/ikusei/Goldencobra_Newsletter.git
-  revision: f23035afcce868cca7bba5dbb3642d2d318988f6
-  specs:
-    goldencobra_newsletter (0.0.1)
-      goldencobra
-      rails (~> 3.2.2)
-
-GIT
   remote: git://github.com/ikusei/active_admin.git
   revision: 2c50f7718f24bc41bcde55514207355eb6961f2d
   specs:
@@ -389,7 +381,6 @@ DEPENDENCIES
   git-pivotal
   goldencobra!
   goldencobra_events!
-  goldencobra_newsletter!
   growl
   guard
   guard-annotate
