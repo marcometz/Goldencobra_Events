@@ -1,6 +1,8 @@
 ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
   menu :parent => "Event-Management", :label => "Panels"
 
+  filter :title
+
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs "" do
       f.actions

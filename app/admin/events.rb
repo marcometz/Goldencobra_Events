@@ -2,6 +2,13 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   
   menu :parent => "Event-Management", :label => "Veranstaltungen"
   
+  filter :title, :label => "Veranstaltungsname"
+  filter :start_date, :label => "Beginn"
+  filter :end_date, :label => "Ende"
+  filter :venue, :label => "Veranstaltungsort"
+  filter :type_of_event, :label => "Art der Anmeldung"
+  
+  
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs "" do 
       f.actions
@@ -44,13 +51,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :external_link, label: t('attributes.event.external_link'), hint: t('active_admin.not_needed')
     end
   end
-  
-  filter :title, :label => "Veranstaltungsname"
-  filter :start_date, :label => "Beginn"
-  filter :end_date, :label => "Ende"
-  filter :venue, :label => "Veranstaltungsort"
-  filter :type_of_event, :label => "Art der Anmeldung"
-  
+    
   
   index do 
     column t('attributes.event.title'), :sortable => :title do |event|
