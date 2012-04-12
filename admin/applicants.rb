@@ -72,7 +72,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     
     f.inputs "" do
       f.has_many :event_registrations do |reg|
-        reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.scoped.map{|a| ["#{a.event.title} (#{a.event.id}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"} 
+        reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.scoped.map{|a| ["#{a.event.title if a.event} (#{a.event.id if a.event}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"} 
         reg.input :_destroy, :as => :boolean 
       end
     end
