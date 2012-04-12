@@ -1,7 +1,8 @@
 ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
   
-  menu :parent => "Event-Management", :label => "Sponsoren"
-
+  menu :parent => "Event-Management", :label => "Sponsoren", :if => proc{can?(:read, GoldencobraEvents::Sponsor)}
+  controller.authorize_resource :class => GoldencobraEvents::Sponsor
+  
   filter :title, label: "Name"
   filter :email, label: "E-Mail"
   filter :link_url, label: "Homepage"

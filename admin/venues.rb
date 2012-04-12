@@ -1,6 +1,7 @@
 ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
   
-  menu :parent => "Event-Management", :label => "Veranstaltungsorte"
+  menu :parent => "Event-Management", :label => "Veranstaltungsorte", :if => proc{can?(:read, GoldencobraEvents::Venue)}
+  controller.authorize_resource :class => GoldencobraEvents::Venue
 
   filter :title
   filter :link_url

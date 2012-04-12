@@ -1,6 +1,6 @@
 ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
-  menu :parent => "Event-Management", :label => "Besucher"
-  
+  menu :parent => "Event-Management", :label => "Besucher", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
+  controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
 
   filter :firstname, :label => "Vorname"
   filter :lastname, :label => "Nachname"

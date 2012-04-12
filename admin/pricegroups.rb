@@ -1,6 +1,7 @@
 ActiveAdmin.register GoldencobraEvents::Pricegroup, :as => "Pricegroup" do
     
-  menu :parent => "Event-Management", :label => "Preisgruppen"
+  menu :parent => "Event-Management", :label => "Preisgruppen", :if => proc{can?(:read, GoldencobraEvents::Pricegroup)}
+  controller.authorize_resource :class => GoldencobraEvents::Pricegroup
   
   filter :title
 

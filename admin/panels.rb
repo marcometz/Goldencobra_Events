@@ -1,5 +1,6 @@
 ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
-  menu :parent => "Event-Management", :label => "Panels"
+  menu :parent => "Event-Management", :label => "Panels", :if => proc{can?(:read, GoldencobraEvents::Panel)}
+  controller.authorize_resource :class => GoldencobraEvents::Panel
 
   filter :title
 

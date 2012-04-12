@@ -1,6 +1,7 @@
 ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   
-  menu :parent => "Event-Management", :label => "Veranstaltungen"
+  menu :parent => "Event-Management", :label => "Veranstaltungen", :if => proc{can?(:read, GoldencobraEvents::Event)}
+  controller.authorize_resource :class => GoldencobraEvents::Event
   
   filter :title, :label => "Veranstaltungsname"
   filter :start_date, :label => "Beginn"

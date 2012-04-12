@@ -1,6 +1,6 @@
 ActiveAdmin.register Goldencobra::Article, :as => "Article" do
 
-  menu :parent => "Content-Management", :label => "Artikel"
+  menu :parent => "Content-Management", :label => "Artikel", :if => proc{can?(:read, Goldencobra::Article)}
   
   sidebar "veranstaltungs_modul", :only => [:edit] do      #:event_module
     render "/goldencobra_events/admin/events/event_module_sidebar"
