@@ -30,6 +30,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     
     f.inputs "Anmeldung" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
+      f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
     end
     
     f.inputs "Besucher" do
