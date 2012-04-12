@@ -1,6 +1,6 @@
 ActiveAdmin::Dashboards.build do
   
-  if can?(:read, GoldencobraEvents::EventRegistrations)
+  if can?(:read, GoldencobraEvents::RegistrationUser)
     section "Neueste Anmeldungen" do
       table do
         tr do
