@@ -127,9 +127,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end
         applicant.event_registrations.each do |ereg|
           tr do
-            [ereg.event_pricegroup.event.title, ereg.event_pricegroup.title, number_to_currency(ereg.event_pricegroup.price, :locale => :de)].each do |esa|
-              td esa
-            end
+            td ereg.event_pricegroup && ereg.event_pricegroup.event && ereg.event_pricegroup.event.title ? ereg.event_pricegroup.event.title : ""
+            td ereg.event_pricegroup && ereg.event_pricegroup.title ? ereg.event_pricegroup.title : ""
+            td ereg.event_pricegroup && ereg.event_pricegroup.price ? number_to_currency(ereg.event_pricegroup.price, :locale => :de) : ""
           end
         end
         tr :class => "total" do
