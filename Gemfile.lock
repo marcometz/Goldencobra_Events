@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 9aa22f3d2c4a2beb4e17c594af8f7540c07bcd79
+  revision: 67dedd5f9529f47ff1f32874c7ea3c3b3d891ab5
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -168,7 +168,7 @@ GEM
       eventmachine (>= 0.12.9)
     erubis (2.7.0)
     eventmachine (0.12.10)
-    exception_notification (2.5.2)
+    exception_notification (2.6.0)
       actionmailer (>= 3.0.4)
     execjs (1.3.0)
       multi_json (~> 1.0)
@@ -210,6 +210,7 @@ GEM
     hashie (1.2.0)
     hike (1.2.1)
     hirb (0.6.2)
+    httpauth (0.1)
     i18n (0.6.0)
     inherited_resources (1.3.0)
       has_scope (~> 0.5.0)
@@ -227,6 +228,8 @@ GEM
     launchy (2.1.0)
       addressable (~> 2.2.6)
     libv8 (3.3.10.4)
+    libwebsocket (0.1.3)
+      addressable
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -256,17 +259,18 @@ GEM
       oa-core (~> 0.0.0)
       rack-openid
     oauth (0.4.5)
-    oauth2 (0.5.2)
+    oauth2 (0.6.0)
       faraday (~> 0.7)
+      httpauth (~> 0.1)
       multi_json (~> 1.0)
-    omniauth (1.0.3)
+    omniauth (1.1.0)
       hashie (~> 1.2)
       rack
     omniauth-openid (1.0.1)
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
     orm_adapter (0.0.7)
-    paperclip (3.0.1)
+    paperclip (3.0.2)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -336,9 +340,10 @@ GEM
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.20.0)
+    selenium-webdriver (2.21.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
+      libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
     slop (2.4.4)

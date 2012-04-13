@@ -15,7 +15,7 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
     end
 
     f.inputs "Informationen" do
-      f.input :sponsors, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('attributes.panel.sponsors'), input_html: { class: 'chzn-select', 'data-placeholder' => t(:select_sponsor), style: "width: 50%;" }
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('attributes.panel.sponsors')#, input_html: { class: 'chzn-select', 'data-placeholder' => t(:select_sponsor), style: "width: 50%;" }
     end
   end
 

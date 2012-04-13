@@ -2,6 +2,11 @@ de:
   active_admin:
     events:
         select_sponsor: "Sponsor wählen"
+        chose_artist: "Künstler wählen"
+        chose_panel: "Panel auswählen"
+        chose_venue: "Veranstaltungsort auswählen"
+        chose_sponsor: "Sponsor auswählen"
+        new_subevent: "Neue Unter-Veranstaltung"
     resource:
       event: "Veranstaltung"
       article: "Artikel"
@@ -29,12 +34,6 @@ de:
     no: "Nein"
     dashboard:
       newest_registrations: "Neueste Anmeldungen"
-    events:
-      chose_panel: "Panel auswählen"
-      chose_venue: "Veranstaltungsort auswählen"
-      chose_sponsor: "Sponsor auswählen"
-      chose_artist: "Künstler auswählen"
-      new_subevent: "Neue Unter-Veranstaltung"
     pricegroups:
       new_pricegroup: "Neue Preisgruppe erstellen"
     not_needed: "Wird nicht benötigt."

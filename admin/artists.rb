@@ -55,7 +55,7 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
       end
     end
     f.inputs "Informationen" do
-      f.input :sponsors, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC").map{|c| [c.title, c.id]}, label: t('attributes.sponsor'), :input_html => { "multiple" => "multiple", :class => 'chzn-select', 'data-placeholder' => t('active_admin.events.select_sponsor')} 
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC").map{|c| [c.title, c.id]}, label: t('attributes.sponsor'), :input_html => { "multiple" => "multiple"} 
     end
     f.inputs :class => "buttons inputs" do
       f.actions

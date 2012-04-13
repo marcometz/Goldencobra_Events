@@ -41,8 +41,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     f.inputs "Information" do
       f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_panel')}, label: t('active_admin.resource.panel')
       f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_venue')}, label: t('active_admin.resource.venue')
-      f.input :sponsors, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), :input_html => { :class=>'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_sponsor') }, label: t('active_admin.resource.sponsor')
-      f.input :artists, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC"), :input_html => { :class=>'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_artist') }, label: t('active_admin.resource.artist')
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), :input_html => { }, label: t('active_admin.resource.sponsor')
+      f.input :artists, as: :check_boxes, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC"), :input_html => { }, label: t('active_admin.resource.artist')
       f.input :max_number_of_participators, label: t('attributes.event.max_number_of_participators'), hint: t('active_admin.not_needed')
     end
     
