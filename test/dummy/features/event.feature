@@ -234,7 +234,7 @@ Feature: Create and manage events
     When I go to the admin list of events  
     Then I click on "Edit" within "tr#event_1"
     And I remove jquery chosen
-    And I select "Naturstrom Panel" within "#event_panel_id"
+    And I check "Naturstrom Panel" within "#event_panel_id"
     Then I press "Update Event"
     And I should see "Naturstrom Panel"
 
@@ -266,7 +266,7 @@ Feature: Create and manage events
     When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
     And I remove jquery chosen
-    And I select "Audi Deutschland" within "#event_sponsors_input"
+    And I check "Audi Deutschland" within "#event_sponsors_input"
     Then I press "Update Event"
     And I should see "Audi Deutschland"
 
@@ -284,8 +284,8 @@ Feature: Create and manage events
     When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
     And I remove jquery chosen
-    And I select "Bodo Wartke" within "#event_artists_input"
-    And I select "Mario Barth" within "#event_artists_input"
+    And I check "Bodo Wartke" within "#event_artists_input"
+    And I check "Mario Barth" within "#event_artists_input"
     And I press "Update Event"
     Then I should see "Bodo Wartke"
     And I should see "Mario Barth"

@@ -5,8 +5,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   filter :firstname, :label => "Vorname"
   filter :lastname, :label => "Nachname"
   filter :email, :label => "E-Mail"
+  filter :type_of_registration, :label => "Art der Registrierung", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
 
   index do
+    selectable_column
     column t(:firstname), :sortable => :firstname do |applicant|
       applicant.firstname
     end
@@ -16,9 +18,12 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column t(:email), :sortable => :email do |applicant|
       applicant.email
     end
-    
+    column "Art", :type_of_registration
     column t(:total_price) do |u|
       number_to_currency(u.total_price, :locale => :de)
+    end
+    column "E-Mail" do |user|
+      link_to("senden", send_confirmation_mail_admin_applicant_path(user)) 
     end
     default_actions
   end
@@ -27,12 +32,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     f.inputs :class => "buttons inputs" do
       f.actions
     end
-    
     f.inputs "Anmeldung" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
       f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
     end
-    
     f.inputs "Besucher" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
       f.input :email     
@@ -43,7 +46,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       f.input :phone     
       f.input :agb, :label => "AGB akzeptiert"   
     end
-    
     f.inputs "" do
       f.fields_for :company_attributes, f.object.company do |comp|
         comp.inputs "Firma" do
@@ -54,7 +56,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
           comp.input :homepage   
           comp.input :sector  
         end 
-         
         comp.inputs "" do
           comp.fields_for :location_attributes, comp.object.location do |loc|
             loc.inputs "Adresse" do
@@ -70,15 +71,12 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end
       end
     end
-    
     f.inputs "" do
       f.has_many :event_registrations do |reg|
         reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.scoped.map{|a| ["#{a.event.title if a.event} (#{a.event.id if a.event}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"} 
         reg.input :_destroy, :as => :boolean 
       end
     end
-    
-    
     f.inputs :class => "buttons inputs" do
       f.actions
     end
@@ -139,6 +137,18 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end
       end
     end #end panel sponsors
+  end
+  
+  member_action :send_confirmation_mail do
+    reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
+    GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+    redirect_to :action => :index, :notice => "Mail wurde versendet"
+  end
+  
+  batch_action :send_confirmation_mails, :confirm => "Sind Sie sicher?" do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+    end
   end
   
   controller do     
