@@ -234,7 +234,7 @@ Feature: Create and manage events
     When I go to the admin list of events  
     Then I click on "Edit" within "tr#event_1"
     And I remove jquery chosen
-    And I select "Naturstrom Panel" within "#event_panel_id"
+    And I select "Naturstrom Panel" within "#event_panel_input"
     Then I press "Update Event"
     And I should see "Naturstrom Panel"
 
