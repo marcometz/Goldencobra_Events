@@ -11,7 +11,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   
   
   form :html => { :enctype => "multipart/form-data" }  do |f|
-    f.inputs "" do 
+    f.inputs :class => "buttons inputs" do
       f.actions
     end
     f.inputs "Allgemein" do
@@ -50,6 +50,9 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :teaser_image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'teaser_image'}, label: t('activerecord.attributes.event.teaser_image'), hint: t('active_admin.not_needed')
       f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}, label: t('activerecord.attributes.event.description'), hint: t('active_admin.not_needed')
       f.input :external_link, label: t('activerecord.attributes.event.external_link'), hint: t('active_admin.not_needed')
+    end
+    f.inputs :class => "buttons inputs" do
+      f.actions
     end
   end
     

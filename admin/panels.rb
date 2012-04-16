@@ -5,7 +5,7 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
   filter :title
 
   form :html => { :enctype => "multipart/form-data" } do |f|
-    f.inputs "" do
+    f.inputs :class => "buttons inputs" do
       f.actions
     end
     f.inputs "Allgemein" do
@@ -16,6 +16,9 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
 
     f.inputs "Informationen" do
       f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('activerecord.attributes.panel.sponsors')#, input_html: { class: 'chzn-select', 'data-placeholder' => t(:select_sponsor), style: "width: 50%;" }
+    end
+    f.inputs :class => "buttons inputs" do
+      f.actions
     end
   end
 

@@ -40,9 +40,9 @@ Feature: Create and manage artists
   Scenario: Set sponsors for an artist
     When I go to the admin list of artists
     Then I click on "Edit" within "tr#artist_1"
-    #And I remove jquery chosen
+    And I remove jquery chosen
     And I check "Audi Deutschland" within "#artist_sponsors_input"
-    And I check "Dr. Oetker" within "#event_sponsors_input"
+    And I check "Dr. Oetker" within "#artist_sponsors_input"
     Then I press "Update Artist"
     And I should see "Audi Deutschland"
     And I should see "Dr. Oetker"
