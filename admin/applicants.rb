@@ -23,7 +23,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       number_to_currency(u.total_price, :locale => :de)
     end
     column "E-Mail" do |user|
-      link_to("senden", send_confirmation_mail_admin_applicant_path(user)) 
+      link_to("senden", send_conf_mail_admin_applicant_path(user)) 
     end
     default_actions
   end
@@ -139,16 +139,17 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end #end panel sponsors
   end
   
-  member_action :send_confirmation_mail do
+  member_action :send_conf_mail do
     reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
     GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
     redirect_to :action => :index, :notice => "Mail wurde versendet"
   end
   
-  batch_action :send_confirmation_mails, :confirm => "Sind Sie sicher?" do |selection|
+  batch_action :send_conf_mails, :confirm => "Sind Sie sicher?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
     end
+    redirect_to :action => :index, :notice => "Mails wurden versendet"
   end
   
   controller do     

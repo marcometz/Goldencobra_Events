@@ -1,7 +1,12 @@
-de:
+de:    
   active_admin:
     batch_actions:
       button_label: "Batch Verarbeitung"
+      delete_confirmation: "Löschen"
+      labels:
+        send_conf_mails: "Sende Bestätigungsmails"
+        destroy: "Löschen"
+      succesfully_destroyed: "%{model} erfolgreich gelöscht"
     resource:
       event: "Veranstaltung"
       article: "Artikel"
