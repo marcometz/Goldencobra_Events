@@ -24,6 +24,7 @@ module GoldencobraEvents
     has_many :event_registrations, class_name: GoldencobraEvents::EventRegistration, :foreign_key => "user_id"
     belongs_to :company, :class_name => GoldencobraEvents::Company
     belongs_to :user, :class_name => User
+    has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
     
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Brieftaube", "anderer Weg"]
     

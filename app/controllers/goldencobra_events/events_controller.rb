@@ -143,6 +143,7 @@ module GoldencobraEvents
             @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], reguser)
             @errors << @result if @result != true
             GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+            reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: customer #{reguser.id}")
             reset_session
         else
           @errors << "user_not_exists"

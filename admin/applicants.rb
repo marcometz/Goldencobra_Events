@@ -145,12 +145,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   member_action :send_conf_mail do
     reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
     GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+    reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}")
     redirect_to :action => :index, :notice => "Mail wurde versendet"
   end
   
   batch_action :send_conf_mails, :confirm => "Sind Sie sicher?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+      reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}")
     end
     redirect_to :action => :index, :notice => "Mails wurden versendet"
   end
