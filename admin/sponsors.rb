@@ -15,18 +15,18 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
       f.input :title
       f.input :description, :input_html => { :class =>"tinymce"}
       f.input :link_url, :label => "Homepage"
-      f.input :size_of_sponsorship, :as => :select, :collection => GoldencobraEvents::Sponsor::SponsorshipSize.map {|c| c}, :include_blank => false, label: t('attributes.sponsor.size_of_sponsorship'), :input_html => { :class => 'chzn-select'}
-      f.input :email, label: t('attributes.sponsor.email')
-      f.input :telephone, label: t('attributes.sponsor.telephone')
+      f.input :size_of_sponsorship, :as => :select, :collection => GoldencobraEvents::Sponsor::SponsorshipSize.map {|c| c}, :include_blank => false, label: t('activerecord.attributes.sponsor.size_of_sponsorship'), :input_html => { :class => 'chzn-select'}
+      f.input :email, label: t('activerecord.attributes.sponsor.email')
+      f.input :telephone, label: t('activerecord.attributes.sponsor.telephone')
     end
     f.inputs "Adresse" do
       f.fields_for :location_attributes, f.object.location do |loc|
         loc.inputs "" do
-          loc.input :street, label: t('attributes.location.street.one')
-          loc.input :city, label: t('attributes.location.city.one')
-          loc.input :zip, label: t('attributes.location.zip.one')
-          loc.input :region, label: t('attributes.location.region.one')
-          loc.input :country, :as => :string, label: t('attributes.location.country.one')
+          loc.input :street, label: t('activerecord.attributes.location.street.one')
+          loc.input :city, label: t('activerecord.attributes.location.city.one')
+          loc.input :zip, label: t('activerecord.attributes.location.zip.one')
+          loc.input :region, label: t('activerecord.attributes.location.region.one')
+          loc.input :country, :as => :string, label: t('activerecord.attributes.location.country.one')
         end
       end
     end
@@ -39,19 +39,19 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
   end
 
   index do
-    column t('attributes.sponsor.title'), :sortable => :title do |sponsor|
+    column t('activerecord.attributes.sponsor.title'), :sortable => :title do |sponsor|
       sponsor.title
     end
-    column t('attributes.sponsor.description') do |sponsor|
+    column t('activerecord.attributes.sponsor.description') do |sponsor|
       sponsor.description
     end
-    column t('attributes.sponsor.email') do |sponsor|
+    column t('activerecord.attributes.sponsor.email') do |sponsor|
       sponsor.email
     end
-    column t('attributes.sponsor.link_url'), :sortable => :link_url do |sponsor|
+    column t('activerecord.attributes.sponsor.link_url'), :sortable => :link_url do |sponsor|
       sponsor.link_url
     end
-    column t('attributes.sponsor.telephone') do |sponsor|
+    column t('activerecord.attributes.sponsor.telephone') do |sponsor|
       sponsor.telephone
     end
     default_actions

@@ -1,12 +1,12 @@
 de:
   activerecord:
     models:
-      registration_user: "Gast" 
       article: "Artikel"
       setting: "Einstellung"
       menue: "Menü"
       metag: "Metatag"
       widget: "Schnipsel"
+      applicant: "Gast"
     attributes:
       registration_user:
         firstname: "Vorname"

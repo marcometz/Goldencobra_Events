@@ -2,7 +2,7 @@ ActiveAdmin::Dashboards.build do
   section "Neueste Anmeldungen" do
     table do
       tr do
-        [t('attributes.user.complete_name'), t('attributes.user.email'), t('attributes.user.created_at'), t('attributes.user.details')].each do |sa|
+        [t('activerecord.attributes.user.complete_name'), t('activerecord.attributes.user.email'), t('activerecord.attributes.user.created_at'), t('activerecord.attributes.user.details')].each do |sa|
           th sa
         end
       end

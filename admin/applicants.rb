@@ -85,33 +85,33 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   show :title => :lastname do
     panel t('active_admin.resource.applicant') do
       attributes_table_for applicant do
-        row(t('attributes.user.firstname')){applicant.firstname}
-        row(t('attributes.user.lastname')){applicant.lastname}
-        row(t('attributes.user.title')){applicant.title}
-        row(t('attributes.user.gender')){applicant.gender}
-        row(t('attributes.user.function')){applicant.function}
-        row(t('attributes.user.phone')){applicant.phone}
-        row(t('attributes.created_at')){applicant.created_at}
-        row(t('attributes.updated_at')){applicant.updated_at}
+        row(t('activerecord.attributes.user.firstname')){applicant.firstname}
+        row(t('activerecord.attributes.user.lastname')){applicant.lastname}
+        row(t('activerecord.attributes.user.title')){applicant.title}
+        row(t('activerecord.attributes.user.gender')){applicant.gender}
+        row(t('activerecord.attributes.user.function')){applicant.function}
+        row(t('activerecord.attributes.user.phone')){applicant.phone}
+        row(t('activerecord.attributes.created_at')){applicant.created_at}
+        row(t('activerecord.attributes.updated_at')){applicant.updated_at}
       end
     end #end panel applicant
     panel t('active_admin.resource.company') do
       if applicant.company
           attributes_table_for applicant.company do
-            row(t('attributes.company.title')){applicant.company.title}
-            row(t('attributes.company.legal_form')){applicant.company.legal_form}
-            row(t('attributes.company.phone')){applicant.company.phone}
-            row(t('attributes.company.fax')){applicant.company.fax}
-            row(t('attributes.company.homepage')){applicant.company.homepage}
-            row(t('attributes.company.sector')){applicant.company.sector}
+            row(t('activerecord.attributes.company.title')){applicant.company.title}
+            row(t('activerecord.attributes.company.legal_form')){applicant.company.legal_form}
+            row(t('activerecord.attributes.company.phone')){applicant.company.phone}
+            row(t('activerecord.attributes.company.fax')){applicant.company.fax}
+            row(t('activerecord.attributes.company.homepage')){applicant.company.homepage}
+            row(t('activerecord.attributes.company.sector')){applicant.company.sector}
           end
         if applicant.company.location 
           attributes_table_for applicant.company.location do
-            row(t('attributes.location.street.one')){applicant.company.location.street}
-            row(t('attributes.location.zip.one')){applicant.company.location.zip}
-            row(t('attributes.location.city.one')){applicant.company.location.city}
-            row(t('attributes.location.region.one')){applicant.company.location.region}
-            row(t('attributes.location.country.one')){applicant.company.location.country}
+            row(t('activerecord.attributes.location.street.one')){applicant.company.location.street}
+            row(t('activerecord.attributes.location.zip.one')){applicant.company.location.zip}
+            row(t('activerecord.attributes.location.city.one')){applicant.company.location.city}
+            row(t('activerecord.attributes.location.region.one')){applicant.company.location.region}
+            row(t('activerecord.attributes.location.country.one')){applicant.company.location.country}
           end
         end
       end   
@@ -119,9 +119,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     panel t('active_admin.resource.event_registration') do
       table do
         tr do
-          th t('attributes.event.title')
-          th t('attributes.event_pricegroup.title.')
-          th t('attributes.event_pricegroup.price')
+          th t('activerecord.attributes.event.title')
+          th t('activerecord.attributes.event_pricegroup.title.')
+          th t('activerecord.attributes.event_pricegroup.price')
         end
         applicant.event_registrations.each do |ereg|
           tr do

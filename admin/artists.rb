@@ -7,19 +7,19 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   filter :description, :label => "Beschreibung"
 
   index do
-    column t('attributes.artist.title'), :sortable => :title do |artist|
+    column t('activerecord.attributes.artist.title'), :sortable => :title do |artist|
       artist.title
     end
-    column t('attributes.artist.description') do |artist|
+    column t('activerecord.attributes.artist.description') do |artist|
       artist.description
     end
-    column t('attributes.artist.email') do |artist|
+    column t('activerecord.attributes.artist.email') do |artist|
       artist.email
     end
-    column t('attributes.artist.url_link'), :sortable => :url_link do |artist|
+    column t('activerecord.attributes.artist.url_link'), :sortable => :url_link do |artist|
       artist.url_link
     end
-    column t('attributes.artist.telephone') do |artist|
+    column t('activerecord.attributes.artist.telephone') do |artist|
       artist.telephone
     end
     default_actions
@@ -30,20 +30,20 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
       f.actions
     end
     f.inputs "Allgemein" do
-      f.input :title, :hint => "Muss ausgefuellt werden", label: t('attributes.artist.title')
-      f.input :description, :input_html => { :class =>"tinymce"}, label: t('attributes.artist.description')
-      f.input :url_link, :label => "Homepage Link", label: t('attributes.artist.url_link')
-      f.input :email, label: t('attributes.artist.email')
-      f.input :telephone, label: t('attributes.artist.telephone')
+      f.input :title, :hint => "Muss ausgefuellt werden", label: t('activerecord.attributes.artist.title')
+      f.input :description, :input_html => { :class =>"tinymce"}, label: t('activerecord.attributes.artist.description')
+      f.input :url_link, :label => "Homepage Link", label: t('activerecord.attributes.artist.url_link')
+      f.input :email, label: t('activerecord.attributes.artist.email')
+      f.input :telephone, label: t('activerecord.attributes.artist.telephone')
     end
     f.inputs "Adresse" do
       f.fields_for :location_attributes, f.object.location do |loc|
         loc.inputs "" do
-          loc.input :street, label: t('attributes.location.one.street')
-          loc.input :city, label: t('attributes.location.one.city')
-          loc.input :zip, label: t('attributes.location.one.zip')
-          loc.input :region, label: t('attributes.location.one.region')
-          loc.input :country, :as => :string, label: t('attributes.location.one.country')
+          loc.input :street, label: t('activerecord.attributes.location.one.street')
+          loc.input :city, label: t('activerecord.attributes.location.one.city')
+          loc.input :zip, label: t('activerecord.attributes.location.one.zip')
+          loc.input :region, label: t('activerecord.attributes.location.one.region')
+          loc.input :country, :as => :string, label: t('activerecord.attributes.location.one.country')
           # loc.input :lat
           # loc.input :lng
         end
@@ -55,7 +55,7 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
       end
     end
     f.inputs "Informationen" do
-      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC").map{|c| [c.title, c.id]}, label: t('attributes.sponsor'), :input_html => { "multiple" => "multiple"} 
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC").map{|c| [c.title, c.id]}, label: t('activerecord.attributes.sponsor'), :input_html => { "multiple" => "multiple"} 
     end
     f.inputs :class => "buttons inputs" do
       f.actions

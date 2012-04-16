@@ -6,7 +6,7 @@ source "http://rubygems.org"
 gemspec
 
 # jquery-rails is used by the dummy application
-gem 'activeadmin', :git => "git://github.com/ikusei/active_admin.git", :require => "activeadmin"
+gem 'activeadmin', :git => "git://github.com/gregbell/active_admin.git", :require => "activeadmin"
 gem 'goldencobra', :git => "git://github.com/ikusei/Goldencobra.git"
 gem 'compass-rails'
 

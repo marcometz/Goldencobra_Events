@@ -9,27 +9,27 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
       f.actions
     end
     f.inputs "Allgemein" do
-      f.input :title, :hint => "Der Titel des Panels, kann Leerzeichen und Sonderzeichen enthalten", label: t('attributes.panel.title')
-      f.input :description, :hint => "Die Beschreibung des Panels", label: t('attributes.panel.description')
-      f.input :link_url, :hint => "Link zur Panel-Seite", label: t('attributes.panel.link_url')
+      f.input :title, :hint => "Der Titel des Panels, kann Leerzeichen und Sonderzeichen enthalten", label: t('activerecord.attributes.panel.title')
+      f.input :description, :hint => "Die Beschreibung des Panels", label: t('activerecord.attributes.panel.description')
+      f.input :link_url, :hint => "Link zur Panel-Seite", label: t('activerecord.attributes.panel.link_url')
     end
 
     f.inputs "Informationen" do
-      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('attributes.panel.sponsors')#, input_html: { class: 'chzn-select', 'data-placeholder' => t(:select_sponsor), style: "width: 50%;" }
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('activerecord.attributes.panel.sponsors')#, input_html: { class: 'chzn-select', 'data-placeholder' => t(:select_sponsor), style: "width: 50%;" }
     end
   end
 
   index do
-    column t('attributes.panel.title'), :sortable => :title do |event_panel|
+    column t('activerecord.attributes.panel.title'), :sortable => :title do |event_panel|
       event_panel.title
     end
-    column t('attributes.panel.description'), :sortable => :description do |event_panel|
+    column t('activerecord.attributes.panel.description'), :sortable => :description do |event_panel|
       event_panel.description
     end
-    column t('attributes.panel.link_url'), :sortable => :link_url do |event_panel|
+    column t('activerecord.attributes.panel.link_url'), :sortable => :link_url do |event_panel|
       event_panel.link_url
     end
-    column t('attributes.updated_at'), :sortable => :updated_at do |event_panel|
+    column t('activerecord.attributes.updated_at'), :sortable => :updated_at do |event_panel|
       event_panel.updated_at
     end
     column "" do |event_panel|

@@ -1,5 +1,7 @@
 de:
   active_admin:
+    batch_actions:
+      button_label: "Batch Verarbeitung"
     resource:
       event: "Veranstaltung"
       article: "Artikel"
