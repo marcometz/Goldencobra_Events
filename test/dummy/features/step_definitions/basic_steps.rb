@@ -95,6 +95,10 @@ Given /^the following "([^"]*)" exist:$/ do |arg1, table|
   end
 end
 
+Given /^no "([^"]*)" exist$/ do |arg1|
+  eval("#{arg1}.destroy_all")
+end
+
 Then /^I should see the image "(.+)" with id "([^\"]*)"$/ do |image, id|
     page.should have_xpath("//img[@src=\"/system/images/#{id}/thumb/#{image}\"]")
 end

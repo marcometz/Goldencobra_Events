@@ -74,9 +74,9 @@ Feature: Create and manage events
         | "Event1"                     |           |  1 | Registration needed |
         | "Event2"                     | 1         |  2 | No Registration needed |
     And the following "event_pricegroups" exist:
-        | id | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
-        | 5  |        1 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
-        | 6  |        1 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
+        | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
+        |        1 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
+        |        1 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
     When I go to the admin list of articles  
     Then I click on "Edit" within "tr#article_2"
     And I should see "Edit Article" within "#page_title"
