@@ -137,9 +137,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end
       end
     end #end panel sponsors
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
   end
   
   member_action :send_conf_mail do
