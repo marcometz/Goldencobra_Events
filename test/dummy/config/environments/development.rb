@@ -45,8 +45,8 @@ Dummy::Application.configure do
     domain: "ikusei.de",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: "metz+ikusei.de",
-    password: "NzhaV9mxNpb1",
+    user_name: "cloudforum+ikusei.de",
+    password: "d0X1CqR2TtfJ",
     enable_starttls_auto: false
   }
   
