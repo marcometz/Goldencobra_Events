@@ -146,15 +146,15 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     redirect_to :action => :index, :notice => "Mail wurde versendet"
   end
   
-  GoldencobraEmailTemplates::EmailTemplate.all.each do |emailtemplate|
-    batch_action "send_conf_mail_#{emailtemplate.id}", :confirm => "#{emailtemplate.title}: sind Sie sicher?" do |selection|
-      GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-        GoldencobraEvents::EventRegistrationMailer.registration_email_with_template(reguser, emailtemplate).deliver unless Rails.env == "test"
-        reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation with template", :description => "email: #{reguser.email}, user: admin #{current_user.id}, email_template: #{emailtemplate.id}")
-      end
-      redirect_to :action => :index, :notice => "Mails wurden versendet"
-    end
-  end
+  #GoldencobraEmailTemplates::EmailTemplate.all.each do |emailtemplate|
+  #  batch_action "send_conf_mail_#{emailtemplate.id}", :confirm => "#{emailtemplate.title}: sind Sie sicher?" do |selection|
+  #    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+  #      GoldencobraEvents::EventRegistrationMailer.registration_email_with_template(reguser, emailtemplate).deliver unless Rails.env == "test"
+  #      reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation with template", :description => "email: #{reguser.email}, user: admin #{current_user.id}, email_template: #{emailtemplate.id}")
+  #    end
+  #    redirect_to :action => :index, :notice => "Mails wurden versendet"
+  #  end
+  #end
   
   batch_action :send_default_conf_mails, :confirm => "Sind Sie sicher?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
