@@ -19,6 +19,8 @@ module GoldencobraEvents
     scope :active, where(:canceled => false)
     scope :with_event_id, lambda { |param| joins(:event_pricegroup).where("goldencobra_events_event_pricegroups.event_id = #{param}") }
     
+    LiquidParser = {}
+    
     before_save :is_registerable?
 
     def is_registerable?(list_of_pricegroup_ids=nil)

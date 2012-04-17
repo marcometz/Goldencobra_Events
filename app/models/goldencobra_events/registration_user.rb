@@ -30,7 +30,15 @@ module GoldencobraEvents
     
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
+    liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
     
+    def anrede
+      if self.gender == true
+        "Sehr geehrter Herr #{self.title} #{self.lastname}"
+      else
+        "Sehr geehrte Frau #{self.title} #{self.lastname}"
+      end
+    end
     
     def total_price
       total_price = 0

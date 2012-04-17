@@ -4,7 +4,8 @@ de:
       button_label: "Batch Verarbeitung"
       delete_confirmation: "Löschen"
       labels:
-        send_conf_mails: "Sende Bestätigungsmails"
+        send_conf_mail1: "Sende Gäste-Mail"  
+        send_default_conf_mails: "Sende Bestätigungsmails"
         destroy: "Löschen"
       succesfully_destroyed: "%{model} erfolgreich gelöscht"
     resource:

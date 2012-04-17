@@ -1,0 +1,2 @@
+<% template = Liquid::Template.parse(@email_template.content_html) %>
+<%= raw(template.render(GoldencobraEvents::EventRegistration::LiquidParser)) %>
