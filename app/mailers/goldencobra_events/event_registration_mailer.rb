@@ -1,6 +1,6 @@
 module GoldencobraEvents
   class EventRegistrationMailer < ActionMailer::Base
-    default from: Goldencobra::Setting.for_key("goldencobra_events.event.registration.mailer.from") 
+    default from: "cloudforum@ikusei.de"
     default subject: Goldencobra::Setting.for_key("goldencobra_events.event.registration.mailer.subject") 
     default :content_type => "text/html"
     default :reply_to => "cloudforum@tagesspiegel.de"
