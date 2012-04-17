@@ -8,6 +8,7 @@ gemspec
 # jquery-rails is used by the dummy application
 gem 'activeadmin', :git => "git://github.com/gregbell/active_admin.git", :require => "activeadmin"
 gem 'goldencobra', :git => "git://github.com/ikusei/Goldencobra.git"
+gem 'goldencobra_email_templates', :git => "git://github.com/ikusei/goldencobra_email_templates.git"
 gem 'compass-rails'
 
 gem "rspec-rails", :group => [:test, :development] # rspec in dev so the rake tasks run properly

@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.2"
   s.add_dependency "goldencobra"
+  s.add_dependency "goldencobra_email_templates"
   s.add_dependency "sass-rails"
   s.add_dependency "compass-rails"
   s.add_dependency "andand"

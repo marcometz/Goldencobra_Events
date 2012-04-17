@@ -53,6 +53,14 @@ GIT
       uglifier
 
 GIT
+  remote: git://github.com/ikusei/goldencobra_email_templates.git
+  revision: 4d1235cbf94dc06ef31e9be965dbf01e59ec9603
+  specs:
+    goldencobra_email_templates (0.0.1)
+      goldencobra
+      rails (~> 3.2.2)
+
+GIT
   remote: git://github.com/thoughtbot/factory_girl_rails.git
   revision: 4259e4cafb383c6b84e14423ba6c351c2cb001a6
   specs:
@@ -74,6 +82,7 @@ PATH
       andand
       compass-rails
       goldencobra
+      goldencobra_email_templates
       rails (~> 3.2.2)
       sass-rails
 
@@ -387,6 +396,7 @@ DEPENDENCIES
   factory_girl_rails!
   git-pivotal
   goldencobra!
+  goldencobra_email_templates!
   goldencobra_events!
   growl
   guard
