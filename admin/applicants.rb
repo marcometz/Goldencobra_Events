@@ -23,7 +23,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       number_to_currency(u.total_price, :locale => :de)
     end
     column "E-Mail erhalten am" do |user|
-      l(user.last_email_send, format: :short)
+      user.last_email_send ? l(user.last_email_send, format: :short) : ""
     end
     default_actions
   end

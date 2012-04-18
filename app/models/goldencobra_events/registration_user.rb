@@ -48,16 +48,17 @@ module GoldencobraEvents
       return total_price
     end
     
+    def registration_emails
+      self.vita_steps.where(title: "Mail delivered: registration confirmation")
+    end
+    
     def last_email_send
-      vitas = self.vita_steps.where(title: "Mail delivered: registration confirmation")
-      if self.type_of_registration == "Webseite" && vitas.count == 0
-        self.created_at
+      emails = self.registration_emails
+      
+      if emails.empty?
+        self.type_of_registration == "Webseite" ? self.created_at : nil
       else
-        if vitas.count > 0
-          vitas.order("created_at DESC").first.created_at
-        else
-          ""
-        end
+        emails.order("created_at DESC").first.created_at
       end
     end
     
