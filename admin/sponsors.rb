@@ -7,6 +7,8 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
   filter :email, label: "E-Mail"
   filter :link_url, label: "Homepage"
   
+  batch_action :destroy, false
+  
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs :class => "buttons inputs" do
       f.actions

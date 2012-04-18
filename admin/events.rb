@@ -86,6 +86,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   #   link_to('New Event', new_admin_event_path)
   # end
   
+  batch_action :destroy, false
+  
   show :title => :title do
     panel "Event Details" do
       attributes_table_for event do

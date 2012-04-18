@@ -176,6 +176,8 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     redirect_to :action => :index, :notice => "Mails wurden versendet"
   end
   
+  batch_action :destroy, false
+  
   controller do     
     def new       
       @applicant = GoldencobraEvents::RegistrationUser.new

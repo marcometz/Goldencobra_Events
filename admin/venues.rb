@@ -38,6 +38,8 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
     link_to('New Venue', new_admin_venue_path)
   end
   
+  batch_action :destroy, false
+  
   show :title => :title do
     panel "Venue Details" do
       attributes_table_for venue do
