@@ -31,7 +31,7 @@ module GoldencobraEvents
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
-    
+        
     def anrede
       if self.gender == true
         "Sehr geehrter Herr #{self.title} #{self.lastname}"
@@ -46,6 +46,15 @@ module GoldencobraEvents
         total_price += e.event_pricegroup.price if e.event_pricegroup && e.event_pricegroup.price
       end
       return total_price
+    end
+    
+    def last_email_send
+      vitas = self.vita_steps.where(title: "Mail delivered: registration confirmation")
+      if self.type_of_registration == "Webseite" && vitas.count == 0
+        self.created_at
+      else
+        vitas.order("created_at DESC").first.created_at
+      end
     end
     
   end

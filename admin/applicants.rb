@@ -22,8 +22,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column t(:total_price) do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
-    column "E-Mail" do |user|
-      link_to("senden", send_conf_mail_admin_applicant_path(user)) 
+    column "E-Mail erhalten am" do |user|
+      #link_to("senden", send_conf_mail_admin_applicant_path(user)) 
+      l(user.last_email_send, format: :short)
     end
     default_actions
   end
