@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   mount Goldencobra::Engine => "/"
 end
 #== Route Map
-# Generated on 17 Apr 2012 22:52
+# Generated on 18 Apr 2012 10:42
 #
 #    mark_as_startpage_admin_article GET        /admin/articles/:id/mark_as_startpage(.:format) admin/articles#mark_as_startpage
 #       update_widgets_admin_article POST       /admin/articles/:id/update_widgets(.:format)    admin/articles#update_widgets
@@ -76,7 +76,6 @@ end
 #                       admin_widget GET        /admin/widgets/:id(.:format)                    admin/widgets#show
 #                                    PUT        /admin/widgets/:id(.:format)                    admin/widgets#update
 #                                    DELETE     /admin/widgets/:id(.:format)                    admin/widgets#destroy
-#     send_conf_mail_admin_applicant GET        /admin/applicants/:id/send_conf_mail(.:format)  admin/applicants#send_conf_mail
 #      batch_action_admin_applicants POST       /admin/applicants/batch_action(.:format)        admin/applicants#batch_action
 #                   admin_applicants GET        /admin/applicants(.:format)                     admin/applicants#index
 #                                    POST       /admin/applicants(.:format)                     admin/applicants#create
