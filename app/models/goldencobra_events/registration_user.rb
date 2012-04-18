@@ -53,7 +53,11 @@ module GoldencobraEvents
       if self.type_of_registration == "Webseite" && vitas.count == 0
         self.created_at
       else
-        vitas.order("created_at DESC").first.created_at
+        if vitas.count > 0
+          vitas.order("created_at DESC").first.created_at
+        else
+          ""
+        end
       end
     end
     
