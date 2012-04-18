@@ -120,7 +120,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       table do
         tr do
           th t('activerecord.attributes.event.title')
-          th t('activerecord.attributes.event_pricegroup.title.')
+          th t('activerecord.attributes.event_pricegroup.title')
           th t('activerecord.attributes.event_pricegroup.price')
         end
         applicant.event_registrations.each do |ereg|
@@ -137,6 +137,22 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end
       end
     end #end panel sponsors
+    panel t('active_admin.resource.vita') do
+      table do
+        tr do
+          th t('activerecord.attributes.vita.title')
+          th t('activerecord.attributes.vita.description')
+          th t('activerecord.attributes.vita.created_at')
+        end
+        applicant.vita_steps.each do |vita|
+          tr do
+            td vita.title
+            td vita.description
+            td l(vita.created_at, format: :short)
+          end
+        end
+      end
+    end #end panel vita
   end
   
   
@@ -166,6 +182,29 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       @applicant.company = GoldencobraEvents::Company.new
       @applicant.company.location = Goldencobra::Location.new
     end 
+  end
+  
+  csv do
+    column :id
+    column :gender
+    column :email
+    column :title
+    column :firstname
+    column :lastname
+    column :function
+    column :phone
+    column :agb
+    column :type_of_registration
+    column :created_at
+    column :updated_at
+    column :comment
+    column("Company") {|applicant| applicant.company.title if applicant.company.present? }
+    column("Street") {|applicant| applicant.company.location.street if applicant.company.present? && applicant.company.location.present? }
+    column("City") {|applicant| applicant.company.location.city if applicant.company.present? && applicant.company.location.present? }
+    column("ZIP") {|applicant| applicant.company.location.zip if applicant.company.present? && applicant.company.location.present? }
+    column("Country") {|applicant| applicant.company.location.country if applicant.company.present? && applicant.company.location.present? }
+    column("last_email_at") {|user| l(user.last_email_send, format: :short) if user.last_email_send.present? }
+    column("total_price") {|u| number_to_currency(u.total_price, :locale => :de) }
   end
   
 end
