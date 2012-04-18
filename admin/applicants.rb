@@ -23,7 +23,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       number_to_currency(u.total_price, :locale => :de)
     end
     column "E-Mail" do |user|
-      link_to("senden", send_conf_mail_admin_applicant_path(user)) 
+      
     end
     default_actions
   end
@@ -139,19 +139,13 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end #end panel sponsors
   end
   
-  member_action :send_conf_mail do
-    reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
-    GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
-    reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}")
-    redirect_to :action => :index, :notice => "Mail wurde versendet"
-  end
   
   if ActiveRecord::Base.connection.table_exists?("goldencobra_email_templates_email_templates")
     GoldencobraEmailTemplates::EmailTemplate.all.each do |emailtemplate|
       batch_action "send_conf_mail_#{emailtemplate.id}", :confirm => "#{emailtemplate.title}: sind Sie sicher?" do |selection|
         GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
           GoldencobraEvents::EventRegistrationMailer.registration_email_with_template(reguser, emailtemplate).deliver unless Rails.env == "test"
-          reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation with template", :description => "email: #{reguser.email}, user: admin #{current_user.id}, email_template: #{emailtemplate.id}")
+          reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}, email_template: #{emailtemplate.id}")
         end
         redirect_to :action => :index, :notice => "Mails wurden versendet"
       end
