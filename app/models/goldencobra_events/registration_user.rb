@@ -32,6 +32,14 @@ module GoldencobraEvents
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
         
+    #scope :total_price_gt, lambda { |param| where(:field => "value") }
+    #scope :total_price_eq, lambda { |param| where(:field => "value") }
+    #scope :total_price_lt, lambda { |param| where(:field => "value") }    
+    #    
+    #search_methods :total_price_gt    
+    #search_methods :total_price_lt
+    #search_methods :total_price_eq
+        
     def anrede
       if self.gender == true
         "Sehr geehrter Herr #{self.title} #{self.lastname}"

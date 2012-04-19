@@ -6,6 +6,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   filter :lastname, :label => "Nachname"
   filter :email, :label => "E-Mail"
   filter :type_of_registration, :label => "Art der Registrierung", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
+  #filter :total_price, :as => :numeric
 
   index do
     selectable_column
