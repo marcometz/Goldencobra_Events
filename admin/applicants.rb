@@ -207,7 +207,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column("Country") {|applicant| applicant.company.location.country if applicant.company.present? && applicant.company.location.present? }
     column("last_email_at") {|user| l(user.last_email_send, format: :short) if user.last_email_send.present? }
     column("total_price") {|u| number_to_currency(u.total_price, :locale => :de) }
-    column("Preisgruppen") {|applicant| u.event_registrations.map(&:event_pricegroup).map(&:title).uniq.compact.join(" - ") }
+    column("Preisgruppen") {|applicant| applicant.event_registrations.map(&:event_pricegroup).map(&:title).uniq.compact.join(" - ") }
   end
   
 end
