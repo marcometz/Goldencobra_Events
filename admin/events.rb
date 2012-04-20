@@ -16,8 +16,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     end
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten", label: t('activerecord.attributes.event.title')
-      f.input :start_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true, label: t('activerecord.attributes.event.start_date')
-      f.input :end_date, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], :include_blank => true, label: t('activerecord.attributes.event.end_date')
+      f.input :start_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_date.strftime('%A, %d.%m.%Y') if f.object.start_date}" }, label: t('activerecord.attributes.event.start_date')
+      f.input :end_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.end_date.strftime('%A, %d.%m.%Y') if f.object.end_date}" }, label: t('activerecord.attributes.event.end_date')
       f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true, label: t('activerecord.attributes.event.parent_id')
       f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false, label: t('activerecord.attributes.event.type_of_event')
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false, label: t('activerecord.attributes.event.type_of_registration')
@@ -30,9 +30,9 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         m.input :pricegroup, :include_blank => "default", :input_html => { :class => 'pricegroup_pricegroup'}, label: t('active_admin.resource.pricegroup')
         m.input :price_raw, label: t('activerecord.attributes.event_pricegroup.price'), :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
         m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'}, label: t('activerecord.attributes.event_pricegroup.max_number_of_participators')
-        m.input :start_reservation, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], label: t('activerecord.attributes.event_pricegroup.start_reservation')
-        m.input :end_reservation, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], label: t('activerecord.attributes.event_pricegroup.end_reservation')
-        m.input :cancelation_until, :start_year => Date.today.year, :include_blank => false, :order => [:day, :month, :year], label: t('activerecord.attributes.event_pricegroup.cancelation_until')
+        m.input :start_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_reservation.strftime('%A, %d.%m.%Y') if f.object.start_reservation}" }, label: t('activerecord.attributes.event_pricegroup.start_reservation')
+        m.input :end_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.end_reservation.strftime('%A, %d.%m.%Y') if f.object.end_reservation}" }, label: t('activerecord.attributes.event_pricegroup.end_reservation')
+        m.input :cancelation_until, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.cancelation_until.strftime('%A, %d.%m.%Y') if f.object.cancelation_until}" }, label: t('activerecord.attributes.event_pricegroup.cancelation_until')
         m.input :webcode, :hint => "Wenn hier ein Code angegeben ist, ist diese Preisgruppe nicht mehr &ouml;ffentlich sichtbar, sondern nur noch mit oben genanntem Webcode.", label: t('activerecord.attributes.event_pricegroup.webcode')
         m.input :available, :as => :boolean, label: t('activerecord.attributes.event_pricegroup.available')
       end
