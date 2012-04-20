@@ -26,7 +26,7 @@ module GoldencobraEvents
     belongs_to :user, :class_name => User
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
     
-    RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Brieftaube", "anderer Weg"]
+    RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
     
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
