@@ -38,7 +38,13 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
       f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
     end
-    f.inputs "Besucher" do
+    f.inputs "Rechnung" do
+      f.input :invoice_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.invoice_sent.strftime('%A, %d.%m.%Y') if f.object.invoice_sent}" }
+      f.input :payed_on, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.payed_on.strftime('%A, %d.%m.%Y') if f.object.payed_on}" }
+      f.input :first_reminder_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.first_reminder_sent.strftime('%A, %d.%m.%Y') if f.object.first_reminder_sent}" }
+      f.input :second_reminder_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.second_reminder_sent.strftime('%A, %d.%m.%Y') if f.object.second_reminder_sent}" }
+    end
+    f.inputs "Besucher", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
       f.input :email     
       f.input :title     
@@ -50,7 +56,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
     f.inputs "" do
       f.fields_for :company_attributes, f.object.company do |comp|
-        comp.inputs "Firma" do
+        comp.inputs "Firma", :class => "foldable inputs" do
           comp.input :title
           comp.input :legal_form 
           comp.input :phone      
@@ -60,7 +66,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end 
         comp.inputs "" do
           comp.fields_for :location_attributes, comp.object.location do |loc|
-            loc.inputs "Adresse" do
+            loc.inputs "Adresse", :class => "foldable inputs" do
               loc.input :street, label: t('attributes.location.one.street')
               loc.input :city, label: t('attributes.location.one.city')
               loc.input :zip, label: t('attributes.location.one.zip')

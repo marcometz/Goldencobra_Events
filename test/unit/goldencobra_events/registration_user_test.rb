@@ -17,6 +17,10 @@
 #  updated_at           :datetime        not null
 #  type_of_registration :string(255)     default("Webseite")
 #  comment              :text
+#  invoice_sent         :datetime
+#  payed_on             :datetime
+#  first_reminder_sent  :datetime
+#  second_reminder_sent :datetime
 #
 
 require 'test_helper'
