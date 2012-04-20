@@ -31,14 +31,42 @@ module GoldencobraEvents
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
+    
+    scope :type_of_registration_not_eq, lambda { |param| where("type_of_registration <> '#{param}'") }
+    search_methods :type_of_registration_not_eq
         
-    #scope :total_price_gt, lambda { |param| where(:field => "value") }
-    #scope :total_price_eq, lambda { |param| where(:field => "value") }
-    #scope :total_price_lt, lambda { |param| where(:field => "value") }    
+    scope :total_price_eq, lambda { |param| 
+      results = RegistrationUser.joins(:event_registrations => :event_pricegroup)
+      .group("goldencobra_events_registration_users.id")
+      .select("goldencobra_events_registration_users.id,SUM(price) AS summe")
+      .map{|a| a.id if a.summe == param.to_f}
+      where("id in (?)", results)
+    }
+
+    scope :total_price_gt, lambda { |param| 
+      results = RegistrationUser.joins(:event_registrations => :event_pricegroup)
+      .group("goldencobra_events_registration_users.id")
+      .select("goldencobra_events_registration_users.id,SUM(price) AS summe")
+      .map{|a| a.id if a.summe > param.to_f}
+      where("id in (?)", results)
+    }
+
+    scope :total_price_lt, lambda { |param| 
+      results = RegistrationUser.joins(:event_registrations => :event_pricegroup)
+      .group("goldencobra_events_registration_users.id")
+      .select("goldencobra_events_registration_users.id,SUM(price) AS summe")
+      .map{|a| a.id if a.summe < param.to_f}
+      where("id in (?)", results)
+    }
+
+    
     #    
-    #search_methods :total_price_gt    
-    #search_methods :total_price_lt
-    #search_methods :total_price_eq
+    search_methods :total_price_gt    
+    search_methods :total_price_lt
+    search_methods :total_price_eq
+    
+    
+    
         
     def anrede
       if self.gender == true
