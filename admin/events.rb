@@ -30,9 +30,9 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         m.input :pricegroup, :include_blank => "default", :input_html => { :class => 'pricegroup_pricegroup'}, label: t('active_admin.resource.pricegroup')
         m.input :price_raw, label: t('activerecord.attributes.event_pricegroup.price'), :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
         m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'}, label: t('activerecord.attributes.event_pricegroup.max_number_of_participators')
-        m.input :start_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_reservation.strftime('%A, %d.%m.%Y') if f.object.start_reservation}" }, label: t('activerecord.attributes.event_pricegroup.start_reservation')
-        m.input :end_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.end_reservation.strftime('%A, %d.%m.%Y') if f.object.end_reservation}" }, label: t('activerecord.attributes.event_pricegroup.end_reservation')
-        m.input :cancelation_until, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.cancelation_until.strftime('%A, %d.%m.%Y') if f.object.cancelation_until}" }, label: t('activerecord.attributes.event_pricegroup.cancelation_until')
+        m.input :start_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.start_reservation.strftime('%A, %d.%m.%Y') if m.object.start_reservation}" }, label: t('activerecord.attributes.event_pricegroup.start_reservation')
+        m.input :end_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.end_reservation.strftime('%A, %d.%m.%Y') if m.object.end_reservation}" }, label: t('activerecord.attributes.event_pricegroup.end_reservation')
+        m.input :cancelation_until, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.cancelation_until.strftime('%A, %d.%m.%Y') if m.object.cancelation_until}" }, label: t('activerecord.attributes.event_pricegroup.cancelation_until')
         m.input :webcode, :hint => "Wenn hier ein Code angegeben ist, ist diese Preisgruppe nicht mehr &ouml;ffentlich sichtbar, sondern nur noch mit oben genanntem Webcode.", label: t('activerecord.attributes.event_pricegroup.webcode')
         m.input :available, :as => :boolean, label: t('activerecord.attributes.event_pricegroup.available')
       end
