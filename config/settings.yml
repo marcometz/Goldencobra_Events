@@ -14,7 +14,7 @@ goldencobra_events:
             mailer:
                 from: "cloudforum@ikusei.de"
                 subject: "Anmeldebestaetigung Cloud Forum 2012"
-                repl_to: "cloudforum@tagesspiegel.de"
+                reply_to: "cloudforum@tagesspiegel.de"
             price_informations: "Der Preis beinhaltet bestimmte Sachen."
             child_registration_informations: "Ich melde mich für folgende Unterevents an:"
             enter_user_data: "Mit Anmeldung fortfahren"
