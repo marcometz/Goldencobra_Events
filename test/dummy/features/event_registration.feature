@@ -25,7 +25,7 @@ Feature: See and register events
       | Party                      |  3        | 5  | 1      |               |  10                         | Registration needed     | false      |
       | VIP-Party                  |  3        | 13 | 1      |               |  10                         | Registration needed     | false      |
       | Rede                       |  2        | 6  | 1      |               |  0                          | No Registration needed  | false      |
-      | Party2                     |  2        | 7  | 1      |               |  0                          | Registration needed     | false      |
+      | Party2                     |  2        | 7  | 1      |               |  10                         | Registration optional   | false      |
       | Rede 2                     |  2        | 8  | 1      |               |  0                          | No Registration needed  | false      |
       | VIP Einzelgespräch         |  8        | 9  | 1      |               |  0                          | No Registration needed  | false      |
       | Exclusives Abendessen      |  3        | 11 | 1      |               |  0                          | No Registration needed  | true       |
@@ -38,9 +38,8 @@ Feature: See and register events
      |  6 |        5 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |          |
      |  7 |       10 |             3 |  80.0 |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |          |
      |  8 |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |          |
-     |  9 |       1  |             3 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" | "OSTERN" |
+     |  9 |       1  |             3 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" | OSTERN |
      
-
   @javascript
   Scenario: Go to the program site and look for events, enter a webcode and see 1 more event
     When I go to the article page "anmeldung"
@@ -61,15 +60,16 @@ Feature: See and register events
     #Then I should not see "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
     And I should see "VIP-Party"
     And I should not see "VIP Einzelgespräch"
-
+  
   @javascript
   Scenario: Got to the program site and register for events and panels
     When I visit url "/anmeldung"
     Then I should see "Studenten"
     And I choose "Studenten"
     And I press "Weiter"
-    And I choose "Party2"
-    And I click on "register_for_event_7_link"
+    # And I choose "Party2"
+    # And I click on "register_for_event_7_link"
+    # And I choose "register_for_event_7_checkbox"
     And I click on "Mit Anmeldung fortfahren" within "#goldencobra_events_enter_account_data_wrapper"
     And I should see "Bitte füllen Sie Ihre Benutzerdaten aus"
     And I choose "male"
@@ -82,7 +82,7 @@ Feature: See and register events
     And I check "AGB_accepted"
     And I press "Verbindlich bestellen"
     And I should see "Zusammenfassung"
-    And I should see "Party2"
+    # And I should see "Party2"
     And I should see "Holger"
     And I should see "Frohloff"
     And I should see "Zossener Str. 55"
@@ -94,14 +94,15 @@ Feature: See and register events
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
 
+   # @wip
     @javascript
     Scenario: Got to the program site and try to register with wrong values
       When I visit url "/anmeldung"
       Then I should see "Studenten"
       And I choose "Studenten"
       And I press "Weiter"
-      And I choose "Party2"
-      And I click on "register_for_event_7_link"
+      # And I choose "Party2"
+      # And I click on "register_for_event_7_link"
       And I click on "Mit Anmeldung fortfahren" within "#goldencobra_events_enter_account_data_wrapper"
       And I should see "Bitte füllen Sie Ihre Benutzerdaten aus"
       And I choose "male"
@@ -118,7 +119,7 @@ Feature: See and register events
       And I fill in "registration_user_email" with "holger@ikusei.de"
       And I press "Verbindlich bestellen"
       And I should see "Zusammenfassung"
-      And I should see "Party2"
+      # And I should see "Party2"
       And I should see "Holger"
       And I should see "Frohloff"
       And I should see "Zossener Str. 55"

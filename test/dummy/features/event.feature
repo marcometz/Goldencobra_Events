@@ -12,14 +12,11 @@ Feature: Create and manage events
     Then I should see "New Event" within "h2#page_title"
     And I fill in "event_title" with "Ausflug"
     And I fill in "event_description" with "Dies ist ein Ausflug nach Brandenburg"
-    And I select "February" within "#event_end_date_2i"
-    And I select "1" within "#event_end_date_3i"
-    And I select "2012" within "#event_end_date_1i"
+    And I fill in "event_start_date" with "2012-02-01"
     And I press "Create Event"
     Then I should see "Ausflug" within "#main_content"
     And I should see "Dies ist ein Ausflug nach Brandenburg" within "#main_content"
-    And I should see "February" within "#main_content"
-    And I should see "2012" within "#main_content"
+    And I should see "Wednesday, 01.02.2012" within textfield "event_start_date"
     
   Scenario: Create a subevent item
     Given that a confirmed admin exists
