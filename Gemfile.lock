@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: a4e7fd867fb12bc17bfcc56a0aa6708d0593b78e
+  revision: f458bc5d8d571287b70717bfd9f228bd50551128
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -178,16 +178,14 @@ GEM
       eventmachine (>= 0.12.9)
     erubis (2.7.0)
     eventmachine (0.12.10)
-    exception_notification (2.6.0)
+    exception_notification (2.6.1)
       actionmailer (>= 3.0.4)
     execjs (1.3.0)
       multi_json (~> 1.0)
     factory_girl (3.1.1)
       activesupport (>= 3.0.0)
-    faraday (0.7.6)
-      addressable (~> 2.2)
+    faraday (0.8.0)
       multipart-post (~> 1.1)
-      rack (~> 1.1)
     fastercsv (1.5.4)
     ffi (1.0.11)
     formtastic (2.1.1)
@@ -269,11 +267,11 @@ GEM
     oa-openid (0.0.2)
       oa-core (~> 0.0.0)
       rack-openid
-    oauth (0.4.5)
-    oauth2 (0.6.0)
+    oauth (0.4.6)
+    oauth2 (0.6.1)
       faraday (~> 0.7)
       httpauth (~> 0.1)
-      multi_json (~> 1.0)
+      multi_json (~> 1.3)
     omniauth (1.1.0)
       hashie (~> 1.2)
       rack
@@ -346,7 +344,7 @@ GEM
       rspec (~> 2.9.0)
     ruby-openid (2.1.8)
     rubyzip (0.9.7)
-    sass (3.1.15)
+    sass (3.1.16)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
