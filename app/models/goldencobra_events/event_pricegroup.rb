@@ -20,6 +20,7 @@ module GoldencobraEvents
   class EventPricegroup < ActiveRecord::Base
     belongs_to :event
     belongs_to :pricegroup
+    has_many :event_registrations, :class_name => GoldencobraEvents::EventRegistration
     attr_accessor :price_raw
     #attr_accessible :price_raw, :pricegroup_id, :price, 
     #  :max_number_of_participators, :cancelation_until, :start_reservation,

@@ -35,14 +35,39 @@ module GoldencobraEvents
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
+    
+    search_methods :type_of_registration_not_eq
+    scope :type_of_registration_not_eq, lambda { |param| where("type_of_registration <> '#{param}'") }
         
-    #scope :total_price_gt, lambda { |param| where(:field => "value") }
-    #scope :total_price_eq, lambda { |param| where(:field => "value") }
-    #scope :total_price_lt, lambda { |param| where(:field => "value") }    
-    #    
-    #search_methods :total_price_gt    
-    #search_methods :total_price_lt
-    #search_methods :total_price_eq
+    search_methods :total_price_eq
+    scope :total_price_eq, lambda { |param| 
+      #joins(:event_registrations => :event_pricegroup)
+      #.group("goldencobra_events_registration_users.id")
+      #.select("goldencobra_events_registration_users.id,firstname,lastname,email,type_of_registration,goldencobra_events_registration_users.created_at,goldencobra_events_registration_users.updated_at,SUM(price) AS summe")
+      #.where("summe = #{param.to_f}")
+      results = RegistrationUser.joins(:event_registrations => :event_pricegroup).group("goldencobra_events_registration_users.id").select("goldencobra_events_registration_users.id,SUM(price) AS summe")
+      .map{|a| a.id if a.summe = param.to_f}
+      where("id in (?)", results)      
+    }
+
+    search_methods :total_price_gt        
+    scope :total_price_gt, lambda { |param| 
+      results = RegistrationUser.joins(:event_registrations => :event_pricegroup).group("goldencobra_events_registration_users.id").select("goldencobra_events_registration_users.id,SUM(price) AS summe")
+      .map{|a| a.id if a.summe > param.to_f}
+      where("id in (?)", results)
+    }
+    
+    search_methods :total_price_lt
+    scope :total_price_lt, lambda { |param| 
+      results = RegistrationUser.joins(:event_registrations => :event_pricegroup)
+      .group("goldencobra_events_registration_users.id")
+      .select("goldencobra_events_registration_users.id,SUM(price) AS summe")
+      .map{|a| a.id if a.summe < param.to_f}
+      where("id in (?)", results)
+    }
+
+      
+    
         
     def anrede
       if self.gender == true
