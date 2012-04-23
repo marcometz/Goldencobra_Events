@@ -1,9 +1,9 @@
 module GoldencobraEvents
   class EventRegistrationMailer < ActionMailer::Base
-    default from: "cloudforum@ikusei.de"
+    default from: Goldencobra::Setting.for_key("goldencobra_events.event.registration.mailer.from") 
     default subject: Goldencobra::Setting.for_key("goldencobra_events.event.registration.mailer.subject") 
     default :content_type => "text/html"
-    default :reply_to => "cloudforum@tagesspiegel.de"
+    default :reply_to => Goldencobra::Setting.for_key("goldencobra_events.event.registration.mailer.reply_to") 
 
     # Subject can be set in your I18n file at config/locales/en.yml
     # with the following lookup:
