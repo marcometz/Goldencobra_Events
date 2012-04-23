@@ -46,7 +46,7 @@ module GoldencobraEvents
       #.select("goldencobra_events_registration_users.id,firstname,lastname,email,type_of_registration,goldencobra_events_registration_users.created_at,goldencobra_events_registration_users.updated_at,SUM(price) AS summe")
       #.where("summe = #{param.to_f}")
       results = RegistrationUser.joins(:event_registrations => :event_pricegroup).group("goldencobra_events_registration_users.id").select("goldencobra_events_registration_users.id,SUM(price) AS summe")
-      .map{|a| a.id if a.summe = param.to_f}
+      .map{|a| a.id if a.summe == param.to_f}
       where("id in (?)", results)      
     }
 
