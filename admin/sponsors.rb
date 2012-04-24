@@ -47,9 +47,6 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
     column t('activerecord.attributes.sponsor.title'), :sortable => :title do |sponsor|
       sponsor.title
     end
-    column t('activerecord.attributes.sponsor.description') do |sponsor|
-      sponsor.description
-    end
     column t('activerecord.attributes.sponsor.email') do |sponsor|
       sponsor.email
     end
