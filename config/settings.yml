@@ -36,6 +36,7 @@ goldencobra_events:
                 user_not_exists: "Diesen Benutzer gibt es nicht"
                 no_price_groups_defined: "Es wurden für diesen Event keine Preisgruppen angelegt"
             user_form:
+                title_summary: "Anmeldung Cloud Forum am 26. und 27. April 2012 in Berlin"
                 headline: "Bitte füllen Sie Ihre Benutzerdaten aus"
                 sub_headline: "Personeninformationen und Firmendaten"
                 description: "wir behandeln Ihre Daten vertraulich und nutzen diese nur im für diese Veranstaltung"
