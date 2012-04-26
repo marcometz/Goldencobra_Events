@@ -25,7 +25,6 @@ Feature: Create and manage sponsors
       | "Gesund ernaehren Panel"     |  2 |             |
 
   @javascript
-  @wip
   Scenario: Go to the sponsor admin site and create a new sponsor
     When I go to the admin list of sponsors
     Then I should see "Sponsors"

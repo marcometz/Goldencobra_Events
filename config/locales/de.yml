@@ -201,7 +201,3 @@ de:
   activerecord:
     errors:
       <<: *errors
-  title: "Titel"
-  url: "Website"
-  created_at: "Erstellt am"
-  updated_at: "Bearbeitet am"

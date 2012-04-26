@@ -63,63 +63,63 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
     link_to(t(:new_sponsor, scope: [:active_admin]), new_admin_sponsor_path)
   end
 
-#  show :title => :title do
-#    panel "Sponsor Details" do
-#      attributes_table_for sponsor do
-#        row :title
-#        row :description
-#        row :link_url
-#        row :email
-#        row :telephone
-#        row :size_of_sponsorship
-#        row :type_of_sponsorship
-#        row :created_at
-#        row :updated_at
-#      end
-#    end
-#    panel "Location" do
-#      if sponsor.location.present?
-#        attributes_table_for sponsor.location do
-#          row :street
-#          row :city
-#          row :zip
-#          row :region
-#          row :country
-#        end
-#      end
-#    end
-#
-#    panel "Sponsorship Details" do
-#      panel t(:event, scope: [:activerecord, :models], count: 3) do
-#        table do
-#          [:title, :description, "# of part.", "Type of Event", "Start Date", "Panel", "Venue"].each do |e|
-#            th e
-#          end
-#          sponsor.events.each do |se|
-#            tr do
-#              [se.title, se.description, se.max_number_of_participators, se.type_of_event, se.start_date, se.panel.present? ? se.panel.title : "", se.venue.present? ? se.venue.title : ""].each do |sea|
-#                td sea
-#              end
-#            end
-#          end
-#        end
-#      end
-#
-#      panel "Panels" do
-#        table do
-#          ["Title", "Description", "Homepage"].each do |e|
-#            th e
-#          end
-#          sponsor.panels.each do |sp|
-#            tr do
-#              [sp.title, sp.description, sp.link_url].each do |spa|
-#                td spa
-#              end
-#            end
-#          end
-#        end
-#      end
-#
-#    end
-#  end
+  show :title => :title do
+    panel "Sponsor Details" do
+      attributes_table_for sponsor do
+        row :title
+        row :description
+        row :link_url
+        row :email
+        row :telephone
+        row :size_of_sponsorship
+        row :type_of_sponsorship
+        row :created_at
+        row :updated_at
+      end
+    end
+    panel "Location" do
+      if sponsor.location.present?
+        attributes_table_for sponsor.location do
+          row :street
+          row :city
+          row :zip
+          row :region
+          row :country
+        end
+      end
+    end
+
+    panel "Sponsorship Details" do
+      panel t(:event, scope: [:activerecord, :models], count: 3) do
+        table do
+          [:title, :description, "# of part.", "Type of Event", "Start Date", "Panel", "Venue"].each do |e|
+            th e
+          end
+          sponsor.events.each do |se|
+            tr do
+              [se.title, se.description, se.max_number_of_participators, se.type_of_event, se.start_date, se.panel.present? ? se.panel.title : "", se.venue.present? ? se.venue.title : ""].each do |sea|
+                td sea
+              end
+            end
+          end
+        end
+      end
+
+      panel "Panels" do
+        table do
+          ["Title", "Description", "Homepage"].each do |e|
+            th e
+          end
+          sponsor.panels.each do |sp|
+            tr do
+              [sp.title, sp.description, sp.link_url].each do |spa|
+                td spa
+              end
+            end
+          end
+        end
+      end
+
+    end
+  end
 end
