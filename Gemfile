@@ -17,6 +17,7 @@ gem 'uglifier', '>= 1.0.3'
 #gem 'premailer-rails3'
 
 group :development do
+  gem 'thin'
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
   gem 'guard-annotate'
   gem 'pry'
