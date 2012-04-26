@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 40e71ce11666c92d1be4102185eb28f831962b1c
+  revision: 366d570639f4be3416c77193e8188471ceee91e1
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -30,6 +30,7 @@ GIT
       omniauth-openid
       paperclip (~> 3.0)
       rails (~> 3.2.3)
+      rubyzip
       sass-rails
       sass-rails (~> 3.2.1)
       sprockets
@@ -38,7 +39,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/active_admin.git
-  revision: 64cf91e94ae772c92a64f4f4a3dd0f819816698a
+  revision: 93e4198d56375de6e28dd72b98e121ac37c4dfaf
   specs:
     activeadmin (0.4.3)
       bourbon (>= 1.0.0)
@@ -54,7 +55,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/goldencobra_email_templates.git
-  revision: a237c5f562e7355242820ef0bdb1deec8a5b988e
+  revision: d6c764bd4919b7002b0c2d3b1cef95102439a40e
   specs:
     goldencobra_email_templates (0.0.1)
       goldencobra
@@ -62,10 +63,10 @@ GIT
 
 GIT
   remote: git://github.com/thoughtbot/factory_girl_rails.git
-  revision: 4259e4cafb383c6b84e14423ba6c351c2cb001a6
+  revision: 453e8e3106e89cfaab6008f666b42278dd6599ad
   specs:
-    factory_girl_rails (3.1.0)
-      factory_girl (~> 3.1.0)
+    factory_girl_rails (3.2.0)
+      factory_girl (~> 3.2.0)
       railties (>= 3.0.0)
 
 GIT
@@ -182,7 +183,7 @@ GEM
       actionmailer (>= 3.0.4)
     execjs (1.3.0)
       multi_json (~> 1.0)
-    factory_girl (3.1.1)
+    factory_girl (3.2.0)
       activesupport (>= 3.0.0)
     faraday (0.8.0)
       multipart-post (~> 1.1)
@@ -268,10 +269,11 @@ GEM
       oa-core (~> 0.0.0)
       rack-openid
     oauth (0.4.6)
-    oauth2 (0.6.1)
-      faraday (~> 0.7)
+    oauth2 (0.7.0)
+      faraday (~> 0.8)
       httpauth (~> 0.1)
       multi_json (~> 1.3)
+      rack (~> 1.4)
     omniauth (1.1.0)
       hashie (~> 1.2)
       rack
@@ -288,7 +290,7 @@ GEM
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
-    pry (0.9.9.3)
+    pry (0.9.9.4)
       coderay (~> 1.0.5)
       method_source (~> 0.7.1)
       slop (>= 2.4.4, < 3)
