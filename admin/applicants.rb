@@ -189,8 +189,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   controller do  
            
     def new       
-      ActiveAdmin.application.unload!
-      ActiveAdmin.application.load!
       @applicant = GoldencobraEvents::RegistrationUser.new
       @applicant.company = GoldencobraEvents::Company.new
       @applicant.company.location = Goldencobra::Location.new
