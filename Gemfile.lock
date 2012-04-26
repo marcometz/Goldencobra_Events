@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 366d570639f4be3416c77193e8188471ceee91e1
+  revision: 3913f676a32ba1f71d9498eee8c3d1db1b408dff
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -55,7 +55,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/goldencobra_email_templates.git
-  revision: d6c764bd4919b7002b0c2d3b1cef95102439a40e
+  revision: c851eede722a3d95650ad721fd5bdf098e1dd0c1
   specs:
     goldencobra_email_templates (0.0.1)
       goldencobra

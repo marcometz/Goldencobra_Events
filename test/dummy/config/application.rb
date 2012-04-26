@@ -27,7 +27,7 @@ module Dummy
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = :en
+    config.i18n.default_locale = :de
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -54,6 +54,16 @@ module Dummy
 
     # roadie gem configuration options => https://github.com/Mange/roadie
     #config.action_mailer.default_url_options
+    config.after_initialize do |app|
+      if defined?(ActiveAdmin) and ActiveAdmin.application
+        # Try enforce reloading after app bootup
+        Rails.logger.info("==== Reloading ActiveAdmin")
+        ActiveAdmin.application.unload!
+        I18n.reload!
+        self.reload_routes!
+      end
+    end
+
   end
 end
 

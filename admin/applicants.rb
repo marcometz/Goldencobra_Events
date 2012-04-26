@@ -1,30 +1,30 @@
 ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
-  menu :parent => "Event-Management", :label => "Besucher", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
+  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
 
-  filter :firstname, :label => "Vorname"
-  filter :lastname, :label => "Nachname"
-  filter :email, :label => "E-Mail"
-  filter :type_of_registration, :label => "Art der Registrierung", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
+  filter :firstname
+  filter :lastname
+  filter :email
+  filter :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :type_of_registration_not, :label => "Art der Registrierung ist NICHT", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :total_price, :as => :numeric
 
   index do
     selectable_column
-    column t(:firstname), :sortable => :firstname do |applicant|
+    column :firstname, :sortable => :firstname do |applicant|
       applicant.firstname
     end
-    column t(:lastname), :sortable => :lastname do |applicant|
+    column :lastname, :sortable => :lastname do |applicant|
       applicant.lastname
     end
-    column t(:email), :sortable => :email do |applicant|
+    column :email, :sortable => :email do |applicant|
       applicant.email
     end
-    column "Art", :type_of_registration
-    column t(:total_price) do |u|
+    column :type_of_registration
+    column :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
-    column "E-Mail erhalten am" do |user|
+    column :last_email_send do |user|
       user.last_email_send ? l(user.last_email_send, format: :short) : ""
     end
     default_actions
@@ -66,14 +66,12 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end 
         comp.inputs "" do
           comp.fields_for :location_attributes, comp.object.location do |loc|
-            loc.inputs "Adresse", :class => "foldable inputs" do
-              loc.input :street, label: t('attributes.location.one.street')
-              loc.input :city, label: t('attributes.location.one.city')
-              loc.input :zip, label: t('attributes.location.one.zip')
-              loc.input :region, label: t('attributes.location.one.region')
-              loc.input :country, :as => :string, label: t('attributes.location.one.country')
-              # loc.input :lat
-              # loc.input :lng
+            loc.inputs "#{t('location', scope: [:activerecord, :models], count: 1)}", :class => "foldable inputs" do
+              loc.input :street
+              loc.input :city
+              loc.input :zip
+              loc.input :region
+              loc.input :country, :as => :string
             end
           end
         end
@@ -81,7 +79,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
     f.inputs "" do
       f.has_many :event_registrations do |reg|
-        reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.scoped.map{|a| ["#{a.event.title if a.event} (#{a.event.id if a.event}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"} 
+        reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.scoped.map{|a| ["#{a.event.title if a.event} (#{a.event.id if a.event}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"}, label: t(:event_pricegroup, scope: [:activerecord, :models], count: 1)
         reg.input :_destroy, :as => :boolean 
       end
     end
@@ -91,27 +89,27 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   end
 
   show :title => :lastname do
-    panel t('active_admin.resource.applicant') do
+    panel t('activerecord.models.applicant', count: 1) do
       attributes_table_for applicant do
         row(t('activerecord.attributes.user.firstname')){applicant.firstname}
         row(t('activerecord.attributes.user.lastname')){applicant.lastname}
-        row(t('activerecord.attributes.user.title')){applicant.title}
-        row(t('activerecord.attributes.user.gender')){applicant.gender}
+        row(t('activerecord.attributes.applicant.title')){applicant.title}
+        row(t('activerecord.attributes.applicant.gender')){applicant.gender}
         row(t('activerecord.attributes.user.function')){applicant.function}
         row(t('activerecord.attributes.user.phone')){applicant.phone}
-        row(t('activerecord.attributes.created_at')){applicant.created_at}
-        row(t('activerecord.attributes.updated_at')){applicant.updated_at}
+        row(t('activerecord.attributes.applicant.created_at')){applicant.created_at}
+        row(t('activerecord.attributes.applicant.updated_at')){applicant.updated_at}
       end
     end #end panel applicant
-    panel t('active_admin.resource.company') do
+    panel t('activerecord.models.company', count: 1) do
       if applicant.company
           attributes_table_for applicant.company do
-            row(t('activerecord.attributes.company.title')){applicant.company.title}
-            row(t('activerecord.attributes.company.legal_form')){applicant.company.legal_form}
-            row(t('activerecord.attributes.company.phone')){applicant.company.phone}
-            row(t('activerecord.attributes.company.fax')){applicant.company.fax}
-            row(t('activerecord.attributes.company.homepage')){applicant.company.homepage}
-            row(t('activerecord.attributes.company.sector')){applicant.company.sector}
+            row(t('activerecord.attributes.goldencobra_events/company.title')){applicant.company.title}
+            row(t('activerecord.attributes.goldencobra_events/company.legal_form')){applicant.company.legal_form}
+            row(t('activerecord.attributes.goldencobra_events/company.phone')){applicant.company.phone}
+            row(t('activerecord.attributes.goldencobra_events/company.fax')){applicant.company.fax}
+            row(t('activerecord.attributes.goldencobra_events/company.homepage')){applicant.company.homepage}
+            row(t('activerecord.attributes.goldencobra_events/company.sector')){applicant.company.sector}
           end
         if applicant.company.location 
           attributes_table_for applicant.company.location do
@@ -124,7 +122,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end
       end   
     end
-    panel t('active_admin.resource.event_registration') do
+    panel t('activerecord.models.event_registration', count: 3) do
       table do
         tr do
           th t('activerecord.attributes.event.title')
