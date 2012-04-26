@@ -164,7 +164,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   
   if ActiveRecord::Base.connection.table_exists?("goldencobra_email_templates_email_templates")
     GoldencobraEmailTemplates::EmailTemplate.all.each do |emailtemplate|
-      batch_action "send_conf_mail_#{emailtemplate.id}", :confirm => "#{emailtemplate.title}: sind Sie sicher?" do |selection|
+      batch_action "send_mail_#{emailtemplate.title.parameterize.underscore}", :confirm => "#{emailtemplate.title}: sind Sie sicher?" do |selection|
         GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
           GoldencobraEvents::EventRegistrationMailer.registration_email_with_template(reguser, emailtemplate).deliver unless Rails.env == "test"
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}, email_template: #{emailtemplate.id}")
@@ -184,8 +184,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   
   batch_action :destroy, false
   
-  controller do     
+  controller do  
+           
     def new       
+      ActiveAdmin.application.unload!
+      ActiveAdmin.application.load!
       @applicant = GoldencobraEvents::RegistrationUser.new
       @applicant.company = GoldencobraEvents::Company.new
       @applicant.company.location = Goldencobra::Location.new

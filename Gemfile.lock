@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: d0721f355841331524295df2d578cc20d36cbaab
+  revision: 3913f676a32ba1f71d9498eee8c3d1db1b408dff
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -55,7 +55,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/goldencobra_email_templates.git
-  revision: a237c5f562e7355242820ef0bdb1deec8a5b988e
+  revision: c851eede722a3d95650ad721fd5bdf098e1dd0c1
   specs:
     goldencobra_email_templates (0.0.1)
       goldencobra
@@ -63,10 +63,10 @@ GIT
 
 GIT
   remote: git://github.com/thoughtbot/factory_girl_rails.git
-  revision: 4259e4cafb383c6b84e14423ba6c351c2cb001a6
+  revision: 453e8e3106e89cfaab6008f666b42278dd6599ad
   specs:
-    factory_girl_rails (3.1.0)
-      factory_girl (~> 3.1.0)
+    factory_girl_rails (3.2.0)
+      factory_girl (~> 3.2.0)
       railties (>= 3.0.0)
 
 GIT
@@ -183,7 +183,7 @@ GEM
       actionmailer (>= 3.0.4)
     execjs (1.3.0)
       multi_json (~> 1.0)
-    factory_girl (3.1.1)
+    factory_girl (3.2.0)
       activesupport (>= 3.0.0)
     faraday (0.8.0)
       multipart-post (~> 1.1)
@@ -290,7 +290,7 @@ GEM
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
-    pry (0.9.9.3)
+    pry (0.9.9.4)
       coderay (~> 1.0.5)
       method_source (~> 0.7.1)
       slop (>= 2.4.4, < 3)
