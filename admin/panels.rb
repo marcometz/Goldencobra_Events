@@ -1,5 +1,5 @@
-ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
-  menu :parent => "Event-Management", :label => "Panels", :if => proc{can?(:read, GoldencobraEvents::Panel)}
+ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event_Panel" do
+  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::Panel)}
   controller.authorize_resource :class => GoldencobraEvents::Panel
 
   filter :title
@@ -9,13 +9,13 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
       f.actions
     end
     f.inputs "Allgemein" do
-      f.input :title, :hint => "Der Titel des Panels, kann Leerzeichen und Sonderzeichen enthalten", label: t('activerecord.attributes.panel.title')
-      f.input :description, :hint => "Die Beschreibung des Panels", label: t('activerecord.attributes.panel.description')
-      f.input :link_url, :hint => "Link zur Panel-Seite", label: t('activerecord.attributes.panel.link_url')
+      f.input :title, :hint => "Der Titel des Panels, kann Leerzeichen und Sonderzeichen enthalten"
+      f.input :description, :hint => "Die Beschreibung des Panels"
+      f.input :link_url, :hint => "Link zur Panel-Seite"
     end
 
     f.inputs "Informationen" do
-      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), label: t('activerecord.attributes.panel.sponsors')#, input_html: { class: 'chzn-select', 'data-placeholder' => t(:select_sponsor), style: "width: 50%;" }
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC")
     end
     f.inputs :class => "buttons inputs" do
       f.actions
@@ -23,25 +23,19 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
   end
 
   index do
-    column t('activerecord.attributes.panel.title'), :sortable => :title do |event_panel|
+    column :title, :sortable => :title do |event_panel|
       event_panel.title
     end
-    column t('activerecord.attributes.panel.description'), :sortable => :description do |event_panel|
+    column :description, :sortable => :description do |event_panel|
       event_panel.description
     end
-    column t('activerecord.attributes.panel.link_url'), :sortable => :link_url do |event_panel|
+    column :link_url, :sortable => :link_url do |event_panel|
       event_panel.link_url
     end
-    column t('activerecord.attributes.updated_at'), :sortable => :updated_at do |event_panel|
+    column :updated_at, :sortable => :updated_at do |event_panel|
       event_panel.updated_at
     end
-    column "" do |event_panel|
-      result = ""
-      result += link_to(t('active_admin.view'), admin_event_panel_path(event_panel), :class => "member_link view_link")
-      result += link_to(t('active_admin.edit'), edit_admin_event_panel_path(event_panel), :class => "member_link edit_link")
-      result += link_to(t('active_admin.delete'), admin_event_panel_path(event_panel), :method => :DELETE, :confirm => "Really want to delete this Panel?", :class => "member_link delete_link")
-      raw(result)
-    end
+    default_actions
   end
 
   action_item :only => :show do
@@ -60,7 +54,7 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event Panel" do
     end
     panel "Sponsors" do
      table do
-       [:title, :description, "Size of sponsorship", "Type of sponsorship"].each do |c|
+       [:title, :description, :size_of_sponsorship, :type_of_sponsorship].each do |c|
          th c
        end
        event_panel.sponsors.each do |es|

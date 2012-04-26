@@ -3,11 +3,11 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   menu :parent => "Event-Management", :label => "Veranstaltungen", :if => proc{can?(:read, GoldencobraEvents::Event)}
   controller.authorize_resource :class => GoldencobraEvents::Event
   
-  filter :title, :label => "Veranstaltungsname"
-  filter :start_date, :label => "Beginn"
-  filter :end_date, :label => "Ende"
-  filter :venue, :label => "Veranstaltungsort"
-  filter :type_of_event, :label => "Art der Anmeldung"
+  filter :title
+  filter :start_date
+  filter :end_date
+  filter :venue
+  filter :type_of_event
   
   
   form :html => { :enctype => "multipart/form-data" }  do |f|
@@ -15,41 +15,41 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.actions
     end
     f.inputs "Allgemein" do
-      f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten", label: t('activerecord.attributes.event.title')
-      f.input :start_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_date.strftime('%A, %d.%m.%Y') if f.object.start_date}" }, label: t('activerecord.attributes.event.start_date')
-      f.input :end_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.end_date.strftime('%A, %d.%m.%Y') if f.object.end_date}" }, label: t('activerecord.attributes.event.end_date')
-      f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true, label: t('activerecord.attributes.event.parent_id')
-      f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false, label: t('activerecord.attributes.event.type_of_event')
-      f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false, label: t('activerecord.attributes.event.type_of_registration')
-      f.input :active, :hint => "Ist dieser Event online zu sehen?", label: t('activerecord.attributes.event.active')
-      f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r eines der Kinder muss sich dann entscheiden werden!", label: t('activerecord.attributes.event.exclusive')
+      f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
+      f.input :start_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_date.strftime('%A, %d.%m.%Y') if f.object.start_date}" }
+      f.input :end_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.end_date.strftime('%A, %d.%m.%Y') if f.object.end_date}" }
+      f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true
+      f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
+      f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
+      f.input :active, :hint => "Ist dieser Event online zu sehen?"
+      f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r eines der Kinder muss sich dann entscheiden werden!"
     end
     
     f.inputs "Preisgruppen" do
       f.has_many :event_pricegroups do |m|
-        m.input :pricegroup, :include_blank => "default", :input_html => { :class => 'pricegroup_pricegroup'}, label: t('active_admin.resource.pricegroup')
-        m.input :price_raw, label: t('activerecord.attributes.event_pricegroup.price'), :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
-        m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'}, label: t('activerecord.attributes.event_pricegroup.max_number_of_participators')
-        m.input :start_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.start_reservation.strftime('%A, %d.%m.%Y') if m.object.start_reservation}" }, label: t('activerecord.attributes.event_pricegroup.start_reservation')
-        m.input :end_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.end_reservation.strftime('%A, %d.%m.%Y') if m.object.end_reservation}" }, label: t('activerecord.attributes.event_pricegroup.end_reservation')
-        m.input :cancelation_until, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.cancelation_until.strftime('%A, %d.%m.%Y') if m.object.cancelation_until}" }, label: t('activerecord.attributes.event_pricegroup.cancelation_until')
-        m.input :webcode, :hint => "Wenn hier ein Code angegeben ist, ist diese Preisgruppe nicht mehr &ouml;ffentlich sichtbar, sondern nur noch mit oben genanntem Webcode.", label: t('activerecord.attributes.event_pricegroup.webcode')
-        m.input :available, :as => :boolean, label: t('activerecord.attributes.event_pricegroup.available')
+        m.input :pricegroup, :include_blank => "default", :input_html => { :class => 'pricegroup_pricegroup'}
+        m.input :price_raw, :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
+        m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'}
+        m.input :start_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.start_reservation.strftime('%A, %d.%m.%Y') if m.object.start_reservation}" }
+        m.input :end_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.end_reservation.strftime('%A, %d.%m.%Y') if m.object.end_reservation}" }
+        m.input :cancelation_until, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.cancelation_until.strftime('%A, %d.%m.%Y') if m.object.cancelation_until}" }
+        m.input :webcode, :hint => "Wenn hier ein Code angegeben ist, ist diese Preisgruppe nicht mehr &ouml;ffentlich sichtbar, sondern nur noch mit oben genanntem Webcode."
+        m.input :available, :as => :boolean
       end
     end    
 
     f.inputs "Information" do
-      f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_panel')}, label: t('active_admin.resource.panel')
-      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_venue')}, label: t('active_admin.resource.venue')
-      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), :input_html => { }, label: t('active_admin.resource.sponsor')
-      f.input :artists, as: :check_boxes, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC"), :input_html => { }, label: t('active_admin.resource.artist')
-      f.input :max_number_of_participators, label: t('activerecord.attributes.event.max_number_of_participators'), hint: t('active_admin.not_needed')
+      f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_panel')}
+      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_venue')}
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), :input_html => { }
+      f.input :artists, as: :check_boxes, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC"), :input_html => { }
+      f.input :max_number_of_participators, hint: t('active_admin.not_needed')
     end
     
     f.inputs "Inhalt" do
-      f.input :teaser_image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'teaser_image'}, label: t('activerecord.attributes.event.teaser_image'), hint: t('active_admin.not_needed')
-      f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}, label: t('activerecord.attributes.event.description'), hint: t('active_admin.not_needed')
-      f.input :external_link, label: t('activerecord.attributes.event.external_link'), hint: t('active_admin.not_needed')
+      f.input :teaser_image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'teaser_image'}, hint: t('active_admin.not_needed')
+      f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}, hint: t('active_admin.not_needed')
+      f.input :external_link, hint: t('active_admin.not_needed')
     end
     f.inputs :class => "buttons inputs" do
       f.actions
@@ -58,19 +58,19 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     
   
   index do 
-    column t('activerecord.attributes.event.title'), :sortable => :title do |event|
+    column :title, :sortable => :title do |event|
       event.title
     end
-    column t('activerecord.attributes.event.active'), :sortable => :active do |event|
+    column :active, :sortable => :active do |event|
       event.active
     end
-    column t('activerecord.attributes.event.exclusive'), :sortable => :exclusive do |event|
+    column :exclusive, :sortable => :exclusive do |event|
       event.exclusive
     end
-    column t('activerecord.attributes.event.type_of_event'), :sortable => :type_of_event do |event|
+    column :type_of_event, :sortable => :type_of_event do |event|
       event.type_of_event
     end
-    column t(:updated_at) do |event|
+    column :updated_at do |event|
       l(event.updated_at, format: :short)
     end
     column "" do |event|
