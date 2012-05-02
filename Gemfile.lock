@@ -55,7 +55,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/goldencobra_email_templates.git
-  revision: 82893f37c1d865758e2bff5215691656a0ebfa9d
+  revision: 83a185af08eb966fe919231cef0c5cf4638bbc0a
   specs:
     goldencobra_email_templates (0.0.1)
       goldencobra
@@ -420,6 +420,7 @@ DEPENDENCIES
   rails-pry
   rb-fsevent!
   roadie
+  rspec-core
   rspec-rails
   spork
   sqlite3

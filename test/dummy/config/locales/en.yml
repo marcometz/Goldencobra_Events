@@ -1,4 +1,8 @@
-en-US:
+en:
+  active_admin:
+    batch_actions:
+      labels:
+        send_default_conf_mails: "Sende dafault Mail"
   date:
     abbr_day_names:
     - Sun

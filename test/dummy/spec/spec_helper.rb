@@ -14,6 +14,8 @@ Spork.prefork do
   require 'rspec/autorun'
   require "factory_girl"
   require "factory_girl_rails"
+  require 'email_spec'
+  require 'email_spec/cucumber'
   
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 

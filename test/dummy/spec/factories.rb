@@ -72,8 +72,11 @@ FactoryGirl.define do
   end
 
   factory :registration_user, :class => GoldencobraEvents::RegistrationUser do |u|
-    u.event_pricegroup_id 1
-    u.user_id 1
+    u.gender true
+    u.email "marco.metz@gmail.com"
+    u.title "Dr."
+    u.firstname "Tim"
+    u.lastname "Test"
   end
 
 

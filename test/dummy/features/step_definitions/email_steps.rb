@@ -171,31 +171,6 @@ Then /^show me a list of email attachments$/ do
   EmailSpec::EmailViewer::save_and_open_email_attachments_list(current_email)
 end
 
-Then /^the attachment (\d+) should be a well formed xml$/ do |index|
-  require "nokogiri" 
-  doc = Nokogiri::XML(current_email_attachments[(index.to_i - 1)].read) 
-  doc.to_xml.should include("</webleads>")
-end
-
-Then /^the xml attachment (\d+) should include "([^"]*)"$/ do |index, content|
-  require "nokogiri" 
-  convert = Iconv.new("ISO-8859-1", "UTF-8")
-  content = convert.iconv(content)
-  doc = Nokogiri::XML(current_email_attachments[(index.to_i - 1)].read) 
-  doc.to_xml.should include(content)
-end
-
-Then /^the attachment (\d+) should not include "([^"]*)"$/ do |index, content|
-  doc = current_email_attachments[(index.to_i - 1)].read
-  doc.should_not include(content)
-end
-
-Then /^the attachment (\d+) should include "([^"]*)"$/ do |index, content|
-  doc = current_email_attachments[(index.to_i - 1)].read
-  doc.should include(content)
-end
-
-
 #
 # Interact with Email Contents
 #

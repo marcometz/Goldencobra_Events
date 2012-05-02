@@ -8,10 +8,15 @@ Feature: Send confirmation emails
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
     And the following "registration_users" exist:
-      
+      | id | firstname | lastname | email        |
+      | 1 | Tim       | Test     | "tim@test.de"  |
+      | 2 | Tom       | Test     | "tom@test.de"  |
+      | 3 | Tina      | Test     | "tina@test.de" |      
     When I go to the admin list of applicants
-    And "marco.metz@gmail.com" should receive an email with subject "Eigene Internetseite - NW-Anfrage"
-    When I open the email with subject "Eigene Internetseite - NW-Anfrage"
-    Then I should see "Eigene Internetseite - NW-Anfrage" in the email body
-    And I should see the email delivered from "mercedes-sonderverkauf@ikusei.de"
+    Then I check "batch_action_item_1"
+    And I check "batch_action_item_2"
+    And I click on "batch_actions_button"
+    Then I click on "Sende dafault Mail"
+    #And "tim@test.de" should receive an email
+    #And "tom@test.de" should receive an email
     

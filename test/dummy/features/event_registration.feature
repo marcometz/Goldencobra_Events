@@ -93,6 +93,7 @@ Feature: See and register events
     And I should see "Aendern"
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
+    #And "holger@ikusei.de" should receive an email
 
    # @wip
     @javascript
@@ -130,3 +131,4 @@ Feature: See and register events
       And I should see "Aendern"
       And I press "Verbindlich bestellen"
       And I should see "Anmeldung erfolgreich abgeschlossen"
+      #And "holger@ikusei.de" should receive an email

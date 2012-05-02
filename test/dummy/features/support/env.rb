@@ -5,7 +5,7 @@
 # files.
 
 require 'cucumber/rails'
-# require "factory_girl"
+require "factory_girl"
 require "factory_girl_rails"
 require "factory_girl/step_definitions"
 require 'capybara/rails'
@@ -13,7 +13,6 @@ require 'capybara/cucumber'
 require 'capybara-webkit'
 require 'email_spec'
 require 'email_spec/cucumber'
-
 
 
 #FactoryGirl.find_definitions
