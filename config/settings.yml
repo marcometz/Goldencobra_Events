@@ -1,4 +1,8 @@
 goldencobra_events:
+    active_admin:
+      menue:
+        panels:
+          display: "false"
     agb_article_id: "0"
     event:
         registration_basket:
