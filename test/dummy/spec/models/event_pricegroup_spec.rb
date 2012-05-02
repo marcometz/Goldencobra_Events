@@ -28,4 +28,14 @@ describe GoldencobraEvents::EventPricegroup do
     @new_pricegroup.update_attributes(:price_raw => "10.5")
     @new_pricegroup.price.should == 10.50
   end
+
+  it "should display the correct brutto amount" do
+    @new_pricegroup.update_attributes(price: 50.24)
+    @new_pricegroup.brutto_price.round(2).should == 59.79
+  end
+
+  it "should display the correct brutto amount if price == 0" do
+    @new_pricegroup.update_attributes(price: 0.0)
+    @new_pricegroup.brutto_price.round(2).should == 0
+  end
 end

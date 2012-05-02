@@ -33,6 +33,10 @@ module GoldencobraEvents
     def title
       self.pricegroup.title if self.pricegroup
     end
+
+    def brutto_price
+      self.price + (self.price / 100 * 19)
+    end
     
     def number_of_participators_label
       if max_number_of_participators == 0
