@@ -54,6 +54,7 @@ en:
       action_label: "%{title} Selected"
       labels:
         destroy: "Delete"
+        deactivate_applicants: "deactivate applicants"
     comments:
       body: "Body"
       author: "Author"
