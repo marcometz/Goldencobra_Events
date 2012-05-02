@@ -24,9 +24,10 @@ module GoldencobraEvents
     def registration_email_with_template(user, email_template)
       GoldencobraEvents::EventRegistration::LiquidParser["user"] = user
       @email_template = email_template
+      subject = @email_template.subject.present? ? @email_template.subject : Goldencobra::Setting.for_key("goldencobra_events.event.registration.mailer.subject") 
       @user = user
       if @user && @user.present?
-          mail to: user.email, bcc: "#{@email_template.bcc}", :css => "/goldencobra_events/email"
+          mail to: user.email, bcc: "#{@email_template.bcc}", :css => "/goldencobra_events/email", :subject => subject
       end
     end
     
