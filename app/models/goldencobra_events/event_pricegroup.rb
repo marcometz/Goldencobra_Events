@@ -30,6 +30,14 @@ module GoldencobraEvents
     before_save :convert_price_raw
     scope :sorted, order("goldencobra_events_events.start_date").joins(:event)
 
+    validate :validate_date_range
+
+    def validate_date_range
+      if self.start_reservation && self.end_reservation && self.start_reservation >= self.end_reservation
+        errors.add(:start_reservation, 'error')
+      end
+    end
+
     def title
       self.pricegroup.title if self.pricegroup
     end
