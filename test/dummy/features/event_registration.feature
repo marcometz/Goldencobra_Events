@@ -55,6 +55,12 @@ Feature: See and register events
     And I should see "Senioren"  
 
   @javascript
+  Scenario: Go to the registration site and see brutto and netto prices
+    When I go to the article page "anmeldung"
+    Then I should see "80,00"
+    And I should see "(brutto: 95,20 €)"
+
+  @javascript
   Scenario: Go to the program site and look for events with an url parameter and see all events
     When I visit url "/anmeldung?webcode=OSTERN"
     #Then I should not see "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
