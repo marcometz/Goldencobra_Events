@@ -236,6 +236,18 @@ Feature: Create and manage events
     Then I press "Update Event"
     And I should see "Naturstrom Panel"
 
+  @javascript
+  Scenario: no panel-selection should be visible if panels.count == 0
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    And the following "events" exist:
+      | title                        | parent_id | id |
+      | "Event"                      |           |  1 |
+    When I go to the admin list of events  
+    Then I click on "Edit" within "tr#event_1"
+    And I remove jquery chosen
+    Then I should not see "panels"
+
   Scenario: Set event type and registration type for existing event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
