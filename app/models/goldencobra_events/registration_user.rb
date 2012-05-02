@@ -36,6 +36,9 @@ module GoldencobraEvents
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
     
+    scope :active, where(:active => true)
+    scope :storno, where(:active => false)
+    
     search_methods :type_of_registration_not_eq
     scope :type_of_registration_not_eq, lambda { |param| where("type_of_registration <> '#{param}'") }
         
@@ -66,7 +69,22 @@ module GoldencobraEvents
       where("id in (?)", results)
     }
 
-      
+    
+    def cancel_reservation!
+      if self.active == true
+        self.active = false
+        self.vita_steps << Goldencobra::Vita.create(:title => "Registration canceled", :description => "no confirmation mail sent")
+        self.save
+      end
+    end
+    
+    def reactivate_reservation!
+      if self.active == false
+        self.active = true
+        self.vita_steps << Goldencobra::Vita.create(:title => "Registration reactivated", :description => "no confirmation mail sent")
+        self.save      
+      end
+    end
     
         
     def anrede

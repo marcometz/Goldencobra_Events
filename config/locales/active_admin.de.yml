@@ -51,6 +51,8 @@ de:
         other: "%{count} %{plural_model} wurden erfolgreich gelöscht"
       selection_toggle_explanation: "(Auswahl umkehren)"
       link: "Erstelle eins"
+      labels:
+        deactivate_applicants: "Gäste stornieren"
     comments:
       body: "Inhalt"
       author: "Autor"
