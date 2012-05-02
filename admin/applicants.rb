@@ -2,12 +2,17 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
 
+  scope "Alle", :scoped, :default => true
+  scope "Aktive", :active
+  scope "Stornierte", :storno
+
   filter :firstname
   filter :lastname
   filter :email
   filter :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :type_of_registration_not, :label => "Art der Registrierung ist NICHT", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :total_price, :as => :numeric
+  filter :active, :as => :select
 
   index do
     selectable_column
@@ -91,33 +96,33 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   show :title => :lastname do
     panel t('activerecord.models.applicant', count: 1) do
       attributes_table_for applicant do
-        row(t('activerecord.attributes.user.firstname')){applicant.firstname}
-        row(t('activerecord.attributes.user.lastname')){applicant.lastname}
-        row(t('activerecord.attributes.applicant.title')){applicant.title}
-        row(t('activerecord.attributes.applicant.gender')){applicant.gender}
-        row(t('activerecord.attributes.user.function')){applicant.function}
-        row(t('activerecord.attributes.user.phone')){applicant.phone}
-        row(t('activerecord.attributes.applicant.created_at')){applicant.created_at}
-        row(t('activerecord.attributes.applicant.updated_at')){applicant.updated_at}
+        row :firstname
+        row :lastname
+        row :title
+        row :gender
+        row :function
+        row :phone
+        row :created_at
+        row :updated_at
       end
     end #end panel applicant
     panel t('activerecord.models.company', count: 1) do
       if applicant.company
           attributes_table_for applicant.company do
-            row(t('activerecord.attributes.goldencobra_events/company.title')){applicant.company.title}
-            row(t('activerecord.attributes.goldencobra_events/company.legal_form')){applicant.company.legal_form}
-            row(t('activerecord.attributes.goldencobra_events/company.phone')){applicant.company.phone}
-            row(t('activerecord.attributes.goldencobra_events/company.fax')){applicant.company.fax}
-            row(t('activerecord.attributes.goldencobra_events/company.homepage')){applicant.company.homepage}
-            row(t('activerecord.attributes.goldencobra_events/company.sector')){applicant.company.sector}
+            row :title
+            row :legal_form
+            row :phone
+            row :fax
+            row :homepage
+            row :sector
           end
         if applicant.company.location 
           attributes_table_for applicant.company.location do
-            row(t('activerecord.attributes.location.street.one')){applicant.company.location.street}
-            row(t('activerecord.attributes.location.zip.one')){applicant.company.location.zip}
-            row(t('activerecord.attributes.location.city.one')){applicant.company.location.city}
-            row(t('activerecord.attributes.location.region.one')){applicant.company.location.region}
-            row(t('activerecord.attributes.location.country.one')){applicant.company.location.country}
+            row :street
+            row :zip
+            row :city
+            row :region
+            row :country
           end
         end
       end   
@@ -143,7 +148,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         end
       end
     end #end panel sponsors
-    panel t('active_admin.resource.vita') do
+    panel "Vita" do
       table do
         tr do
           th t('activerecord.attributes.vita.title')
@@ -182,7 +187,36 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     redirect_to :action => :index, :notice => "Mails wurden versendet"
   end
   
+  batch_action :deactivate_applicants, :confirm => "Sie wollen diese Gaeste stornieren?" do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      reguser.cancel_reservation!
+    end
+    redirect_to :action => :index, :notice => "Gaeste wurden deaktiviert"
+  end
+  
   batch_action :destroy, false
+  
+  member_action :deactivate_applicant do
+    reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
+    reguser.cancel_reservation!
+    redirect_to :action => :show, :notice => "This Applicant is now inactive!"
+  end
+
+  member_action :reactivate_applicant do
+    reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
+    reguser.reactivate_reservation!
+    redirect_to :action => :show, :notice => "This Applicant is now active!"
+  end
+
+  
+  action_item :only => [:edit, :show] do
+    _applicant = @_assigns['applicant']
+    if _applicant.active
+      link_to('Diesen Gast stornieren', deactivate_applicant_admin_applicant_path(_applicant))
+    else
+      link_to('Diesen Gast wieder reaktivieren', reactivate_applicant_admin_applicant_path(_applicant))
+    end
+  end
   
   controller do  
            
