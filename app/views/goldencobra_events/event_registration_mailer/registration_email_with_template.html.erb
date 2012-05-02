@@ -1,31 +1,34 @@
 <html><head>
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-        
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">        
         <!-- Facebook sharing information tags -->
-        <meta content="eMobility Summit Mai 2012" property="og:title">
-        
-        <title>eMobility Summit Mai 2012</title>
+        <meta content="<%= Goldencobra::Setting.for_key("goldencobra.page.default_title_tag")%>" property="og:title">
+        <title><%= Goldencobra::Setting.for_key("goldencobra.page.default_title_tag")%></title>
 		
 </head>
-    <body marginwidth="0" marginheight="0" style="-webkit-text-size-adjust: none;margin: 0;padding: 0;background-color: #FAFAFA;width: 100% !important;" offset="0" topmargin="0" leftmargin="0">
+    <body marginwidth="0" marginheight="0" offset="0" topmargin="0" leftmargin="0">
     	<center>
-        	<table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 0;padding: 0;background: url(http://cloudforum.tagesspiegel.de/assets/emailback.jpg) repeat-x 0 0 #ffffff; height: 100% !important;width: 100% !important;" id="backgroundTable">
+        	<table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" id="backgroundTable">
             	<tbody><tr>
                 	<td valign="top" align="center" style="border-collapse: collapse;">
-                    	<table width="600" cellspacing="0" cellpadding="0" border="0" style="border: 1px solid #DDDDDD;background-color: #FFFFFF;" id="templateContainer">
+                    	<table width="600" cellspacing="0" cellpadding="0" border="0" id="templateContainer">
                         	<tbody><tr>
                             	<td valign="top" align="center" style="border-collapse: collapse;">
-                                	<table width="600" cellspacing="0" cellpadding="0" border="0" style="background-color: #FFFFFF;border-bottom: 0;" id="templateHeader">
-                                        <tbody><tr>
-                                            <td style="border-collapse: collapse;color: #202020;font-family:Helvetica,Arial,sans-serif;font-size: 34px;font-weight: bold;line-height: 100%;padding: 0;text-align: center;vertical-align: middle;" class="headerContent">
-                                            
-                                            	<div style="text-align: none;">
-													<a style="color: #336699;font-weight: normal;text-decoration: underline;" href="http://cloudforum.tagesspiegel.de">
-													<img width="397" height="134" border="0" id="headerImage campaign-icon" style="margin: 0;padding: 0;max-width: 600px;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;" alt="" src="http://cloudforum.tagesspiegel.de/system/images/8/original/cloudforum-logo.jpg"></a></div>
-                                            
-                                            </td>
-                                        </tr>
-                                    </tbody></table>
+                                	<table width="600" cellspacing="0" cellpadding="0" border="0" id="templateHeader">
+                                        <tbody>
+											<tr>
+                                            	<td  class="headerContent">
+                                            		<div style="text-align: none;">
+														<% if @email_template.header_html.blank? %>
+															<a style="color: #336699;font-weight: normal;text-decoration: underline;" href="http://cloudforum.tagesspiegel.de">
+															<img width="397" height="134" border="0" id="headerImage campaign-icon" style="margin: 0;padding: 0;max-width: 600px;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;" alt="" src="http://cloudforum.tagesspiegel.de/system/images/8/original/cloudforum-logo.jpg"></a>
+														<% else %>	
+															<%= raw(@email_template.header_html) %>
+														<% end %>
+													</div>
+                                            	</td>
+                                        	</tr>
+                                    	</tbody>
+									</table>
                                 </td>
                             </tr>
                         	<tr>
@@ -33,19 +36,20 @@
                                     <!-- // Begin Template Body \\ -->
                                 	<table width="600" cellspacing="0" cellpadding="0" border="0" id="templateBody">
                                     	<tbody><tr>
-                                            <td valign="top" style="border-collapse: collapse;background-color: #FFFFFF;" class="bodyContent">
-                                
+                                            <td valign="top" style="border-collapse: collapse;" class="bodyContent">
                                                 <!-- // Begin Module: Standard Content \\ -->
                                                 <table width="100%" cellspacing="0" cellpadding="20" border="0">
-                                                    <tbody><tr>
-                                                        <td valign="top" style="border-collapse: collapse;">
-                                                            <div style="color: #505050;font-family:Helvetica,Arial,sans-serif;font-size: 14px;line-height: 150%;text-align: left;">
-	<% template = Liquid::Template.parse(@email_template.content_html) %>
-	<%= raw(template.render(GoldencobraEvents::EventRegistration::LiquidParser)) %>
-</div>
-														</td>
-                                                    </tr>
-                                                </tbody></table>                                                
+                                                    <tbody>
+														<tr>
+                                                        	<td valign="top" style="border-collapse: collapse;">
+                                                        	    <div>
+																	<% template = Liquid::Template.parse(@email_template.content_html) %>
+																	<%= raw(template.render(GoldencobraEvents::EventRegistration::LiquidParser)) %>
+																</div>
+															</td>
+                                                    	</tr>
+                                                	</tbody>
+												</table>                                                
                                             </td>
                                         </tr>
                                     </tbody></table>
@@ -53,16 +57,21 @@
                             </tr>
                         	<tr>
                             	<td valign="top" style="border-collapse: collapse;">
-                                	<table width="600" cellspacing="0" cellpadding="10" border="0" style="background-color: #FFFFFF;border-top: 0;" id="templateFooter">
+                                	<table width="600" cellspacing="0" cellpadding="10" border="0" id="templateFooter">
                                     	<tbody><tr>
                                         	<td valign="top" style="border-collapse: collapse;" class="footerContent">
                                             
                                                 <table width="100%" cellspacing="0" cellpadding="10" border="0">
                                                     <tbody><tr>
                                                         <td valign="middle" style="border-collapse: collapse;border: 0;" id="social" colspan="2">
-                                                            <div style="color: #707070;font-family:Helvetica,Arial,sans-serif;font-size: 12px;line-height: 125%;"><p>Verlag Der Tagesspiegel GmbH | Askanischer Platz 3 | 10963 Berlin | Telefon: (030) 29021 29222 | Fax: (030) 29021 29224</p>
-
-<p>Vertreten durch die Geschäftsführung: Joachim Liebler | Registriergericht: AG Charlottenburg | Registriernummer: HRB 43850 | Umsatzsteuer-Identifikationsnummer: DE 151725755</p></div>
+                                                            <div>
+																<% if @email_template.footer_html.blank? %>
+																	<p>Verlag Der Tagesspiegel GmbH | Askanischer Platz 3 | 10963 Berlin | Telefon: (030) 29021 29222 | Fax: (030) 29021 29224</p>
+																	<p>Vertreten durch die Geschäftsführung: Joachim Liebler | Registriergericht: AG Charlottenburg | Registriernummer: HRB 43850 | Umsatzsteuer-Identifikationsnummer: DE 151725755</p>
+																<% else %>
+																	<%= raw(@email_template.footer_html) %>
+																<% end %>
+															</div>
                                                         </td>
                                                     </tr>
                                                 </tbody></table>
@@ -78,4 +87,5 @@
                 </tr>
             </tbody></table>
         </center>
-</body></html>
+	</body>
+</html>
