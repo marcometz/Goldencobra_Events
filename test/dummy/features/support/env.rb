@@ -11,6 +11,8 @@ require "factory_girl/step_definitions"
 require 'capybara/rails'
 require 'capybara/cucumber'
 require 'capybara-webkit'
+require 'email_spec'
+require 'email_spec/cucumber'
 
 
 

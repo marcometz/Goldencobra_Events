@@ -42,4 +42,5 @@ group :test do
   gem 'growl' 
   gem 'launchy'
   gem 'spork'
+  gem 'email_spec'
 end

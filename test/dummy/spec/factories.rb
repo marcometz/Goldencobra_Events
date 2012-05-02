@@ -71,6 +71,12 @@ FactoryGirl.define do
     u.user_id 1
   end
 
+  factory :registration_user, :class => GoldencobraEvents::RegistrationUser do |u|
+    u.event_pricegroup_id 1
+    u.user_id 1
+  end
+
+
   factory :panel, :class => GoldencobraEvents::Panel do |u|
     u.title "Naturstrom Panel"
     u.description "Das ist ein Panel"
