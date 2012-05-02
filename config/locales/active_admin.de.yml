@@ -64,3 +64,6 @@ de:
       errors:
         empty_text: "Der Kommentar wurde nicht gespeichert, da der Text fehlt."
     new_sponsor: "Neuer Sponsor"
+    errors:
+      event_pricegroup:
+        date_error: "Fehler beim Datum. Bitte prüfen Sie Start- u. Enddaten."
