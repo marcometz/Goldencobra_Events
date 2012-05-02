@@ -32,12 +32,14 @@ table td{
 	margin:0;
 	padding:0;
 	width:100% !important;
+	background: url(http://cloudforum.tagesspiegel.de/assets/emailback.jpg) repeat-x 0 0 #ffffff;
 }
 body,#backgroundTable{
 	background-color:#FAFAFA;
 }
 #templateContainer{
 	border:1px solid #DDDDDD;
+	background-color: #FFFFFF;
 }
 h1,.h1{
 	color:#202020;
@@ -112,13 +114,14 @@ h4,.h4{
 }
 .headerContent{
 	color:#202020;
-	font-family:Arial;
+	font-family:Helvetica,Arial,sans-serif;
 	font-size:34px;
 	font-weight:bold;
 	line-height:100%;
 	padding:0;
 	text-align:center;
-	vertical-align:middle;
+	vertical-align:middle;	
+	border-collapse: collapse;
 }
 .headerContent a:link,.headerContent a:visited,.headerContent a .yshortcuts {
 	color:#336699;
@@ -131,10 +134,11 @@ h4,.h4{
 }
 #templateContainer,.bodyContent{
 	background-color:#FFFFFF;
+	border-collapse: collapse;
 }
 .bodyContent div{
 	color:#505050;
-	font-family:Arial;
+	font-family:Helvetica,Arial;
 	font-size:14px;
 	line-height:150%;
 	text-align:left;
@@ -152,9 +156,10 @@ h4,.h4{
 	background-color:#FFFFFF;
 	border-top:0;
 }
+
 .footerContent div{
 	color:#707070;
-	font-family:Arial;
+	font-family:Helvetica,Arial;
 	font-size:12px;
 	line-height:125%;
 	text-align:left;
