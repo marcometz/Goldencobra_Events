@@ -165,7 +165,7 @@ Feature: Create and manage events
   And I should see "Abendessen Alternative 2"
   And I should see "Abendessen Alternative 1"
   
-  @javascript  
+  @javascript
   Scenario: add prices to existing event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -180,10 +180,11 @@ Feature: Create and manage events
     And I should see "Edit Event" within "#page_title"
     When I click on "Add New Event Pricegroup"
     Then I select "Studenten" within ".pricegroup_pricegroup" 
-    And I should see "Price"
-    And I fill in "Price" with "10.5"
+    And I should see "price"
+    And I fill in "price" with "10.5"
     Then I press "Update Event"
     And I should see "Studenten"
+    And I should see "10.5" within textfield "event[event_pricegroups_attributes][0][price_raw]"
     # And I should see "10.50" findet den Inhalt nicht, da es kein String ist, sondern Value in einem Input
     
   Scenario: add teaser image to existign event
@@ -214,9 +215,9 @@ Feature: Create and manage events
     When I go to the admin list of events  
     Then I click on "Edit" within "tr#event_1"
     When I click on "Add New Event Pricegroup"
-    And I fill in "Webcode" with "Osterspezial2010"
+    And I fill in "webcode" with "Osterspezial2010"
     Then I press "Update Event"
-    # And I should see "Osterspezial2010" findet den Inhalt nicht, da es kein String ist, sondern Value in einem Input
+    And I should see "Osterspezial2010" within textfield "webcode"
 
   @javascript
   Scenario: add event to an existing panel
