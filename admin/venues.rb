@@ -7,6 +7,8 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
   filter :link_url
   filter :email
   
+
+  
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs :class => "buttons inputs" do
       f.actions

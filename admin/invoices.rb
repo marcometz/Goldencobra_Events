@@ -1,11 +1,17 @@
-ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
-  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
+ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
+  menu :parent => "Billing & Invoices", :if => proc{can?(:update, Goldencobra::Setting)}
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
 
   scope "Alle", :scoped, :default => true
+  scope "Rechnung nicht gestellt", :invoice_not_send
+  scope "unbezahlt", :unpaid
   scope "Aktive", :active
   scope "Stornierte", :storno
 
+  filter :invoice_sent
+  filter :payed_on
+  filter :first_reminder_sent
+  filter :second_reminder_sent
   filter :firstname
   filter :lastname
   filter :email
@@ -14,25 +20,42 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   filter :total_price, :as => :numeric
   filter :active, :as => :select
 
+  config.clear_action_items!
+  action_item :only => [:show] do
+    _invoice = @_assigns['invoice']
+    link_to(t('active_admin.edit'), edit_admin_invoice_path(_invoice), :class => "member_link edit_link")
+  end
+
   index do
     selectable_column
-    column :firstname, :sortable => :firstname do |applicant|
-      applicant.firstname
+    column :firstname, :sortable => :firstname do |invoice|
+      invoice.firstname
     end
-    column :lastname, :sortable => :lastname do |applicant|
-      applicant.lastname
+    column :lastname, :sortable => :lastname do |invoice|
+      invoice.lastname
     end
-    column :email, :sortable => :email do |applicant|
-      applicant.email
-    end
-    column :type_of_registration
     column :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
-    column :last_email_send do |user|
-      user.last_email_send ? l(user.last_email_send, format: :short) : ""
+    column :invoice_sent do |invoice|
+      invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent
     end
-    default_actions
+    column :payed_on do |invoice|
+      invoice.payed_on.strftime("%d.%m.%Y") if invoice.payed_on
+    end
+    column :first_reminder_sent do |invoice|
+      invoice.first_reminder_sent.strftime("%d.%m.%Y") if invoice.first_reminder_sent
+    end
+    column :second_reminder_sent do |invoice|
+      invoice.second_reminder_sent.strftime("%d.%m.%Y") if invoice.second_reminder_sent
+    end
+    column "" do |invoice|
+      result = ""
+      result += link_to(t('active_admin.view'), admin_invoice_path(invoice), :class => "member_link show_link")
+      result += link_to(t('active_admin.edit'), edit_admin_invoice_path(invoice), :class => "member_link edit_link")
+      raw(result)
+    end
+    
   end
   
   form :html => { :enctype => "multipart/form-data" } do |f|
@@ -42,6 +65,12 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     f.inputs "Anmeldung" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
       f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
+    end
+    f.inputs "Rechnung" do
+      f.input :invoice_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.invoice_sent.strftime('%A, %d.%m.%Y') if f.object.invoice_sent}" }
+      f.input :payed_on, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.payed_on.strftime('%A, %d.%m.%Y') if f.object.payed_on}" }
+      f.input :first_reminder_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.first_reminder_sent.strftime('%A, %d.%m.%Y') if f.object.first_reminder_sent}" }
+      f.input :second_reminder_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.second_reminder_sent.strftime('%A, %d.%m.%Y') if f.object.second_reminder_sent}" }
     end
     f.inputs "Besucher", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
@@ -89,7 +118,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
 
   show :title => :lastname do
     panel t('activerecord.models.applicant', count: 1) do
-      attributes_table_for applicant do
+      attributes_table_for invoice do
         row :firstname
         row :lastname
         row :title
@@ -100,9 +129,17 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         row :updated_at
       end
     end #end panel applicant
+    panel t('activerecord.models.invoice', count: 1) do
+      attributes_table_for invoice do
+        row :invoice_sent
+        row :payed_on
+        row :first_reminder_sent
+        row :second_reminder_sent
+      end
+    end    
     panel t('activerecord.models.company', count: 1) do
-      if applicant.company
-          attributes_table_for applicant.company do
+      if invoice.company
+          attributes_table_for invoice.company do
             row :title
             row :legal_form
             row :phone
@@ -110,8 +147,8 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
             row :homepage
             row :sector
           end
-        if applicant.company.location 
-          attributes_table_for applicant.company.location do
+        if invoice.company.location 
+          attributes_table_for invoice.company.location do
             row :street
             row :zip
             row :city
@@ -128,7 +165,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
           th t('activerecord.attributes.event_pricegroup.title')
           th t('activerecord.attributes.event_pricegroup.price')
         end
-        applicant.event_registrations.each do |ereg|
+        invoice.event_registrations.each do |ereg|
           tr do
             td ereg.event_pricegroup && ereg.event_pricegroup.event && ereg.event_pricegroup.event.title ? ereg.event_pricegroup.event.title : ""
             td ereg.event_pricegroup && ereg.event_pricegroup.title ? ereg.event_pricegroup.title : ""
@@ -138,7 +175,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         tr :class => "total" do
           td ""
           td "Summe:"
-          td number_to_currency(applicant.total_price, :locale => :de)
+          td number_to_currency(invoice.total_price, :locale => :de)
         end
       end
     end #end panel sponsors
@@ -149,7 +186,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
           th t('activerecord.attributes.vita.description')
           th t('activerecord.attributes.vita.created_at')
         end
-        applicant.vita_steps.each do |vita|
+        invoice.vita_steps.each do |vita|
           tr do
             td vita.title
             td vita.description
@@ -174,56 +211,24 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
   end
   
-  batch_action :send_default_conf_mails, :confirm => "Sind Sie sicher?" do |selection|
-    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
-      reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}")
-    end
-    flash[:notice] = "Mails wurden versendet"
-    redirect_to :action => :index
-  end
-  
-  batch_action :deactivate_applicants, :confirm => "Sie wollen diese Gaeste stornieren?" do |selection|
-    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      reguser.cancel_reservation!
-    end
-    flash[:notice] = "Gaeste wurden deaktiviert"
-    redirect_to :action => :index
-  end
-  
+    
   batch_action :destroy, false
   
-  member_action :deactivate_applicant do
-    reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
-    reguser.cancel_reservation!
-    flash[:notice] = "This Applicant is now inactive!"
-    redirect_to :action => :show
+  sidebar "invoice_options", only: [:index] do
+    render "/goldencobra_events/admin/invoices/invoice_options_sidebar"
   end
-
-  member_action :reactivate_applicant do
-    reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
-    reguser.reactivate_reservation!
-    flash[:notice] = "This Applicant is now active!"
-    redirect_to :action => :show
-  end
-
   
-  action_item :only => [:edit, :show] do
-    _applicant = @_assigns['applicant']
-    if _applicant.active
-      link_to('Diesen Gast stornieren', deactivate_applicant_admin_applicant_path(_applicant))
-    else
-      link_to('Diesen Gast wieder reaktivieren', reactivate_applicant_admin_applicant_path(_applicant))
+  collection_action :set_invoice_date, :method => :post do 
+    collection_selection = params[:invoice_collection_selection]
+    if collection_selection.present?
+      invoice_type = params[:invoice_type]
+      GoldencobraEvents::RegistrationUser.find(collection_selection.split(",")).each do |reguser|
+        reguser.send("#{invoice_type}=", params[:date])
+        reguser.save
+      end
     end
-  end
-  
-  controller do  
-           
-    def new       
-      @applicant = GoldencobraEvents::RegistrationUser.new
-      @applicant.company = GoldencobraEvents::Company.new
-      @applicant.company.location = Goldencobra::Location.new
-    end 
+    flash[:notice] = "Datum wurde gesetzt"
+    redirect_to :action => :index
   end
   
   csv do
@@ -249,6 +254,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column("last_email_at") {|user| l(user.last_email_send, format: :short) if user.last_email_send.present? }
     column("total_price") {|u| number_to_currency(u.total_price, :locale => :de) }
     column("Preisgruppen") {|applicant| applicant.event_registrations.map(&:event_pricegroup).compact.map(&:title).uniq.compact.join(" - ") }
+    column :invoice_sent
+    column :payed_on
+    column :first_reminder_sent
+    column :second_reminder_sent
   end
   
 end

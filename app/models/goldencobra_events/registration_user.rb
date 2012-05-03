@@ -38,6 +38,8 @@ module GoldencobraEvents
     
     scope :active, where(:active => true)
     scope :storno, where(:active => false)
+    scope :unpaid, where(:payed_on => nil )
+    scope :invoice_not_send, where(:invoice_sent => nil )
     
     search_methods :type_of_registration_not_eq
     scope :type_of_registration_not_eq, lambda { |param| where("type_of_registration <> '#{param}'") }
