@@ -27,13 +27,14 @@ Cloudforum 2012 - eine Veranstaltung des Tagesspiegels
     <%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %>
     <% end %>
 	Teilnahmegebühr:
-	<% event_regs = @user.event_registrations.joins(:event_pricegroup).where("price > 0").order("created_at ASC").last %>
-	<% event_pg = event_regs.event_pricegroup if event_regs %>
+	<% event_reg = @user.event_registrations.joins(:event_pricegroup).where("price > 0").order("created_at ASC").last %>
+	<% event_pg = event_reg.event_pricegroup if event_reg %>
 	<% if event_pg %>
-	Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %>
-	zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %>
-	Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %>
+	Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %><br>
+	zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %><br>
+	Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %><br>
 	<% end %>
+
 	Zahlungsart: Rechnung
 	
 	Bitte überweisen Sie die Teilnahmegebühr nach Erhalt der Rechnung. Ihre Kongressunterlagen liegen auf dem Cloud Forum für Sie bereit. Bitte registrieren Sie sich vor Ort mit Ihrem Namen beim Anmeldecounter.

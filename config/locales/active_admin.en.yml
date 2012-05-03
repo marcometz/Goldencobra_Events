@@ -65,4 +65,6 @@ en:
       title_content: "Comments (%{count})"
       errors:
         empty_text: "Comment wasn't saved, text was empty."
-
+    errors:
+      event_pricegroup:
+        date_error: "Fehler beim Datum. Bitte prüfen Sie Start- u. Enddaten."
