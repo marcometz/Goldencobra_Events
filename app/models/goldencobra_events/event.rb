@@ -41,6 +41,7 @@ module GoldencobraEvents
     belongs_to :teaser_image, :class_name => Goldencobra::Upload, :foreign_key => "teaser_image_id"
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true).order(:start_date)
+    scope :inactive, where(:active => false).order(:start_date)
     
     scope :parent_ids_in_eq, lambda { |art_id| subtree_of(art_id) }
     search_methods :parent_ids_in_eq

@@ -3,6 +3,10 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   menu :parent => "Event-Management", :label => "Veranstaltungen", :if => proc{can?(:read, GoldencobraEvents::Event)}
   controller.authorize_resource :class => GoldencobraEvents::Event
   
+  scope "Alle", :scoped, :default => true
+  scope :active
+  scope :inactive
+  
   filter :title
   filter :start_date
   filter :end_date
@@ -64,14 +68,14 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     column :active, :sortable => :active do |event|
       event.active
     end
-    column :exclusive, :sortable => :exclusive do |event|
-      event.exclusive
-    end
     column :type_of_event, :sortable => :type_of_event do |event|
       event.type_of_event
     end
     column :updated_at do |event|
       l(event.updated_at, format: :short)
+    end
+    column "Regs" do |event|
+      event.event_pricegroups.joins(:event_registrations => :user).where("goldencobra_events_registration_users.active = true").collect(&:event_registrations).count
     end
     column "" do |event|
       result = ""
@@ -195,6 +199,25 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       end
       @event.set_start_end_dates if @event.parent
     end 
+  end
+  
+  
+  csv do
+    column :id
+    column :title
+    column :description
+    column :created_at
+    column :updated_at
+    column :active
+    column :exclusive
+    column :external_link
+    column :max_number_of_participators
+    column :type_of_event
+    column :type_of_registration
+    column :start_date
+    column :end_date
+    column :venue_id
+    column("Registrations") {|event| event.event_pricegroups.joins(:event_registrations => :user).where("goldencobra_events_registration_users.active = true").collect(&:event_registrations).count }
   end
   
   

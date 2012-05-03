@@ -231,6 +231,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   
   csv do
     column :id
+    column :active
     column :gender
     column :email
     column :title
