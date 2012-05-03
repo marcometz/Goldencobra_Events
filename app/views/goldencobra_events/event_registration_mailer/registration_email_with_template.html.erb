@@ -18,12 +18,8 @@
 											<tr>
                                             	<td  class="headerContent">
                                             		<div style="text-align: none;">
-														<% if @email_template.header_html.blank? %>
 															<a style="color: #336699;font-weight: normal;text-decoration: underline;" href="http://cloudforum.tagesspiegel.de">
 															<img width="397" height="134" border="0" id="headerImage campaign-icon" style="margin: 0;padding: 0;max-width: 600px;border: 0;height: auto;line-height: 100%;outline: none;text-decoration: none;" alt="" src="http://cloudforum.tagesspiegel.de/system/images/8/original/cloudforum-logo.jpg"></a>
-														<% else %>	
-															<%= raw(@email_template.header_html) %>
-														<% end %>
 													</div>
                                             	</td>
                                         	</tr>
@@ -65,12 +61,8 @@
                                                     <tbody><tr>
                                                         <td valign="middle" style="border-collapse: collapse;border: 0;" id="social" colspan="2">
                                                             <div>
-																<% if @email_template.footer_html.blank? %>
-																	<p>Verlag Der Tagesspiegel GmbH | Askanischer Platz 3 | 10963 Berlin | Telefon: (030) 29021 29222 | Fax: (030) 29021 29224</p>
-																	<p>Vertreten durch die Geschäftsführung: Joachim Liebler | Registriergericht: AG Charlottenburg | Registriernummer: HRB 43850 | Umsatzsteuer-Identifikationsnummer: DE 151725755</p>
-																<% else %>
-																	<%= raw(@email_template.footer_html) %>
-																<% end %>
+																<p>Verlag Der Tagesspiegel GmbH | Askanischer Platz 3 | 10963 Berlin | Telefon: (030) 29021 29222 | Fax: (030) 29021 29224</p>
+																<p>Vertreten durch die Geschäftsführung: Joachim Liebler | Registriergericht: AG Charlottenburg | Registriernummer: HRB 43850 | Umsatzsteuer-Identifikationsnummer: DE 151725755</p>
 															</div>
                                                         </td>
                                                     </tr>
