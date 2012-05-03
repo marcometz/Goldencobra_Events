@@ -1,6 +1,9 @@
 de:
   activerecord:
     models:
+      invoice:
+        one: "Abrechnung"
+        other: "Abrechnungen"
       applicant: 
         one: "Besucher"
         other: "Besucher"

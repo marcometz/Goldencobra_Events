@@ -1,0 +1,24 @@
+<div id="invoice-options-sidebar">
+  <%= form_tag set_invoice_date_admin_invoices_path() do %>
+	<%= hidden_field_tag "invoice_collection_selection", ""%>
+	<%= select_tag "invoice_type", options_for_select([["Rechnung gestellt am","invoice_sent"], ["Bezahlt am","payed_on"], ["1. Mahnung","first_reminder_sent"], ["2.Mahnung","second_reminder_sent"]]) %>
+	<br/><br/>
+	<%= text_field_tag "date", "", :order => [:day, :month, :year], :class => "datepicker", :placeholder => "Datum auswählen" %>
+	<br/><br/>
+    <p><%= submit_tag "Update Invoices" %></p>
+  <% end %>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {	
+		$("#invoice-options-sidebar form").bind("submit", function(){
+			$('.collection_selection:checked')
+			var checked_ids = new Array();
+			$(".collection_selection:checked").each(function(){
+				checked_ids.push($(this).attr('value'));
+			});
+			$('#invoice_collection_selection').attr('value', checked_ids.join(',') );					
+		});
+	});
+</script>
