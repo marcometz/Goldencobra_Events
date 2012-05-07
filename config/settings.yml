@@ -5,6 +5,9 @@ goldencobra_events:
           display: "false"
     agb_article_id: "0"
     event:
+        event_pricegroup:
+            available:
+                default: true
         registration_basket:
             headline: "Sie haben gewählt:"
             greeting: "Hallo "

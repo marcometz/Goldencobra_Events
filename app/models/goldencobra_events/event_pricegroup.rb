@@ -31,6 +31,14 @@ module GoldencobraEvents
     scope :sorted, order("goldencobra_events_events.start_date").joins(:event)
 
     validate :validate_date_range
+    after_initialize :set_default_available
+    
+    def set_default_available
+      default_available = Goldencobra::Setting.for_key("goldencobra_events.event_pricegroup.available.default")
+      if self.new_record? && default_available.present? && default_available == "false"
+        self.available = false
+      end
+    end
 
     def validate_date_range
       if self.start_reservation && self.end_reservation && self.start_reservation >= self.end_reservation
