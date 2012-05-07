@@ -4,10 +4,10 @@ goldencobra_events:
         panels:
           display: "false"
     agb_article_id: "0"
+    event_pricegroup:
+        available:
+            default: "true"    
     event:
-        event_pricegroup:
-            available:
-                default: true
         registration_basket:
             headline: "Sie haben gewählt:"
             greeting: "Hallo "

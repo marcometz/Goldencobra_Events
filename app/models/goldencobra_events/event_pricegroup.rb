@@ -34,9 +34,11 @@ module GoldencobraEvents
     after_initialize :set_default_available
     
     def set_default_available
-      default_available = Goldencobra::Setting.for_key("goldencobra_events.event_pricegroup.available.default")
-      if self.new_record? && default_available.present? && default_available == "false"
-        self.available = false
+      if self.new_record? 
+        default_available = Goldencobra::Setting.for_key("goldencobra_events.event_pricegroup.available.default")
+        if default_available.present? && default_available == "false" && self.event.event_pricegroups.count > 0
+          self.available = false
+        end
       end
     end
 
