@@ -6,7 +6,7 @@ goldencobra_events:
     agb_article_id: "0"
     event_pricegroup:
         available:
-            default: "true"    
+            default: "false"    
     event:
         registration_basket:
             headline: "Sie haben gewählt:"
