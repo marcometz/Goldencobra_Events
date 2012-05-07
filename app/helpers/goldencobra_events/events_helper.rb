@@ -22,7 +22,7 @@ module GoldencobraEvents
           list = @article.sponsor_list.sort {|a,b| a[1].to_i <=> b[1].to_i}
           list = list.map{|element| element[0]}.delete_if{|a| a.include?('display_')}.delete_if{|a| @article.sponsor_list["display_#{a}"].present? && @article.sponsor_list["display_#{a}"] == "0"}
         else
-          list = @article.event.sponsors.map{|a| a.id}
+          list = (@article.event && @article.event.sponsors.count > 0) ? @article.event.sponsors.map{|a| a.id} : []
           list = list.sort
         end
         list.each do |sponsor_id|
