@@ -192,7 +192,9 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
             
     def new 
       @event = GoldencobraEvents::Event.new
-      @event.event_pricegroups << GoldencobraEvents::EventPricegroup.new(:price => 0, :max_number_of_participators => 0)
+      evpg = GoldencobraEvents::EventPricegroup.new(:price => 0, :max_number_of_participators => 0)
+      evpg.available = true
+      @event.event_pricegroups << evpg
       if params[:parent] && params[:parent].present? 
         @parent = GoldencobraEvents::Event.find(params[:parent])
         @event.parent_id = @parent.id
