@@ -115,7 +115,8 @@ module GoldencobraEvents
     
     
     def perform_registration
-      if @errors.blank? && session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_data].present?  && session[:goldencobra_event_registration][:pricegroup_ids].present?
+      @errors = []
+      if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_data].present?  && session[:goldencobra_event_registration][:pricegroup_ids].present?
 
         #Create user
         reguser = GoldencobraEvents::RegistrationUser.create(session[:goldencobra_event_registration][:user_data])
