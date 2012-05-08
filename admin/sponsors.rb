@@ -1,6 +1,6 @@
 ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
   
-  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::Sponsor)}
+  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::Sponsor) && (Goldencobra::Setting.for_key('goldencobra_events.active_admin.menue.sponsors.display') != "false")}
   controller.authorize_resource :class => GoldencobraEvents::Sponsor
   
   filter :title

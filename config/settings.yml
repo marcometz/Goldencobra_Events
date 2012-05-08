@@ -3,6 +3,12 @@ goldencobra_events:
       menue:
         panels:
           display: "false"
+        invoices:
+          display: "true"    
+        sponsors:
+          display: "true"
+        artists:
+          display: "true"
     agb_article_id: "0"
     event_pricegroup:
         available:

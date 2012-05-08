@@ -1,5 +1,5 @@
 ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
-  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::Artist)}
+  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::Artist) && (Goldencobra::Setting.for_key('goldencobra_events.active_admin.menue.artists.display') != "false")}
   controller.authorize_resource :class => GoldencobraEvents::Artist
 
   filter :title, :label => "Name"
