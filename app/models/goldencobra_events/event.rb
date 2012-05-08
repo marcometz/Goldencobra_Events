@@ -23,7 +23,10 @@
 
 module GoldencobraEvents
   class Event < ActiveRecord::Base
-
+    attr_accessible :title, :start_date, :end_date, :parent_id, :type_of_event, :type_of_registration, :active, :exclusive
+    attr_accessible :event_pricegroups_attributes, :max_number_of_participators, :teaser_image_id, :description, :external_link
+    attr_accessible :teaser_image_id, :venue_id, :panel_id, :ancestry
+    
     EventType = ["No Registration needed", "Registration needed", "Registration optional"]
     RegistrationType = ["No cancellation required", "Cancellation required"]
     Modultype = {"program" => "Programm", "registration" => "Anmeldung"}
