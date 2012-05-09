@@ -37,5 +37,12 @@ module GoldencobraEvents
     belongs_to :location, :class_name => Goldencobra::Location
     accepts_nested_attributes_for :sponsor_images    
     accepts_nested_attributes_for :location
+    
+    if ActiveRecord::Base.connection.table_exists?("goldencobra_settings")
+      after_save Goldencobra::Setting.new
+      after_destroy Goldencobra::Setting.new
+    end
+    
+    
  end
 end
