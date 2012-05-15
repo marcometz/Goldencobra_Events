@@ -7,7 +7,9 @@ module GoldencobraEvents
       ActionController::Base.helper(GoldencobraEvents::ApplicationHelper)  
       
       ApplicationController.helper(GoldencobraEvents::EventsHelper)
-      ActionController::Base.helper(GoldencobraEvents::EventsHelper)      
+      ActionController::Base.helper(GoldencobraEvents::EventsHelper)     
+      
+      Devise::SessionsController.helper(GoldencobraEvents::EventsHelper)   
     end
   end
 end
