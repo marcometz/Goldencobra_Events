@@ -6,10 +6,11 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
+  - "cd test/dummy && rake goldencobra:install:migrations
   - "bundle exec rake db:create"
   - "bundle exec rake db:migrate"
-  - "cd test/dummy && bundle exec rake db:test:prepare"
-  - "system('export DISPLAY=:99.0 && bundle exec rake cucumber')"
+  - "bundle exec rake db:test:prepare"
+  - "export DISPLAY=:99.0 && bundle exec rake cucumber"
   - "bundle exec rake rspec"
 rvm:
   - 1.9.2
