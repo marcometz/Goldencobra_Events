@@ -1,4 +1,5 @@
 language: ruby
+export TRAVIS_RUBY_VERSION=1.9.2
 before_script:
   - "mysql -e 'create database goldencobra_events_test;'"
 bundler_args: --without development
