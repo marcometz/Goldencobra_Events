@@ -1,5 +1,7 @@
 language: ruby
-export TRAVIS_RUBY_VERSION=1.9.2
+rvm:
+  - 1.9.2
+  - 1.9.3
 before_script:
   - "mysql -e 'create database goldencobra_events_test;'"
 bundler_args: --without development
@@ -13,8 +15,6 @@ before_script:
   - "bundle exec rake db:test:prepare"
   - "export DISPLAY=:99.0 && bundle exec rake cucumber"
   - "bundle exec rake rspec"
-rvm:
-  - 1.9.2
 gemfile:
   - Gemfile
 branches:
