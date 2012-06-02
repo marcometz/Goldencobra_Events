@@ -8,6 +8,7 @@ before_script:
   - sleep 3
   - "bundle exec rake db:create"
   - "cd test/dummy && bundle exec rake goldencobra:install:migrations"
+  - "bundle exec rake db:migrate"
   - "cd ../.. && bundle exec rake db:migrate"
   - "cd test/dummy && bundle exec rake db:test:prepare"
   - "export DISPLAY=:99.0 && bundle exec rake cucumber"
