@@ -31,10 +31,10 @@ $(document).ready(function() {
 		$('#goldencobra_events_event_popup').overlay().close();
 		return false;
 	});
-	$('#goldencobra_events_enter_account_data_form div.next_step a').live("click", function(){
-		$('#goldencobra_events_enter_account_data_form ul a.current').parent().next().find("a").trigger("click");
-		return false;
-	});
+	//$('#goldencobra_events_enter_account_data_form div.next_step a').live("click", function(){
+		//$('#goldencobra_events_enter_account_data_form ul a.current').parent().next().find("a").trigger("click");
+		//return false;
+	//});
 	
 
 	// $('#goldencobra_events_user_registration_form').validator();
@@ -54,16 +54,17 @@ $(document).ready(function() {
 	// $(this).hide();
   });
 	
-	$('#goldencobra_events_enter_account_data').bind("click", function(){
-		$('#goldencobra_events_enter_account_data_form').fadeIn();
-		$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
-	});
+	//$('#goldencobra_events_enter_account_data').bind("click", function(){
+		//$('#goldencobra_events_enter_account_data_form').fadeIn();
+    //$("#goldencobra_events_enter_account_data_form ul.tabs").tabs("div.panes > fieldset", {effect: 'fade', fadeInSpeed: 400});
+	//});
 	
 	// Mit Anmeldung fortfahren und DIVs darüber ausblenden
 	$('#goldencobra_events_enter_account_data').live("click", function() {
 		$('#goldencobra_events_article_events').fadeOut('slow');
-    	$('#goldencobra_events_enter_account_data').fadeOut('slow');
-    	$('#article_event_webcode_form').fadeOut('slow');
+    $('#goldencobra_events_enter_account_data').fadeOut('slow');
+    $('#article_event_webcode_form').fadeOut('slow');
+    $('#goldencobra_events_enter_account_data_form').fadeIn();
 	});
 	
   $('#goldencobra_events_user_registration_form_submit').bind("click", function(){
