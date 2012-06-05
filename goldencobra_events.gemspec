@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "Summary of GoldencobraEvents."
   s.description = "Description of GoldencobraEvents."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["CC-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["CC-LICENSE", "Rakefile", "README.markdown"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.2"
