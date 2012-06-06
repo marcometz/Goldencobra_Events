@@ -10,6 +10,7 @@ gem 'activeadmin', :git => "git://github.com/ikusei/active_admin.git", :require 
 gem 'goldencobra', :git => "git://github.com/ikusei/Goldencobra.git"
 gem 'goldencobra_email_templates', :git => "git://github.com/ikusei/goldencobra_email_templates.git"
 gem 'compass-rails'
+gem 'coffee-rails'
 
 gem "rspec-rails", :group => [:test, :development] # rspec in dev so the rake tasks run properly
 gem 'roadie'
@@ -27,7 +28,7 @@ group :development do
 end
 
 group :test do
-  gem 'sqlite3'
+  gem 'mysql2'
   gem 'cucumber'
   gem 'cucumber-rails', '~> 1.3.0' 
   gem "factory_girl_rails", :git => "git://github.com/thoughtbot/factory_girl_rails.git"
