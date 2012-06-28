@@ -19,12 +19,13 @@ gem 'uglifier', '>= 1.0.3'
 
 group :development do
   gem 'thin'
-  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
+  gem 'git-pivotal'
   gem 'guard-annotate'
   gem 'pry'
   gem 'rails-pry'
-  gem 'git-pivotal'#, "~> 0.8.2"
+  gem 'brakeman'
   gem 'hirb'
+  gem 'powder'
 end
 
 group :test do

@@ -16,7 +16,7 @@ Feature: Send confirmation emails
     Then I check "batch_action_item_1"
     And I check "batch_action_item_2"
     And I click on "Batch Actions"
-    Then I click on "Sende dafault Mail"
+    Then I click on "Send Default Conf Mails"
     #And "tim@test.de" should receive an email
     #And "tom@test.de" should receive an email
     

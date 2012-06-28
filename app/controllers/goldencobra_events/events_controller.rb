@@ -24,37 +24,20 @@ module GoldencobraEvents
     
     def register
       @webcode = false
-      if params[:article_id] && params[:article_id].present?
-        @article = Goldencobra::Article.find(params[:article_id])
-      end
+      @article = Goldencobra::Article.find(params[:article_id]) if params[:article_id] && params[:article_id].present?
+      validate_web_code()
       
-      if params[:webcode] && params[:webcode].present?
-        session[:goldencobra_events_webcode] = params[:webcode]
-        @webcode = true
-        if GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
-          @valid_webcode = true
-        else
-          @valid_webcode = false
-        end
-      end      
       if params[:id] && params[:id].present?
         @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])
+        #Wenn eine Eventoption gebucht wird....
         if (params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?) || @event_to_register.event_pricegroups.count == 1
-          if params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?
-            epg_id = params[:event][:event_pricegroup]
-          else
-            epg_id = @event_to_register.event_pricegroups.first.id
-          end
-          @registered_event_price_group = GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
+          @registered_event_price_group = get_event_pricegroup()
           #neue Wahl durch radio_button => event ist exklusiv und alle seine (evt.) bisher registrierten Geschwister müssen entfernt werden
           if @registered_event_price_group.event.parent && @registered_event_price_group.event.parent.exclusive == true
-            siblings_ids = []
-            @registered_event_price_group.event.siblings.each do |sibling|
-              siblings_ids << GoldencobraEvents::EventPricegroup.find_by_event_id(sibling.id).id
-            end
-            session[:goldencobra_event_registration][:pricegroup_ids] -= siblings_ids
+            remove_existing_registrations_from_session_if_needed()
           end
           
+          #prüfe ob bestehenden registrierungskombinationen valide sind => Fehler in @errors speichern bzw. ergebnis in session
           event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @registered_event_price_group)
           check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
           if check
@@ -62,6 +45,7 @@ module GoldencobraEvents
           else
             @errors = check
           end
+          
         end
       end
     end
@@ -152,7 +136,40 @@ module GoldencobraEvents
       end
     end
     
+    
+    
+    
     private
+    
+    def remove_existing_registrations_from_session_if_needed
+      siblings_ids = []
+      @registered_event_price_group.event.siblings.each do |sibling|
+        siblings_ids << GoldencobraEvents::EventPricegroup.find_by_event_id(sibling.id).id
+      end
+      session[:goldencobra_event_registration][:pricegroup_ids] -= siblings_ids
+    end
+    
+    def get_event_pricegroup
+      if params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?
+        epg_id = params[:event][:event_pricegroup]
+      else
+        epg_id = @event_to_register.event_pricegroups.first.id
+      end
+      return GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
+    end
+    
+    def validate_web_code
+      if params[:webcode] && params[:webcode].present?
+        session[:goldencobra_events_webcode] = params[:webcode]
+        @webcode = true
+        if GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
+          @valid_webcode = true
+        else
+          @valid_webcode = false
+        end
+      end      
+    end
+    
     def init_registration_session
       session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank?
       session[:goldencobra_event_registration][:pricegroup_ids] = [] if session[:goldencobra_event_registration][:pricegroup_ids].blank?  

@@ -24,9 +24,6 @@ module GoldencobraEvents
     belongs_to :pricegroup
     has_many :event_registrations, :class_name => GoldencobraEvents::EventRegistration
     attr_accessor :price_raw
-    #attr_accessible :price_raw, :pricegroup_id, :price, 
-    #  :max_number_of_participators, :cancelation_until, :start_reservation,
-    #  :end_reservation, :available, :webcode, :event_id
     scope :available, where(:available => true)
     scope :publicly_available, where(:webcode => "")
     before_save :convert_price_raw
