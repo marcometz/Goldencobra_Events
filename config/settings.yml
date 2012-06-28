@@ -54,6 +54,7 @@ goldencobra_events:
                 headline: "Bitte füllen Sie Ihre Benutzerdaten aus"
                 sub_headline: "Personeninformationen und Firmendaten"
                 description: "wir behandeln Ihre Daten vertraulich und nutzen diese nur im für diese Veranstaltung"
+                footer_description: "Die Bestellung wird über unseren Dienstelister ikusei GmbH abgewickelt"
                 account_description: "Bitte wählen Sie ein Passwort (mit diesem können Sie Ihre Bestellung später noch anpassen)"
                 user_fieldset_name: "Angaben zu Ihrer Person"
                 user_info_fieldset_name: "Detailinformationen"

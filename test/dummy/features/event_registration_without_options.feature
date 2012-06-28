@@ -51,7 +51,6 @@ Feature: See and register events without options
     Then I should see "Studenten"
     And I choose "Studenten"
     When I press "Weiter"
-    And show me the page
     Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
     And I choose "male"
     And I fill in "registration_user_firstname" with "Holger"
