@@ -27,8 +27,7 @@
 <% else %>
 	// Hier werden alle Preisgruppen und deren Eventoptionen aufgelistet zur Auswahl
 	<% if @event_to_register && @event_to_register.event_pricegroups.available.count > 0 %>
-			$('li.article_event_id_<%= @event_to_register.id %> div.new_pricegroups').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>")
-			.fadeIn();
+	  	$('li.article_event_id_<%= @event_to_register.id %> div.new_pricegroups').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/register' ))%>").fadeIn();
 		$('#register_for_event_<%= @event_to_register.id %>_link').fadeOut(400, function(){});
 	    $('.registration_informations').show();
 		<% if @webcode == true %>
