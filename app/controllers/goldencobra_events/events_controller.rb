@@ -46,8 +46,7 @@ module GoldencobraEvents
             @errors = check
           end          
         end
-        
-      end
+      end      
     end
     
     def summary
