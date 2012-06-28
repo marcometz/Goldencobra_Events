@@ -1,6 +1,8 @@
 module GoldencobraEvents
   module EventsHelper
     
+    
+    #ein popup für die AGBS im Eventmodul. 
     def event_agb_popup(options={})
       art_id = Goldencobra::Setting.find_by_title("agb_article_id")
       if art_id.present? && art_id.value != "0"
@@ -9,10 +11,12 @@ module GoldencobraEvents
       end
     end
     
+    #ausgabe eine warenkorbs bereits gebuchter events
     def render_registration_basket()
         render :partial => "goldencobra_events/events/registration_basket"
     end
     
+    #ausgabe aler sponsoren einer seite
     def render_article_sponsors(options={})
       class_name = options[:class] || ""
       if @article && @article.event_for_sponsor_id.present?
@@ -34,6 +38,7 @@ module GoldencobraEvents
     end
     
     
+    #ausgabe aller künstler einer seite
     def render_article_artists(options={})
       class_name = options[:class] || ""
       if @article && @article.event_for_artists_id.present?
@@ -54,6 +59,7 @@ module GoldencobraEvents
       end
     end
     
+    #ausgabe aller events  auf eienr seite als liste oder als anmeldeformular
     def render_article_events(options={})
       #reset der Session damit beim erneuten laden keine alten bestelldaten enthalten sind
       session[:goldencobra_event_registration] = nil if session[:goldencobra_event_registration]

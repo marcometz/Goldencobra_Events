@@ -77,7 +77,8 @@ Feature: See and register events
     # And I click on "register_for_event_7_link"
     # And I choose "register_for_event_7_checkbox"
     And I click on "Mit Anmeldung fortfahren" within "#goldencobra_events_enter_account_data_wrapper"
-    And I should see "Bitte füllen Sie Ihre Benutzerdaten aus"
+    #And I should see "Bitte füllen Sie Ihre Benutzerdaten aus"
+    Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
     And I choose "male"
     And I fill in "registration_user_firstname" with "Holger"
     And I fill in "registration_user_lastname" with "Frohloff"

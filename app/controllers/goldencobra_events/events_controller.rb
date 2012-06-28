@@ -44,9 +44,9 @@ module GoldencobraEvents
             session[:goldencobra_event_registration][:pricegroup_ids] << @registered_event_price_group.id
           else
             @errors = check
-          end
-          
+          end          
         end
+        
       end
     end
     
