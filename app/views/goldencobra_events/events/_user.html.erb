@@ -69,30 +69,17 @@
 				<%= radio_button "registration[billing_user]", "billing_gender", false, :id => "billing_female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
 			</p>
 			<p>
-				<label><%= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
-				<%= text_field_tag "registration[billing_user][billing_title]", "", :required => false %>
-			</p>
-			<p>
-				<label><%= s("goldencobra_events.event.registration.user_form.user_label.firstname") %></label>
+				<label><%= s("goldencobra_events.event.registration.user_form.user_label.billing_firstname") %></label>
 				<%= text_field_tag "registration[billing_user][billing_firstname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
 			</p>
 			<p>
-				<label><%= s("goldencobra_events.event.registration.user_form.user_label.lastname") %></label>
+				<label><%= s("goldencobra_events.event.registration.user_form.user_label.billing_lastname") %></label>
 				<%= text_field_tag "registration[billing_user][billing_lastname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
 			</p>
-			<p>
-				<label><%= s("goldencobra_events.event.registration.user_form.user_label.function") %></label>
-				<%= text_field_tag "registration[billing_user][billing_function]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.billing_function") %>
-			</p>
-			<p>
-				<label><%= s("goldencobra_events.event.registration.user_form.user_label.phone") %></label>
-				<%= text_field_tag "registration[billing_user][billing_phone]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.billing_phone") %>
-			</p>
 
-			<p>Unternehmen</p>
 			<div class="address">
 				<p>
-					<label><%= s("goldencobra_events.event.registration.user_form.company_label.title") %></label>
+					<label><%= s("goldencobra_events.event.registration.user_form.company_label.billing_title") %></label>
 					<%= text_field_tag "registration[billing_company][title]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
 				</p>
 				<p>

@@ -65,14 +65,14 @@
   <br>
   <% if @user.billing_firstname.present? %>
     <strong>Rechnungsanschrift</strong>
-    <p><%= @user.billing_title if @user.billing_title %> <%= @user.billing_firstname%> <%= @user.billing_lastname %><br>
+    Ansprechpartner: <%= @user.billing_gender ? "Herr" : "Frau" %> <%= @user.billing_firstname%> <%= @user.billing_lastname %><br>
   	<% if @user.billing_company_id.present? %>
       <% @billing_company = GoldencobraEvents::Company.find_by_id(@user.billing_company_id) %>
   	  <%= @billing_company.title if @billing_company.title != "privat Person"%><br>
+      <%= @user.billing_department %>
   	  <%= @billing_company.location.street %><br>
   	  <%= @billing_company.location.zip %> <%= @billing_company.location.city %>
   	<% end %>
-    </p>
   <% end %>
   <br />
   Sie haben sich f&uuml;r folgende Panels angemeldet:

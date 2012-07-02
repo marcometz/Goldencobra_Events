@@ -79,8 +79,8 @@ goldencobra_events:
                     company_title: "Firmenname muss ausgefüllt sein"
                     company_street: "Strasse muss ausgefüllt sein"
                     company_city: "Stadt muss ausgefüllt sein"
-                    company_zip: "PLZ muss ausgefüllt sein"                                                            
-                    company_country: "Land muss ausgefüllt sein"      
+                    company_zip: "PLZ muss ausgefüllt sein"
+                    company_country: "Land muss ausgefüllt sein"
                     password: "Das Passwort muss mindestens aus 6 Zeichen bestehen"
                     password_confirmation: "Passwort und die Wiederholung müssen übereinstimmen"
                     agb: "Die AGBs müssen akzeptiert werden"
@@ -100,8 +100,10 @@ goldencobra_events:
                     linkedin: "LinkedIn"
                     twitter: "Twitter"
                     facebook: "Facebook"
-                    billing_department: "Abteilung"
+                    billing_department: "Kostenstelle"
                     billing_street: "Straße/Postfach"
+                    billing_firstname: "Ansprechpartner Vorname"
+                    billing_lastname: "Ansprechpartner Nachname"
                 company_label:
                     title: "Name"
                     legal_form: "Rechtsform"
@@ -114,11 +116,7 @@ goldencobra_events:
                     region: "Bezirk"
                     country: "Land"
                     sector: "Branche"
+                    billing_title: "Unternehmen"
                 account_label:
                     password: "Passwort"
                     confirm_password: "Passwort wiederholen"
-                    
-                    
-
-                
-                      
