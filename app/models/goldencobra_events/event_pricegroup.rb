@@ -43,7 +43,7 @@ module GoldencobraEvents
 
     def validate_date_range
       if self.start_reservation && self.end_reservation && self.start_reservation >= self.end_reservation
-        errors.add(:start_reservation, t('active_admin.errors.event_pricegroup.date_error'))
+        errors.add(:start_reservation, I18n.t('active_admin.errors.event_pricegroup.date_error'))
       end
     end
 

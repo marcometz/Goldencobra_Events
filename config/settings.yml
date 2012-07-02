@@ -61,6 +61,7 @@ goldencobra_events:
                 company_fieldset_name: "Angaben zu Ihrer Firma"
                 account_fieldset_name: "Accountdaten"
                 company_adress_fieldset_name: "Adresse"
+                alternate_billing_address: "Abweichende Rechnungsadresse?"
                 next_step_label: "weiter ..."
                 submit: "Verbindlich bestellen"
                 submit_disabled: "Anfrage wird übermittelt ..."

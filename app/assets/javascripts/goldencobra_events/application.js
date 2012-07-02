@@ -46,6 +46,7 @@ $(document).ready(function() {
     	$('#goldencobra_events_enter_account_data_form').fadeIn();
 	});
 	
+  // Validierung des Formulars zur Eingabe der Besucherdaten
   $('#goldencobra_events_user_registration_form_submit').bind("click", function(){
     $('.validation_error').each(function() { $(this).remove();});
     var gender_selection = false;
@@ -91,5 +92,17 @@ $(document).ready(function() {
       $('#AGB_accepted').parent().append("<p class='validation_error' style='color:red; margin: -18px 0 0 480px;'>Pflichtangabe</p>");
     }
 
+  });
+  
+  // Abweichende Lieferadresse. Checkbox blendet zusätzliche Felder ein
+  $('#supply_alternate_billing_address').bind("change", function(){
+    if( $('#alternate_billing_address').is(':hidden') ) {
+      // Felder für abweichende Lieferadresse sind verborgen, also einblenden
+      $('#alternate_billing_address').fadeIn('fast');
+    }
+    else {
+      // Felder sind sichtbar, also wieder ausblenden
+      $('#alternate_billing_address').fadeOut('fast');
+    }
   });
 });

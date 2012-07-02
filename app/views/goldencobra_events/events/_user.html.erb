@@ -47,6 +47,25 @@
 			</p>
 		</div>	
 		<p>
+			<label><%= s('goldencobra_events.event.registration.user_form.alternate_billing_address') %></label>
+			<%= check_box_tag "supply_alternate_billing_address", 'yes', false %>
+		</p>
+		<div id="alternate_billing_address">
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.street") %> <span class="asterix">*</span></label>
+				<%= text_field_tag "registration[company][location_attributes][street]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
+			</p>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %> <span class="asterix">*</span> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %> <span class="asterix">*</span></label>
+				<%= text_field_tag "registration[company][location_attributes][zip]", "", :required => true, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
+				<%= text_field_tag "registration[company][location_attributes][city]", "", :required => true, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
+			</p>
+			<p>
+				<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
+				<%= text_field_tag "registration[company][location_attributes][country]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
+			</p>		
+		</div>
+		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.phone") %></label>
 			<%= text_field_tag "registration[user][phone]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.phone") %>
 		</p>
