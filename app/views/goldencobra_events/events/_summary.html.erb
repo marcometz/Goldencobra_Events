@@ -5,7 +5,7 @@
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
 	<div id="registration_summary">
 	  <div class="anschrift">
-		  <h2>Rechnungsanschrift</h2>
+		  <h2>Anschrift</h2>
 			<% if @summary_user %>
 			  <p><%= @summary_user.title if @summary_user.title %> <%= @summary_user.firstname%> <%= @summary_user.lastname %><br>
 				<% if @summary_company %>
@@ -14,6 +14,16 @@
 				  <%= @summary_company.location.zip %> <%= @summary_company.location.city %>
 				<% end %>
 			  </p>
+        <% if @summary_user.billing_firstname.present? %>
+          <h2>Rechnungsanschrift</h2>
+			    <p><%= @summary_user.billing_title if @summary_user.billing_title %> <%= @summary_user.billing_firstname%> <%= @summary_user.billing_lastname %><br>
+			  	<% if @billing_company %>
+			  	  <%= @billing_company.title if @billing_company.title != "privat Person"%><br>
+			  	  <%= @billing_company.location.street %><br>
+			  	  <%= @billing_company.location.zip %> <%= @billing_company.location.city %>
+			  	<% end %>
+			    </p>
+        <% end %>
 			<% end %>
 	  </div>
     <div class="anschrift">

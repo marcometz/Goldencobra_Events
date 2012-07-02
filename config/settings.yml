@@ -100,6 +100,8 @@ goldencobra_events:
                     linkedin: "LinkedIn"
                     twitter: "Twitter"
                     facebook: "Facebook"
+                    billing_department: "Abteilung"
+                    billing_street: "Straße/Postfach"
                 company_label:
                     title: "Name"
                     legal_form: "Rechtsform"

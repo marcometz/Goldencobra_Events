@@ -66,7 +66,7 @@ Feature: See and register events
     #Then I should not see "Sofern Sie einen Webcode besitzen, geben Sie diesen hier bitte an."
     And I should see "VIP-Party"
     And I should not see "VIP Einzelgespräch"
-  
+
   @javascript
   Scenario: Got to the program site and register for events and panels
     When I visit url "/anmeldung"
@@ -101,6 +101,50 @@ Feature: See and register events
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
     #And "holger@ikusei.de" should receive an email
+
+  @javascript
+  Scenario: Got to the program site and register for events and panels with alternate billing address
+    When I visit url "/anmeldung"
+    Then I should see "Studenten"
+    And I choose "Studenten"
+    And I press "Weiter"
+    And I click on "Mit Anmeldung fortfahren" within "#goldencobra_events_enter_account_data_wrapper"
+    Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
+    And I choose "male"
+    And I fill in "registration_user_firstname" with "Holger"
+    And I fill in "registration_user_lastname" with "Frohloff"
+    And I fill in "registration_company_location_attributes_street" with "Musterstr. 55"
+    And I fill in "registration_company_location_attributes_zip" with "10962"
+    And I fill in "registration_company_location_attributes_city" with "Berlin"
+    And I fill in "registration_user_email" with "holger@ikusei.de"
+    And I check "supply_alternate_billing_address"
+    And I choose "billing_male"
+    And I fill in "registration_billing_user_billing_firstname" with "Philipp"
+    And I fill in "registration_billing_user_billing_lastname" with "Wilimzig"
+    And I fill in "registration_billing_company_title" with "ikusei GmbH"
+    And I fill in "registration_billing_company_location_attributes_street" with "Zossener Str. 55"
+    And I fill in "registration_billing_company_location_attributes_zip" with "10961"
+    And I fill in "registration_billing_company_location_attributes_city" with "Berlin"
+
+    And I check "AGB_accepted"
+    And I press "Verbindlich bestellen"
+    And I should see "Zusammenfassung"
+    And I should see "Holger"
+    And I should see "Frohloff"
+    And I should see "Musterstr. 55"
+    And I should see "10962"
+    And I should see "Berlin"
+    And I should see "80,00"
+    And I should see "Aendern"
+    And I should see "Rechnungsanschrift"
+    And I should see "Philipp Wilimzig"
+    And I should see "ikusei GmbH"
+    And I should see "Zossener Str. 55"
+    And I should see "10961"
+    And I should see "Berlin"
+
+    And I press "Verbindlich bestellen"
+    And I should see "Anmeldung erfolgreich abgeschlossen"
 
    # @wip
     @javascript

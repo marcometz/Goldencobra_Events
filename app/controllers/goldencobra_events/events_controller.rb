@@ -21,12 +21,12 @@ module GoldencobraEvents
         @agb = Goldencobra::Article.find_by_id(art_id.value)
       end
     end
-    
+
     def register
       @webcode = false
       @article = Goldencobra::Article.find(params[:article_id]) if params[:article_id] && params[:article_id].present?
       validate_web_code()
-      
+
       if params[:id] && params[:id].present?
         @event_to_register = GoldencobraEvents::Event.find_by_id(params[:id])
         #Wenn eine Eventoption gebucht wird....
@@ -36,7 +36,7 @@ module GoldencobraEvents
           if @registered_event_price_group.event.parent && @registered_event_price_group.event.parent.exclusive == true
             remove_existing_registrations_from_session_if_needed()
           end
-          
+
           #prüfe ob bestehenden registrierungskombinationen valide sind => Fehler in @errors speichern bzw. ergebnis in session
           event_registration = GoldencobraEvents::EventRegistration.new(:event_pricegroup => @registered_event_price_group)
           check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
@@ -44,11 +44,11 @@ module GoldencobraEvents
             session[:goldencobra_event_registration][:pricegroup_ids] << @registered_event_price_group.id
           else
             @errors = check
-          end          
+          end
         end
-      end      
+      end
     end
-    
+
     def summary
       @errors = []
       @result = nil
@@ -59,7 +59,7 @@ module GoldencobraEvents
         params[:registration][:user] = ""
         @errors << "email wrong"
       end
-      
+
       unless params[:registration][:company][:location_attributes][:zip].to_s =~ /^\d{5}$/
         params[:registration][:company] = ""
         @errors << "zip wrong"
@@ -75,12 +75,31 @@ module GoldencobraEvents
           end
           @summary_company = GoldencobraEvents::Company.new(session[:goldencobra_event_registration][:user_company_data])
         end
-        
+
+        # alternate billing address present?
+        if params[:registration][:billing_user] && params[:registration][:billing_user].present? && params[:supply_alternate_billing_address] == "yes"
+          session[:goldencobra_event_registration][:billing_user_data] = params[:registration][:billing_user]
+          @summary_user.billing_gender = params[:registration][:billing_user][:billing_gender]
+          @summary_user.billing_title = params[:registration][:billing_user][:billing_title]
+          @summary_user.billing_firstname = params[:registration][:billing_user][:billing_firstname]
+          @summary_user.billing_lastname = params[:registration][:billing_user][:billing_lastname]
+          @summary_user.billing_function = params[:registration][:billing_user][:billing_function]
+          @summary_user.billing_phone = params[:registration][:billing_user][:billing_phone]
+          @summary_user.billing_department = params[:registration][:billing_user][:billing_department]
+
+          if params[:registration][:billing_company].present?
+            session[:goldencobra_event_registration][:user_billing_company_data] =  params[:registration][:billing_company]
+            if session[:goldencobra_event_registration][:user_billing_company_data][:title].blank?
+              session[:goldencobra_event_registration][:user_billing_company_data][:title] = "privat Person"
+            end
+            @billing_company = GoldencobraEvents::Company.new(session[:goldencobra_event_registration][:user_billing_company_data])
+          end
+        end
       else
           @errors << "agb not accepted"
       end
     end
-    
+
     def cancel
       @eventpricegroup_to_cancel = GoldencobraEvents::EventPricegroup.find_by_id(params[:id])
       @events_removed = false
@@ -95,33 +114,37 @@ module GoldencobraEvents
         end
       end
     end
-    
-    
+
     def perform_registration
       @errors = []
       if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_data].present?  && session[:goldencobra_event_registration][:pricegroup_ids].present?
 
-        #Create user
+        # Create user
         reguser = GoldencobraEvents::RegistrationUser.create(session[:goldencobra_event_registration][:user_data])
+        reguser.update_attributes(session[:goldencobra_event_registration][:billing_user_data])
         user = User.find_by_email(reguser.email)
-        unless user 
+        unless user
           generated_password = Devise.friendly_token.first(6)
           user = User.create(:email => reguser.email, :password => generated_password, :password_confirmation => generated_password, :firstname => reguser.firstname, :lastname => reguser.lastname, :title => reguser.title)
-          #Add default user Role für event Registrators
+          # Add default user Role für event Registrators
           user.roles << Goldencobra::Role.find_or_create_by_name("EventRegistrations")
         end
         reguser.user = user
         reguser.save
-        
-        #Add Company to user if data provided
+
+        # Add Company to user if data provided
         if reguser && session[:goldencobra_event_registration][:user_company_data].present?
-          company = Company.create(session[:goldencobra_event_registration][:user_company_data])
+          company = GoldencobraEvents::Company.create(session[:goldencobra_event_registration][:user_company_data])
           if company.present? && company.id.present?
             reguser.company = company
-            reguser.save
           end
+          if session[:goldencobra_event_registration][:user_billing_company_data].present?
+            billing_company = GoldencobraEvents::Company.create(session[:goldencobra_event_registration][:user_billing_company_data])
+            reguser.billing_company_id = billing_company.id
+          end
+          reguser.save
         end
-        
+
         if reguser.present? && reguser.id.present?
             session[:goldencobra_event_registration][:user_id] = reguser.id
             @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], reguser)
@@ -134,12 +157,9 @@ module GoldencobraEvents
         end
       end
     end
-    
-    
-    
-    
+
     private
-    
+
     def remove_existing_registrations_from_session_if_needed
       siblings_ids = []
       @registered_event_price_group.event.siblings.each do |sibling|
@@ -147,7 +167,7 @@ module GoldencobraEvents
       end
       session[:goldencobra_event_registration][:pricegroup_ids] -= siblings_ids
     end
-    
+
     def get_event_pricegroup
       if params[:event] && params[:event][:event_pricegroup] && params[:event][:event_pricegroup].present?
         epg_id = params[:event][:event_pricegroup]
@@ -156,7 +176,7 @@ module GoldencobraEvents
       end
       return GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
     end
-    
+
     def validate_web_code
       if params[:webcode] && params[:webcode].present?
         session[:goldencobra_events_webcode] = params[:webcode]
@@ -166,9 +186,9 @@ module GoldencobraEvents
         else
           @valid_webcode = false
         end
-      end      
+      end
     end
-    
+
     def init_registration_session
       session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank?
       session[:goldencobra_event_registration][:pricegroup_ids] = [] if session[:goldencobra_event_registration][:pricegroup_ids].blank?  
@@ -181,8 +201,6 @@ module GoldencobraEvents
         end
       end
       yield
-      # session[:goldencobra_event_registration][:pricegroup_ids] = session[:goldencobra_event_registration][:pricegroup_ids].uniq.compact
     end
-    
   end
 end
