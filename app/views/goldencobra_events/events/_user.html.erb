@@ -62,9 +62,8 @@
 		<%# Felder fuer abweichende Rechnungsadresse %>
 		<div id="alternate_billing_address">
     <hr id="alternate_billing_address_hr" />
-			<p>Ansprechpartner</p>
 			<p>
-				<label><%= s("goldencobra_events.event.registration.user_form.label.gender") %></label>
+				<label><%= s("goldencobra_events.event.registration.user_form.label.billing_gender") %></label>
 				<%= radio_button "registration[billing_user]", "billing_gender", false , :id => "billing_male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
 				<%= radio_button "registration[billing_user]", "billing_gender", false, :id => "billing_female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
 			</p>
