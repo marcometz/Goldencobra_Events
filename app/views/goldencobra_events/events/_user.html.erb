@@ -62,43 +62,48 @@
 		<%# Felder fuer abweichende Rechnungsadresse %>
 		<div id="alternate_billing_address">
     <hr id="alternate_billing_address_hr" />
+  <!-- Firma -->
+      <p>
+        <label><%= s("goldencobra_events.event.registration.user_form.company_label.billing_title") %></label>
+        <%= text_field_tag "registration[billing_company][title]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
+      </p>
+  <!-- Kostenstelle -->
+      <p>
+        <label><%= s("goldencobra_events.event.registration.user_form.user_label.billing_department") %></label>
+        <%= text_field_tag "registration[billing_user][billing_department]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.billing_department") %>
+      </p>
+  <!-- Ansprechpartner Anrede -->
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.label.billing_gender") %></label>
 				<%= radio_button "registration[billing_user]", "billing_gender", false , :id => "billing_male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
 				<%= radio_button "registration[billing_user]", "billing_gender", false, :id => "billing_female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
 			</p>
+  <!-- Ansprechpartner Vorname -->
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.user_label.billing_firstname") %></label>
 				<%= text_field_tag "registration[billing_user][billing_firstname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.firstname") %>
 			</p>
+  <!-- Ansprechpartner Nachname -->
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.user_label.billing_lastname") %></label>
 				<%= text_field_tag "registration[billing_user][billing_lastname]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.lastname") %>
 			</p>
-
-			<div class="address">
-				<p>
-					<label><%= s("goldencobra_events.event.registration.user_form.company_label.billing_title") %></label>
-					<%= text_field_tag "registration[billing_company][title]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
-				</p>
+  <!-- Straße mit Hausnummer oder Postfach -->
 				<p>
 					<label><%= s("goldencobra_events.event.registration.user_form.billing_company_label.billing_street") %></label>
 					<%= text_field_tag "registration[billing_company][location_attributes][street]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
 				</p>
+  <!-- PLZ und Ort -->
 				<p>
 					<label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
 					<%= text_field_tag "registration[billing_company][location_attributes][zip]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
 					<%= text_field_tag "registration[billing_company][location_attributes][city]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
 				</p>
+  <!-- Land -->
 				<p>
 					<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
 					<%= text_field_tag "registration[billing_company][location_attributes][country]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
 				</p>
-        <p>
-          <label><%= s("goldencobra_events.event.registration.user_form.user_label.billing_department") %></label>
-          <%= text_field_tag "registration[billing_user][billing_department]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.billing_department") %>
-        </p>
-			</div>
 			<hr />
 		</div>
 		<%# Ende -- Felder fuer abweichende Rechnungsadresse %>

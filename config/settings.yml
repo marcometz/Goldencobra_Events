@@ -102,7 +102,7 @@ goldencobra_events:
                     facebook: "Facebook"
                     billing_gender: "Ansprechpartner Anrede"
                     billing_department: "Kostenstelle"
-                    billing_street: "Straße/Postfach"
+                    billing_street: "Straße mit Hausnummer oder Postfach"
                     billing_firstname: "Ansprechpartner Vorname"
                     billing_lastname: "Ansprechpartner Nachname"
                 company_label:
@@ -117,7 +117,7 @@ goldencobra_events:
                     region: "Bezirk"
                     country: "Land"
                     sector: "Branche"
-                    billing_title: "Unternehmen"
+                    billing_title: "Firma"
                 account_label:
                     password: "Passwort"
                     confirm_password: "Passwort wiederholen"
