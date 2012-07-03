@@ -7,6 +7,9 @@
 			<%= s("goldencobra_events.event.registration.user_form.user_fieldset_name") %>
 		</p>
 		<p>
+			<label><span class="asterix">*</span> – Pflichtangabe</label>
+		</p>
+		<p>
 			<label><%= s("goldencobra_events.event.registration.user_form.label.gender") %> <span class="asterix">*</span></label>
 			<%= radio_button "registration[user]", "gender", true , :id => "male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
 			<%= radio_button "registration[user]", "gender", false, :id => "female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
@@ -54,6 +57,7 @@
 			<label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %> <span class="asterix">*</span></label>
 			<%= text_field_tag "registration[user][email]", "", :required => true, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
 		</p>
+    <hr />
 		<p>
 			<label><%= s('goldencobra_events.event.registration.user_form.alternate_billing_address') %></label>
 			<%= check_box_tag "supply_alternate_billing_address", 'yes', false %>
@@ -61,7 +65,6 @@
 
 		<%# Felder fuer abweichende Rechnungsadresse %>
 		<div id="alternate_billing_address">
-    <hr id="alternate_billing_address_hr" />
   <!-- Firma -->
       <p>
         <label><%= s("goldencobra_events.event.registration.user_form.company_label.billing_title") %></label>
@@ -75,7 +78,7 @@
   <!-- Ansprechpartner Anrede -->
 			<p>
 				<label><%= s("goldencobra_events.event.registration.user_form.label.billing_gender") %></label>
-				<%= radio_button "registration[billing_user]", "billing_gender", false , :id => "billing_male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
+				<%= radio_button "registration[billing_user]", "billing_gender", true , :id => "billing_male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
 				<%= radio_button "registration[billing_user]", "billing_gender", false, :id => "billing_female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>		
 			</p>
   <!-- Ansprechpartner Vorname -->
@@ -104,18 +107,16 @@
 					<label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
 					<%= text_field_tag "registration[billing_company][location_attributes][country]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
 				</p>
-			<hr />
 		</div>
+		<hr />
 		<%# Ende -- Felder fuer abweichende Rechnungsadresse %>
 		<p>
 			<label>AGB <span class="asterix">*</span></label>
-      		<%= check_box("AGB","accepted", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.agb")) %>
+      <%= check_box("AGB","accepted", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.agb")) %>
 			Ich habe die <%= event_agb_popup(:title => "AGB") %> gelesen und akzeptiert.
 		</p>
+		<hr />
 		<p><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p>
-		<p>
-			<label><span class="asterix">*</span> – Pflichtangabe</label>
-		</p>
 		<p style="padding:25px 0 25px 15px;">
 			<label></label>
       <%= submit_tag s("goldencobra_events.event.registration.user_form.submit"), :id => "goldencobra_events_user_registration_form_submit", input_html: { 'data-disable-with' => s("goldencobra_events.event.registration.user_form.submit_disabled") } %>	

@@ -23,7 +23,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       applicant.lastname
     end
     column :email, :sortable => :email do |applicant|
-      applicant.email
+      span applicant.email, class: "email"
     end
     column :type_of_registration
     column :total_price do |u|
@@ -34,7 +34,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
     default_actions
   end
-  
+
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs :class => "buttons inputs" do
       f.actions
@@ -45,24 +45,49 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
     f.inputs "Besucher", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
-      f.input :email     
-      f.input :title     
-      f.input :firstname 
-      f.input :lastname  
-      f.input :function  
-      f.input :phone     
-      f.input :agb, :label => "AGB akzeptiert"   
+      f.input :email
+      f.input :title
+      f.input :firstname
+      f.input :lastname
+      f.input :function
+      f.input :phone
+      if f.object.agb == true
+        f.input :agb, :label => "AGB akzeptiert", :input_html => { :checked => 'checked' }
+      else
+        f.input :agb, :label => "AGB akzeptiert"
+      end
+    end
+    f.inputs "Rechnungsadresse", class: "foldable inputs" do
+      f.input :billing_gender
+      f.input :billing_firstname
+      f.input :billing_lastname
+      f.input :billing_department, label: Goldencobra::Setting.for_key("goldencobra_events.event.registration.user_form.user_label.billing_department")
+      f.fields_for :billing_company_attributes, f.object.billing_company do |comp|
+        comp.inputs "", class: "foldable inputs" do
+          comp.input :title
+        end
+        comp.inputs "" do
+          comp.fields_for :location_attributes, comp.object.location do |loc|
+            loc.inputs "Anschrift", :class => "foldable inputs" do
+              loc.input :street
+              loc.input :city
+              loc.input :zip
+              loc.input :country, :as => :string
+            end
+          end
+        end
+      end
     end
     f.inputs "" do
       f.fields_for :company_attributes, f.object.company do |comp|
         comp.inputs "Firma", :class => "foldable inputs" do
           comp.input :title
-          comp.input :legal_form 
-          comp.input :phone      
-          comp.input :fax        
-          comp.input :homepage   
-          comp.input :sector  
-        end 
+          comp.input :legal_form
+          comp.input :phone
+          comp.input :fax
+          comp.input :homepage
+          comp.input :sector
+        end
         comp.inputs "" do
           comp.fields_for :location_attributes, comp.object.location do |loc|
             loc.inputs "#{t('location', scope: [:activerecord, :models], count: 1)}", :class => "foldable inputs" do
@@ -249,6 +274,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column("last_email_at") {|user| l(user.last_email_send, format: :short) if user.last_email_send.present? }
     column("total_price") {|u| number_to_currency(u.total_price, :locale => :de) }
     column("Preisgruppen") {|applicant| applicant.event_registrations.map(&:event_pricegroup).compact.map(&:title).uniq.compact.join(" - ") }
+    column("Rechnungs-Firma Name") {|applicant| applicant.billing_company.title if applicant.billing_company.present? }
+    column("Rechnungs-Firma Strasse") {|applicant| applicant.billing_company.location.street if applicant.billing_company.present? && applicant.billing_company.location.present? }
+    column("Rechnungs-Firma Stadt") {|applicant| applicant.billing_company.location.city if applicant.billing_company.present? && applicant.billing_company.location.present? }
+    column("Rechnugns-Firma PLZ") {|applicant| applicant.billing_company.location.zip if applicant.billing_company.present? && applicant.billing_company.location.present? }
+    column("Rechunungs-Firma Land") {|applicant| applicant.billing_company.location.country if applicant.billing_company.present? && applicant.billing_company.location.present? }
   end
   
 end

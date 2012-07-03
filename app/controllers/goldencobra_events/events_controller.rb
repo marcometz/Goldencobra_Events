@@ -2,7 +2,7 @@ module GoldencobraEvents
   class EventsController < ApplicationController
     
     around_filter :init_registration_session, :only => [:register]#, :cancel, :perform_registration]
-    
+
     def validate_webcode
       @webcode = false
       if params[:article_id] && params[:article_id].present?
@@ -13,8 +13,7 @@ module GoldencobraEvents
         @webcode = true
       end
     end
-    
-    
+
     def display_agb
       art_id = Goldencobra::Setting.find_by_title("agb_article_id")
       if art_id.present? && art_id.value != "0"
@@ -80,11 +79,8 @@ module GoldencobraEvents
         if params[:registration][:billing_user] && params[:registration][:billing_user].present? && params[:supply_alternate_billing_address] == "yes"
           session[:goldencobra_event_registration][:billing_user_data] = params[:registration][:billing_user]
           @summary_user.billing_gender = params[:registration][:billing_user][:billing_gender]
-          @summary_user.billing_title = params[:registration][:billing_user][:billing_title]
           @summary_user.billing_firstname = params[:registration][:billing_user][:billing_firstname]
           @summary_user.billing_lastname = params[:registration][:billing_user][:billing_lastname]
-          @summary_user.billing_function = params[:registration][:billing_user][:billing_function]
-          @summary_user.billing_phone = params[:registration][:billing_user][:billing_phone]
           @summary_user.billing_department = params[:registration][:billing_user][:billing_department]
 
           if params[:registration][:billing_company].present?
@@ -117,7 +113,7 @@ module GoldencobraEvents
 
     def perform_registration
       @errors = []
-      if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_data].present?  && session[:goldencobra_event_registration][:pricegroup_ids].present?
+      if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_data].present? && session[:goldencobra_event_registration][:pricegroup_ids].present?
 
         # Create user
         reguser = GoldencobraEvents::RegistrationUser.create(session[:goldencobra_event_registration][:user_data])

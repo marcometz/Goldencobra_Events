@@ -39,7 +39,7 @@ Feature: See and register events
      |  7 |       10 |             3 |  80.0 |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |          |
      |  8 |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" |          |
      |  9 |       1  |             3 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2013-02-09 12:00:00" | OSTERN |
-     
+
   @javascript
   Scenario: Go to the program site and look for events, enter a webcode and see 1 more event
     When I go to the article page "anmeldung"
@@ -73,11 +73,7 @@ Feature: See and register events
     Then I should see "Studenten"
     And I choose "Studenten"
     And I press "Weiter"
-    # And I choose "Party2"
-    # And I click on "register_for_event_7_link"
-    # And I choose "register_for_event_7_checkbox"
     And I click on "Mit Anmeldung fortfahren" within "#goldencobra_events_enter_account_data_wrapper"
-    #And I should see "Bitte füllen Sie Ihre Benutzerdaten aus"
     Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
     And I choose "male"
     And I fill in "registration_user_firstname" with "Holger"
@@ -89,18 +85,44 @@ Feature: See and register events
     And I check "AGB_accepted"
     And I press "Verbindlich bestellen"
     And I should see "Zusammenfassung"
-    # And I should see "Party2"
+    And I should see "Herr"
     And I should see "Holger"
     And I should see "Frohloff"
     And I should see "Zossener Str. 55"
     And I should see "10961"
     And I should see "Berlin"
     And I should see "80,00"
-    #And I should see "Abendessen Alternative 1"
     And I should see "Aendern"
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
-    #And "holger@ikusei.de" should receive an email
+
+  @javascript
+  Scenario: Got to the program site and try to register twice for events and panels
+    When I visit url "/anmeldung"
+    Then I should see "Studenten"
+    And I choose "Studenten"
+    And I press "Weiter"
+    And I click on "Mit Anmeldung fortfahren" within "#goldencobra_events_enter_account_data_wrapper"
+    Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
+    And I choose "female"
+    And I fill in "registration_user_firstname" with "Andrea"
+    And I fill in "registration_user_lastname" with "Testfrau"
+    And I fill in "registration_company_location_attributes_street" with "Zossener Str. 55"
+    And I fill in "registration_company_location_attributes_zip" with "10961"
+    And I fill in "registration_company_location_attributes_city" with "Berlin"
+    And I fill in "registration_user_email" with "holger@ikusei.de"
+    And I check "AGB_accepted"
+    And I press "Verbindlich bestellen"
+    And I should see "Zusammenfassung"
+    And I should see "Frau"
+    And I should see "Andrea Testfrau"
+    And I press "Verbindlich bestellen"
+    And I should see "Anmeldung erfolgreich abgeschlossen"
+    Given that a confirmed admin exists
+    And I am logged in as "admin@test.de" with password "secure12"
+    When I go to the admin list of applicants
+    Then I should see "holger@ikusei.de"
+    And the count of elements "span.email" should be "1"
 
   @javascript
   Scenario: Got to the program site and register for events and panels with alternate billing address
@@ -137,6 +159,7 @@ Feature: See and register events
     And I should see "80,00"
     And I should see "Aendern"
     And I should see "Rechnungsanschrift"
+    And I should see "Herr"
     And I should see "Philipp Wilimzig"
     And I should see "ikusei GmbH"
     And I should see "Zossener Str. 55"

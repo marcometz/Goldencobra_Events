@@ -37,13 +37,14 @@ module GoldencobraEvents
   class RegistrationUser < ActiveRecord::Base
     has_many :event_registrations, class_name: GoldencobraEvents::EventRegistration, :foreign_key => "user_id"
     belongs_to :company, :class_name => GoldencobraEvents::Company
-    belongs_to :delivery_company, :class_name => GoldencobraEvents::Company
+    belongs_to :billing_company, :class_name => GoldencobraEvents::Company
     belongs_to :user, :class_name => User
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
 
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
 
     accepts_nested_attributes_for :company
+    accepts_nested_attributes_for :billing_company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
 

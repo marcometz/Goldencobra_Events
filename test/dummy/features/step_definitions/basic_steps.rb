@@ -134,3 +134,7 @@ Then /^I remove jquery chosen$/ do
   page.execute_script("$('select').removeClass('chzn-done').css('display', 'inline').data('chosen', null);")
   page.execute_script("$('.chzn-container').remove();")
 end
+
+Then /^the count of elements "(.*?)" should be "(.*?)"$/ do |arg1, arg2|
+  page.has_css?(arg1, :count => arg2)
+end
