@@ -203,26 +203,6 @@
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #goldencobra_events_event_popup{
 	border: 1px solid black;
 }
@@ -231,6 +211,9 @@
 	background-color:#fff;
 	box-shadow:5px 5px 5px grey;
 	padding:10px;
+  left: 200px;
+  right: 200px;
+  line-height: 1.5em;
 	.close {
 		background-image:url("/assets/goldencobra/close.png");
 		position:absolute;
