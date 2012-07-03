@@ -57,24 +57,25 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         f.input :agb, :label => "AGB akzeptiert"
       end
     end
-    f.inputs "Rechnungsadresse", class: "foldable inputs" do
-      f.input :billing_gender
+
+    f.inputs "Rechnungsadresse Ansprechpartner", class: "foldable inputs" do
+      f.input :billing_gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
       f.input :billing_firstname
       f.input :billing_lastname
       f.input :billing_department, label: Goldencobra::Setting.for_key("goldencobra_events.event.registration.user_form.user_label.billing_department")
+    end
+    f.inputs "Rechnungsadresse Firma" do
       f.fields_for :billing_company_attributes, f.object.billing_company do |comp|
         comp.inputs "", class: "foldable inputs" do
           comp.input :title
         end
-        if comp.object && comp.object.present? && comp.object.location && com.object.location.present?
-          comp.inputs "" do
-            comp.fields_for :location_attributes, comp.object.location do |loc|
-              loc.inputs "Anschrift", :class => "foldable inputs" do
-                loc.input :street
-                loc.input :city
-                loc.input :zip
-                loc.input :country, :as => :string
-              end
+        comp.inputs "" do
+          comp.fields_for :location_attributes, f.object.billing_company.location do |loc|
+            loc.inputs "Anschrift", :class => "foldable inputs" do
+              loc.input :street
+              loc.input :city
+              loc.input :zip
+              loc.input :country, :as => :string
             end
           end
         end
