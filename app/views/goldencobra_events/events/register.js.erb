@@ -8,7 +8,7 @@
 		
 		// Button 'Mit Anmeldung fortfahren' einblenden
 		$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
-    	
+	
 		$('#article_event_webcode_form').hide();
 		
 		// Wenn radiobuttons genutzt werden, wird hier das vorgemerkt, des bereits gemerkten Events entfernt
@@ -21,7 +21,7 @@
    		$('p.price_informations').hide();
    		$('div.new_pricegroups').fadeOut('slow');
    		$('#article_event_webcode_form').fadeOut('slow');
-    	
+	
 		// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
 		<% @show_panels = true %>
 		<% if @article && @article.event && @article.event.child_ids.count == 0 %>
