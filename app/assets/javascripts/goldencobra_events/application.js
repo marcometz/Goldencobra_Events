@@ -107,11 +107,10 @@ $(document).ready(function() {
   });
 
   $("#goldencobra_events_registration_to_add_submit").live("click", function(){
+    $("#no_pricegroup_selected").remove();
     if ($(".event_pricegroup_select:checked").length == 0 && $("#webcode").attr("value").length == 0) {
       $("#goldencobra_events_registration_to_add_submit").parent().append("<span id='no_pricegroup_selected'>Bitte eine Preisgruppe auswaehlen.</span>");
       return false;
-    } else {
-      $("#no_pricegroup_selected").remove();
     }
   });
 });
