@@ -31,7 +31,7 @@
 		
 			<div id="goldencobra_events_webcode_error"></div>	
 			
-    		<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit", input_html: {'data-disable-with' => s("goldencobra_events.event.registration.to_add.submit_disabled") } %>
+    		<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit", disable_with: s("goldencobra_events.event.registration.to_add.submit_disabled") %>
 		<% end %><!-- End of form register-->
 	<% else %>
 		<p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>

@@ -56,42 +56,41 @@ $(document).ready(function() {
     var female_result = (female.attr("checked") != "undefined" && female.attr("checked") == "checked");
 
     if (male_result == false && female_result == false) {
-      $("#female").parent().append("<p class='validation_error' style='color:red; margin: -20px 0 0 280px;'>Pflichtangabe</p>");
+      $("#female").parent().append("<span class='validation_error' style='color:red; margin: -27px 0 10px 530px;'>Pflichtangabe</span>");
     }
 
     if ($('#registration_user_firstname').attr('value') == '') {
-      $('#registration_user_firstname').parent().append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Pflichtangabe</p>");
+      $('#registration_user_firstname').parent().append("<span class='validation_error' style='color:red; margin: -33px 0 13px 530px;'>Pflichtangabe</span>");
     }
 
     if ($('#registration_user_lastname').attr('value') == '') {
-      $('#registration_user_lastname').parent().append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Pflichtangabe</p>");
+      $('#registration_user_lastname').parent().append("<span class='validation_error' style='color:red; margin: -33px 0 13px 530px;'>Pflichtangabe</span>");
     }
 
     if ($('#registration_company_location_attributes_street').attr('value') == '') {
-      $('#registration_company_location_attributes_street').parent().append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Pflichtangabe</p>");
+      $('#registration_company_location_attributes_street').parent().append("<span class='validation_error' style='color:red; margin: -33px 0 13px 530px;'>Pflichtangabe</span>");
     }
 
     var zipReg = /^\d{5}$/;
     if (!zipReg.test($('#registration_company_location_attributes_zip').attr('value'))) {
-      $('#registration_company_location_attributes_city').parent().append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Pflichtangabe. Bitte 5 stellige Postleitzahl angeben.</p>");
+      $('#registration_company_location_attributes_city').parent().append("<span class='validation_error' style='color:red; margin: -33px 0 13px 530px;'>Pflichtangabe. Bitte 5 stellige Postleitzahl angeben.</span>");
     }
 
     if ($('#registration_company_location_attributes_city').attr('value') == '') {
-      $('#registration_company_location_attributes_city').append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Pflichtangabe</p>");
+      $('#registration_company_location_attributes_city').append("<span class='validation_error' style='color:red; margin: -33px 0 13px 530px;'>Pflichtangabe</span>");
     }
 
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if ($('#registration_user_email').attr('value') == '') {
-      $('#registration_user_email').parent().append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Pflichtangabe</p>");
+      $('#registration_user_email').parent().append("<span class='validation_error' style='color:red; margin: -33px 0 13px 530px;'>Pflichtangabe</span>");
     }
     else if(!emailReg.test($('#registration_user_email').attr('value'))) {
-      $('#registration_user_email').parent().append("<p class='validation_error' style='color:red; margin: -20px 0 0 480px;'>Email nicht gültig</p>");
+      $('#registration_user_email').parent().append("<span class='validation_error' style='color:red; margin: -33px 0 13px 530px;'>Email nicht gültig</span>");
     }
 
     if ($('#AGB_accepted').attr('checked') != "checked") {
-      $('#AGB_accepted').parent().append("<p class='validation_error' style='color:red; margin: -18px 0 0 480px;'>Pflichtangabe</p>");
+      $('#AGB_accepted').parent().append("<span class='validation_error' style='color:red; margin: -27px 0 10px 530px;'>Pflichtangabe</span>");
     }
-
   });
 
   // Abweichende Lieferadresse. Checkbox blendet zusätzliche Felder ein
