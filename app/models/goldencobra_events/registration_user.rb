@@ -41,6 +41,8 @@ module GoldencobraEvents
     belongs_to :user, :class_name => User
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
 
+    after_initialize :init_default_data
+
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
 
     accepts_nested_attributes_for :company
@@ -127,6 +129,13 @@ module GoldencobraEvents
       else
         emails.order("created_at DESC").first.created_at
       end
+    end
+
+    def init_default_data
+      billing_company = GoldencobraEvents::Company.new if self.billing_company_id.blank?
+      billing_company.location = Goldencobra::Location.new if billing_company.present? && billing_company.location
+      self.billing_company = billing_company
+      self.save
     end
   end
 end
