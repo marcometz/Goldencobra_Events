@@ -66,13 +66,15 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         comp.inputs "", class: "foldable inputs" do
           comp.input :title
         end
-        comp.inputs "" do
-          comp.fields_for :location_attributes, comp.object.location do |loc|
-            loc.inputs "Anschrift", :class => "foldable inputs" do
-              loc.input :street
-              loc.input :city
-              loc.input :zip
-              loc.input :country, :as => :string
+        if comp.object && comp.object.present? && comp.object.location && com.object.location.present?
+          comp.inputs "" do
+            comp.fields_for :location_attributes, comp.object.location do |loc|
+              loc.inputs "Anschrift", :class => "foldable inputs" do
+                loc.input :street
+                loc.input :city
+                loc.input :zip
+                loc.input :country, :as => :string
+              end
             end
           end
         end
