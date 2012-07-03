@@ -64,6 +64,7 @@ goldencobra_events:
                 alternate_billing_address: "Abweichende Rechnungsadresse?"
                 next_step_label: "weiter ..."
                 submit: "Verbindlich bestellen"
+                final_submit: "Verbindlich bestellen"
                 submit_disabled: "Anfrage wird übermittelt ..."
                 teilnahmebedingungen1: "Der Teilnahmebetrag für diese Veranstaltung inklusive Mittagessen, Dinner-Veranstaltung am 26. April und Pausengetränken pro Person zzgl. MwSt ist nach Erhalt der Rechnung fällig. Nach Eingang Ihrer Anmeldung erhalten Sie eine Bestätigung."
                 teilnahmebedingungen2: "Die Stornierung (nur schriftlich) ist bis 14 Tage vor Veranstaltungsbeginn kostenlos möglich, danach wird die Hälfte des Teilnahmebetrags erhoben. Bei Nichterscheinen oder Stornierung am Veranstaltungstag wird der gesamte Teilnahmebetrag fällig."
