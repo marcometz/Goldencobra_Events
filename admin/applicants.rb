@@ -187,8 +187,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       end
     end #end panel vita
   end
-  
-  
+
   if ActiveRecord::Base.connection.table_exists?("goldencobra_email_templates_email_templates")
     GoldencobraEmailTemplates::EmailTemplate.all.each do |emailtemplate|
       batch_action "send_mail_#{emailtemplate.title.parameterize.underscore}", :confirm => "#{emailtemplate.title}: sind Sie sicher?" do |selection|
