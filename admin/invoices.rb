@@ -34,19 +34,19 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column :lastname, :sortable => :lastname do |invoice|
       invoice.lastname
     end
-    column :total_price do |u|
+    column :total_price, sortable: :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
-    column :invoice_sent do |invoice|
+    column :invoice_sent, sortable: :invoice_sent do |invoice|
       invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent
     end
-    column :payed_on do |invoice|
+    column :payed_on, sortable: :payed_on do |invoice|
       invoice.payed_on.strftime("%d.%m.%Y") if invoice.payed_on
     end
-    column :first_reminder_sent do |invoice|
+    column :first_reminder_sent, sortable: :first_reminder_sent do |invoice|
       invoice.first_reminder_sent.strftime("%d.%m.%Y") if invoice.first_reminder_sent
     end
-    column :second_reminder_sent do |invoice|
+    column :second_reminder_sent, sortable: :second_reminder_sent do |invoice|
       invoice.second_reminder_sent.strftime("%d.%m.%Y") if invoice.second_reminder_sent
     end
     column "" do |invoice|

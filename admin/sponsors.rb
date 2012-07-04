@@ -47,13 +47,13 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
     column :title, :sortable => :title do |sponsor|
       sponsor.title
     end
-    column :email do |sponsor|
+    column :email, sortable: :email do |sponsor|
       sponsor.email
     end
     column :link_url, :sortable => :link_url do |sponsor|
       sponsor.link_url
     end
-    column :telephone do |sponsor|
+    column :telephone, sortable: :telephone do |sponsor|
       sponsor.telephone
     end
     default_actions

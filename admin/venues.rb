@@ -1,14 +1,12 @@
 ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
-  
+
   menu :parent => "Event-Management", :label => "Veranstaltungsorte", :if => proc{can?(:read, GoldencobraEvents::Venue)}
   controller.authorize_resource :class => GoldencobraEvents::Venue
 
   filter :title
   filter :link_url
   filter :email
-  
 
-  
   form :html => { :enctype => "multipart/form-data" }  do |f|
     f.inputs :class => "buttons inputs" do
       f.actions
@@ -35,13 +33,13 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
       f.actions
     end
   end
-  
+
   action_item :only => :show do
     link_to('New Venue', new_admin_venue_path)
   end
-  
+
   batch_action :destroy, false
-  
+
   show :title => :title do
     panel "Venue Details" do
       attributes_table_for venue do
@@ -65,7 +63,4 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
     end
     active_admin_comments
   end
-
-  
-  
 end

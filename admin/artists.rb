@@ -13,13 +13,13 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
     column :description do |artist|
       artist.description
     end
-    column :email do |artist|
+    column :email, sortable: :email do |artist|
       artist.email
     end
     column :url_link, :sortable => :url_link do |artist|
       artist.url_link
     end
-    column :telephone do |artist|
+    column :telephone, sortable: :telephone do |artist|
       artist.telephone
     end
     default_actions

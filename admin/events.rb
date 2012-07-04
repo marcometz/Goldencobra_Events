@@ -71,7 +71,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     column :type_of_event, :sortable => :type_of_event do |event|
       event.type_of_event
     end
-    column :updated_at do |event|
+    column :updated_at, sortable: :updated_at do |event|
       l(event.updated_at, format: :short)
     end
     column "Regs" do |event|

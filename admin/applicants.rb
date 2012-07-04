@@ -26,10 +26,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       span applicant.email, class: "email"
     end
     column :type_of_registration
-    column :total_price do |u|
+    column :total_price, sortable: :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
-    column :last_email_send do |user|
+    column :last_email_send, sortable: :last_email_send do |user|
       user.last_email_send ? l(user.last_email_send, format: :short) : ""
     end
     default_actions
