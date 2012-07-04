@@ -92,7 +92,7 @@ Feature: See and register events
     And I should see "10961"
     And I should see "Berlin"
     And I should see "80,00"
-    And I should see "Aendern"
+    And I should see "Ändern"
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
 
@@ -157,7 +157,7 @@ Feature: See and register events
     And I should see "10962"
     And I should see "Berlin"
     And I should see "80,00"
-    And I should see "Aendern"
+    And I should see "Ändern"
     And I should see "Rechnungsanschrift"
     And I should see "Herr"
     And I should see "Philipp Wilimzig"
@@ -202,7 +202,7 @@ Feature: See and register events
       And I should see "Berlin"
       And I should see "80,00"
       #And I should see "Abendessen Alternative 1"
-      And I should see "Aendern"
+      And I should see "Ändern"
       And I press "Verbindlich bestellen"
       And I should see "Anmeldung erfolgreich abgeschlossen"
       #And "holger@ikusei.de" should receive an email
@@ -244,7 +244,7 @@ Feature: See and register events
       And I should see "12345"
       And I should see "Berlin"
       And I should see "80,00"
-      And I should see "Aendern"
+      And I should see "Ändern"
       And I press "Verbindlich bestellen"
       And I should see "Anmeldung erfolgreich abgeschlossen"
       #And "holger@ikusei.de" should receive an email

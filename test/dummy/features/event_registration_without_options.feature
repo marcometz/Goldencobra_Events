@@ -69,7 +69,7 @@ Feature: See and register events without options
     And I should see "10961"
     And I should see "Berlin"
     And I should see "80,00"
-    And I should see "Aendern"
+    And I should see "Ändern"
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
 
@@ -100,7 +100,7 @@ Feature: See and register events without options
     And I should see "10961"
     And I should see "Berlin"
     And I should see "80,00"
-    And I should see "Aendern"
+    And I should see "Ändern"
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
     
@@ -140,7 +140,7 @@ Feature: See and register events without options
     And I should see "12345"
     And I should see "Berlin"
     And I should see "80,00"
-    And I should see "Aendern"
+    And I should see "Ändern"
     And I press "Verbindlich bestellen"
     And I should see "Anmeldung erfolgreich abgeschlossen"
     
