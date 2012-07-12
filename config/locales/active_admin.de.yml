@@ -1,5 +1,13 @@
 de:
-  active_admin:    
+  active_admin:   
+    update_invoice: "Rechnung aktualisieren" 
+    flash_notice:
+      mail_confirmation: "Sind Sie sicher?"
+      mail_sent: "Mails wurden versendet"
+      deactivate_applicant: "Sie wollen diese Gäste stornieren?"
+      deactivate: "Gäste wurden deaktiviert"
+      inactive: "Dieser Besucher ist nun Inaktiv!"
+      active: "Dieser Besucher ist nun Aktiv!"
     dashboard: "Übersicht"
     dashboard_welcome:
       welcome: "Willkommen in Active Admin. Dies ist die Standard-Übersichtsseite."
@@ -31,6 +39,7 @@ de:
     logout: "Abmelden"
     sidebars:
       filters: "Filter"
+      invoice_options: "Rechnungsoptionen"
     pagination:
       empty: "Keine %{model} gefunden"
       one: "Zeige <b>1</b> %{model}"
@@ -67,3 +76,13 @@ de:
     errors:
       event_pricegroup:
         date_error: "Fehler beim Datum. Bitte prüfen Sie Start- u. Enddaten."
+    events:
+      new_subevent: "Neue Unterveranstaltung"
+    pricegroups:
+      new_pricegroup: "Neue Preisgruppe"
+    venue:
+      new_venue: "Veranstaltungsort erstellen"
+      details: "Details"
+      location: "Ort"
+    artist:
+      new_artist: "Neuer Künstler"

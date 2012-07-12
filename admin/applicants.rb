@@ -223,14 +223,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   member_action :deactivate_applicant do
     reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
     reguser.cancel_reservation!
-    flash[:notice] = "This Applicant is now inactive!"
+    flash[:notice] = t("inactive", :scope => [:active_admin, :flash_notice])
     redirect_to :action => :show
   end
 
   member_action :reactivate_applicant do
     reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
     reguser.reactivate_reservation!
-    flash[:notice] = "This Applicant is now active!"
+    flash[:notice] = t("active", :scope => [:active_admin, :flash_notice])
     redirect_to :action => :show
   end
 

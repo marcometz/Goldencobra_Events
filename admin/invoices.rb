@@ -1,5 +1,5 @@
 ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
-  menu :parent => "Billing & Invoices", :if => proc{can?(:update, Goldencobra::Setting) && (Goldencobra::Setting.for_key('goldencobra_events.active_admin.menue.invoices.display') != "false")}
+  menu :parent => "Rechnungen", :label => "Abrechnungen", :if => proc{can?(:update, Goldencobra::Setting) && (Goldencobra::Setting.for_key('goldencobra_events.active_admin.menue.invoices.display') != "false")}
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
 
   scope "Alle", :scoped, :default => true

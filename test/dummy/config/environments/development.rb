@@ -34,6 +34,8 @@ Dummy::Application.configure do
   # Do not compress assets
   config.assets.compress = false
 
+  config.i18n.default_locale = :de
+  config.i18n.locale = :de
   # Expands the lines which load the assets
   config.assets.debug = true
   config.action_mailer.default_url_options = { host: "ikusei.de" }

@@ -4,8 +4,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   controller.authorize_resource :class => GoldencobraEvents::Event
   
   scope "Alle", :scoped, :default => true
-  scope :active
-  scope :inactive
+  scope "Aktiv", :active
+  scope "Inaktiv", :inactive
   
   filter :title
   filter :start_date
@@ -26,7 +26,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
       f.input :active, :hint => "Ist dieser Event online zu sehen?"
-      f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r eines der Kinder muss sich dann entscheiden werden!"
+      f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r eines der Kinder muss sich dann entschieden werden!"
     end
     
     f.inputs "Preisgruppen" do
@@ -81,7 +81,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       result = ""
       result += link_to(t('active_admin.edit'), edit_admin_event_path(event), :class => "member_link edit_link")
       result += link_to(t('active_admin.events.new_subevent'), new_admin_event_path(:parent => event), :class => "member_link edit_link")
-      result += link_to(t('active_admin.delete'), admin_event_path(event), :method => :DELETE, :confirm => "Realy want to delete this Event?", :class => "member_link delete_link")
+      result += link_to(t('active_admin.delete'), admin_event_path(event), :method => :DELETE, :confirm => t("delete_confirmation", :scope => [:active_admin]), :class => "member_link delete_link")
       raw(result)
     end
   end

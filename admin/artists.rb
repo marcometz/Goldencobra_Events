@@ -61,7 +61,7 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   end
 
   action_item :only => :show do
-    link_to('New Artist', new_admin_artist_path)
+    link_to(t('active_admin.artist.new_artist'), new_admin_artist_path)
   end
   
   batch_action :destroy, false

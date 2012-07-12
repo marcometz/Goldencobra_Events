@@ -35,13 +35,13 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
   end
 
   action_item :only => :show do
-    link_to('New Venue', new_admin_venue_path)
+    link_to(t('active_admin.venue.new_venue'), new_admin_venue_path)
   end
 
   batch_action :destroy, false
 
   show :title => :title do
-    panel "Venue Details" do
+    panel t('active_admin.venue.details') do
       attributes_table_for venue do
         row :title
         row :description
@@ -52,7 +52,7 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
         row :updated_at
       end
     end
-    panel "Location" do
+    panel t('active_admin.venue.location') do
       attributes_table_for venue.location do
         row :street
         row :city

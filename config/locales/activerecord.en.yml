@@ -1,6 +1,9 @@
 en:
   activerecord:
     models:
+      no_registration: "No Registration needed"
+      registration: "Registration needed"
+      registration_optional: "Registration optional"
       invoice:
         one: "Invoice"
         other: "Invoices"  
@@ -61,6 +64,8 @@ en:
       company:
         one: "Company"
         other: "Companies"
+      article:
+        title: "Titel"
     attributes:
       applicant:
         firstname: "firstname"
@@ -189,3 +194,5 @@ en:
         link_url: "link_url"
         phone: "phone"
         email: "E-email"
+      article:
+        updated_at: "updated_at"

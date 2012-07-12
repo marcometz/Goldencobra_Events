@@ -1,5 +1,13 @@
 en:
   active_admin:
+    update_invoice: "Update Invoice" 
+    flash_notice:
+      mail_confirmation: "Are you sure?"
+      mail_sent: "Mails were sent"
+      deactivate_applicant: "You want cancle this guests?"
+      deactivate: "Guests were deactivated"
+      inactive: "This Applicant is now inactive!"
+      active: "This Applicant is now active!"
     dashboard: Dashboard
     dashboard_welcome:
       welcome: "Welcome to Active Admin. This is the default dashboard page."
@@ -68,3 +76,13 @@ en:
     errors:
       event_pricegroup:
         date_error: "Fehler beim Datum. Bitte prüfen Sie Start- u. Enddaten."
+    events:
+      new_subevent: "New Subevent"
+    pricegroups:
+      new_pricegroup: "New Pricegroups"
+    venue:
+      new_venue: "new Venue"
+      details: "Details"
+      location: "Location"
+    artist:
+      new_artist: "New Artist"
