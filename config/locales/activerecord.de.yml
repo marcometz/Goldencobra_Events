@@ -43,6 +43,9 @@ de:
       venue:
         one: "Veranstaltungsort"
         other: "Veranstaltungsorte"
+      goldencobra_events/venue:
+        one: "Veranstaltungsort"
+        other: "Veranstaltungsorte"
       event_pricegroup:
         one: "Veranstaltung/Preisgruppe"
         other: "Veranstaltungen/Preisgruppen"
@@ -61,8 +64,6 @@ de:
       company:
         one: "Unternehmen"
         other: "Unternehmen"
-      article:
-        title: "Titel"
     attributes:
       applicant:
         firstname: "Vorname"
@@ -192,6 +193,4 @@ de:
         phone: "Telefon"
         email: "E-Mail"
         created_at: "Erstellt am"
-        updated_at: "Bearbeitet am"
-      article:
         updated_at: "Bearbeitet am"

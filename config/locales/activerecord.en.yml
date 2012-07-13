@@ -64,8 +64,6 @@ en:
       company:
         one: "Company"
         other: "Companies"
-      article:
-        title: "Titel"
     attributes:
       applicant:
         firstname: "firstname"
@@ -194,5 +192,3 @@ en:
         link_url: "link_url"
         phone: "phone"
         email: "E-email"
-      article:
-        updated_at: "updated_at"
