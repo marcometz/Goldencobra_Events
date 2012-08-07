@@ -52,6 +52,7 @@ Feature: See and register events without options
     Then I should see "Studenten"
     And I choose "Studenten"
     When I press "Weiter"
+    And I wait for 2 seconds
     Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
     And I choose "male"
     And I fill in "registration_user_firstname" with "Holger"
@@ -60,6 +61,7 @@ Feature: See and register events without options
     And I fill in "registration_company_location_attributes_zip" with "10961"
     And I fill in "registration_company_location_attributes_city" with "Berlin"
     And I fill in "registration_user_email" with "holger@ikusei.de"
+    And I choose "no"
     And I check "AGB_accepted"
     And I press "Verbindlich bestellen"
     And I should see "Zusammenfassung"
@@ -79,6 +81,7 @@ Feature: See and register events without options
     Then I should see "Studenten"
     And I choose "Studenten"
     When I press "Weiter"
+    And I wait for 2 seconds
     Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
     And I choose "male"
     And I fill in "registration_user_firstname" with "Holger"
@@ -87,12 +90,15 @@ Feature: See and register events without options
     And I fill in "registration_company_location_attributes_zip" with "abc"
     And I fill in "registration_company_location_attributes_city" with "Berlin"
     And I fill in "registration_user_email" with "holger@"
+    And I choose "no"
     And I check "AGB_accepted"
     And I press "Verbindlich bestellen"
+    And I wait for 2 seconds
     And I should see "Pflichtangabe. Bitte 5 stellige Postleitzahl angeben."
     And I fill in "registration_company_location_attributes_zip" with "10961"
     And I fill in "registration_user_email" with "holger@ikusei.de"
     And I press "Verbindlich bestellen"
+    And I wait for 2 seconds
     And I should see "Zusammenfassung"
     And I should see "Holger"
     And I should see "Frohloff"
@@ -102,6 +108,7 @@ Feature: See and register events without options
     And I should see "80,00"
     And I should see "Ändern"
     And I press "Verbindlich bestellen"
+    And I wait for 2 seconds
     And I should see "Anmeldung erfolgreich abgeschlossen"
     
       
@@ -111,6 +118,7 @@ Feature: See and register events without options
     Then I should see "Studenten"
     And I choose "Studenten"
     When I press "Weiter"
+    And I wait for 2 seconds
     Then the text "Bitte füllen Sie Ihre Benutzerdaten aus" should be visible
     And I choose "male"
     And I fill in "registration_user_firstname" with "Holger"
@@ -119,20 +127,26 @@ Feature: See and register events without options
     And I fill in "registration_company_location_attributes_zip" with "12345"
     And I fill in "registration_company_location_attributes_city" with "Berlin"
     And I fill in "registration_user_email" with "holger@test.de (Test)"
+    And I choose "no"
     And I check "AGB_accepted"
+    And I wait for 2 seconds
     And I press "Verbindlich bestellen"
     And I should see "Email nicht gültig"
     And I fill in "registration_user_email" with "holger@ikusei.de(test)"
     And I press "Verbindlich bestellen"
+    And I wait for 2 seconds
     And I should see "Email nicht gültig"
     And I fill in "registration_user_email" with "holger@ikusei.de{test}"
     And I press "Verbindlich bestellen"
+    And I wait for 2 seconds
     And I should see "Email nicht gültig"
     And I fill in "registration_user_email" with "holger @ikusei.de"
+    And I wait for 2 seconds
     And I press "Verbindlich bestellen"
     And I should see "Email nicht gültig"
     And I fill in "registration_user_email" with "holger.frohloff_privat@ikusei2-firma.de"
     And I press "Verbindlich bestellen"
+    And I wait for 2 seconds
     And I should see "Zusammenfassung"
     And I should see "Holger"
     And I should see "Frohloff"
@@ -142,6 +156,5 @@ Feature: See and register events without options
     And I should see "80,00"
     And I should see "Ändern"
     And I press "Verbindlich bestellen"
+    And I wait for 2 seconds
     And I should see "Anmeldung erfolgreich abgeschlossen"
-    
-  

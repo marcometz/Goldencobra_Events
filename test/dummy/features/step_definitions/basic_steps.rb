@@ -138,3 +138,7 @@ end
 Then /^the count of elements "(.*?)" should be "(.*?)"$/ do |arg1, arg2|
   page.has_css?(arg1, :count => arg2)
 end
+
+When /^I wait for (\d+) seconds$/ do |arg1|
+  sleep arg1.to_i
+end
