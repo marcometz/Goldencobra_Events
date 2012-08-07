@@ -82,7 +82,8 @@ module GoldencobraEvents
 
         #save user data in session
         session[:goldencobra_event_registration][:user_data] = params[:registration][:user]
-			  @summary_user = GoldencobraEvents::RegistrationUser.new(session[:goldencobra_event_registration][:user_data])
+        session[:goldencobra_event_registration][:user_data]["should_initialize"] = false
+        @summary_user = GoldencobraEvents::RegistrationUser.new(session[:goldencobra_event_registration][:user_data])
         if params[:registration][:company].present?
           session[:goldencobra_event_registration][:user_company_data] =  params[:registration][:company]
           if session[:goldencobra_event_registration][:user_company_data][:title].blank?
