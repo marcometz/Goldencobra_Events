@@ -60,8 +60,8 @@
     <hr />
         <p>
             <label><%= s("goldencobra_events.event.registration.user_form.alternate_billing_address") %> <span class="asterix">*</span></label>
-            <%= radio_button "supply_alternate_billing_address", "choice", true , :id => "yes" %> Ja
-            <%= radio_button "supply_alternate_billing_address", "choice", false, :id => "no" %> Nein
+            <%= radio_button "registration[billing][choice]", "", true , :id => "yes" %> Ja
+            <%= radio_button "registration[billing][choice]", "", false, :id => "no" %> Nein
         </p>
 
 

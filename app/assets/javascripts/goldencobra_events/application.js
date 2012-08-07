@@ -100,6 +100,39 @@ $(document).ready(function() {
     if (yes_result == false && no_result == false) {
       $("#no").parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
     }
+
+    // Pflichtangaben prüfen, sofern alternative Rechnungsadresse vorhanden
+    if (bill_yes.attr("checked") == "checked") {
+      var billing_male = $("#billing_male");
+      var billing_female = $("#billing_female");
+      var billing_male_result = (billing_male.attr("checked") != "undefined" && billing_male.attr("checked") == "checked");
+      var billing_female_result = (billing_female.attr("checked") != "undefined" && billing_female.attr("checked") == "checked");
+
+      if (billing_male_result == false && billing_female_result == false) {
+        $("#billing_female").parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
+      }
+
+      if ($('#registration_billing_user_billing_firstname').attr('value') == '') {
+        $('#registration_billing_user_billing_firstname').parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
+      }
+
+      if ($('#registration_billing_user_billing_lastname').attr('value') == '') {
+        $('#registration_billing_user_billing_lastname').parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
+      }
+
+      if ($('#registration_billing_company_location_attributes_street').attr('value') == '') {
+        $('#registration_billing_company_location_attributes_street').parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
+      }
+
+      if (!zipReg.test($('#registration_billing_company_location_attributes_zip').attr('value'))) {
+        $('#registration_billing_company_location_attributes_city').parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe. Bitte 5 stellige Postleitzahl angeben.</span>");
+      }
+
+      if ($('#registration_billing_company_location_attributes_city').attr('value') == '') {
+        $('#registration_billing_company_location_attributes_city').parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
+      }
+
+    }
   });
 
   // Abweichende Lieferadresse. Checkbox blendet zusätzliche Felder ein
