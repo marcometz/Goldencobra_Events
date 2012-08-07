@@ -33,6 +33,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.has_many :event_pricegroups do |m|
         m.input :pricegroup, :include_blank => "default", :input_html => { :class => 'pricegroup_pricegroup'}
         m.input :price_raw, :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
+        m.input :description, hint: "Wenn dieser Text vorhanden ist, wird er anstatt der Preises dargestellt."
         m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'}
         m.input :start_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.start_reservation.strftime('%A, %d.%m.%Y') if m.object.start_reservation}" }
         m.input :end_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.end_reservation.strftime('%A, %d.%m.%Y') if m.object.end_reservation}" }

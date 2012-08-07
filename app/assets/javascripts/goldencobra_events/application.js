@@ -91,15 +91,26 @@ $(document).ready(function() {
     if ($('#AGB_accepted').attr('checked') != "checked") {
       $('#AGB_accepted').parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
     }
+
+    var bill_yes = $("#yes");
+    var bill_no = $("#no");
+    var yes_result = (bill_yes.attr("checked") != "undefined" && bill_yes.attr("checked") == "checked");
+    var no_result = (bill_no.attr("checked") != "undefined" && bill_no.attr("checked") == "checked");
+
+    if (yes_result == false && no_result == false) {
+      $("#no").parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
+    }
   });
 
   // Abweichende Lieferadresse. Checkbox blendet zusätzliche Felder ein
-  $('#supply_alternate_billing_address').bind("change", function(){
+  $('#yes').bind("change", function(){
     if( $('div#alternate_billing_address').is(':hidden') ) {
       // Felder für abweichende Lieferadresse sind verborgen, also einblenden
       $('div#alternate_billing_address').fadeIn('fast');
     }
-    else {
+  });
+  $('#no').bind("change", function(){
+    if( !$('div#alternate_billing_address').is(':hidden') ) {
       // Felder sind sichtbar, also wieder ausblenden
       $('div#alternate_billing_address').fadeOut('fast');
     }
