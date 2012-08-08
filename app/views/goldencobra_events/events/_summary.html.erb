@@ -23,7 +23,7 @@
             <% if @billing_company.title != "privat Person" %>
               <%= @billing_company.title %><br />
             <% end %>
-            <% if @billing_company.billing_department.present? %>
+            <% if @summary_user.billing_department.present? %>
               <%= @summary_user.billing_department %><br />
             <% end %>
             <% if @billing_company.location.present? && @billing_company.location.street.present? %>
