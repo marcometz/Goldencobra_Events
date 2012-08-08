@@ -9,7 +9,9 @@
 		    <h2>Anschrift</h2>
         <p><%= @summary_user.gender ? "Herr" : "Frau" %> <%= " #{@summary_user.title} " if @summary_user.title %><%= @summary_user.firstname%> <%= @summary_user.lastname %><br>
 			  <% if @summary_company %>
-          <%= @summary_company.title if @summary_company.title != "privat Person"%><br>
+          <% if @summary_company.title != "privat Person" %>
+            <%= @summary_company.title%><br>
+          <% end %>
           <%= @summary_company.location.street %><br>
           <%= @summary_company.location.zip %> <%= @summary_company.location.city %>
         <% end %>
