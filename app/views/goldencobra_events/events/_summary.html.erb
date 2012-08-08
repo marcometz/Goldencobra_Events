@@ -20,10 +20,18 @@
           <h2>Rechnungsanschrift</h2>
           <p>Ansprechpartner: <%= @summary_user.billing_gender ? "Herr" : "Frau" %> <%= @summary_user.billing_firstname%> <%= @summary_user.billing_lastname %><br>
           <% if @billing_company %>
-            <%= @billing_company.title if @billing_company.title != "privat Person"%><br />
-            <%= @summary_user.billing_department %><br />
-            <%= @billing_company.location.street %><br />
-            <%= @billing_company.location.zip %> <%= @billing_company.location.city %>
+            <% if @billing_company.title != "privat Person" %>
+              <%= @billing_company.title %><br />
+            <% end %>
+            <% if @billing_company.billing_department.present? %>
+              <%= @summary_user.billing_department %><br />
+            <% end %>
+            <% if @billing_company.location.present? && @billing_company.location.street.present? %>
+              <%= @billing_company.location.street %><br />
+            <% end %>
+            <% if @billing_company.location.present? %>
+              <%= @billing_company.location.zip %> <%= @billing_company.location.city %>
+            <% end %>
           <% end %>
           </p>
         </div>
