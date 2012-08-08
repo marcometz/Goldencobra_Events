@@ -40,8 +40,8 @@ module GoldencobraEvents
     belongs_to :billing_company, :class_name => GoldencobraEvents::Company
     belongs_to :user, :class_name => User
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
-    attr_accessor :should_initialize
-    after_initialize :init_default_data
+    attr_accessor :should_not_initialize
+    after_create :init_default_data
 
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
 
@@ -132,11 +132,11 @@ module GoldencobraEvents
     end
 
     def init_default_data
-      # zusätzlicher Parameter 'should_initialize' wird im events_controller gesetzt,
+      # zusätzlicher Parameter 'should_not_initialize' wird im events_controller gesetzt,
       # sofern ein RegistrationUser für die Session erzeugt wird. Ansonsten wird er nicht
       # benötigt. Der after_initialize callback wird benötigt für manuelles Erstellen
       # eines RegistrationUsers im ActiveAdmin Backend.
-      unless self.should_initialize == false
+      unless self.should_not_initialize.present? && self.should_not_initialize == true
         billing_company = GoldencobraEvents::Company.new if self.billing_company_id.blank?
         billing_company.location = Goldencobra::Location.new if billing_company.present? && billing_company.location
         self.billing_company = billing_company
