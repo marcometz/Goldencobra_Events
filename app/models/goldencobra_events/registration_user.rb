@@ -48,7 +48,7 @@ module GoldencobraEvents
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :billing_company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
-    accepts_nested_attributes_for :vita_steps
+    accepts_nested_attributes_for :vita_steps, allow_destroy: true, reject_if: lambda { |a| a[:description].blank? }
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
 
     scope :active, where(:active => true)
