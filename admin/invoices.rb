@@ -55,16 +55,23 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       result += link_to(t('active_admin.edit'), edit_admin_invoice_path(invoice), :class => "member_link edit_link")
       raw(result)
     end
-    
   end
-  
+
   form :html => { :enctype => "multipart/form-data" } do |f|
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
+    f.actions
     f.inputs "Anmeldung" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
       f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
+    end
+    f.inputs "Historie" do
+      f.has_many :vita_steps do |step|
+        if step.object.new_record?
+          step.input :description
+        step.input :title, label: "Bearbeiter", hint: "Tragen Sie hier Ihren Namen ein, damit die Aktion zugeordnet werden kann"
+        else
+          step.input :description, :input_html => {:disabled => true, :resize => false, :class => "metadescription_hint", value: "#{step.object.title}; #{step.object.description}"}
+        end
+      end
     end
     f.inputs "Rechnung" do
       f.input :invoice_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.invoice_sent.strftime('%A, %d.%m.%Y') if f.object.invoice_sent}" }
@@ -74,24 +81,24 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     end
     f.inputs "Besucher", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
-      f.input :email     
-      f.input :title     
-      f.input :firstname 
-      f.input :lastname  
-      f.input :function  
-      f.input :phone     
-      f.input :agb, :label => "AGB akzeptiert"   
+      f.input :email
+      f.input :title
+      f.input :firstname
+      f.input :lastname
+      f.input :function
+      f.input :phone
+      f.input :agb, :label => "AGB akzeptiert"
     end
     f.inputs "" do
       f.fields_for :company_attributes, f.object.company do |comp|
         comp.inputs "Firma", :class => "foldable inputs" do
           comp.input :title
-          comp.input :legal_form 
-          comp.input :phone      
-          comp.input :fax        
-          comp.input :homepage   
-          comp.input :sector  
-        end 
+          comp.input :legal_form
+          comp.input :phone
+          comp.input :fax
+          comp.input :homepage
+          comp.input :sector
+        end
         comp.inputs "" do
           comp.fields_for :location_attributes, comp.object.location do |loc|
             loc.inputs "#{t('location', scope: [:activerecord, :models], count: 1)}", :class => "foldable inputs" do
@@ -111,9 +118,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         reg.input :_destroy, :as => :boolean 
       end
     end
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
+    f.actions
   end
 
   show :title => :lastname do
@@ -136,7 +141,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         row :first_reminder_sent
         row :second_reminder_sent
       end
-    end    
+    end
     panel t('activerecord.models.company', count: 1) do
       if invoice.company
           attributes_table_for invoice.company do
@@ -156,7 +161,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
             row :country
           end
         end
-      end   
+      end
     end
     panel t('activerecord.models.event_registration', count: 3) do
       table do
@@ -196,8 +201,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       end
     end #end panel vita
   end
-  
-  
+
   if ActiveRecord::Base.connection.table_exists?("goldencobra_email_templates_email_templates")
     GoldencobraEmailTemplates::EmailTemplate.all.each do |emailtemplate|
       batch_action "send_mail_#{emailtemplate.title.parameterize.underscore}", :confirm => "#{emailtemplate.title}: sind Sie sicher?" do |selection|
@@ -210,14 +214,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       end
     end
   end
-  
-    
+
+
   batch_action :destroy, false
-  
+
   sidebar "invoice_options", only: [:index] do
     render "/goldencobra_events/admin/invoices/invoice_options_sidebar"
   end
-  
+
   collection_action :set_invoice_date, :method => :post do 
     collection_selection = params[:invoice_collection_selection]
     if collection_selection.present?
@@ -230,7 +234,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     flash[:notice] = "Datum wurde gesetzt"
     redirect_to :action => :index
   end
-  
+
   csv do
     column :id
     column :active
