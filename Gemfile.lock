@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 0d555aa8156aca609f8469676093ca812889c2b6
+  revision: eb5f5fce2fbd2e6d78663741489548b7cc80e275
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -83,8 +83,10 @@ PATH
       compass-rails
       goldencobra
       goldencobra_email_templates
+      pdfkit
       rails (~> 3.2.2)
       sass-rails
+      wkhtmltopdf-binary
 
 GEM
   remote: http://rubygems.org/
