@@ -16,6 +16,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   filter :firstname
   filter :lastname
   filter :email
+  filter :invoice_number
   filter :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :type_of_registration_not, :label => "Art der Registrierung ist NICHT", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :total_price, :as => :numeric
@@ -37,6 +38,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     end
     column :total_price, sortable: :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
+    end
+    column :invoice_number, sortable: :invoice_number do |i|
+      link_to(i.invoice_number, "/system/#{i.invoice_number}.pdf") if i.invoice_number.present?
     end
     column :invoice_sent, sortable: :invoice_sent do |invoice|
       invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent
@@ -90,6 +94,33 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       f.input :phone
       f.input :agb, :label => "AGB akzeptiert"
     end
+
+    f.inputs "Rechnungsadresse Ansprechpartner", class: "foldable inputs" do
+      f.input :billing_gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
+      f.input :billing_firstname
+      f.input :billing_lastname
+      f.input :billing_department, label: Goldencobra::Setting.for_key("goldencobra_events.event.registration.user_form.user_label.billing_department")
+    end
+    # if f.object.billing_company.present?
+      f.inputs "Rechnungsadresse Firma" do
+        f.fields_for :billing_company_attributes, f.object.billing_company do |comp|
+          comp.inputs "", class: "foldable inputs" do
+            comp.input :title
+          end
+          comp.inputs "" do
+            comp.fields_for :location_attributes, f.object.billing_company.location do |loc|
+              loc.inputs "Anschrift", :class => "foldable inputs" do
+                loc.input :street
+                loc.input :city
+                loc.input :zip
+                loc.input :country, :as => :string
+              end
+            end
+          end
+        end
+      end
+    # end
+
     f.inputs "" do
       f.fields_for :company_attributes, f.object.company do |comp|
         comp.inputs "Firma", :class => "foldable inputs" do
@@ -99,6 +130,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           comp.input :fax
           comp.input :homepage
           comp.input :sector
+          comp.input :id, as: :hidden
         end
         comp.inputs "" do
           comp.fields_for :location_attributes, comp.object.location do |loc|
@@ -219,11 +251,19 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
   batch_action :destroy, false
 
+  batch_action :generate_invoice do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |registration|
+      #render(template: 'templates/invoice/invoice', layout: false, locals: {user: registration, event: registration.event_registrations.first.event_pricegroup.event.root})
+      registration.generate_invoice(registration.event_registrations.first.event_pricegroup.event.root) if registration.invoice_number.blank?
+    end
+    redirect_to action: :index
+  end
+
   sidebar "invoice_options", only: [:index] do
     render "/goldencobra_events/admin/invoices/invoice_options_sidebar"
   end
 
-  collection_action :set_invoice_date, :method => :post do 
+  collection_action :set_invoice_date, :method => :post do
     collection_selection = params[:invoice_collection_selection]
     if collection_selection.present?
       invoice_type = params[:invoice_type]
@@ -264,5 +304,4 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column :first_reminder_sent
     column :second_reminder_sent
   end
-  
 end

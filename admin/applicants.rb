@@ -43,6 +43,17 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
       f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
     end
+    f.inputs "Historie" do
+      f.has_many :vita_steps do |step|
+        if step.object.new_record?
+          step.input :description
+        step.input :title, label: "Bearbeiter", hint: "Tragen Sie hier Ihren Namen ein, damit die Aktion zugeordnet werden kann"
+        else
+          step.input :description, :input_html => {:disabled => true, :resize => false, :class => "metadescription_hint", value: "#{step.object.title}; #{step.object.description}"}
+        end
+      end
+    end
+
     f.inputs "Besucher", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
       f.input :email

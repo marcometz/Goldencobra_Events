@@ -111,6 +111,52 @@ module GoldencobraEvents
       end
     end
 
+    def full_name
+      self.firstname + " " + self.lastname
+    end
+
+    def full_billing_name_with_gender_and_title
+      s = ""
+      if self.billing_gender
+        s << "Herr"
+      else
+        s << "Frau"
+      end
+      if self.billing_title.present?
+        s << " #{self.billing_title}"
+      end
+      s << " #{self.billing_firstname} #{self.billing_lastname}"
+      if self.billing_firstname.blank? && self.billing_lastname.blank?
+        s = self.full_name_with_gender_and_title
+      end
+      s
+    end
+
+    def full_name_with_gender_and_title
+      if self.gender
+        s = "Herr"
+      else
+        s = "Frau"
+      end
+      if self.title.present?
+        s << " #{self.title}"
+      end
+      s << " #{self.firstname} #{self.lastname}"
+    end
+
+    def company_name
+      if self.billing_company_id.present? && self.billing_company.title.present?
+        company = GoldencobraEvents::Company.find(self.billing_company_id)
+        result = company.title
+      elsif self.company_id.present? && GoldencobraEvents::Company.find(self.company_id) && self.company.title != "Privat Person"
+        company = GoldencobraEvents::Company.find(self.company_id)
+        result = company.title
+      else
+        result = nil
+      end
+      result
+    end
+
     def total_price
       total_price = 0
       self.event_registrations.each do |e|
@@ -131,6 +177,15 @@ module GoldencobraEvents
       else
         emails.order("created_at DESC").first.created_at
       end
+    end
+
+    def generate_invoice(event)
+      require 'pdfkit'
+      html = ActionController::Base.new.render_to_string(template: 'templates/invoice/invoice', layout: false, locals: {user: self, event: event})
+      kit = PDFKit.new(html, :page_size => 'Letter')
+      self.invoice_number = event.invoice_number(self.id)
+      self.save
+      kit.to_file("#{Rails.root}/public/system/#{self.invoice_number}.pdf")
     end
 
     def init_default_data

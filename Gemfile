@@ -16,7 +16,8 @@ gem 'sass'
 gem "rspec-rails", :group => [:test, :development] # rspec in dev so the rake tasks run properly
 gem 'roadie'
 gem 'uglifier', '>= 1.0.3'
-#gem 'premailer-rails3'
+gem 'pdfkit'
+gem 'wkhtmltopdf-binary'
 
 group :development do
   gem 'thin'
