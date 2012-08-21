@@ -53,7 +53,8 @@ module GoldencobraEvents
 
     scope :active, where(:active => true)
     scope :storno, where(:active => false)
-    scope :unpaid, where(:payed_on => nil )
+    scope :unpayed, where(:payed_on => nil )
+    scope :payed, where('payed_on IS NOT NULL')
     scope :invoice_not_send, where(:invoice_sent => nil )
 
     search_methods :type_of_registration_not_eq

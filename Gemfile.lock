@@ -54,7 +54,7 @@ GIT
 
 GIT
   remote: git://github.com/ikusei/goldencobra_email_templates.git
-  revision: cdacf03cfcc1f359dad1b66a97ca213d134758cd
+  revision: c429307ca0b7fcffc6341648ea03f538b817386a
   specs:
     goldencobra_email_templates (0.0.1)
       goldencobra
@@ -220,7 +220,7 @@ GEM
     friendly_id (4.0.8)
     fssm (0.2.9)
     geocoder (1.1.2)
-    gherkin (2.11.1)
+    gherkin (2.11.2)
       json (>= 1.4.6)
     git-pivotal (0.2.3)
       builder
@@ -259,7 +259,7 @@ GEM
       thor (~> 0.14)
     jqueryui_rails (0.0.4)
     json (1.7.5)
-    json_pure (1.7.4)
+    json_pure (1.7.5)
     jwt (0.1.5)
       multi_json (>= 1.0)
     kaminari (0.13.0)

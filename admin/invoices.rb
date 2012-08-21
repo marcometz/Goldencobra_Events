@@ -3,8 +3,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
 
   scope "Alle", :scoped, :default => true
+  scope "Bezahlt", :payed
+  scope "Unbezahlt", :unpayed
   scope "Rechnung nicht gestellt", :invoice_not_send
-  scope "unbezahlt", :unpaid
   scope "Aktive", :active
   scope "Stornierte", :storno
 
