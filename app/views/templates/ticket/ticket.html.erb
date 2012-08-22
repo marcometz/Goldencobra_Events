@@ -8,7 +8,7 @@
 <body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px;">
   <section>
     <article style="border: 5px solid #cccccc; padding: 20px;">
-      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.logo_for_ticket') %>" alt="logo-event" style="float:right;" />
+      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.logo_for_ticket') %>" alt="logo-event" style="float:right; width: 200px;" />
       <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/system/tickets/barcode_for_ticket_<%= ticket_number %>.png" alt="barcode-vertical" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg); float:left; margin-top: 100px;" />
       <table id="invoice-details" style="width: 450px; margin-left: 90px;">
         <tr>
