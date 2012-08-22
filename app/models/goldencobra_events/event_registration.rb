@@ -15,16 +15,16 @@ module GoldencobraEvents
   class EventRegistration < ActiveRecord::Base
     belongs_to :user, :class_name => GoldencobraEvents::RegistrationUser
     belongs_to :event_pricegroup
-    attr_accessor :session_list_of_ids 
+    attr_accessor :session_list_of_ids
     scope :active, where(:canceled => false)
     scope :with_event_id, lambda { |param| joins(:event_pricegroup).where("goldencobra_events_event_pricegroups.event_id = #{param}") }
-    
+
     LiquidParser = {}
-    
+
     before_save :is_registerable?
 
     def is_registerable?(list_of_pricegroup_ids=nil)
-      # receives array of event_pricegroup_ids and checks them for 
+      # receives array of event_pricegroup_ids and checks them for
       list_of_ids = []
       if list_of_pricegroup_ids == nil
         if self.user && self.user.present? && self.user.event_registration_ids
@@ -81,7 +81,7 @@ module GoldencobraEvents
       if list_of_pricegroup_ids.present? && list_of_pricegroup_ids.count > 0
         ev_reg = GoldencobraEvents::EventRegistration.new
         result = ev_reg.is_registerable?(list_of_pricegroup_ids)
-        if result == true 
+        if result == true
           list_of_pricegroup_ids.each do |reg_id|
             reg = GoldencobraEvents::EventRegistration.find_by_event_pricegroup_id_and_user_id(reg_id,user.id)
             unless reg

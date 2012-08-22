@@ -20,6 +20,7 @@ gem 'pdfkit'
 gem 'wkhtmltopdf-binary'
 
 group :development do
+  gem 'unicorn'
   gem 'thin'
   gem 'git-pivotal'
   gem 'guard-annotate'
@@ -33,7 +34,7 @@ end
 group :test do
   gem 'mysql2'
   gem 'cucumber'
-  gem 'cucumber-rails', '~> 1.3.0' 
+  gem 'cucumber-rails', '~> 1.3.0'
   gem "factory_girl_rails", :git => "git://github.com/thoughtbot/factory_girl_rails.git"
   gem 'database_cleaner'
   gem 'capybara'
@@ -45,7 +46,7 @@ group :test do
   gem 'guard-cucumber'
   gem 'guard-livereload'
   gem 'rb-fsevent', :git => 'git://github.com/ttilley/rb-fsevent.git', :branch => 'pre-compiled-gem-one-off'
-  gem 'growl' 
+  gem 'growl'
   gem 'launchy'
   gem 'spork'
   gem 'email_spec'

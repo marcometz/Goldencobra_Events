@@ -4,7 +4,7 @@ goldencobra_events:
         panels:
           display: "false"
         invoices:
-          display: "true"    
+          display: "true"
         sponsors:
           display: "true"
         artists:
@@ -12,14 +12,17 @@ goldencobra_events:
     agb_article_id: "0"
     event_pricegroup:
         available:
-            default: "false"    
+            default: "false"
+    ticket:
+        last_ticket_number: "0"
+        logo_for_ticket: "logo.png"
     event:
         registration_basket:
             headline: "Sie haben gewählt:"
             greeting: "Hallo "
             submit_text: "Anmeldung abschließen"
-            remove_text: "entfernen"    
-            description: "Bitte füllen Sie noch Ihre Benutzerdaten aus..."    
+            remove_text: "entfernen"
+            description: "Bitte füllen Sie noch Ihre Benutzerdaten aus..."
             completed: "Anmeldung abgeschlossen"
         article_events:
             register_text: "Für diese Veranstaltung anmelden"
@@ -45,7 +48,7 @@ goldencobra_events:
                 submit: "Weiter"
                 submit_disabled: "Anfrage wird übermittelt ..."
             errors:
-                no_events_selected: "Es wurden noch keine Event gewählt"            
+                no_events_selected: "Es wurden noch keine Event gewählt"
                 no_user_selected: "Bitte füllen Sie Ihre Benutzerdaten aus"
                 user_not_exists: "Diesen Benutzer gibt es nicht"
                 no_price_groups_defined: "Es wurden für diesen Event keine Preisgruppen angelegt"

@@ -25,6 +25,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column :email, :sortable => :email do |applicant|
       span applicant.email, class: "email"
     end
+    column "Ticket" do |applicant|
+      link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf", target: "blank") if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
+    end
     column :type_of_registration
     column :total_price, sortable: :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
@@ -120,7 +123,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     f.inputs "" do
       f.has_many :event_registrations do |reg|
         reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.joins(:event).map{|a| ["#{a.event.title if a.event} (#{a.event.id if a.event}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"}, label: t(:event_pricegroup, scope: [:activerecord, :models], count: 1)
-        reg.input :_destroy, :as => :boolean 
+        reg.input :_destroy, :as => :boolean
       end
     end
     f.inputs :class => "buttons inputs" do
@@ -151,7 +154,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
             row :homepage
             row :sector
           end
-        if applicant.company.location 
+        if applicant.company.location
           attributes_table_for applicant.company.location do
             row :street
             row :zip
@@ -160,7 +163,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
             row :country
           end
         end
-      end   
+      end
     end
     panel t('activerecord.models.event_registration', count: 3) do
       table do
@@ -213,7 +216,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       end
     end
   end
-  
+
   batch_action :send_default_conf_mails, :confirm => "Sind Sie sicher?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
@@ -222,7 +225,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     flash[:notice] = "Mails wurden versendet"
     redirect_to :action => :index
   end
-  
+
   batch_action :deactivate_applicants, :confirm => "Sie wollen diese Gaeste stornieren?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       reguser.cancel_reservation!
@@ -230,9 +233,17 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     flash[:notice] = "Gaeste wurden deaktiviert"
     redirect_to :action => :index
   end
-  
+
+  batch_action :generate_ticket, confirm: "Ticket erzeugen?" do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      # render(template: 'templates/ticket/ticket', layout: false, locals: {user: reguser, event: reguser.event_registrations.first.event_pricegroup.event.root})
+      GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first)
+    end
+    redirect_to :action => :index
+  end
+
   batch_action :destroy, false
-  
+
   member_action :deactivate_applicant do
     reguser = GoldencobraEvents::RegistrationUser.find(params[:id])
     reguser.cancel_reservation!
@@ -247,7 +258,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     redirect_to :action => :show
   end
 
-  
+
   action_item :only => [:edit, :show] do
     _applicant = @_assigns['applicant']
     if _applicant.active
@@ -256,16 +267,16 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       link_to('Diesen Gast wieder reaktivieren', reactivate_applicant_admin_applicant_path(_applicant))
     end
   end
-  
-  controller do  
-           
-    def new       
+
+  controller do
+
+    def new
       @applicant = GoldencobraEvents::RegistrationUser.new
       @applicant.company = GoldencobraEvents::Company.new
       @applicant.company.location = Goldencobra::Location.new
-    end 
+    end
   end
-  
+
   csv do
     column :id
     column :active
@@ -295,5 +306,5 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column("Rechnugns-Firma PLZ") {|applicant| applicant.billing_company.location.zip if applicant.billing_company.present? && applicant.billing_company.location.present? }
     column("Rechunungs-Firma Land") {|applicant| applicant.billing_company.location.country if applicant.billing_company.present? && applicant.billing_company.location.present? }
   end
-  
+
 end

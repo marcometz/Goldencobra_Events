@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: eb5f5fce2fbd2e6d78663741489548b7cc80e275
+  revision: bc59755668a6a713a0a3308704761363524528a7
   specs:
     goldencobra (1.0.3)
       activeadmin
@@ -80,6 +80,7 @@ PATH
   specs:
     goldencobra_events (1.0.1)
       andand
+      barby
       compass-rails
       goldencobra
       goldencobra_email_templates
@@ -131,6 +132,7 @@ GEM
     annotate (2.5.0)
       rake
     arel (3.0.2)
+    barby (0.5.0)
     bcrypt-ruby (3.0.1)
     bourbon (2.1.1)
       sass (>= 3.1)
@@ -268,6 +270,7 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
+    kgio (2.7.4)
     launchy (2.1.2)
       addressable (~> 2.3)
     libv8 (3.3.10.4)
@@ -364,6 +367,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
+    raindrops (0.10.0)
     rake (0.9.2.2)
     rdoc (3.12)
       json (~> 1.4)
@@ -456,6 +460,10 @@ GEM
     uglifier (1.2.7)
       execjs (>= 0.3.0)
       multi_json (~> 1.3)
+    unicorn (4.3.1)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     warden (1.2.1)
       rack (>= 1.0)
     wkhtmltopdf-binary (0.9.9.1)
@@ -503,4 +511,5 @@ DEPENDENCIES
   spork
   thin
   uglifier (>= 1.0.3)
+  unicorn
   wkhtmltopdf-binary
