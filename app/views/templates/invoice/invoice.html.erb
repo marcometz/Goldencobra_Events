@@ -11,7 +11,7 @@
 
       <!-- Anschrift -->
       <header>
-      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:20px 0 0 560px;"/>
+      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/>
         <h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
         <p class="contact-informations">
         <% if user.company_name %>
@@ -49,7 +49,7 @@
           <td style="width:167px;">Rechnungsdatum:</td><td><%= Time.now.strftime("%d.%m.%Y") %></td>
         </tr>
         <tr>
-          <td style="width:167px;">Rechnungsnummer:</td><td><%= event.invoice_number(user.id) %></td>
+          <td style="width:167px;">Rechnungsnummer:</td><td><%= invoice_number %></td>
         </tr>
         <tr>
           <td style="width:167px;">Teilnehmer:</td><td><%= user.full_name %></td>

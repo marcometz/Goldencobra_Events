@@ -2,13 +2,15 @@
 #
 # Table name: goldencobra_events_event_registrations
 #
-#  id                  :integer(4)      not null, primary key
-#  user_id             :integer(4)
-#  event_pricegroup_id :integer(4)
-#  canceled            :boolean(1)      default(FALSE)
+#  id                  :integer          not null, primary key
+#  user_id             :integer
+#  event_pricegroup_id :integer
+#  canceled            :boolean          default(FALSE)
 #  canceled_at         :datetime
-#  created_at          :datetime        not null
-#  updated_at          :datetime        not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  ticket_number       :string(255)
+#  invoice_number      :string(255)
 #
 
 module GoldencobraEvents

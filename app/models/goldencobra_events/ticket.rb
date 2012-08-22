@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: goldencobra_events_tickets
+#
+#  id                    :integer          not null, primary key
+#  event_registration_id :integer
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#
+
 module GoldencobraEvents
   class Ticket < ActiveRecord::Base
     def self.generate_barcode

@@ -2,35 +2,36 @@
 #
 # Table name: goldencobra_events_registration_users
 #
-#  id                     :integer(4)      not null, primary key
-#  user_id                :integer(4)
-#  gender                 :boolean(1)
+#  id                     :integer          not null, primary key
+#  user_id                :integer
+#  gender                 :boolean
 #  email                  :string(255)
 #  title                  :string(255)
 #  firstname              :string(255)
 #  lastname               :string(255)
 #  function               :string(255)
 #  phone                  :string(255)
-#  agb                    :boolean(1)
-#  company_id             :integer(4)
-#  created_at             :datetime        not null
-#  updated_at             :datetime        not null
-#  type_of_registration   :string(255)     default("Webseite")
+#  agb                    :boolean
+#  company_id             :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  type_of_registration   :string(255)      default("Webseite")
 #  comment                :text
 #  invoice_sent           :datetime
 #  payed_on               :datetime
 #  first_reminder_sent    :datetime
 #  second_reminder_sent   :datetime
-#  active                 :boolean(1)      default(TRUE)
-#  billing_gender         :boolean(1)
+#  active                 :boolean          default(TRUE)
+#  billing_gender         :boolean
 #  billing_title          :string(255)
 #  billing_firstname      :string(255)
 #  billing_lastname       :string(255)
 #  billing_function       :string(255)
 #  billing_phone          :string(255)
-#  billing_company_id     :integer(4)
+#  billing_company_id     :integer
 #  billing_contact_person :string(255)
 #  billing_department     :string(255)
+#  invoice_number         :string(255)
 #
 
 module GoldencobraEvents
@@ -145,10 +146,10 @@ module GoldencobraEvents
     end
 
     def company_name
-      if self.billing_company_id.present? && self.billing_company.title.present?
+      if self.billing_company_id.present? && self.billing_company.title.present? && GoldencobraEvents::Company.find(self.billing_company_id).title != "privat Person"
         company = GoldencobraEvents::Company.find(self.billing_company_id)
         result = company.title
-      elsif self.company_id.present? && GoldencobraEvents::Company.find(self.company_id) && self.company.title != "Privat Person"
+      elsif self.company_id.present? && GoldencobraEvents::Company.find(self.company_id) && GoldencobraEvents::Company.find(self.company_id).title != "privat Person"
         company = GoldencobraEvents::Company.find(self.company_id)
         result = company.title
       else
@@ -177,15 +178,6 @@ module GoldencobraEvents
       else
         emails.order("created_at DESC").first.created_at
       end
-    end
-
-    def generate_invoice(event)
-      require 'pdfkit'
-      html = ActionController::Base.new.render_to_string(template: 'templates/invoice/invoice', layout: false, locals: {user: self, event: event})
-      kit = PDFKit.new(html, :page_size => 'Letter')
-      self.invoice_number = event.invoice_number(self.id)
-      self.save
-      kit.to_file("#{Rails.root}/public/system/#{self.invoice_number}.pdf")
     end
 
     def init_default_data

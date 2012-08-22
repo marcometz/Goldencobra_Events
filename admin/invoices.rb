@@ -39,8 +39,8 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column :total_price, sortable: :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
-    column :invoice_number, sortable: :invoice_number do |i|
-      link_to(i.invoice_number, "/system/#{i.invoice_number}.pdf", target: "blank") if i.invoice_number.present?
+    column "Rechnung" do |i|
+      link_to(i.event_registrations.first.invoice_number, "/system/invoices/#{i.event_registrations.first.invoice_number}.pdf", target: "blank") if i.event_registrations.count > 0 && i.event_registrations.first.invoice_number.present?
     end
     column :invoice_sent, sortable: :invoice_sent do |invoice|
       invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent
@@ -254,7 +254,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_invoice do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |registration|
       #render(template: 'templates/invoice/invoice', layout: false, locals: {user: registration, event: registration.event_registrations.first.event_pricegroup.event.root})
-      registration.generate_invoice(registration.event_registrations.first.event_pricegroup.event.root) if registration.invoice_number.blank?
+      GoldencobraEvents::Invoice.generate_invoice(registration) if registration.event_registrations.count > 0 && registration.event_registrations.first.invoice_number.blank?
     end
     redirect_to action: :index
   end

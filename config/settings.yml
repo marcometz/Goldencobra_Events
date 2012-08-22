@@ -16,6 +16,9 @@ goldencobra_events:
     ticket:
         last_ticket_number: "0"
         logo_for_ticket: "logo.png"
+    invoice:
+        last_invoice_number: "0"
+        event_name_for_invoice: "DK"
     event:
         registration_basket:
             headline: "Sie haben gewählt:"

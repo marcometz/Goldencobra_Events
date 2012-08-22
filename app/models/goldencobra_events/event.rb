@@ -2,28 +2,28 @@
 #
 # Table name: goldencobra_events_events
 #
-#  id                          :integer(4)      not null, primary key
+#  id                          :integer          not null, primary key
 #  ancestry                    :string(255)
 #  title                       :string(255)
 #  description                 :text
-#  created_at                  :datetime        not null
-#  updated_at                  :datetime        not null
-#  active                      :boolean(1)      default(TRUE)
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  active                      :boolean          default(TRUE)
 #  external_link               :string(255)
-#  max_number_of_participators :integer(4)      default(0)
+#  max_number_of_participators :integer          default(0)
 #  type_of_event               :string(255)
 #  type_of_registration        :string(255)
-#  exclusive                   :boolean(1)      default(FALSE)
+#  exclusive                   :boolean          default(FALSE)
 #  start_date                  :datetime
 #  end_date                    :datetime
-#  panel_id                    :integer(4)
-#  venue_id                    :integer(4)
-#  teaser_image_id             :integer(4)
+#  panel_id                    :integer
+#  venue_id                    :integer
+#  teaser_image_id             :integer
 #
 
 module GoldencobraEvents
   class Event < ActiveRecord::Base
-    
+
     EventType = ["No Registration needed", "Registration needed", "Registration optional"]
     RegistrationType = ["No cancellation required", "Cancellation required"]
     Modultype = {"program" => "Programm", "registration" => "Anmeldung"}
@@ -81,7 +81,7 @@ module GoldencobraEvents
     def registration_date_valid
       # Check if current date is valid for registration
       if self.end_date
-        return self.end_date > Time.now 
+        return self.end_date > Time.now
       else
         return true
       end
@@ -123,9 +123,9 @@ module GoldencobraEvents
       if options && options[:article].present?
         article = options[:article]
         result = true if article.eventmoduletype == "program"
-        if (article.eventmoduletype == "registration" && (self.has_registerable_childrens? || self.needs_registration? || self.registration_optional?))           
-          if self.webcodes.present? 
-            if (options[:webcode].present? && self.webcodes.include?(options[:webcode])) || self.webcodes.include?(true) 
+        if (article.eventmoduletype == "registration" && (self.has_registerable_childrens? || self.needs_registration? || self.registration_optional?))
+          if self.webcodes.present?
+            if (options[:webcode].present? && self.webcodes.include?(options[:webcode])) || self.webcodes.include?(true)
               result = true
             end
           else
@@ -179,12 +179,6 @@ module GoldencobraEvents
 
     def title_for_invoice
       self.title + " des Tagesspiegels"
-    end
-
-    def invoice_number(user_id)
-      a = self.title.split(" ")[0][0]
-      a << self.title.split(" ")[1][0]
-      a << user_id.to_s
     end
 
     def date
