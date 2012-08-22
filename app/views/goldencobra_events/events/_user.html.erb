@@ -7,12 +7,12 @@
             <%= s("goldencobra_events.event.registration.user_form.user_fieldset_name") %>
         </p>
         <p>
-            <label><span class="asterix">*</span> – Pflichtangabe</label>
+            <label><span class="asterix">*</span> Pflichtangabe</label>
         </p>
         <p>
             <label><%= s("goldencobra_events.event.registration.user_form.label.gender") %> <span class="asterix">*</span></label>
             <%= radio_button "registration[user]", "gender", true , :id => "male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
-            <%= radio_button "registration[user]", "gender", false, :id => "female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>        
+            <%= radio_button "registration[user]", "gender", false, :id => "female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>
         </p>
         <p>
             <label><%= s("goldencobra_events.event.registration.user_form.user_label.title") %></label>
@@ -48,7 +48,7 @@
                 <label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
                 <%= text_field_tag "registration[company][location_attributes][country]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_country") %>
             </p>
-        </div>  
+        </div>
         <p>
             <label><%= s("goldencobra_events.event.registration.user_form.user_label.phone") %></label>
             <%= text_field_tag "registration[user][phone]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.phone") %>
@@ -82,7 +82,7 @@
       <p>
           <label><%= s("goldencobra_events.event.registration.user_form.label.billing_gender") %></label>
           <%= radio_button "registration[billing_user]", "billing_gender", true , :id => "billing_male" %> <%= s("goldencobra_events.event.registration.user_form.gender_male") %>
-          <%= radio_button "registration[billing_user]", "billing_gender", false, :id => "billing_female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>        
+          <%= radio_button "registration[billing_user]", "billing_gender", false, :id => "billing_female" %> <%= s("goldencobra_events.event.registration.user_form.gender_female") %>
       </p>
   <!-- Ansprechpartner Vorname -->
       <p>
@@ -122,7 +122,7 @@
     <p><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p>
     <p style="padding:25px 0 25px 15px;">
         <label></label>
-  <%= submit_tag s("goldencobra_events.event.registration.user_form.submit"), :id => "goldencobra_events_user_registration_form_submit", disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %>  
+  <%= submit_tag s("goldencobra_events.event.registration.user_form.submit"), :id => "goldencobra_events_user_registration_form_submit", disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %>
     </p>
 </div>
 <% end %>
