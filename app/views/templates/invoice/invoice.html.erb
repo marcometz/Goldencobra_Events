@@ -2,17 +2,17 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Rechnung <%= event.title %></title>
+  <title>Rechnung <%= event.title %></title>
 </head>
 
 <body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px;">
-	<section>
-		<article>
+  <section>
+    <article>
 
       <!-- Anschrift -->
-			<header>
-      <img src="/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:20px 0 0 560px;"/>
-				<h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
+      <header>
+      <img src="<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:20px 0 0 560px;"/>
+        <h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
         <p class="contact-informations">
         <% if user.company_name %>
           <%= user.company_name %><br />
@@ -39,7 +39,7 @@
             <%= user.company.location.country %>
           <% end %>
         <% end %><p/>
-			</header>
+      </header>
 
       <p style="margin-top: 70px;"><strong>Teilnahme-Rechnung <%= event.title_for_invoice %>, <%= event.date %></strong></p>
       <p>(im Auftrag des Tagesspiegels, <%= event.title %>)</p>
@@ -85,12 +85,12 @@
       <br />
       <p>Mit freundlichen Grüßen<br />
       Teilnehmermanagement <%= event.title %></p>
-		</article>
-	</section>
+    </article>
+  </section>
 
-	<footer>
-      <img src="/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px;"/>
-	</footer>
+  <footer>
+      <img src="<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px;"/>
+  </footer>
 </body>
 </html>
 
