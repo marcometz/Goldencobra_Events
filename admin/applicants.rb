@@ -234,14 +234,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     redirect_to :action => :index
   end
 
-  batch_action :generate_ticket, confirm: "Ticket erzeugen?" do |selection|
-    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      # render(template: 'templates/ticket/ticket', layout: false, locals: {user: reguser, event: reguser.event_registrations.first.event_pricegroup.event.root})
-      GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.first.ticket_number.present?
-    end
-    redirect_to :action => :index
-  end
-
   batch_action :destroy, false
 
   member_action :deactivate_applicant do
