@@ -85,7 +85,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
             comp.input :title
           end
           comp.inputs "" do
-            comp.fields_for :location_attributes, f.object.billing_company.location do |loc|
+            comp.fields_for :location_attributes, (comp.object.location if comp.object.present?) do |loc|
               loc.inputs "Anschrift", :class => "foldable inputs" do
                 loc.input :street
                 loc.input :city
@@ -108,7 +108,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
           comp.input :sector
         end
         comp.inputs "" do
-          comp.fields_for :location_attributes, comp.object.location do |loc|
+          comp.fields_for :location_attributes, (comp.object.location if comp.object.present?) do |loc|
             loc.inputs "#{t('location', scope: [:activerecord, :models], count: 1)}", :class => "foldable inputs" do
               loc.input :street
               loc.input :city
