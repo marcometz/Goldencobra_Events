@@ -189,6 +189,9 @@ module GoldencobraEvents
         billing_company = GoldencobraEvents::Company.new if self.billing_company_id.blank?
         billing_company.location = Goldencobra::Location.new if billing_company.present? && billing_company.location
         self.billing_company = billing_company
+        company = GoldencobraEvents::Company.new if self.company_id.blank?
+        company.location = Goldencobra::Location.new if company.present? && company.location
+        self.company = company
         self.save
       end
     end
