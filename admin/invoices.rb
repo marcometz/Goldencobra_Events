@@ -262,7 +262,8 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_ticket, confirm: "Ticket erzeugen?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       # render(template: 'templates/ticket/ticket', layout: false, locals: {user: reguser, event: reguser.event_registrations.first.event_pricegroup.event.root})
-      GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.any? && reguser.event_registrations.first.ticket_number.present?
+      # GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.any? && reguser.event_registrations.first.ticket_number.present?
+      GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first)
     end
     redirect_to :action => :index
   end
