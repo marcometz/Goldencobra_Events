@@ -254,7 +254,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_invoice do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |registration|
       #render(template: 'templates/invoice/invoice', layout: false, locals: {user: registration, event: registration.event_registrations.first.event_pricegroup.event.root})
-      GoldencobraEvents::Invoice.generate_invoice(registration) if registration.event_registrations.any? && registration.event_registrations.first.invoice_number.blank?
+      
+      # Wenn Rechungen nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
+      # GoldencobraEvents::Invoice.generate_invoice(registration) if registration.event_registrations.any? && registration.event_registrations.first.invoice_number.blank?
+      GoldencobraEvents::Invoice.generate_invoice(registration)
     end
     redirect_to action: :index
   end
@@ -262,6 +265,8 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_ticket, confirm: "Ticket erzeugen?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       # render(template: 'templates/ticket/ticket', layout: false, locals: {user: reguser, event: reguser.event_registrations.first.event_pricegroup.event.root})
+      
+      # Wenn Tickets nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
       # GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.any? && reguser.event_registrations.first.ticket_number.present?
       GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first)
     end
