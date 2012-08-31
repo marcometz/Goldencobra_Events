@@ -35,7 +35,7 @@
           <% company = GoldencobraEvents::Company.find(user.company_id) %>
           <% if user.company.location_id.present? %>
             <%= user.company.location.street %><br />
-            <%= "#{user.company.location.zip} #{user.company.location.city}" %>
+            <%= "#{user.company.location.zip} #{user.company.location.city}" %><br />
             <%= user.company.location.country %>
           <% end %>
         <% end %><p/>
