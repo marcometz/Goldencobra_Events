@@ -27,6 +27,7 @@ module GoldencobraEvents
     def self.generate_ticket(event_registration)
       require 'pdfkit'
       ticket_number = self.generate_barcode
+      File.delete("#{Rails.root}/public/system/tickets/ticket_#{ticket_number}.pdf")
       html = ActionController::Base.new.render_to_string(template: 'templates/ticket/ticket', layout: false, locals: {user: event_registration.user, event: event_registration.event_pricegroup.event, ticket_number: ticket_number})
       event_registration.update_attributes(ticket_number: ticket_number)
       kit = PDFKit.new(html, :page_size => 'Letter')
