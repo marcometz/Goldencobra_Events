@@ -62,17 +62,19 @@
         <% end %>
       </table>
     </div>
-	  <div class="gebuehren">
-		  <h2>Teilnahmegeb&uuml;hr</h2>
-		<table id="gebuehrtable">
-				<% if session[:goldencobra_event_registration].present? %>
-					<% erg = session[:goldencobra_event_registration] %>
-					<% event_pg = GoldencobraEvents::EventPricegroup.find(session[:goldencobra_event_registration][:pricegroup_ids].first) %>
-					<tr><td>Preis netto: </td><td> <%= number_to_currency(event_pg.price, :locale => :de) %></td></tr>
-					<tr><td>zzgl MwSt: </td><td> <%= number_to_currency(event_pg.price/100*19, :locale => :de) %></td></tr>
-					<tr><td>Preis brutto: </td><td> <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %></td></tr>
-				<% end %>
-		</table>
+    <% if session[:goldencobra_event_registration].present? %>
+      <% erg = session[:goldencobra_event_registration] %>
+      <% event_pg = GoldencobraEvents::EventPricegroup.find(session[:goldencobra_event_registration][:pricegroup_ids].first) %>
+      <% if event_pg && event_pg.price > 0 %>
+    	  <div class="gebuehren">
+    		  <h2>Teilnahmegeb&uuml;hr</h2>
+    		<table id="gebuehrtable">
+    					<tr><td>Preis netto: </td><td> <%= number_to_currency(event_pg.price, :locale => :de) %></td></tr>
+    					<tr><td>zzgl MwSt: </td><td> <%= number_to_currency(event_pg.price/100*19, :locale => :de) %></td></tr>
+    					<tr><td>Preis brutto: </td><td> <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %></td></tr>
+    				<% end %>
+    		</table>
+      <% end %>
     <p><%= submit_tag s("goldencobra_events.event.registration.user_form.final_submit"), disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
 	  </div>
 	</div>

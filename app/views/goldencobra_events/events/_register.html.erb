@@ -38,7 +38,6 @@
           <% end %>
         <% else %>
           <% if @validated_pricegroups && !@validated_pricegroups.each_value.include?(true) %>
-          <%# session[:goldencobra_events_webcode] = nil %>
             <span>Leider kann die gew&uuml;nschte Preisgruppe nicht mehr gebucht werden. Bitte w&auml;hlen Sie eine andere Preisgruppe.</span>
           <% end %>
           <ul class="select_pricegroup_id" id="select_pricegroup_<%= @event_to_register.event_pricegroups.available.publicly_available.map{|a| a.id}.join('_')%>">
