@@ -89,7 +89,9 @@ module GoldencobraEvents
 
     def pricegroups_with_webcode(webcode)
       pricegroups = []
-      pricegroups << self.event_pricegroups.available.where(:webcode => "")
+      # Wenn ein Webcode vorhanden ist, soll nur noch diese entsprechende Preisgruppe
+      # angezeigt werden.
+      # pricegroups << self.event_pricegroups.available.where(:webcode => "")
       pricegroups << self.event_pricegroups.available.where(:webcode => webcode)
       return pricegroups.flatten
     end

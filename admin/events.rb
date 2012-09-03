@@ -15,9 +15,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
 
 
   form :html => { :enctype => "multipart/form-data" }  do |f|
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
+    f.actions
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
       f.input :start_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_date.strftime('%A, %d.%m.%Y') if f.object.start_date}" }
@@ -56,9 +54,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}, hint: t('active_admin.not_needed')
       f.input :external_link, hint: t('active_admin.not_needed')
     end
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
+    f.actions
   end
 
 
