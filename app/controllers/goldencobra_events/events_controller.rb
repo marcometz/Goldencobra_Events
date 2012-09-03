@@ -1,6 +1,6 @@
 module GoldencobraEvents
   class EventsController < ApplicationController
-    
+
     around_filter :init_registration_session, :only => [:register]#, :cancel, :perform_registration]
 
     def validate_webcode
@@ -9,7 +9,7 @@ module GoldencobraEvents
         @article = Goldencobra::Article.find(params[:article_id])
       end
       if params[:webcode] && params[:webcode].present? && GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
-        session[:goldencobra_events_webcode] = params[:webcode] 
+        session[:goldencobra_events_webcode] = params[:webcode]
         @webcode = true
       end
     end
@@ -206,7 +206,7 @@ module GoldencobraEvents
 
     def init_registration_session
       session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank?
-      session[:goldencobra_event_registration][:pricegroup_ids] = [] if session[:goldencobra_event_registration][:pricegroup_ids].blank?  
+      session[:goldencobra_event_registration][:pricegroup_ids] = [] if session[:goldencobra_event_registration][:pricegroup_ids].blank?
       if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_id].present?
         @current_user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
         if @current_user && @current_user.event_registrations.count > 0
