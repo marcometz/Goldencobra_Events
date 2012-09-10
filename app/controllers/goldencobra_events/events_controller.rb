@@ -1,4 +1,4 @@
-module GoldencobraEvents
+  module GoldencobraEvents
   class EventsController < ApplicationController
 
     around_filter :init_registration_session, :only => [:register]#, :cancel, :perform_registration]
@@ -66,7 +66,7 @@ module GoldencobraEvents
 
       # Wenn alternative Rechnungsadresse angegeben ist, muessen Pflichtfelder
       # ausgefuellt sein
-      if params[:registration][:billing][:choice].present? && params[:registration][:billing][:choice][0] == "true"
+      if params[:registration][:billing].present? && params[:registration][:billing][:choice].present? && params[:registration][:billing][:choice].any? && params[:registration][:billing][:choice][0] == "true"
         if params[:registration][:billing_user][:billing_gender].present? && params[:registration][:billing_user][:billing_lastname].present? &&
            params[:registration][:billing_company][:location_attributes][:street].present? &&
            params[:registration][:billing_company][:location_attributes][:zip].present? &&
@@ -93,7 +93,7 @@ module GoldencobraEvents
         end
 
         # alternate billing address present?
-        if params[:registration][:billing][:choice].present? && params[:registration][:billing][:choice][0] == "true" &&
+        if params[:registration][:billing].present? && params[:registration][:billing][:choice].present? && params[:registration][:billing][:choice][0] == "true" &&
            params[:registration][:billing_user] && params[:registration][:billing_user].present?
 
           session[:goldencobra_event_registration][:billing_user_data] = params[:registration][:billing_user]
