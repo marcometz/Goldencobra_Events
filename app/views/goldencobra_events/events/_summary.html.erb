@@ -40,7 +40,11 @@
       <% end %>
     <% end %>
     <div class="anschrift">
-      <p><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p><br />
+      <% if session[:goldencobra_event_registration][:price] == 0.0 %>
+        <p>Das Ticket wird Ihnen durch den technischen Dienstleister des Tagesspiegels, die ikusei GmbH, übersendet.</p><br />
+      <% else %>
+        <p><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p><br />
+      <% end %>
       <table class="events">
         <% event_titles = [] %>
 		    <% ergs = GoldencobraEvents::EventPricegroup.where("goldencobra_events_event_pricegroups.id in (?)",session[:goldencobra_event_registration][:pricegroup_ids]).sorted %>
@@ -74,9 +78,11 @@
     					<tr><td>Preis brutto: </td><td> <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %></td></tr>
     				<% end %>
     		</table>
-        <p><%= submit_tag s("goldencobra_events.event.registration.user_form.final_submit"), disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
-      <% else %>
+      <% end %>
+      <% if session[:goldencobra_event_registration][:price] == 0.0 %>
         <p><%= submit_tag "Bestellen", disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
+      <% else %>
+        <p><%= submit_tag s("goldencobra_events.event.registration.user_form.final_submit"), disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
       <% end %>
 	  </div>
 	</div>
