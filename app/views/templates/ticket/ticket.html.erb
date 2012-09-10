@@ -7,7 +7,7 @@
 
 <body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px;">
   <section>
-    <article>
+    <article style="border: 1px solid rgb(154,154,154); padding: 10px;">
       <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/system/tickets/barcode_for_ticket_<%= ticket_number %>.png" alt="barcode-vertical" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg); float:left; margin-top: 100px;" />
       <img src="<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.logo_for_ticket') %>" alt="logo-event" style="float:right; width: 200px;" />
       <table id="invoice-details" style="width: 250px; margin-left: 90px;">
@@ -36,11 +36,10 @@
           </td>
         </tr>
       </table>
-	<p>Bestellt von <%= user.full_name %> am <%= user.event_registrations.first.created_at.strftime("%d. %B %Y, %H:%M") %><br> <br>
-	Eine Veranstaltung von Verlag der Tagesspiegel GmbH und Charta der Vielfalt e.V.<br><br></p>
+  <p>Bestellt von <%= user.full_name %> am <%= user.event_registrations.first.created_at.strftime("%d. %B %Y, %H:%M") %><br> <br>
+  Eine Veranstaltung von Verlag der Tagesspiegel GmbH und Charta der Vielfalt e.V.<br><br></p>
     </article>
   </section>
-  <hr />
   <section>
     <article style="margin-top: 50px; margin-bottom: 10px;">
       <img style="float:right;" src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/system/tickets/barcode_for_ticket_<%= ticket_number %>.png" alt="barcode-vertical" style=" margin: 10px;" />
@@ -50,11 +49,11 @@
 
 
   <footer style="text-align:center;">
-	<p>
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	</p>
-	<hr />
-	<img src="<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.sponsorenleiste_for_ticket') %>" style="width:100%;">
+  <p>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  </p>
+  <hr />
+  <img src="<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.sponsorenleiste_for_ticket') %>" style="width:100%;">
   </footer>
 </body>
 </html>
