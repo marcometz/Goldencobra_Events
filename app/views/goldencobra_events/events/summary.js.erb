@@ -2,3 +2,8 @@
 	$('#main_article').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/summary' ))%>");
 	_gaq.push(['_trackPageview', '/registrierung/bestellzusammenfassung']);
 <% end %>
+
+<% if session[:goldencobra_event_registration][:price] == 0.0 %>
+  $("#footer_description").text("Das Ticket wird Ihnen durch den technischen Dienstleister des Tagesspiegels, die ikusei GmbH, übersendet.");
+<% end %>
+

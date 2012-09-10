@@ -41,6 +41,7 @@
           check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
           if check
             session[:goldencobra_event_registration][:pricegroup_ids] << @registered_event_price_group.id
+            session[:goldencobra_event_registration][:price] = @registered_event_price_group.price
           else
             @errors = check
           end
