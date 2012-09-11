@@ -43,7 +43,7 @@
       <% if session[:goldencobra_event_registration][:price] == 0.0 %>
         <p>Das Ticket wird Ihnen durch den technischen Dienstleister des Tagesspiegels, die ikusei GmbH, übersendet.</p><br />
       <% else %>
-        <p><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p><br />
+        <p id="footer_description"><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p><br />
       <% end %>
       <table class="events">
         <% event_titles = [] %>
