@@ -81,6 +81,9 @@
       <% end %>
       <% if session[:goldencobra_event_registration][:price] == 0.0 %>
         <p><%= submit_tag "Bestellen", disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
+        <%= jquery do %>
+          $("#footer_description").text("Ihr Ticket wird Ihnen durch den technischen Dienstleister des Tagesspiegels, die ikusei GmbH, per Post zugestellt.");
+        <% end %>
       <% else %>
         <p><%= submit_tag s("goldencobra_events.event.registration.user_form.final_submit"), disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
       <% end %>
