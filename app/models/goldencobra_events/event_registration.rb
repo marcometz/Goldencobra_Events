@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # == Schema Information
 #
 # Table name: goldencobra_events_event_registrations
@@ -20,10 +21,22 @@ module GoldencobraEvents
     attr_accessor :session_list_of_ids
     scope :active, where(:canceled => false)
     scope :with_event_id, lambda { |param| joins(:event_pricegroup).where("goldencobra_events_event_pricegroups.event_id = #{param}") }
+    CheckIns = ["Bekannt & erster Checkin. Bitte Unterhalten aushändigen.", "Bekannt & wiederholter Checkin. Keine Unterlagen aushändigen."]
 
     LiquidParser = {}
 
     before_save :is_registerable?
+
+    def checkin_status_message
+      unless self.checkin_status.present?
+        self.checkin_status = CheckIns[0]
+        self.save
+      else
+        self.checkin_status = CheckIns[1]
+        self.save
+      end
+      self.checkin_status
+    end
 
     def is_registerable?(list_of_pricegroup_ids=nil)
       # receives array of event_pricegroup_ids and checks them for

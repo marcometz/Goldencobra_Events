@@ -13,7 +13,6 @@ module GoldencobraEvents
     def self.generate_barcode
       require 'barby'
       require 'barby/barcode/code_128'
-      require 'barby/outputter/ascii_outputter'
       require 'barby/outputter/png_outputter'
 
       ticket_number = self.next_ticket_number.to_s

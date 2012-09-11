@@ -1,10 +1,13 @@
 de:
   activerecord:
     models:
+      tickets scannen:
+        one: "Ticket scannen"
+        other: "Tickets scannen"
       invoice:
         one: "Abrechnung"
         other: "Abrechnungen"
-      applicant: 
+      applicant:
         one: "Besucher"
         other: "Besucher"
       goldencobra_events/registration_user:

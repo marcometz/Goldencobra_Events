@@ -32,3 +32,29 @@
 		color: #22eeaa;
 	}
 }
+
+div#result {
+
+  height: 41px;
+  width: 450px;
+
+  &.valid {
+    background-color:#00aa00;
+  }
+
+  &.invalid {
+    background-color:#aa0000;
+  }
+
+  span.correct {
+    color:#ffffff;
+    font-size: 18px;
+    padding: 10px 210px 5px 210px;
+  }
+
+  span.incorrect {
+    color:#ffffff;
+    font-size: 18px;
+    padding: 10px 50px 5px 150px;
+  }
+}
