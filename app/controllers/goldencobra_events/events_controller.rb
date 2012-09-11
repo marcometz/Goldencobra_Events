@@ -208,6 +208,7 @@
     def init_registration_session
       session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank?
       session[:goldencobra_event_registration][:pricegroup_ids] = [] if session[:goldencobra_event_registration][:pricegroup_ids].blank?
+      session[:goldencobra_event_registration][:price] = nil
       if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_id].present?
         @current_user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
         if @current_user && @current_user.event_registrations.count > 0
