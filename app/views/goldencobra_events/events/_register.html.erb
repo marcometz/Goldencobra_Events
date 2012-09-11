@@ -33,8 +33,10 @@
                 <% else %>
                   <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> (brutto: <%= number_to_currency(e_pricegroup.brutto_price, locale: :de) %>)</label>
                 <% end %>
-                <% if e_pricegroup.price == "0.0" %>
-                  <% @nil_price = true %>
+                <% if e_pricegroup.price == 0.0 %>
+                  <%= jquery do %>
+                    $(".article_content_for_sidebar").hide();
+                  <% end %>
                 <% end %>
               </li>
             <% end %>
@@ -54,7 +56,9 @@
                 <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> (brutto: <%= number_to_currency(e_pricegroup.brutto_price, locale: :de) %>)</label>
               <% end %>
                 <% if e_pricegroup.price == 0.0 %>
-                  <% @nil_price = true %>
+                  <%= jquery do %>
+                    $(".article_content_for_sidebar").hide();
+                  <% end %>
                 <% end %>
             </li>
           <% end %>
@@ -78,10 +82,3 @@
     <p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
   <% end %>
 <% end %>
-
-<% if @nil_price == true %>
-  <%= jquery do %>
-    $(".article_content_for_sidebar").hide();
-  <% end %>
-<% end %>
-
