@@ -21,7 +21,7 @@ module GoldencobraEvents
     attr_accessor :session_list_of_ids
     scope :active, where(:canceled => false)
     scope :with_event_id, lambda { |param| joins(:event_pricegroup).where("goldencobra_events_event_pricegroups.event_id = #{param}") }
-    CheckIns = ["Bekannt & erster Checkin. Bitte Unterhalten aushändigen.", "Bekannt & wiederholter Checkin. Keine Unterlagen aushändigen."]
+    CheckIns = ["Bekannt & erster Checkin. Bitte Unterlagen aushändigen.", "Bekannt & wiederholter Checkin. Keine Unterlagen aushändigen."]
 
     LiquidParser = {}
 
