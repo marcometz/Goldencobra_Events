@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 9de1ca94dd195f41939b9224d0236abd4da38469
+  revision: d5d5b76a218e61dbda8fbc74c46c8daf0dd2b22f
   specs:
     goldencobra (1.0.7)
       activeadmin
@@ -35,6 +35,7 @@ GIT
       sunspot_solr
       therubyracer
       uglifier
+      whenever
 
 GIT
   remote: git://github.com/ikusei/active_admin.git
@@ -164,6 +165,7 @@ GEM
       timers (>= 1.0.0)
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
+    chronic (0.6.7)
     chunky_png (1.2.6)
     cocaine (0.3.0)
     coderay (1.0.7)
@@ -465,6 +467,9 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.1)
       rack (>= 1.0)
+    whenever (0.7.3)
+      activesupport (>= 2.3.4)
+      chronic (~> 0.6.3)
     wkhtmltopdf-binary (0.9.9.1)
     xpath (0.1.4)
       nokogiri (~> 1.3)
