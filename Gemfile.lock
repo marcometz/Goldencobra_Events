@@ -497,6 +497,7 @@ DEPENDENCIES
   guard-rspec
   hirb
   launchy
+  mail
   mysql2
   pdfkit
   powder

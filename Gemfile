@@ -12,6 +12,7 @@ gem 'goldencobra_email_templates', :git => "git://github.com/ikusei/goldencobra_
 gem 'compass-rails'
 gem 'coffee-rails'
 gem 'sass'
+gem 'mail'
 
 gem "rspec-rails", :group => [:test, :development] # rspec in dev so the rake tasks run properly
 gem 'roadie'
