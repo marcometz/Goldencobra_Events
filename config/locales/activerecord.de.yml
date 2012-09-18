@@ -4,6 +4,9 @@ de:
       tickets scannen:
         one: "Ticket scannen"
         other: "Tickets scannen"
+      email-blacklist:
+        one: "Email Blacklist"
+        other: "Email Blacklist"
       invoice:
         one: "Abrechnung"
         other: "Abrechnungen"
