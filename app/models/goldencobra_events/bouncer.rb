@@ -30,7 +30,6 @@ module GoldencobraEvents
           # delete message after parsing
           # imap.store(message_id, "+FLAGS", [:Deleted])
         end
-        puts "#{EmailBlacklist.all}"
       end
     end
   end

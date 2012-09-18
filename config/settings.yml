@@ -129,7 +129,7 @@ goldencobra_events:
                     password: "Passwort"
                     confirm_password: "Passwort wiederholen"
     imap:
-        domain: "80.239.150.82"
-        login: "info+diversity-konferenz.de"
-        password: "s1IrW8kUA1S8"
+        domain: "my.server.com"
+        login: "my-username"
+        password: "my-password"
         use_blacklist: "false"
