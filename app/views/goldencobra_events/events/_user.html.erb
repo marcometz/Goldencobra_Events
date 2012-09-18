@@ -100,7 +100,7 @@
       </p>
   <!-- PLZ und Ort -->
       <p>
-          <label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %><span class="asterix">*</span> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %><span class="asterix">*</span></label>
+          <label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
           <%= text_field_tag "registration[billing_company][location_attributes][zip]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
           <%= text_field_tag "registration[billing_company][location_attributes][city]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
       </p>
