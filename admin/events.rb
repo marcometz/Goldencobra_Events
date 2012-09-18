@@ -4,15 +4,9 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   controller.authorize_resource :class => GoldencobraEvents::Event
 
   scope "Alle", :scoped, :default => true
-<<<<<<< HEAD
   scope "Aktiv", :active
   scope "Inaktiv", :inactive
   
-=======
-  scope :active
-  scope :inactive
-
->>>>>>> 91a59ad44f0bacb283152d8a2b8c7a1c0096e546
   filter :title
   filter :start_date
   filter :end_date
