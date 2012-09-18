@@ -85,7 +85,8 @@ module GoldencobraEvents
         # Darstellung des Anmeldeformulars
         else
           result = content_tag(:ul, raw(content), :class => "#{class_name} depth_#{depth} article_events level_1".squeeze(' ').strip)
-          result << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.price_informations"))}", class: "price_informations")
+          # Wird derzeit nicht mehr benötigt und wird deshalb aktuell nicht angezeigt.
+          # result << content_tag(:p, "#{raw(s("goldencobra_events.event.registration.price_informations"))}", class: "price_informations")
           return_content = content_tag(:div, raw(result), :id => "goldencobra_events_article_events", :class=> "#{@article.eventmoduletype}")
           # return_content += content_tag(:div, render(:partial => "goldencobra_events/events/webcode_form"), :id => "article_event_webcode_form" )
           return_content += content_tag(:div, link_to(s("goldencobra_events.event.registration.enter_user_data"), "#", :id => "goldencobra_events_enter_account_data", :class => "button"), :id => "goldencobra_events_enter_account_data_wrapper", :style => "display:none")
@@ -332,10 +333,16 @@ module GoldencobraEvents
           end
         end
       end
-      
+
       if @article.eventmoduletype == "registration"
         if (event.needs_registration? || event.registration_optional?)
-          return content_tag(:div, raw(content), class: "article_event_content")          
+          c = content_tag(:div, raw(content), class: "article_event_content")
+
+          # Sidebartext dient z.B. der Darstellung von Stornoinformationen
+          # und wird unterhalb der Preisgruppen angezeigt
+          c << content_tag(:div, raw(@article.context_info), class: "article_content_for_sidebar")
+
+          return c
         else
           # if event.exclusive
           #   return content_tag(:div, raw(s("goldencobra_events.event.registration.exclusive_description")), class: "article_event_content exclusive_description")
@@ -348,6 +355,5 @@ module GoldencobraEvents
       end
     end
 
-      
   end
 end

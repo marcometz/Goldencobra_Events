@@ -1,23 +1,27 @@
 ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
-  
+
   menu :parent => "Event-Management", :label => "Veranstaltungen", :if => proc{can?(:read, GoldencobraEvents::Event)}
   controller.authorize_resource :class => GoldencobraEvents::Event
-  
+
   scope "Alle", :scoped, :default => true
+<<<<<<< HEAD
   scope "Aktiv", :active
   scope "Inaktiv", :inactive
   
+=======
+  scope :active
+  scope :inactive
+
+>>>>>>> 91a59ad44f0bacb283152d8a2b8c7a1c0096e546
   filter :title
   filter :start_date
   filter :end_date
   filter :venue
   filter :type_of_event
-  
-  
+
+
   form :html => { :enctype => "multipart/form-data" }  do |f|
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
+    f.actions
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
       f.input :start_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_date.strftime('%A, %d.%m.%Y') if f.object.start_date}" }
@@ -28,11 +32,12 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       f.input :active, :hint => "Ist dieser Event online zu sehen?"
       f.input :exclusive, :hint => "Kinder dieser Veranstaltung sind Exclusiv, f&uuml;r eines der Kinder muss sich dann entschieden werden!"
     end
-    
+
     f.inputs "Preisgruppen" do
       f.has_many :event_pricegroups do |m|
         m.input :pricegroup, :include_blank => "default", :input_html => { :class => 'pricegroup_pricegroup'}
         m.input :price_raw, :input_html => { :class => 'pricegroup_price', :maxlength => 10, :value => "#{m.object.price}" }
+        m.input :description, hint: "Wenn dieser Text vorhanden ist, wird er anstatt der Preises dargestellt."
         m.input :max_number_of_participators, :input_html => { :class => 'pricegroup_numbers'}
         m.input :start_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.start_reservation.strftime('%A, %d.%m.%Y') if m.object.start_reservation}" }
         m.input :end_reservation, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{m.object.end_reservation.strftime('%A, %d.%m.%Y') if m.object.end_reservation}" }
@@ -40,28 +45,26 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
         m.input :webcode, :hint => "Wenn hier ein Code angegeben ist, ist diese Preisgruppe nicht mehr &ouml;ffentlich sichtbar, sondern nur noch mit oben genanntem Webcode."
         m.input :available, :as => :boolean
       end
-    end    
+    end
 
     f.inputs "Information" do
       f.input :panel, :as => :select, :collection => GoldencobraEvents::Panel.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_panel')} if GoldencobraEvents::Panel.all.count > 0
-      f.input :venue, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => t('active_admin.events.chose_venue')} if GoldencobraEvents::Venue.all.count > 0
+      f.input :venue_id, :as => :select, :collection => GoldencobraEvents::Venue.all.map{|c| [c.title, c.id]}, :include_blank => true, :input_html => { :class => 'chzn-select', :style => 'width: 70%;', 'data-placeholder' => 'Ort auswaehlen'} if GoldencobraEvents::Venue.all.count > 0
       f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC"), :input_html => { } if GoldencobraEvents::Sponsor.all.count > 0
       f.input :artists, as: :check_boxes, :collection => GoldencobraEvents::Artist.find(:all, :order => "title ASC"), :input_html => { } if GoldencobraEvents::Artist.all.count > 0
       f.input :max_number_of_participators, hint: t('active_admin.not_needed')
     end
-    
+
     f.inputs "Inhalt" do
       f.input :teaser_image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'teaser_image'}, hint: t('active_admin.not_needed')
       f.input :description, :hint => "Beschreibung des Events", :input_html => { :class =>"tinymce"}, hint: t('active_admin.not_needed')
       f.input :external_link, hint: t('active_admin.not_needed')
     end
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
+    f.actions
   end
-    
-  
-  index do 
+
+
+  index do
     column :title, :sortable => :title do |event|
       event.title
     end
@@ -85,13 +88,13 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       raw(result)
     end
   end
-  
+
   # action_item do
   #   link_to('New Event', new_admin_event_path)
   # end
-  
+
   batch_action :destroy, false
-  
+
   show :title => :title do
     panel "Event Details" do
       attributes_table_for event do
@@ -130,7 +133,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
       	    td epg.webcode
       	  end
         end
-      end      
+      end
     end
     if event.panel.present?
       panel "Panel" do
@@ -172,7 +175,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     end
     active_admin_comments
   end
-  
+
   sidebar "Ueberblick", only: [:index]  do
     render :partial => "/goldencobra/admin/shared/overview", :object => GoldencobraEvents::Event.roots, :locals => {:link_name => "title", :url_path => "event" }
   end
@@ -180,30 +183,30 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   sidebar "Zeitlinie", only: [:index]  do
     render :partial => "/goldencobra_events/admin/events/timeline", :object => GoldencobraEvents::Event.active, :locals => {:link_name => "title", :url_path => "event" }
   end
-  
-  
-  controller do 
-    
+
+
+  controller do
+
     def show
       show! do |format|
          format.html { redirect_to edit_admin_event_path(@event), :flash => flash }
       end
     end
-            
-    def new 
+
+    def new
       @event = GoldencobraEvents::Event.new
       evpg = GoldencobraEvents::EventPricegroup.new(:price => 0, :max_number_of_participators => 0)
       evpg.available = true
       @event.event_pricegroups << evpg
-      if params[:parent] && params[:parent].present? 
+      if params[:parent] && params[:parent].present?
         @parent = GoldencobraEvents::Event.find(params[:parent])
         @event.parent_id = @parent.id
       end
       @event.set_start_end_dates if @event.parent
-    end 
+    end
   end
-  
-  
+
+
   csv do
     column :id
     column :title
@@ -221,6 +224,6 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     column :venue_id
     column("Registrations") {|event| event.event_pricegroups.joins(:event_registrations => :user).where("goldencobra_events_registration_users.active = true").collect(&:event_registrations).count }
   end
-  
-  
+
+
 end

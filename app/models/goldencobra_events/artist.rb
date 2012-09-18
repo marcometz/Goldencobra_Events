@@ -2,15 +2,15 @@
 #
 # Table name: goldencobra_events_artists
 #
-#  id          :integer(4)      not null, primary key
+#  id          :integer          not null, primary key
 #  title       :string(255)
 #  description :text
 #  url_link    :string(255)
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #  telephone   :string(255)
 #  email       :string(255)
-#  location_id :integer(4)
+#  location_id :integer
 #
 
 module GoldencobraEvents

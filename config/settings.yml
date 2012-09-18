@@ -4,7 +4,7 @@ goldencobra_events:
         panels:
           display: "false"
         invoices:
-          display: "true"    
+          display: "true"
         sponsors:
           display: "true"
         artists:
@@ -12,14 +12,20 @@ goldencobra_events:
     agb_article_id: "0"
     event_pricegroup:
         available:
-            default: "false"    
+            default: "false"
+    ticket:
+        last_ticket_number: "0"
+        logo_for_ticket: "logo.png"
+    invoice:
+        last_invoice_number: "0"
+        event_name_for_invoice: "DK"
     event:
         registration_basket:
             headline: "Sie haben gewählt:"
             greeting: "Hallo "
             submit_text: "Anmeldung abschließen"
-            remove_text: "entfernen"    
-            description: "Bitte füllen Sie noch Ihre Benutzerdaten aus..."    
+            remove_text: "entfernen"
+            description: "Bitte füllen Sie noch Ihre Benutzerdaten aus..."
             completed: "Anmeldung abgeschlossen"
         article_events:
             register_text: "Für diese Veranstaltung anmelden"
@@ -45,7 +51,7 @@ goldencobra_events:
                 submit: "Weiter"
                 submit_disabled: "Anfrage wird übermittelt ..."
             errors:
-                no_events_selected: "Es wurden noch keine Event gewählt"            
+                no_events_selected: "Es wurden noch keine Event gewählt"
                 no_user_selected: "Bitte füllen Sie Ihre Benutzerdaten aus"
                 user_not_exists: "Diesen Benutzer gibt es nicht"
                 no_price_groups_defined: "Es wurden für diesen Event keine Preisgruppen angelegt"
@@ -101,11 +107,11 @@ goldencobra_events:
                     linkedin: "LinkedIn"
                     twitter: "Twitter"
                     facebook: "Facebook"
-                    billing_gender: "Ansprechpartner Anrede"
-                    billing_department: "Kostenstelle"
-                    billing_street: "Straße mit Hausnummer oder Postfach"
-                    billing_firstname: "Ansprechpartner Vorname"
-                    billing_lastname: "Ansprechpartner Nachname"
+                    billing_gender: "Anrede"
+                    billing_department: "Abteilung/Kostenstelle"
+                    billing_street: "Straße oder Postfach"
+                    billing_firstname: "Vorname"
+                    billing_lastname: "Nachname"
                 company_label:
                     title: "Name"
                     legal_form: "Rechtsform"

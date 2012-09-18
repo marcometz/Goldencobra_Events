@@ -1,33 +1,34 @@
 <% @event_to_register = @article.event if @article.present? %>
 <% if @registered_event_price_group %>
-		// Elternelement als 'registriert' kennzeichnen & Kinder einblenden 
+
+		// Elternelement als 'registriert' kennzeichnen & Kinder einblenden
 		$('li.article_event_id_<%= @registered_event_price_group.event_id%>').find("ul.sub_events").addClass("active").show();
-				
+
 		// Preisgruppen ausblenden, da Wahl getroffen wurde
 		$(".article_event_id_<%= @registered_event_price_group.event_id %>").children(".article_event_content").children(".pricegroups").hide();
-		
+
 		// Button 'Mit Anmeldung fortfahren' einblenden
 		$('#goldencobra_events_enter_account_data_wrapper').fadeIn();
-	
+
 		$('#article_event_webcode_form').hide();
-		
+
 		// Wenn radiobuttons genutzt werden, wird hier das vorgemerkt, des bereits gemerkten Events entfernt
 		<% siblings_array = @registered_event_price_group.event.siblings %>
 		<% siblings_array.each do |sibling| %>
 		<% next if sibling == @registered_event_price_group.event %>
 			$('.article_event_id_<%= sibling.id %>').children().children('div.title').html('<%= sibling.title %>');
 		<% end %>
-		
+
    		$('p.price_informations').hide();
    		$('div.new_pricegroups').fadeOut('slow');
    		$('#article_event_webcode_form').fadeOut('slow');
-	
+
 		// $('li.article_event_id_<%= @registered_event_price_group.event_id%>').parent().children("div.register_for_event").fadeOut(400, function(){});
 		<% @show_panels = true %>
 		<% if @article && @article.event && @article.event.child_ids.count == 0 %>
 			$('#goldencobra_events_enter_account_data').trigger('click');
 		<% end %>
-		
+
 <% else %>
 	// Hier werden alle Preisgruppen und deren Eventoptionen aufgelistet zur Auswahl
 	<% if @event_to_register && @event_to_register.event_pricegroups.available.count > 0 %>
@@ -46,6 +47,11 @@
 <% elsif @valid_webcode == false %>
 	$('#goldencobra_events_webcode_error').append('<p style="color: red;">Webcode ist nicht g&uuml;ltig</p>');
 <% end %>
+
+    <% if @registered_event_price_group.price == 0.0 %>
+      $("#alternate_billing_address").hide();
+      $("#footer_description").text("Ihr Ticket wird Ihnen durch den technischen Dienstleister des Tagesspiegels, die ikusei GmbH, per Post zugestellt.");
+    <% end %>
 
 var _gaq = _gaq || [];
 _gaq.push(['_trackPageview', 'registrierung/preisgruppe_aussuchen']);

@@ -2,28 +2,28 @@
 #
 # Table name: goldencobra_events_events
 #
-#  id                          :integer(4)      not null, primary key
+#  id                          :integer          not null, primary key
 #  ancestry                    :string(255)
 #  title                       :string(255)
 #  description                 :text
-#  created_at                  :datetime        not null
-#  updated_at                  :datetime        not null
-#  active                      :boolean(1)      default(TRUE)
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  active                      :boolean          default(TRUE)
 #  external_link               :string(255)
-#  max_number_of_participators :integer(4)      default(0)
+#  max_number_of_participators :integer          default(0)
 #  type_of_event               :string(255)
 #  type_of_registration        :string(255)
-#  exclusive                   :boolean(1)      default(FALSE)
+#  exclusive                   :boolean          default(FALSE)
 #  start_date                  :datetime
 #  end_date                    :datetime
-#  panel_id                    :integer(4)
-#  venue_id                    :integer(4)
-#  teaser_image_id             :integer(4)
+#  panel_id                    :integer
+#  venue_id                    :integer
+#  teaser_image_id             :integer
 #
 
 module GoldencobraEvents
   class Event < ActiveRecord::Base
-    
+
     EventType = ["No Registration needed", "Registration needed", "Registration optional"]
     RegistrationType = ["No cancellation required", "Cancellation required"]
     Modultype = {"program" => "Programm", "registration" => "Anmeldung"}
@@ -42,13 +42,13 @@ module GoldencobraEvents
     accepts_nested_attributes_for :event_pricegroups
     scope :active, where(:active => true).order(:start_date)
     scope :inactive, where(:active => false).order(:start_date)
-    
+
     scope :parent_ids_in_eq, lambda { |art_id| subtree_of(art_id) }
     search_methods :parent_ids_in_eq
-    
+
     scope :parent_ids_in, lambda { |art_id| subtree_of(art_id) }
     search_methods :parent_ids_in
-    
+
     before_save :set_start_end_dates
     def set_start_end_dates
       if self.start_date.blank? && self.parent.present?
@@ -58,18 +58,18 @@ module GoldencobraEvents
         self.end_date = self.parent.end_date
       end
     end
-    
+
     after_save :init_default_pricegroup
     def init_default_pricegroup
       if self.event_pricegroups.count == 0
         self.event_pricegroups << EventPricegroup.create(:price => 0, :max_number_of_participators => 0)
       end
     end
-    
+
     def needs_registration?
       self.type_of_event == "Registration needed"
     end
-    
+
     def registration_optional?
       self.type_of_event == "Registration optional"
     end
@@ -77,31 +77,36 @@ module GoldencobraEvents
     def get_list_of_events_from_event_pricegroup_ids(list_of_event_pricegroup_ids)
       GoldencobraEvents::Event.joins(:event_pricegroups).where("goldencobra_events_event_pricegroups.id in (?)", list_of_event_pricegroup_ids).select("goldencobra_events_events.id")
     end
-    
+
     def registration_date_valid
       # Check if current date is valid for registration
       if self.end_date
-        return self.end_date > Time.now 
+        return self.end_date > Time.now
       else
         return true
       end
     end
-    
+
     def pricegroups_with_webcode(webcode)
       pricegroups = []
-      pricegroups << self.event_pricegroups.available.where(:webcode => "")
-      pricegroups << self.event_pricegroups.available.where(:webcode => webcode)
+      # Wenn ein Webcode vorhanden ist, soll nur noch diese entsprechende Preisgruppe
+      # angezeigt werden.
+      if webcode.present?
+        pricegroups << self.event_pricegroups.available.where(:webcode => webcode)
+      else
+        pricegroups << self.event_pricegroups.available.where(:webcode => "")
+      end
       return pricegroups.flatten
     end
-    
+
     def webcodes
       self.event_pricegroups.select(:webcode).map(&:webcode).map{|a| a.present? == true ? a : true}
     end
-    
+
     def registration_css_class
       self.type_of_event.to_s.underscore.strip.gsub(" ", "_")
     end
-    
+
     def has_registerable_childrens?
       result = false
       self.descendants.each do |child|
@@ -109,7 +114,7 @@ module GoldencobraEvents
       end
       return result
     end
-    
+
     def number_of_participators_label
       if self.max_number_of_participators == 0
         "&infin;"
@@ -117,15 +122,15 @@ module GoldencobraEvents
         "#{GoldencobraEvents::EventRegistration.with_event_id(self.id).select("goldencobra_events_event_registrations.id").count}/#{self.max_number_of_participators}"
       end
     end
-    
+
     def is_visible?(options={})
       result = false
       if options && options[:article].present?
         article = options[:article]
         result = true if article.eventmoduletype == "program"
-        if (article.eventmoduletype == "registration" && (self.has_registerable_childrens? || self.needs_registration? || self.registration_optional?))           
-          if self.webcodes.present? 
-            if (options[:webcode].present? && self.webcodes.include?(options[:webcode])) || self.webcodes.include?(true) 
+        if (article.eventmoduletype == "registration" && (self.has_registerable_childrens? || self.needs_registration? || self.registration_optional?))
+          if self.webcodes.present?
+            if (options[:webcode].present? && self.webcodes.include?(options[:webcode])) || self.webcodes.include?(true)
               result = true
             end
           else
@@ -135,7 +140,6 @@ module GoldencobraEvents
       end
       return result
     end
-    
 
     def check_for_parent_registrations(list_of_ids)
       # does parent need a registration? Is registration already in system?
@@ -176,6 +180,20 @@ module GoldencobraEvents
         end
       end
       return errors.blank? ? true : errors
+    end
+
+    def title_for_invoice
+      self.title + " des Tagesspiegels"
+    end
+
+    def date
+      if self.start_date.present? && self.end_date.present?
+        self.start_date.strftime("%d.%m.").to_s + "-" + self.end_date.strftime("%d.%m.%Y").to_s
+      elsif self.start_date.present?
+        self.start_date.strftime("%d.%m.").to_s
+      else
+        ""
+      end
     end
   end
 end

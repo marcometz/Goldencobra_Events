@@ -2,35 +2,36 @@
 #
 # Table name: goldencobra_events_registration_users
 #
-#  id                     :integer(4)      not null, primary key
-#  user_id                :integer(4)
-#  gender                 :boolean(1)
+#  id                     :integer          not null, primary key
+#  user_id                :integer
+#  gender                 :boolean
 #  email                  :string(255)
 #  title                  :string(255)
 #  firstname              :string(255)
 #  lastname               :string(255)
 #  function               :string(255)
 #  phone                  :string(255)
-#  agb                    :boolean(1)
-#  company_id             :integer(4)
-#  created_at             :datetime        not null
-#  updated_at             :datetime        not null
-#  type_of_registration   :string(255)     default("Webseite")
+#  agb                    :boolean
+#  company_id             :integer
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  type_of_registration   :string(255)      default("Webseite")
 #  comment                :text
 #  invoice_sent           :datetime
 #  payed_on               :datetime
 #  first_reminder_sent    :datetime
 #  second_reminder_sent   :datetime
-#  active                 :boolean(1)      default(TRUE)
-#  billing_gender         :boolean(1)
+#  active                 :boolean          default(TRUE)
+#  billing_gender         :boolean
 #  billing_title          :string(255)
 #  billing_firstname      :string(255)
 #  billing_lastname       :string(255)
 #  billing_function       :string(255)
 #  billing_phone          :string(255)
-#  billing_company_id     :integer(4)
+#  billing_company_id     :integer
 #  billing_contact_person :string(255)
 #  billing_department     :string(255)
+#  invoice_number         :string(255)
 #
 
 module GoldencobraEvents
@@ -40,19 +41,21 @@ module GoldencobraEvents
     belongs_to :billing_company, :class_name => GoldencobraEvents::Company
     belongs_to :user, :class_name => User
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
-
-    after_initialize :init_default_data
+    attr_accessor :should_not_initialize
+    after_create :init_default_data
 
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
 
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :billing_company
     accepts_nested_attributes_for :event_registrations, :allow_destroy => true
+    accepts_nested_attributes_for :vita_steps, allow_destroy: true, reject_if: lambda { |a| a[:description].blank? }
     liquid_methods :gender, :email, :title, :firstname, :lastname, :function, :anrede
 
     scope :active, where(:active => true)
     scope :storno, where(:active => false)
-    scope :unpaid, where(:payed_on => nil )
+    scope :unpayed, where(:payed_on => nil )
+    scope :payed, where('payed_on IS NOT NULL')
     scope :invoice_not_send, where(:invoice_sent => nil )
 
     search_methods :type_of_registration_not_eq
@@ -109,6 +112,52 @@ module GoldencobraEvents
       end
     end
 
+    def full_name
+      self.firstname + " " + self.lastname
+    end
+
+    def full_billing_name_with_gender_and_title
+      s = ""
+      if self.billing_gender
+        s << "Herr"
+      else
+        s << "Frau"
+      end
+      if self.billing_title.present?
+        s << " #{self.billing_title}"
+      end
+      s << " #{self.billing_firstname} #{self.billing_lastname}"
+      if self.billing_firstname.blank? && self.billing_lastname.blank?
+        s = self.full_name_with_gender_and_title
+      end
+      s
+    end
+
+    def full_name_with_gender_and_title
+      if self.gender
+        s = "Herr"
+      else
+        s = "Frau"
+      end
+      if self.title.present?
+        s << " #{self.title}"
+      end
+      s << " #{self.firstname} #{self.lastname}"
+    end
+
+    def company_name
+      if self.billing_company_id.present? && self.billing_company.title.present? && GoldencobraEvents::Company.find(self.billing_company_id).title != "privat Person"
+        company = GoldencobraEvents::Company.find(self.billing_company_id)
+        result = company.title
+      elsif self.company_id.present? && GoldencobraEvents::Company.find(self.company_id) && GoldencobraEvents::Company.find(self.company_id).title != "privat Person"
+        company = GoldencobraEvents::Company.find(self.company_id)
+        result = company.title
+      else
+        result = nil
+      end
+      result
+    end
+
     def total_price
       total_price = 0
       self.event_registrations.each do |e|
@@ -132,10 +181,19 @@ module GoldencobraEvents
     end
 
     def init_default_data
-      billing_company = GoldencobraEvents::Company.new if self.billing_company_id.blank?
-      billing_company.location = Goldencobra::Location.new if billing_company.present? && billing_company.location
-      self.billing_company = billing_company
-      self.save
+      # zusätzlicher Parameter 'should_not_initialize' wird im events_controller gesetzt,
+      # sofern ein RegistrationUser für die Session erzeugt wird. Ansonsten wird er nicht
+      # benötigt. Der after_initialize callback wird benötigt für manuelles Erstellen
+      # eines RegistrationUsers im ActiveAdmin Backend.
+      unless self.should_not_initialize.present? && self.should_not_initialize == true
+        billing_company = GoldencobraEvents::Company.new if self.billing_company_id.blank?
+        billing_company.location = Goldencobra::Location.new if billing_company.present? && billing_company.location
+        self.billing_company = billing_company
+        company = GoldencobraEvents::Company.new if self.company_id.blank?
+        company.location = Goldencobra::Location.new if company.present? && company.location.blank?
+        self.company = company
+        self.save
+      end
     end
   end
 end

@@ -1,24 +1,67 @@
+// Active Admin CSS Styles
+//@import "active_admin/mixins";
+//@import "active_admin/base";
+
+@import "compass";
+
+// To customize the Active Admin interfaces, add your
+// styles here:
 
 #goldencobra_events_article_event_modul{
-	input[type="submit"]{
-		margin-top:10px;
-	}
+  input[type="submit"]{
+    margin-top:10px;
+  }
 }
 
 .sortable li{
-	cursor:move;
-	&:hover{
-		background-color:yellow;
-	}
+  cursor:move;
+  &:hover{
+    background-color:yellow;
+  }
 }
 
 .overview-sidebar{
-	div.start_date{
-		color:grey;
-		font-style:italic;
-	}
+  div.start_date{
+    color:grey;
+    font-style:italic;
+  }
 }
 
 #event_artist_ids_chzn {
-	width: 350px;
+  width: 350px;
+}
+
+#invoice {
+  h5 {
+    margin-top: 150px;
+  }
+  p.contact-informations {
+    font-size: 10px;
+    color: #22eeaa;
+  }
+}
+
+div#result {
+
+  height: 41px;
+  width: 750px;
+  padding: 20px 0px 0px 10px;
+
+  &.valid {
+    background-color:#00aa00;
+  }
+
+  &.invalid {
+    background-color:#aa0000;
+  }
+
+  span.correct {
+    color:#ffffff;
+    font-size: 18px;
+  }
+
+  span.incorrect {
+    color:#ffffff;
+    font-size: 18px;
+  }
 }

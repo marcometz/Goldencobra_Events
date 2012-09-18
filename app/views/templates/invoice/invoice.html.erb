@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Rechnung <%= event.title %></title>
+</head>
+
+<body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px; padding-left: 20px;">
+  <section>
+    <article>
+
+      <!-- Anschrift -->
+      <header>
+      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/>
+        <h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
+        <p class="contact-informations">
+        <% if user.company_name %>
+          <%= user.company_name %><br />
+        <% end %>
+
+        <% if user.billing_department.present? %>
+          <%= user.billing_department %><br />
+        <% end %>
+
+        <%= user.full_billing_name_with_gender_and_title %><br>
+
+        <% if user.billing_company_id.present? && user.billing_company.title.present? %>
+          <% company = GoldencobraEvents::Company.find(user.billing_company_id) %>
+          <% if company.location_id.present? %>
+            <%= company.location.street %><br />
+            <%= "#{company.location.zip} #{company.location.city}" %><br />
+            <%= company.location.country %>
+          <% end %>
+        <% else %>
+          <% company = GoldencobraEvents::Company.find(user.company_id) %>
+          <% if user.company.location_id.present? %>
+            <%= user.company.location.street %><br />
+            <%= "#{user.company.location.zip} #{user.company.location.city}" %><br />
+            <%= user.company.location.country %>
+          <% end %>
+        <% end %><p/>
+      </header>
+
+      <p style="margin-top: 70px;"><strong>Teilnahme-Rechnung <%= event.title_for_invoice %>, <%= event.date %></strong></p>
+      <p>(im Auftrag des Tagesspiegels, <%= event.title %>)</p>
+      <hr style="max-width:740px; align: left;" />
+      <table id="invoice-details" style="width: 300px;">
+        <tr>
+          <td style="width:167px;">Rechnungsdatum:</td><td><%= Time.now.strftime("%d.%m.%Y") %></td>
+        </tr>
+        <tr>
+          <td style="width:167px;">Rechnungsnummer:</td><td><%= invoice_number %></td>
+        </tr>
+        <tr>
+          <td style="width:167px;">Teilnehmer:</td><td><%= user.full_name %></td>
+        </tr>
+      </table>
+      <hr style="max-width:740px;" />
+      <table id="invoice-amount-bt" style="width: 300px;">
+        <tr>
+          <td style="width:167px;">Teilnehmergebühr:</td><td><%= number_to_currency(user.total_price, :locale => :de) %></td>
+        </tr>
+        <tr>
+          <td style="width:167px;"><strong>Gesamtbetrag netto</strong></td><td><%= number_to_currency(user.total_price, :locale => :de) %></td>
+        </tr>
+      </table>
+      <hr style="max-width:740px;" />
+      <table id="invoice-amount-at" style="width: 300px;">
+        <tr>
+          <td style="width:167px;">Zzgl. MwSt. 19%:</td><td><%= number_to_currency(user.total_price/100*19, :locale => :de) %></td>
+        </tr>
+        <tr>
+          <td style="width:167px;"><strong>Gesamtbetrag</strong></td><td><%= number_to_currency(user.total_price + user.total_price/100*19, :locale => :de) %></td>
+        </tr>
+      </table>
+      <hr style="max-width:740px;" />
+      <p id="account-informations" style="max-width:740px;">Bitte überweisen Sie den Betrag unter Angabe der Rechnungsnummer auf unser Konto:<br /><br />
+      Kontoinhaber: ikusei GmbH<br />
+      Commerzbank Berlin • Kto-Nr.: 0420148600 • BLZ: 100 800 00<br />
+      (IBAN: DRES DE FF 100 • Swift/BIC: DE38 1008 0000 0420 1486 00)<br /><br />
+      Der Rechnungsbetrag ist ohne Abzug sofort fällig.<br /><br />
+      Für Rückfragen steht Ihnen jederzeit unsere Veranstaltungshotline unter der Rufnummer (030) 290 21 - 29 22 2 werktags in der Zeit von 09:00 bis 18:00 Uhr zur Verfügung.
+      </p>
+      <br />
+      <br />
+      <p>Mit freundlichen Grüßen<br />
+      Teilnehmermanagement <%= event.title %></p>
+    </article>
+  </section>
+
+  <footer>
+      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px;"/>
+  </footer>
+</body>
+</html>
+
+

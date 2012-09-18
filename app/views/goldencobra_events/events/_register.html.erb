@@ -1,42 +1,86 @@
 <% if @event_to_register %>
-	<% if @event_to_register.event_pricegroups.available.count > 0 %>
-		<%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
-			<p><%= s("goldencobra_events.event.registration.to_add.headline") %></p>
-				<% if session[:goldencobra_events_webcode] && session[:goldencobra_events_webcode].present? %>
-					<ul class="select_pricegroup_id" id="select_pricegroup_<%= @event_to_register.pricegroups_with_webcode("#{session[:goldencobra_events_webcode]}").map{|a| a.id}.join('_')%>">
-					<% @event_to_register.pricegroups_with_webcode("#{session[:goldencobra_events_webcode]}").each do |e_pricegroup| %>
-						<li class="goldencobra_events_event_price_group_item_for_select_id goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
-							<%= radio_button "event", "event_pricegroup", e_pricegroup.id, :class =>"event_pricegroup_select" %>
-              <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> (brutto: <%= number_to_currency(e_pricegroup.brutto_price, locale: :de) %>) </label>
-						</li>
-					<% end %>
-				<% else %>
-					<ul class="select_pricegroup_id" id="select_pricegroup_<%= @event_to_register.event_pricegroups.available.publicly_available.map{|a| a.id}.join('_')%>">
-					<% @event_to_register.event_pricegroups.available.publicly_available.each do |e_pricegroup| %>
-						<li class="goldencobra_events_event_price_group_item_for_select_id goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
+  <% if @event_to_register.event_pricegroups.available.count > 0 %>
+    <%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
+      <!-- <p><%#= s("goldencobra_events.event.registration.to_add.headline") %></p> -->
+
+<%
+  # Sofern ein Webcode vorhanden ist, soll geprueft werden, ob entsprechende Presigruppen vorhanden sind & ob in diesen
+  # Preisgruppen noch buchbare Plaetze frei sind.
+  # im Partial _register.html.erb werden die nicht mehr buchbaren Preisgruppen dann nicht angezeigt.
+
+  pricegroups = GoldencobraEvents::EventPricegroup.where(webcode: session[:goldencobra_events_webcode]).flatten
+  if pricegroups.any?
+    @validated_pricegroups = {}
+    pricegroups.each do |pricegroup|
+      if pricegroup.max_number_of_participants_reached? == false
+        @validated_pricegroups["#{pricegroup.id}"] = true # wenn die Teilnehmerzahl noch nicht erreicht ist, soll die Preisgruppen-ID den Wert 'true' erhalten. Sie ist also _gueltig_
+      else
+        @validated_pricegroups["#{pricegroup.id}"] = false
+      end
+    end
+  end
+%>
+
+        <% if session[:goldencobra_events_webcode] && session[:goldencobra_events_webcode].present? && @validated_pricegroups && @validated_pricegroups.each_value.include?(true) %>
+          <ul class="select_pricegroup_id" id="select_pricegroup_<%= @event_to_register.pricegroups_with_webcode("#{session[:goldencobra_events_webcode]}").map{|a| a.id}.join('_')%>">
+          <% @event_to_register.pricegroups_with_webcode("#{session[:goldencobra_events_webcode]}").each do |e_pricegroup| %>
+            <% if @validated_pricegroups["#{e_pricegroup.id}"] == true %>
+              <li class="goldencobra_events_event_price_group_item_for_select_id goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
+                <%= radio_button "event", "event_pricegroup", e_pricegroup.id, :class =>"event_pricegroup_select" %>
+                <% if e_pricegroup.description.present? %>
+                  <% # Zeige den Description Text anstatt der Preisinformationen %>
+                  <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.description %></label>
+                <% else %>
+                  <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> (brutto: <%= number_to_currency(e_pricegroup.brutto_price, locale: :de) %>)</label>
+                <% end %>
+                <% if e_pricegroup.price == 0.0 %>
+                  <%= jquery do %>
+                    $('#main_article').find('p').first().text("Die Teilnahme beinhaltet Getränke, Mittagsbuffet und Dinner-Veranstaltung am 8. November 2012.")
+                    $(".article_content_for_sidebar").hide();
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% if @validated_pricegroups && !@validated_pricegroups.each_value.include?(true) %>
+            <span>Leider kann die gew&uuml;nschte Preisgruppe nicht mehr gebucht werden. Bitte w&auml;hlen Sie eine andere Preisgruppe.</span>
+          <% end %>
+          <ul class="select_pricegroup_id" id="select_pricegroup_<%= @event_to_register.event_pricegroups.available.publicly_available.map{|a| a.id}.join('_')%>">
+          <% @event_to_register.event_pricegroups.available.publicly_available.each do |e_pricegroup| %>
+            <li class="goldencobra_events_event_price_group_item_for_select_id goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
               <%= radio_button "event", "event_pricegroup", e_pricegroup.id, :class =>"event_pricegroup_select" %>
-              <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> (brutto: <%= number_to_currency(e_pricegroup.brutto_price, locale: :de) %>)</label>
-						</li>
-					<% end %>
-				<% end %>
-			</ul>
-		
-			<p class="registration_webcode_description">
-				<%= s("goldencobra_events.event.registration.webcode.description") %>
-		  		<%= text_field_tag :webcode, "", :placeholder => "Aktionscode eingeben"%>
-			</p>
-			<% if @article.present? %>
-				<%= hidden_field_tag :article_id, @article.id %>
-			<% end %>
-		
-			<div id="goldencobra_events_webcode_error"></div>	
-			
-    		<%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit", disable_with: s("goldencobra_events.event.registration.to_add.submit_disabled") %>
-		<% end %><!-- End of form register-->
-	<% else %>
-		<p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
-	<% end %>
+              <% if e_pricegroup.description.present? %>
+                <% # Zeige den Description Text anstatt der Preisinformationen %>
+                <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.description %></label>
+              <% else %>
+                <label for="event_event_pricegroup_<%= e_pricegroup.id %>"><%= e_pricegroup.title %> <%= number_to_currency(e_pricegroup.price, :locale => :de) %> (brutto: <%= number_to_currency(e_pricegroup.brutto_price, locale: :de) %>)</label>
+              <% end %>
+                <% if e_pricegroup.price == 0.0 %>
+                  <%= jquery do %>
+                    $('#main_article').find('p').first().text("Die Teilnahme beinhaltet Getränke, Mittagsbuffet und Dinner-Veranstaltung am 8. November 2012.")
+                    $(".article_content_for_sidebar").hide();
+                  <% end %>
+                <% end %>
+            </li>
+          <% end %>
+
+        <% end %>
+      </ul>
+
+      <p class="registration_webcode_description">
+        <%= s("goldencobra_events.event.registration.webcode.description") %>
+          <%= text_field_tag :webcode, "", :placeholder => "Aktionscode eingeben"%>
+      </p>
+      <% if @article.present? %>
+        <%= hidden_field_tag :article_id, @article.id %>
+      <% end %>
+
+      <div id="goldencobra_events_webcode_error"></div>
+
+        <%= submit_tag s("goldencobra_events.event.registration.to_add.submit"), :id => "goldencobra_events_registration_to_add_submit", disable_with: s("goldencobra_events.event.registration.to_add.submit_disabled") %>
+    <% end %><!-- End of form register-->
+  <% else %>
+    <p><%= s("goldencobra_events.event.registration.errors.no_price_groups_defined") %></p>
+  <% end %>
 <% end %>
-
-		
-

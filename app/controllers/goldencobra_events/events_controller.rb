@@ -1,6 +1,6 @@
-module GoldencobraEvents
+  module GoldencobraEvents
   class EventsController < ApplicationController
-    
+
     around_filter :init_registration_session, :only => [:register]#, :cancel, :perform_registration]
 
     def validate_webcode
@@ -9,7 +9,7 @@ module GoldencobraEvents
         @article = Goldencobra::Article.find(params[:article_id])
       end
       if params[:webcode] && params[:webcode].present? && GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
-        session[:goldencobra_events_webcode] = params[:webcode] 
+        session[:goldencobra_events_webcode] = params[:webcode]
         @webcode = true
       end
     end
@@ -41,6 +41,7 @@ module GoldencobraEvents
           check = event_registration.is_registerable?(session[:goldencobra_event_registration][:pricegroup_ids] )
           if check
             session[:goldencobra_event_registration][:pricegroup_ids] << @registered_event_price_group.id
+            session[:goldencobra_event_registration][:price] = @registered_event_price_group.price
           else
             @errors = check
           end
@@ -63,10 +64,27 @@ module GoldencobraEvents
         params[:registration][:company] = ""
         @errors << "zip wrong"
       end
-      if params[:registration] && params[:registration].present? && params[:registration][:user] && params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? && params[:AGB][:accepted] == "1"
+
+      # Wenn alternative Rechnungsadresse angegeben ist, muessen Pflichtfelder
+      # ausgefuellt sein
+      if params[:registration][:billing].present? && params[:registration][:billing][:choice].present? && params[:registration][:billing][:choice].any? && params[:registration][:billing][:choice][0] == "true"
+        if params[:registration][:billing_user][:billing_gender].present? && params[:registration][:billing_user][:billing_lastname].present? &&
+           params[:registration][:billing_company][:location_attributes][:street].present? &&
+           params[:registration][:billing_company][:location_attributes][:zip].present? &&
+           params[:registration][:billing_company][:location_attributes][:city].present?
+        else
+          @errors << params[:registration][:billing][:choice][0].to_s
+        end
+      end
+
+      if params[:registration] && params[:registration].present? && params[:registration][:user] &&
+         params[:registration][:user].present? && params[:AGB][:accepted] && params[:AGB][:accepted].present? &&
+         params[:AGB][:accepted] == "1"
+
         #save user data in session
         session[:goldencobra_event_registration][:user_data] = params[:registration][:user]
-			  @summary_user = GoldencobraEvents::RegistrationUser.new(session[:goldencobra_event_registration][:user_data])
+        # session[:goldencobra_event_registration][:user_data]["should_not_initialize"] = true
+        @summary_user = GoldencobraEvents::RegistrationUser.new(session[:goldencobra_event_registration][:user_data], "should_not_initialize" => true)
         if params[:registration][:company].present?
           session[:goldencobra_event_registration][:user_company_data] =  params[:registration][:company]
           if session[:goldencobra_event_registration][:user_company_data][:title].blank?
@@ -76,7 +94,9 @@ module GoldencobraEvents
         end
 
         # alternate billing address present?
-        if params[:registration][:billing_user] && params[:registration][:billing_user].present? && params[:supply_alternate_billing_address] == "yes"
+        if params[:registration][:billing].present? && params[:registration][:billing][:choice].present? && params[:registration][:billing][:choice][0] == "true" &&
+           params[:registration][:billing_user] && params[:registration][:billing_user].present?
+
           session[:goldencobra_event_registration][:billing_user_data] = params[:registration][:billing_user]
           @summary_user.billing_gender = params[:registration][:billing_user][:billing_gender]
           @summary_user.billing_firstname = params[:registration][:billing_user][:billing_firstname]
@@ -92,7 +112,7 @@ module GoldencobraEvents
           end
         end
       else
-          @errors << "agb not accepted"
+        @errors << "agb not accepted"
       end
     end
 
@@ -187,7 +207,8 @@ module GoldencobraEvents
 
     def init_registration_session
       session[:goldencobra_event_registration] = {} if session[:goldencobra_event_registration].blank?
-      session[:goldencobra_event_registration][:pricegroup_ids] = [] if session[:goldencobra_event_registration][:pricegroup_ids].blank?  
+      session[:goldencobra_event_registration][:pricegroup_ids] = [] if session[:goldencobra_event_registration][:pricegroup_ids].blank?
+      session[:goldencobra_event_registration][:price] = nil
       if session[:goldencobra_event_registration].present? && session[:goldencobra_event_registration][:user_id].present?
         @current_user = User.find_by_id(session[:goldencobra_event_registration][:user_id])
         if @current_user && @current_user.event_registrations.count > 0

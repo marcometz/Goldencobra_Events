@@ -3,13 +3,15 @@
 <p><%= s("goldencobra_events.event.registration.user_form.title_summary") %></p>
 
 <%= form_tag "/goldencobra_events/events/registration", :remote => true, :class=>"user_registration", :id => "goldencobra_events_user_registration_form" do %>
-	<div id="registration_summary">
+  <div id="registration_summary">
     <% if @summary_user %>
       <div class="anschrift">
-		    <h2>Anschrift</h2>
+        <h2>Anschrift</h2>
         <p><%= @summary_user.gender ? "Herr" : "Frau" %> <%= " #{@summary_user.title} " if @summary_user.title %><%= @summary_user.firstname%> <%= @summary_user.lastname %><br>
-			  <% if @summary_company %>
-          <%= @summary_company.title if @summary_company.title != "privat Person"%><br>
+        <% if @summary_company %>
+          <% if @summary_company.title != "privat Person" %>
+            <%= @summary_company.title%><br>
+          <% end %>
           <%= @summary_company.location.street %><br>
           <%= @summary_company.location.zip %> <%= @summary_company.location.city %>
         <% end %>
@@ -20,26 +22,38 @@
           <h2>Rechnungsanschrift</h2>
           <p>Ansprechpartner: <%= @summary_user.billing_gender ? "Herr" : "Frau" %> <%= @summary_user.billing_firstname%> <%= @summary_user.billing_lastname %><br>
           <% if @billing_company %>
-            <%= @billing_company.title if @billing_company.title != "privat Person"%><br />
-            <%= @summary_user.billing_department %><br />
-            <%= @billing_company.location.street %><br />
-            <%= @billing_company.location.zip %> <%= @billing_company.location.city %>
+            <% if @billing_company.title != "privat Person" %>
+              <%= @billing_company.title %><br />
+            <% end %>
+            <% if @summary_user.billing_department.present? %>
+              <%= @summary_user.billing_department %><br />
+            <% end %>
+            <% if @billing_company.location.present? && @billing_company.location.street.present? %>
+              <%= @billing_company.location.street %><br />
+            <% end %>
+            <% if @billing_company.location.present? %>
+              <%= @billing_company.location.zip %> <%= @billing_company.location.city %>
+            <% end %>
           <% end %>
           </p>
         </div>
       <% end %>
     <% end %>
     <div class="anschrift">
-      <p><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p><br />
+      <% if session[:goldencobra_event_registration][:price] == 0.0 %>
+        <p id="footer_description">Ihr Ticket wird Ihnen durch den technischen Dienstleister des Tagesspiegels, die ikusei GmbH, per Post zugestellt.</p><br />
+      <% else %>
+        <p><%= raw(s("goldencobra_events.event.registration.user_form.footer_description")) %></p><br />
+      <% end %>
       <table class="events">
         <% event_titles = [] %>
-		    <% ergs = GoldencobraEvents::EventPricegroup.where("goldencobra_events_event_pricegroups.id in (?)",session[:goldencobra_event_registration][:pricegroup_ids]).sorted %>
+        <% ergs = GoldencobraEvents::EventPricegroup.where("goldencobra_events_event_pricegroups.id in (?)",session[:goldencobra_event_registration][:pricegroup_ids]).sorted %>
         <% ergs.each do |erg| %>
-				<% if erg.event.title.blank? %>
-				LEER
-				<% else %>
+        <% if erg.event.title.blank? %>
+        LEER
+        <% else %>
           <%= erg.event.title unless erg.event.is_root? %>
-				<% end %>
+        <% end %>
           <% unless erg.event.is_root? || erg.event.parent.title.blank? || event_titles.include?(erg.event.parent.title) %>
             <tr>
               <td><strong><%= erg.event.parent.title %>&nbsp;(<%= erg.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong></td>
@@ -52,18 +66,24 @@
         <% end %>
       </table>
     </div>
-	  <div class="gebuehren">
-		  <h2>Teilnahmegeb&uuml;hr</h2>
-		<table id="gebuehrtable">
-				<% if session[:goldencobra_event_registration].present? %>
-					<% erg = session[:goldencobra_event_registration] %>
-					<% event_pg = GoldencobraEvents::EventPricegroup.find(session[:goldencobra_event_registration][:pricegroup_ids].first) %>
-					<tr><td>Preis netto: </td><td> <%= number_to_currency(event_pg.price, :locale => :de) %></td></tr>
-					<tr><td>zzgl MwSt: </td><td> <%= number_to_currency(event_pg.price/100*19, :locale => :de) %></td></tr>
-					<tr><td>Preis brutto: </td><td> <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %></td></tr>
-				<% end %>
-		</table>
-    <p><%= submit_tag s("goldencobra_events.event.registration.user_form.final_submit"), disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
-	  </div>
-	</div>
+    <% if session[:goldencobra_event_registration].present? %>
+      <% erg = session[:goldencobra_event_registration] %>
+      <% event_pg = GoldencobraEvents::EventPricegroup.find(session[:goldencobra_event_registration][:pricegroup_ids].first) %>
+      <% if event_pg && event_pg.price > 0 %>
+        <div class="gebuehren">
+          <h2>Teilnahmegeb&uuml;hr</h2>
+        <table id="gebuehrtable">
+              <tr><td>Preis netto: </td><td> <%= number_to_currency(event_pg.price, :locale => :de) %></td></tr>
+              <tr><td>zzgl MwSt: </td><td> <%= number_to_currency(event_pg.price/100*19, :locale => :de) %></td></tr>
+              <tr><td>Preis brutto: </td><td> <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %></td></tr>
+            <% end %>
+        </table>
+      <% end %>
+      <% if session[:goldencobra_event_registration][:price] == 0.0 %>
+        <p><%= submit_tag "Bestellen", disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
+      <% else %>
+        <p><%= submit_tag s("goldencobra_events.event.registration.user_form.final_submit"), disable_with: s("goldencobra_events.event.registration.user_form.submit_disabled") %> oder <%= link_to "Ändern", "/anmeldung" %></p>
+      <% end %>
+    </div>
+  </div>
 <% end %>
