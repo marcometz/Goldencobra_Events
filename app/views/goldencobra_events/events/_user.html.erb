@@ -55,16 +55,16 @@
         </p>
         <p>
             <label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %> <span class="asterix">*</span></label>
-            <%= text_field_tag "registration[user][email]", "", :required => true, :type => "email", "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
+            <%= text_field_tag "registration[user][email]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
         </p>
   <%# Felder fuer abweichende Rechnungsadresse %>
-  <div id="alternate_billing_address">
     <hr />
-        <p>
+        <p id="billing_address_choice">
             <label><%= s("goldencobra_events.event.registration.user_form.alternate_billing_address") %> <span class="asterix">*</span></label>
             <%= radio_button "registration[billing][choice]", "", true , :id => "yes" %> Ja
             <%= radio_button "registration[billing][choice]", "", false, :id => "no" %> Nein
         </p>
+  <div id="alternate_billing_address">
   <!-- Firma -->
       <p>
         <label><%= s("goldencobra_events.event.registration.user_form.company_label.billing_title") %></label>
@@ -98,11 +98,13 @@
           <%= text_field_tag "registration[billing_company][location_attributes][street]", "", :required => false, "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_street") %>
       </p>
   <!-- PLZ und Ort -->
-      <p>
-          <label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
-          <%= text_field_tag "registration[billing_company][location_attributes][zip]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
-          <%= text_field_tag "registration[billing_company][location_attributes][city]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
-      </p>
+      <div class="address">
+        <p>
+            <label><%= s("goldencobra_events.event.registration.user_form.company_label.zip") %> <%= s("goldencobra_events.event.registration.user_form.company_label.city") %></label>
+            <%= text_field_tag "registration[billing_company][location_attributes][zip]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_zip") %>
+            <%= text_field_tag "registration[billing_company][location_attributes][city]", "", :required => false, :class=>"shortinput", "data-message" => s("goldencobra_events.event.registration.user_form.errors.company_city") %>
+        </p>
+      </div>
   <!-- Land -->
       <p>
           <label><%= s("goldencobra_events.event.registration.user_form.company_label.country") %></label>
