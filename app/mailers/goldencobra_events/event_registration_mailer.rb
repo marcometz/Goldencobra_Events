@@ -34,3 +34,32 @@ module GoldencobraEvents
 
   end
 end
+
+# http://stackoverflow.com/questions/6550809/rails-3-how-to-abort-delivery-method-in-actionmailer
+
+module ActionMailer
+  class Base
+    # A simple way to short circuit the delivery of an email from within
+    # deliver_* methods defined in ActionMailer::Base subclases.
+    def do_not_deliver!
+      raise AbortDeliveryError
+    end
+
+    def process(*args)
+      begin
+        super *args
+      rescue AbortDeliveryError
+        self.message = BlackholeMailMessage
+      end
+    end
+  end
+end
+
+class AbortDeliveryError < StandardError
+end
+
+class BlackholeMailMessage < Mail::Message
+  def self.deliver
+    false
+  end
+end

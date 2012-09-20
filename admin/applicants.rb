@@ -49,10 +49,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     f.inputs "Historie" do
       f.has_many :vita_steps do |step|
         if step.object.new_record?
-          step.input :description
+          step.input :description, as: :string, label: "Eintrag"
         step.input :title, label: "Bearbeiter", hint: "Tragen Sie hier Ihren Namen ein, damit die Aktion zugeordnet werden kann"
         else
-          step.input :description, :input_html => {:disabled => true, :resize => false, :class => "metadescription_hint", value: "#{step.object.title}; #{step.object.description}"}
+          step.input :description, as: :string, label: "Eintrag", :input_html => {"disabled" => "disabled", value: "#{step.object.title}; #{step.object.description}"}
         end
       end
     end
