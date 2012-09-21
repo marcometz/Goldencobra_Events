@@ -12,6 +12,7 @@
 #  updated_at          :datetime         not null
 #  ticket_number       :string(255)
 #  invoice_number      :string(255)
+#  checkin_status      :string(255)
 #
 
 module GoldencobraEvents
