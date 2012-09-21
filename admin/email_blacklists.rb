@@ -9,9 +9,7 @@ ActiveAdmin.register GoldencobraEvents::EmailBlacklist, as: "Email-Blacklist" do
       column :count, sortable: true
       column "Stammdaten" do |blacklist_entry|
         if User.where(email: blacklist_entry.email_address).any?
-          link_to "Stammdaten anzeigen", edit_admin_user_path(User.where(email: blacklist_entry.email_address).first)
-        elsif GoldencobraEvents::RegistrationUser.where(email: blacklist_entry.email_address).any?
-          link_to "Event-Anmeldungen anzeigen", "/admin/applicants?q%5Bemail_contains%5D=#{blacklist_entry.email_address}&commit=Filtern&order=id_desc&scope="
+          link_to "Stammdaten anzeigen", edit_admin_master_datum_path(User.where(email: blacklist_entry.email_address).first.id)
         end
       end
       default_actions
