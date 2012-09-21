@@ -6,7 +6,7 @@ Feature: Create and manage artists
   Background:
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
-    And the following uploads exist:
+    And the following "uploads" exist:
       | image_file_name | source  | rights |
       | "Bild1"         | "ikusei" | "alle" |
       | "Bild2"         | "ikuse2" | "alle" |
@@ -14,7 +14,7 @@ Feature: Create and manage artists
       | title              | description | id |
       | "Audi Deutschland" | "Autos"     |  1 |
       | "Dr. Oetker"       | "Speisen"   |  2 |
-    And the following artists exist:
+    And the following "artists" exist:
       | title             | description | id |
       | "Bodo Wartke"     | "toll toll" |  1 |
 
@@ -35,7 +35,7 @@ Feature: Create and manage artists
     And I should see "http://www.bodowartke.de" within "#main_content"
     When I click on "Edit Artist"
     Then I should see "Bild1"
-    
+
   @javascript
   Scenario: Set sponsors for an artist
     When I go to the admin list of artists

@@ -195,6 +195,24 @@ module GoldencobraEvents
         self.save
       end
     end
+
+    class << self
+      def create_from_master_data(user_id)
+        user = User.find(user_id)
+        if user
+          GoldencobraEvents::RegistrationUser.create(email: user.email,
+                                                     firstname: user.firstname,
+                                                     lastname: user.lastname,
+                                                     gender: user.gender,
+                                                     title: user.title,
+                                                     phone: user.phone,
+                                                     function: user.function,
+                                                     company_id: user.company_id,
+                                                     type_of_registration: "",
+                                                     comment: "Anmeldung aus Stammdaten erzeugt")
+        end
+      end
+    end
   end
 end
 

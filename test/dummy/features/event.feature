@@ -2,7 +2,7 @@ Feature: Create and manage events
   In order to make an programm
   As an author
   I want to create and manage some events
-  
+
   Scenario: Go to the events admin site
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -17,7 +17,7 @@ Feature: Create and manage events
     Then I should see "Ausflug" within "#main_content"
     And I should see "Dies ist ein Ausflug nach Brandenburg" within "#main_content"
     And I should see "Wednesday, 01.02.2012" within textfield "event_start_date"
-    
+
   Scenario: Create a subevent item
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -32,62 +32,62 @@ Feature: Create and manage events
     Then I should see "Event1" within "#event_parent_id"
     When I fill in "event_title" with "Sub of Event1"
     And I press "Create Event"
-    Then I should see "Sub of Event1" 
-    Then I should see "Event1" 
-    
-  Scenario: add an events to an article as a programm site 
-    Given that a confirmed admin exists
-    And I am logged in as "admin@test.de" with password "secure12"
-    And the following "articles" exist:
-      | title                        | startpage | id |
-      | "Programm"                   | false     |  2 |
-      | "Startseite"                 | false     |  1 |
-    And the following "events" exist:
-        | title                        | parent_id | id |
-        | "Event1"                     |           |  1 |
-        | "Event2"                     | 1         |  2 |  
-    When I go to the admin list of articles  
-    Then I click on "Edit" within "tr#article_2"
-    And I should see "Edit Article" within "#page_title"
-    And I should see "Veranstaltungs Modul" within "#sidebar"
-    And I should see "Wähle ein Veranstaltungsbaum aus" within "#veranstaltungs_modul_sidebar_section"
-    And I select "Event2" within "#article_event_id"
-    When I press "Event zuweisen"
-    And I should see "Event2"
+    Then I should see "Sub of Event1"
+    Then I should see "Event1"
 
-  Scenario: add an events to an article as a registration site 
-    Given that a confirmed admin exists
-    And I am logged in as "admin@test.de" with password "secure12"
-    And the following "pricegroup" exist:
-      | title                      | id |
-      | Studenten                  |  1 |
-      | Frühbucher                 |  2 |
-    And the following "articles" exist:
-      | title                        | startpage | id | url_name   |
-      | "Anmeldung"                  | false     |  2 | anmeldung  |
-      | "Startseite"                 | false     |  1 | startseite |
-    And the following "events" exist:
-        | title                        | parent_id | id | type_of_event |
-        | "Event1"                     |           |  1 | Registration needed |
-        | "Event2"                     | 1         |  2 | No Registration needed |
-    And the following "event_pricegroups" exist:
-        | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
-        |        1 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
-        |        1 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
-    When I go to the admin list of articles  
-    Then I click on "Edit" within "tr#article_2"
-    And I should see "Edit Article" within "#page_title"
-    And I select "Event1" within "#article_event_id"
-    And I select "Anmeldung" within "#article_eventmoduletype"
-    When I press "Event zuweisen"
-    And I should see "Event1" within "#article_event_id"
-    And I should see "Anmeldung" within "#article_eventmoduletype"
-    Then I visit url "/anmeldung"
-    And I should see "50,00"
-    And I should see "Studenten"
-    And I should not see "Event2"
-    
-  Scenario: visit an article and look for events 
+#  Scenario: add an events to an article as a programm site
+#    Given that a confirmed admin exists
+#    And I am logged in as "admin@test.de" with password "secure12"
+#    And the following "articles" exist:
+#      | title                        | startpage | id |
+#      | "Programm"                   | false     |  2 |
+#      | "Startseite"                 | false     |  1 |
+#    And the following "events" exist:
+#        | title                        | parent_id | id |
+#        | "Event1"                     |           |  1 |
+#        | "Event2"                     | 1         |  2 |
+#    When I go to the admin list of articles
+#    Then I click on "Edit" within "tr#article_2"
+#    And I should see "Edit Article" within "#page_title"
+#    And I should see "Veranstaltungs Modul" within "#sidebar"
+#    And I should see "Wähle ein Veranstaltungsbaum aus" within "#veranstaltungs_modul_sidebar_section"
+#    And I select "Event2" within "#article_event_id"
+#    When I press "Event zuweisen"
+#    And I should see "Event2"
+
+#  Scenario: add an events to an article as a registration site
+#    Given that a confirmed admin exists
+#    And I am logged in as "admin@test.de" with password "secure12"
+#    And the following "pricegroup" exist:
+#      | title                      | id |
+#      | Studenten                  |  1 |
+#      | Frühbucher                 |  2 |
+#    And the following "articles" exist:
+#      | title                        | startpage | id | url_name   |
+#      | "Anmeldung"                  | false     |  2 | anmeldung  |
+#      | "Startseite"                 | false     |  1 | startseite |
+#    And the following "events" exist:
+#        | title                        | parent_id | id | type_of_event |
+#        | "Event1"                     |           |  1 | Registration needed |
+#        | "Event2"                     | 1         |  2 | No Registration needed |
+#    And the following "event_pricegroups" exist:
+#        | event_id | pricegroup_id | price | max_number_of_participators | available | start_reservation     | cancelation_until     | end_reservation       | webcode |
+#        |        1 |             1 |  50.0 |                         500 |      true | "2012-02-10 12:00:00" | "2012-04-01 12:00:00" | "2012-03-01 12:00:00" |         |
+#        |        1 |             2 |  30.0 |                         200 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
+#    When I go to the admin list of articles
+#    Then I click on "Edit" within "tr#article_2"
+#    And I should see "Edit Article" within "#page_title"
+#    And I select "Event1" within "#article_event_id"
+#    And I select "Anmeldung" within "#article_eventmoduletype"
+#    When I press "Event zuweisen"
+#    And I should see "Event1" within "#article_event_id"
+#    And I should see "Anmeldung" within "#article_eventmoduletype"
+#    Then I visit url "/anmeldung"
+#    And I should see "50,00"
+#    And I should see "Studenten"
+#    And I should not see "Event2"
+
+  Scenario: visit an article and look for events
     Given the following "articles" exist:
       | title                        | startpage | id | url_name    | event_id | event_levels | active  |
       | "Programm"                   | false     |  1 | programm    |    1     |   2         | true    |
@@ -96,7 +96,7 @@ Feature: Create and manage events
         | title                        | parent_id | id | active |
         | "Event1"                     |           |  1 | true   |
         | "Event2"                     | 1         |  2 | true   |
-        | "Event3"                     | 1         |  3 | true   | 
+        | "Event3"                     | 1         |  3 | true   |
         | "Event4"                     | 2         |  4 | true   |
         | "InvisibleEvent"             | 2         |  5 | false  |
     And the following "pricegroup" exist:
@@ -114,8 +114,8 @@ Feature: Create and manage events
     And I should not see "Event1"
     And I should not see "Event3"
     And I should not see "InvisibleEvent"
-    
-    
+
+
   Scenario: visit an Article program site an check für the programm tree
     Given that I am not logged in
     And default settings exists
@@ -150,7 +150,7 @@ Feature: Create and manage events
       |       10 |             3 |  80.0 |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
       |        1 |             1 |  80.0 |                         500 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" |         |
       |       13 |             4 |  0.0  |                         100 |      true | "2012-02-01 12:00:00" | "2012-04-01 12:00:00" | "2012-02-09 12:00:00" | OSTERN  |
-  When I visit url "/programm"   
+  When I visit url "/programm"
   Then I should not see "Cloudforum"
   And I should not see "Cloudforum-Old"
   And I should see "Kongress"
@@ -164,7 +164,7 @@ Feature: Create and manage events
   And I should see "Exclusives Abendessen"
   And I should see "Abendessen Alternative 2"
   And I should see "Abendessen Alternative 1"
-  
+
   @javascript
   Scenario: add prices to existing event
     Given that a confirmed admin exists
@@ -175,34 +175,34 @@ Feature: Create and manage events
     And the following "events" exist:
         | title                        | parent_id | id |
         | "Event"                      |           |  1 |
-    When I go to the admin list of events  
+    When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
     And I should see "Edit Event" within "#page_title"
     When I click on "Add New Event Pricegroup"
-    Then I select "Studenten" within ".pricegroup_pricegroup" 
+    Then I select "Studenten" within ".pricegroup_pricegroup"
     And I should see "price"
     And I fill in "price" with "10.5"
     Then I press "Update Event"
     And I should see "Studenten"
     And I should see "10.5" within textfield "event[event_pricegroups_attributes][0][price_raw]"
     # And I should see "10.50" findet den Inhalt nicht, da es kein String ist, sondern Value in einem Input
-    
+
   Scenario: add teaser image to existign event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
     And the following "events" exist:
       | title                        | parent_id | id |
-      | "Event"                      |           |  1 |  
-    And the following uploads exist:
+      | "Event"                      |           |  1 |
+    And the following "uploads" exist:
       | image_file_name | source  | rights |
       | "Bild1"         | "ikusei" | "alle" |
-   When I go to the admin list of events  
+   When I go to the admin list of events
    Then I click on "Edit" within "tr#event_1"
    And I select "Bild1" within ".teaser_image"
    Then I press "Update Event"
    And I should see "Bild1"
-  
-  @javascript  
+
+  @javascript
   Scenario: add webcode to existing event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
@@ -212,7 +212,7 @@ Feature: Create and manage events
     And the following "events" exist:
         | title                        | parent_id | id |
         | "Event"                      |           |  1 |
-    When I go to the admin list of events  
+    When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
     When I click on "Add New Event Pricegroup"
     And I fill in "webcode" with "Osterspezial2010"
@@ -229,7 +229,7 @@ Feature: Create and manage events
     And the following "panels" exist:
       | title                        | id |
       | "Naturstrom Panel"           |  1 |
-    When I go to the admin list of events  
+    When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
     And I remove jquery chosen
     And I select "Naturstrom Panel" within "#event_panel_input"
@@ -243,7 +243,7 @@ Feature: Create and manage events
     And the following "events" exist:
       | title                        | parent_id | id |
       | "Event"                      |           |  1 |
-    When I go to the admin list of events  
+    When I go to the admin list of events
     Then I click on "Edit" within "tr#event_1"
     And I remove jquery chosen
     Then I should not see "panels"
@@ -284,10 +284,10 @@ Feature: Create and manage events
   Scenario: Set artists for an event
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
-    And the following events exist:
+    And the following "events" exist:
       | title                        | parent_id | id | active |
       | "Event1"                     |           |  1 | true   |
-   And the following artists exist:
+   And the following "artists" exist:
       | title             | description | id |
       | "Bodo Wartke"     | "toll toll" |  1 |
       | "Mario Barth"     | "Kuenstler" |  2 |

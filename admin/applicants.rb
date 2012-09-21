@@ -39,24 +39,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   end
 
   form :html => { :enctype => "multipart/form-data" } do |f|
-    f.inputs :class => "buttons inputs" do
-      f.actions
-    end
-    f.inputs "Anmeldung" do
-      f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
-      f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
-    end
-    f.inputs "Historie" do
-      f.has_many :vita_steps do |step|
-        if step.object.new_record?
-          step.input :description, as: :string, label: "Eintrag"
-          step.input :title, label: "Bearbeiter", hint: "Tragen Sie hier Ihren Namen ein, damit die Aktion zugeordnet werden kann"
-        else
-          render :partial => "/goldencobra_events/admin/applicants/vita_steps", :locals => {:step => step}
-          # step.input :description, as: :string, label: "Eintrag", :input_html => {"disabled" => "disabled", value: "#{step.object.title}; #{step.object.description}"}
-        end
-      end
-    end
+    f.actions
 
     f.inputs "Besucher", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
@@ -70,6 +53,29 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         f.input :agb, :label => "AGB akzeptiert", :input_html => { :checked => 'checked' }
       else
         f.input :agb, :label => "AGB akzeptiert"
+      end
+    end
+    f.inputs "" do
+      f.fields_for :company_attributes, f.object.company do |comp|
+        comp.inputs "Firma", :class => "foldable inputs" do
+          comp.input :title
+          comp.input :legal_form
+          comp.input :phone
+          comp.input :fax
+          comp.input :homepage
+          comp.input :sector
+        end
+        comp.inputs "" do
+          comp.fields_for :location_attributes, (comp.object.location if comp.object.present?) do |loc|
+            loc.inputs "#{t('location', scope: [:activerecord, :models], count: 1)}", :class => "foldable inputs" do
+              loc.input :street
+              loc.input :city
+              loc.input :zip
+              loc.input :region
+              loc.input :country, :as => :string
+            end
+          end
+        end
       end
     end
 
@@ -97,29 +103,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
           end
         end
       end
-    # end
-    f.inputs "" do
-      f.fields_for :company_attributes, f.object.company do |comp|
-        comp.inputs "Firma", :class => "foldable inputs" do
-          comp.input :title
-          comp.input :legal_form
-          comp.input :phone
-          comp.input :fax
-          comp.input :homepage
-          comp.input :sector
-        end
-        comp.inputs "" do
-          comp.fields_for :location_attributes, (comp.object.location if comp.object.present?) do |loc|
-            loc.inputs "#{t('location', scope: [:activerecord, :models], count: 1)}", :class => "foldable inputs" do
-              loc.input :street
-              loc.input :city
-              loc.input :zip
-              loc.input :region
-              loc.input :country, :as => :string
-            end
-          end
-        end
-      end
+
+    f.inputs "Anmeldung" do
+      f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
+      f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
     end
     f.inputs "" do
       f.has_many :event_registrations do |reg|
@@ -127,9 +114,18 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
         reg.input :_destroy, :as => :boolean
       end
     end
-    f.inputs :class => "buttons inputs" do
-      f.actions
+    f.inputs "Historie" do
+      f.has_many :vita_steps do |step|
+        if step.object.new_record?
+          step.input :description, as: :string, label: "Eintrag"
+          step.input :title, label: "Bearbeiter", hint: "Tragen Sie hier Ihren Namen ein, damit die Aktion zugeordnet werden kann"
+        else
+          render :partial => "/goldencobra_events/admin/applicants/vita_steps", :locals => {:step => step}
+        end
+      end
     end
+
+    f.actions
   end
 
   show :title => :lastname do

@@ -5,21 +5,21 @@ Feature: Create and manage sponsors
   Background:
     Given that a confirmed admin exists
     And I am logged in as "admin@test.de" with password "secure12"
-    And the following uploads exist:
+    And the following "uploads" exist:
       | image_file_name | source  | rights |
       | "Bild1"         | "ikusei" | "alle" |
       | "Bild2"         | "ikuse2" | "alle" |
-    And the following sponsors exist:
+    And the following "sponsors" exist:
       | title              | description | id |
       | "Audi Deutschland" | "Autos"     |  1 |
       | "Dr. Oetker"       | "Speisen"   |  2 |
-    And the following events exist:
+    And the following "events" exist:
       | title                        | parent_id | id | active | sponsor_ids |
       | "Event1"                     |           |  1 | true   |           1 |
       | "Event2"                     | 1         |  2 | true   |           1 |
       | "Event3"                     | 1         |  3 | true   |           2 |
       | "Event4"                     | 2         |  4 | true   |             |
-    And the following panels exist:
+    And the following "panels" exist:
       | title                       | id | sponsor_ids |
       | "Naturstrom Panel"          |  1 |         1,2 |
       | "Gesund ernaehren Panel"     |  2 |             |

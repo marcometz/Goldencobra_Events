@@ -2,7 +2,7 @@
 	<h4>Achtung!</h4>
 	<p>
 		<b>Es ist noch kein Artikel ausgewählt, der die AGBs beinhaltet!</b><br/>
-		<%= link_to "Tragen Sie bitte hier die ID des entsprechenden Artikels ein" , edit_admin_setting_path(Goldencobra::Setting.find_by_title("agb_article_id")) %>
+		<%= link_to "Tragen Sie bitte hier die ID des entsprechenden Artikels ein" , edit_admin_setting_path(Goldencobra::Setting.find_by_title("agb_article_id").id) %>
 	</p>
 <% end %>
 
@@ -12,7 +12,7 @@
 	<ul>
 		<%= f.input :event_id, :as => :select, :collection => GoldencobraEvents::Event.active.map{|a| [a.title, a.id]}, :include_blank => true %>
 		<%= f.input :event_levels, :hint => "0: Alle Ebenen anzeigen (default)  - 1,2,3...: alle bis zur 1.,2.,3. Ebene anzeigen"  %>
-		<%= f.input :eventmoduletype, :as => :select, :collection => GoldencobraEvents::Event::Modultype.map{|a| [a[1], a[0]]}, :include_blank => false %>		
+		<%= f.input :eventmoduletype, :as => :select, :collection => GoldencobraEvents::Event::Modultype.map{|a| [a[1], a[0]]}, :include_blank => false %>
 	</ul>
 	<%= f.submit "Event zuweisen" %>
 <% end %>
