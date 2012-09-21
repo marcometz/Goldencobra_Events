@@ -209,7 +209,8 @@ module GoldencobraEvents
                                                      function: user.function,
                                                      company_id: user.company_id,
                                                      type_of_registration: "",
-                                                     comment: "Anmeldung aus Stammdaten erzeugt")
+                                                     comment: "Anmeldung aus Stammdaten erzeugt",
+                                                     user_id: user.id)
         end
       end
     end
