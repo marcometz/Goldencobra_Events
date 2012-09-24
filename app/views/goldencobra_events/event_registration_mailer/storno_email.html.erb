@@ -1,0 +1,11 @@
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>Storno</title>
+  </head>
+  <body>
+    <p>Es ist ein neuer Storno eingegangen.<br />
+      Bitte unter folgendem Link überprüfen:<br />
+      <a href='<%= Goldencobra::Setting.for_key("goldencobra.url") %>/admin/applicants/<%= @user.id %>'>Anmeldung überprüfen</a></p>
+  </body>
+</html>

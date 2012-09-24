@@ -20,6 +20,8 @@ goldencobra_events:
         last_invoice_number: "0"
         event_name_for_invoice: "DK"
     event:
+        cancellation:
+            info_email: "foo@bar.baz"
         registration_basket:
             headline: "Sie haben gewählt:"
             greeting: "Hallo "

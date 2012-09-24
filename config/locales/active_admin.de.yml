@@ -1,6 +1,6 @@
 de:
-  active_admin:   
-    update_invoice: "Rechnung aktualisieren" 
+  active_admin:
+    update_invoice: "Rechnung aktualisieren"
     flash_notice:
       mail_confirmation: "Sind Sie sicher?"
       mail_sent: "Mails wurden versendet"
@@ -86,3 +86,5 @@ de:
       location: "Ort"
     artist:
       new_artist: "Neuer Künstler"
+    applicants:
+      cancellation_info_subject: "Neue Stornierung"

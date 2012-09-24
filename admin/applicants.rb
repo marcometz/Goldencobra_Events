@@ -23,22 +23,28 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       applicant.lastname
     end
     column :email, :sortable => :email do |applicant|
-      span applicant.email, class: "email"
+      span applicant.email, class: 'email'
     end
-    column "Ticket" do |applicant|
-      link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf", target: "blank") if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
+    column 'Ticket' do |applicant|
+      link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf", target: 'blank') if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
     end
     column :type_of_registration
     column :total_price, sortable: :total_price do |u|
       number_to_currency(u.total_price, :locale => :de)
     end
     column :last_email_send, sortable: :last_email_send do |user|
-      user.last_email_send ? l(user.last_email_send, format: :short) : ""
+      user.last_email_send ? l(user.last_email_send, format: :short) : ''
     end
-    default_actions
+    column '' do |applicant|
+      result = ''
+      result += link_to(t('active_admin.view'), admin_applicant_path(applicant), class: 'member_link show_link')
+      result += link_to(t('active_admin.edit'), edit_admin_applicant_path(applicant), class: 'member_link edit_link')
+      result += link_to('Storno', deactivate_applicant_admin_applicant_path(applicant), class: 'member_link edit_link')
+      raw(result)
+    end
   end
 
-  form :html => { :enctype => "multipart/form-data" } do |f|
+  form :html => { :enctype => 'multipart/form-data' } do |f|
     f.actions
 
     f.inputs "Besucher", :class => "foldable inputs" do
@@ -230,6 +236,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     flash[:notice] = "Gaeste wurden deaktiviert"
     redirect_to :action => :index
   end
+
 
   batch_action :destroy, false
 

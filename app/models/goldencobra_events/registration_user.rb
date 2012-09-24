@@ -93,6 +93,7 @@ module GoldencobraEvents
         self.active = false
         self.vita_steps << Goldencobra::Vita.create(:title => "Registration canceled", :description => "no confirmation mail sent")
         self.save
+        GoldencobraEvents::EventRegistrationMailer.storno_email(self.id).deliver
       end
     end
 

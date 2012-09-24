@@ -27,11 +27,16 @@ module GoldencobraEvents
       subject = @email_template.subject.present? ? @email_template.subject : Goldencobra::Setting.for_key("goldencobra_events.event.registration.mailer.subject")
       @user = user
       if @user && @user.present? && GoldencobraEvents::EmailBlacklist.is_blacklisted?(user.email) == false
-          mail to: user.email, bcc: "#{@email_template.bcc}", :css => "/goldencobra_events/email", :subject => subject
+          mail to: user.email, bcc: "#{@email_template.bcc}", :css => "/goldencobra_events/email", subject: subject
       end
     end
 
-
+    def storno_email(registration_user_id)
+      @user = GoldencobraEvents::RegistrationUser.find(registration_user_id)
+      if @user
+        mail to: Goldencobra::Setting.for_key('goldencobra_events.event.cancellation.info_email'), subject: I18n.t(:cancellation_info_subject, scope: [:active_admin, :applicants])
+      end
+    end
   end
 end
 
