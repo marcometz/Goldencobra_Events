@@ -9,7 +9,7 @@ module GoldencobraEvents
     #
     # Returns the invoice number as String
     def self.invoice_number
-      number = Goldencobra::Setting.for_key('goldencobra_events.invoice.last_invoice_number').to_i + 1
+      number = Goldencobra::Setting.for_key('goldencobra_events.invoice.last_invoice_number', false).to_i + 1
       Goldencobra::Setting.set_value_for_key(number.to_s, 'goldencobra_events.invoice.last_invoice_number')
       kuerzel = Goldencobra::Setting.for_key('goldencobra_events.invoice.event_name_for_invoice')
       s = "#{kuerzel}#{number}"

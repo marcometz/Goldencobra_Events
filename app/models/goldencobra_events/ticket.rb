@@ -38,7 +38,7 @@ module GoldencobraEvents
     private
 
     def self.next_ticket_number
-      number = Goldencobra::Setting.for_key('goldencobra_events.ticket.last_ticket_number').to_i + 1
+      number = Goldencobra::Setting.for_key('goldencobra_events.ticket.last_ticket_number', false).to_i + 1
       Goldencobra::Setting.set_value_for_key(number.to_s, 'goldencobra_events.ticket.last_ticket_number')
       number
     end
