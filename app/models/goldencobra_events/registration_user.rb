@@ -93,6 +93,7 @@ module GoldencobraEvents
       if self.active == true
         self.active = false
         self.vita_steps << Goldencobra::Vita.create(:title => "Registration canceled", :description => "no confirmation mail sent")
+        self.user.vita_steps << Goldencobra::Vita.create(:title => "Registration canceled", :description => "no confirmation mail sent") if self.user.present?
         self.save
         GoldencobraEvents::EventRegistrationMailer.storno_email(self.id).deliver
       end
@@ -102,6 +103,7 @@ module GoldencobraEvents
       if self.active == false
         self.active = true
         self.vita_steps << Goldencobra::Vita.create(:title => "Registration reactivated", :description => "no confirmation mail sent")
+        self.user.vita_steps << Goldencobra::Vita.create(:title => "Registration reactivated", :description => "no confirmation mail sent") if self.user.present?
         self.save
       end
     end
