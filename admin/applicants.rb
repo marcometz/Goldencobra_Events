@@ -47,7 +47,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   form :html => { :enctype => 'multipart/form-data' } do |f|
     f.actions
 
-    f.inputs "Besucher", :class => "foldable inputs" do
+    f.inputs "Anmeldung", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
       f.input :email
       f.input :title

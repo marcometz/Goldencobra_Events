@@ -12,10 +12,10 @@
 //
 
 $(document).ready(function() {
-	
+
 	// Nur einmal die Info zu den Anmeldeoptionen anzeigen
 	$(".reg_info:gt(0)").hide()
-	
+
 	//Initialize popup for event Registration: Select of Pricegroup
 	$('body').append("<div id='goldencobra_events_event_popup' style='display:none'></div>");
 	$('#goldencobra_events_event_popup').overlay({
@@ -37,7 +37,7 @@ $(document).ready(function() {
     $("a#register_for_event_" + id + "_link").trigger("click")
     $(this).parent().find(".title").append(' (vorgemerkt)');
   });
-	
+
 	// Mit Anmeldung fortfahren und DIVs darüber ausblenden
 	$('#goldencobra_events_enter_account_data').live("click", function() {
 		$('#goldencobra_events_article_events').fadeOut('slow');
@@ -45,8 +45,8 @@ $(document).ready(function() {
     	$('#article_event_webcode_form').fadeOut('slow');
     	$('#goldencobra_events_enter_account_data_form').fadeIn();
 	});
-	
-  // Validierung des Formulars zur Eingabe der Besucherdaten
+
+  // Validierung des Formulars zur Eingabe der Anmeldungsaten
   $('#goldencobra_events_user_registration_form_submit').bind("click", function(){
     $('.validation_error').each(function() { $(this).remove();});
     var gender_selection = false;

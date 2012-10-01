@@ -6,8 +6,8 @@ de:
       mail_sent: "Mails wurden versendet"
       deactivate_applicant: "Sie wollen diese Gäste stornieren?"
       deactivate: "Gäste wurden deaktiviert"
-      inactive: "Dieser Besucher ist nun Inaktiv!"
-      active: "Dieser Besucher ist nun Aktiv!"
+      inactive: "Diese Anmeldung ist nun inaktiv!"
+      active: "Diese Anmeldung ist nun aktiv!"
     dashboard: "Übersicht"
     dashboard_welcome:
       welcome: "Willkommen in Active Admin. Dies ist die Standard-Übersichtsseite."

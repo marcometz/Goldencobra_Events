@@ -87,7 +87,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       f.input :first_reminder_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.first_reminder_sent.strftime('%A, %d.%m.%Y') if f.object.first_reminder_sent}" }
       f.input :second_reminder_sent, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.second_reminder_sent.strftime('%A, %d.%m.%Y') if f.object.second_reminder_sent}" }
     end
-    f.inputs "Besucher", :class => "foldable inputs" do
+    f.inputs "Anmeldung", :class => "foldable inputs" do
       f.input :gender, :as => :select, :collection => [["Herr", true],["Frau",false]], :include_blank => false
       f.input :email
       f.input :title

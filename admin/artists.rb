@@ -1,5 +1,5 @@
 ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
-  menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::Artist) && (Goldencobra::Setting.for_key('goldencobra_events.active_admin.menue.artists.display') != "false")}
+  menu :parent => "Event-Management", :if => proc{false}#can?(:read, GoldencobraEvents::Artist) && (Goldencobra::Setting.for_key('goldencobra_events.active_admin.menue.artists.display') != "false")}
   controller.authorize_resource :class => GoldencobraEvents::Artist
 
   filter :title, :label => "Name"
@@ -49,11 +49,11 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
     end
     f.inputs "Bilder" do
       f.has_many :artist_images do |ai|
-        ai.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'artist_image_file'} 
+        ai.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'artist_image_file'}
       end
     end
     f.inputs "Informationen" do
-      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC").map{|c| [c.title, c.id]}, :input_html => { "multiple" => "multiple"} 
+      f.input :sponsors, as: :check_boxes, :collection => GoldencobraEvents::Sponsor.find(:all, :order => "title ASC").map{|c| [c.title, c.id]}, :input_html => { "multiple" => "multiple"}
     end
     f.inputs :class => "buttons inputs" do
       f.actions
@@ -63,7 +63,7 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
   action_item :only => :show do
     link_to(t('active_admin.artist.new_artist'), new_admin_artist_path)
   end
-  
+
   batch_action :destroy, false
 
   show :title => :title do

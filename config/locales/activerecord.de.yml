@@ -11,11 +11,11 @@ de:
         one: "Abrechnung"
         other: "Abrechnungen"
       applicant:
-        one: "Besucher"
-        other: "Besucher"
+        one: "Anmeldung"
+        other: "Anmeldungen"
       goldencobra_events/registration_user:
-        one: "Besucher"
-        other: "Besucher"
+        one: "Anmeldung"
+        other: "Anmeldungen"
       artist:
         one: "Künstler"
         other: "Künstler"
