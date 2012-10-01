@@ -43,9 +43,7 @@ module GoldencobraEvents
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
     attr_accessor :should_not_initialize
     after_create :init_default_data
-    if ActiveRecord::Base.connection.table_exists?("goldencobra_newsletter_master_datas")
-      after_save :check_for_master_data
-    end
+    after_save :check_for_master_data
 
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
 
@@ -217,21 +215,19 @@ module GoldencobraEvents
       end
     end
 
-    if ActiveRecord::Base.connection.table_exists?("goldencobra_newsletter_master_datas")
-      def check_for_master_data
-        if self.user_id.blank?
-          # Set user_id from existing User
-          new_user = User.where(email: self.email).first_or_create do |user|
-            user.firstname = self.firstname
-            user.lastname = self.lastname
-            user.title = self.title
-            user.gender = self.gender
-            password = Devise.friendly_token
-            user.password = password
-            user.password_confirmation = password
-          end
-          self.update_attributes(user_id: new_user.id)
+    def check_for_master_data
+      if self.user_id.blank?
+        # Set user_id from existing User
+        new_user = User.where(email: self.email).first_or_create do |user|
+          user.firstname = self.firstname
+          user.lastname = self.lastname
+          user.title = self.title
+          user.gender = self.gender
+          password = Devise.friendly_token
+          user.password = password
+          user.password_confirmation = password
         end
+        self.update_attributes(user_id: new_user.id)
       end
     end
   end
