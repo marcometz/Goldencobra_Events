@@ -31,7 +31,7 @@ module GoldencobraEvents
             user: registration_user,
             event: registration_user.event_registrations.first.event_pricegroup.event,
             invoice_number: invoice_numb,
-            invoice_date: registration_user.invoice_sent.present? ? registration_user.invoice_sent : Time.now.strftime("%d.%m.%Y")
+            invoice_date: registration_user.invoice_sent.present? ? registration_user.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
             })
         registration_user.event_registrations.first.update_attributes(invoice_number: invoice_numb)
         kit = PDFKit.new(html, :page_size => 'Letter')
