@@ -216,7 +216,7 @@ module GoldencobraEvents
     end
 
     def check_for_master_data
-      if self.user_id.blank?
+      if self.user_id.blank? && self.email.present?
         # Set user_id from existing User
         new_user = User.where(email: self.email).first_or_create do |user|
           user.firstname = self.firstname
