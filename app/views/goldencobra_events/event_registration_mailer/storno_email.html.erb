@@ -6,6 +6,6 @@
   <body>
     <p>Es ist ein neuer Storno eingegangen.<br />
       Bitte unter folgendem Link überprüfen:<br />
-      <a href='<%= Goldencobra::Setting.for_key("goldencobra.url") %>/admin/applicants/<%= @user.id %>'>Anmeldung überprüfen</a></p>
+      <a href='http://<%= Goldencobra::Setting.for_key("goldencobra.url") %>/admin/applicants/<%= @user.id %>'>Anmeldung überprüfen</a></p>
   </body>
 </html>
