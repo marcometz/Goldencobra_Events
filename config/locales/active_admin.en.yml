@@ -88,3 +88,4 @@ en:
       new_artist: "New Artist"
     applicants:
       cancellation_info_subject: "Neue Stornierung"
+      link_to_master_data: "Stammdaten anzeigen"
