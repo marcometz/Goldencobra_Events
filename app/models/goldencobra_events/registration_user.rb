@@ -176,10 +176,7 @@ module GoldencobraEvents
 
     def last_email_send
       emails = self.registration_emails
-
-      if emails.empty?
-        self.type_of_registration == "Webseite" ? self.created_at : nil
-      else
+      if emails.any?
         emails.order("created_at DESC").first.created_at
       end
     end

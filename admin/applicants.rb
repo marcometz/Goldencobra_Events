@@ -2,8 +2,8 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
 
-  scope "Alle", :scoped, :default => true
-  scope "Aktive", :active
+  scope "Aktive", :active, :default => true
+  scope "Alle", :scoped
   scope "Stornierte", :storno
 
   filter :firstname
