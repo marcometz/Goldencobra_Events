@@ -24,24 +24,22 @@ module GoldencobraEvents
     def self.generate_invoice(registration_user)
       require 'pdfkit'
       invoice_numb = self.invoice_number
-      unless GoldencobraEvents::EventRegistration.where(invoice_number: invoice_numb).any?
-        html = ActionController::Base.new.render_to_string(
-                                      template: 'templates/invoice/invoice', layout: false,
-                                        locals: {
-            user: registration_user,
-            event: registration_user.event_registrations.first.event_pricegroup.event,
-            invoice_number: invoice_numb,
-            invoice_date: registration_user.invoice_sent.present? ? registration_user.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
-            })
-        registration_user.event_registrations.first.update_attributes(invoice_number: invoice_numb)
-        kit = PDFKit.new(html, :page_size => 'Letter')
-        begin
-          File.delete("#{Rails.root}/public/system/invoices/#{invoice_numb}.pdf")
-        rescue Errno::ENOENT
-          logger.info "File not present."
-        end
-        kit.to_file("#{Rails.root}/public/system/invoices/#{invoice_numb}.pdf")
+      html = ActionController::Base.new.render_to_string(
+                                    template: 'templates/invoice/invoice', layout: false,
+                                      locals: {
+          user: registration_user,
+          event: registration_user.event_registrations.first.event_pricegroup.event,
+          invoice_number: invoice_numb,
+          invoice_date: registration_user.invoice_sent.present? ? registration_user.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
+          })
+      registration_user.event_registrations.first.update_attributes(invoice_number: invoice_numb)
+      kit = PDFKit.new(html, :page_size => 'Letter')
+      begin
+        File.delete("#{Rails.root}/public/system/invoices/#{invoice_numb}.pdf")
+      rescue Errno::ENOENT
+        logger.info "File not present."
       end
+      kit.to_file("#{Rails.root}/public/system/invoices/#{invoice_numb}.pdf")
     end
   end
 end
