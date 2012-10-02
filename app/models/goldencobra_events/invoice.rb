@@ -35,6 +35,11 @@ module GoldencobraEvents
             })
         registration_user.event_registrations.first.update_attributes(invoice_number: invoice_numb)
         kit = PDFKit.new(html, :page_size => 'Letter')
+        begin
+          File.delete("#{Rails.root}/public/system/invoices/#{invoice_numb}.pdf")
+        rescue Errno::ENOENT
+          logger.info "File not present."
+        end
         kit.to_file("#{Rails.root}/public/system/invoices/#{invoice_numb}.pdf")
       end
     end
