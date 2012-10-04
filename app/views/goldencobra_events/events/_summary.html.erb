@@ -6,6 +6,7 @@
   <div id="registration_summary">
     <% if @summary_user %>
       <div class="anschrift">
+        <p>E-Mail Adresse für Bestätigungsemail: <%= @summary_user.email %></p><br />
         <h2>Anschrift</h2>
         <p><%= @summary_user.gender ? "Herr" : "Frau" %> <%= " #{@summary_user.title} " if @summary_user.title %><%= @summary_user.firstname%> <%= @summary_user.lastname %><br>
         <% if @summary_company %>
