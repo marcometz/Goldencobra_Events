@@ -16,6 +16,8 @@ goldencobra_events:
     ticket:
         last_ticket_number: "0"
         logo_for_ticket: "logo.png"
+        veranstalter: "Eine Veranstaltung von Verlag der Tagesspiegel GmbH."
+        sponsorenleiste_for_ticket: "leiste.png"
     invoice:
         last_invoice_number: "0"
         event_name_for_invoice: "DK"

@@ -37,7 +37,8 @@
         </tr>
       </table>
   <p>Bestellt von <%= user.full_name %> am <%= user.event_registrations.first.created_at.strftime("%d. %B %Y, %H:%M") %><br> <br>
-  Eine Veranstaltung von Verlag der Tagesspiegel GmbH und Charta der Vielfalt e.V.<br><br></p>
+  <%= Goldencobra::Setting.for_key('goldencobra_events.ticket.veranstalter') %>
+  <br><br></p>
     </article>
   </section>
   <section>
