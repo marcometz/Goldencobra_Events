@@ -240,7 +240,9 @@ module GoldencobraEvents
           user.password = password
           user.password_confirmation = password
         end
-        self.update_attributes(user_id: new_user.id)
+        if self.user_id != new_user.id
+          self.update_attributes(user_id: new_user.id)
+        end
       end
     end
   end
