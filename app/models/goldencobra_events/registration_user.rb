@@ -43,7 +43,7 @@ module GoldencobraEvents
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
     attr_accessor :should_not_initialize
     after_create :init_default_data
-    after_save :check_for_master_data
+    after_commit :check_for_master_data
 
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
 
@@ -88,6 +88,9 @@ module GoldencobraEvents
       .map{|a| a.id if a.summe < param.to_f}
       where("id in (?)", results)
     }
+
+    scope :pricegroup_name_eq, lambda { |search_term| joins(:event_registrations => {:event_pricegroup => :pricegroup}).where("goldencobra_events_pricegroups.title LIKE '%#{search_term}%' AND goldencobra_events_registration_users.active = true") }
+    search_methods :pricegroup_name_eq
 
     def cancel_reservation!
       if self.active == true
@@ -170,6 +173,17 @@ module GoldencobraEvents
       return total_price
     end
 
+
+    def pricegroup_title
+      if self.event_registrations.last && self.event_registrations.last.event_pricegroup.present? &&
+        self.event_registrations.last.event_pricegroup.pricegroup.present? &&
+        self.event_registrations.last.event_pricegroup.pricegroup.title.present?
+        self.event_registrations.last.event_pricegroup.pricegroup.title
+      else
+        "leer"
+      end
+    end
+
     def registration_emails
       self.vita_steps.where(title: "Mail delivered: registration confirmation")
     end
@@ -215,7 +229,7 @@ module GoldencobraEvents
     end
 
     def check_for_master_data
-      if self.user_id.blank? && self.email.present?
+      if self.email.present?
         # Set user_id from existing User
         new_user = User.where(email: self.email).first_or_create do |user|
           user.firstname = self.firstname

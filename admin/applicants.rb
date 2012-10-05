@@ -13,6 +13,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   filter :type_of_registration_not, :label => "Art der Registrierung ist NICHT", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :total_price, :as => :numeric
   filter :active, :as => :select
+  filter :pricegroup_name, :as => :select, :collection => GoldencobraEvents::Pricegroup.pluck(:title)
 
   index do
     selectable_column
@@ -30,7 +31,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
     column :type_of_registration
     column :total_price, sortable: :total_price do |u|
-      number_to_currency(u.total_price, :locale => :de)
+      "#{number_to_currency(u.total_price, :locale => :de)} (#{u.pricegroup_title})"
     end
     column :last_email_send, sortable: :last_email_send do |user|
       user.last_email_send ? l(user.last_email_send, format: :short) : ''
