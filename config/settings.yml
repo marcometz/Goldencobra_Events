@@ -137,3 +137,9 @@ goldencobra_events:
         login: "my-username"
         password: "my-password"
         use_blacklist: "false"
+        bounce_recipient: "bounce-recipient@goldencobra.com"
+        send_bounce_report: 'false'
+        bouncer_mailer:
+            from: 'do-not-reply@goldencobra.com'
+            subject: 'Bounce report'
+            reply_to: ''

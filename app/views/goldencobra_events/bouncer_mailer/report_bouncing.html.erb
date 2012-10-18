@@ -1,0 +1,17 @@
+<html>
+<head>
+
+</head>
+<body>
+<p>
+Es wurde die E-Mail Blacklist für die URL <%= @url %> aktualisiert.<br />
+<% if @counter == 0 %>
+Es sind keine Einträge hinzugekommen.
+<% elsif @counter == 1 %>
+Es ist 1 Eintrag hinzugekommen.
+<% else %>
+Es sind <%= @counter %> Einträge hinzugekommen.
+<% end %>
+</p>
+</body>
+</html>
