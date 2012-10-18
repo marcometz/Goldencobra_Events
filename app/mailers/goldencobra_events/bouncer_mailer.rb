@@ -9,7 +9,7 @@ module GoldencobraEvents
       @counter = counter
       @url = Goldencobra::Setting.for_key('goldencobra.url')
       if email.present?
-        mail to:email, bcc: 'holger@ikusei.de'
+        mail to: email
       else
         logger.error 'BouncerMailer needs an email to send report.'
         do_not_deliver!
