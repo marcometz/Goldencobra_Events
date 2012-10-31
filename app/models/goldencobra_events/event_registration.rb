@@ -30,10 +30,9 @@ module GoldencobraEvents
 
     def checkin_status_message
       unless self.checkin_status.present?
-        self.checkin_status = CheckIns[0]
-        self.save
+        self.update_attributes(checkin_status: CheckIns[0])
       else
-        self.checkin_status = CheckIns[1]
+        self.update_attributes(checkin_status: CheckIns[1])
         self.save
       end
       self.checkin_status
