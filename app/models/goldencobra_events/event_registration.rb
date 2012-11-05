@@ -29,10 +29,11 @@ module GoldencobraEvents
     before_save :is_registerable?
 
     def checkin_status_message
-      unless self.checkin_status.present?
-        self.update_attributes(checkin_status: CheckIns[0])
+      if self.checkin_status.blank?
+        self.checkin_status = CheckIns[0]
+        self.save
       else
-        self.update_attributes(checkin_status: CheckIns[1])
+        self.checkin_status = CheckIns[1]
         self.save
       end
       self.checkin_status
