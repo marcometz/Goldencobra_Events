@@ -20,7 +20,7 @@ module GoldencobraEvents
     belongs_to :user, :class_name => GoldencobraEvents::RegistrationUser
     belongs_to :event_pricegroup
     attr_accessor :session_list_of_ids
-    scope :active, where(:canceled => false)
+    scope :active, joins(:user).where('goldencobra_events_registration_users.active = 1')
     scope :with_event_id, lambda { |param| joins(:event_pricegroup).where("goldencobra_events_event_pricegroups.event_id = #{param}") }
     CheckIns = ["Bekannt & erster Checkin. Bitte Unterlagen aushändigen.", "Bekannt & wiederholter Checkin. Keine Unterlagen aushändigen."]
 
