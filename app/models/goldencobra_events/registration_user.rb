@@ -44,6 +44,7 @@ module GoldencobraEvents
     attr_accessor :should_not_initialize
     after_create :init_default_data
     after_commit :check_for_master_data
+    validates_presence_of :email, :firstname, :lastname, :gender
 
     RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
 

@@ -261,7 +261,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     # Search for NewsletterRegistrations. If present, MasterData ist registered as ActiveAdmin resource as well
     action_item only: [:edit, :show] do
       _applicant = @_assigns['applicant']
-      link_to t(:link_to_master_data, scope: [:active_admin, :applicants]), edit_admin_master_datum_path(_applicant.user_id)
+      link_to t(:link_to_master_data, scope: [:active_admin, :applicants]), edit_admin_master_datum_path(_applicant.user_id) if _applicant.user_id.present?
     end
   end
 
