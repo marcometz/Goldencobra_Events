@@ -18,10 +18,12 @@ ActiveAdmin.register GoldencobraEvents::Ticket, :as => "Tickets scannen" do
 
   collection_action :verify_barcode, method: :post do
     barcode = params[:barcode]
-    registration = GoldencobraEvents::EventRegistration.active.where(ticket_number: barcode.to_s.split("?")[1]).readonly(false).first
+    registration = GoldencobraEvents::EventRegistration.active.where('ticket_number = ? AND ticket_number IS NOT NULL', barcode.to_s.split("?")[1]).readonly(false).first
+    @count = 0
     if registration
       @barcode = "valid"
       @checkin = registration.checkin_status_message
+      @count = registration.checkin_count
     else
       @barcode = false
     end

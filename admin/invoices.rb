@@ -42,8 +42,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column "Rechnung" do |i|
       link_to(i.event_registrations.first.invoice_number, "/system/invoices/#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank") if i.event_registrations.count > 0 && i.event_registrations.first.invoice_number.present?
     end
-    column "Ticket" do |applicant|
-      link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf?#{Time.now}", target: "blank") if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
+    column "Ticket" do |invoice|
+      link_to(invoice.event_registrations.first.ticket_number, "/system/tickets/ticket_#{invoice.event_registrations.first.ticket_number}.pdf?#{Time.now}", target: "blank") if invoice.event_registrations.count > 0 && invoice.event_registrations.first.ticket_number.present?
+    end
+    column '# Checkins' do |invoice|
+      invoice.event_registrations.first.checkin_count if invoice.event_registrations.any?
     end
     column :invoice_sent, sortable: :invoice_sent do |invoice|
       invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent

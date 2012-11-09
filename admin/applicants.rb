@@ -29,6 +29,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     column 'Ticket' do |applicant|
       link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf", target: 'blank') if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
     end
+    column '# Checkins' do |applicant|
+      applicant.event_registrations.last.checkin_count if applicant.event_registrations.any?
+    end
     column :type_of_registration
     column :total_price, sortable: :total_price do |u|
       "#{number_to_currency(u.total_price, :locale => :de)} (#{u.pricegroup_title})"

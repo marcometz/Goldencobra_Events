@@ -13,6 +13,7 @@
 #  ticket_number       :string(255)
 #  invoice_number      :string(255)
 #  checkin_status      :string(255)
+#  checkin_count       :integer          default(0)
 #
 
 module GoldencobraEvents
@@ -31,11 +32,11 @@ module GoldencobraEvents
     def checkin_status_message
       if self.checkin_status.blank?
         self.checkin_status = CheckIns[0]
-        self.save
       else
         self.checkin_status = CheckIns[1]
-        self.save
       end
+      self.checkin_count += 1
+      self.save
       self.checkin_status
     end
 
