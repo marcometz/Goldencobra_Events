@@ -312,11 +312,20 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column :created_at
     column :updated_at
     column :comment
-    column("Company") {|applicant| applicant.company.title if applicant.company.present? }
-    column("Street") {|applicant| applicant.company.location.street if applicant.company.present? && applicant.company.location.present? }
-    column("City") {|applicant| applicant.company.location.city if applicant.company.present? && applicant.company.location.present? }
-    column("ZIP") {|applicant| applicant.company.location.zip if applicant.company.present? && applicant.company.location.present? }
-    column("Country") {|applicant| applicant.company.location.country if applicant.company.present? && applicant.company.location.present? }
+    if applicant.billing_firstname.present?
+      # Rechnungsadresse exportieren
+      column("Company") {|applicant| applicant.billing_company.title if applicant.billing_company.present? }
+      column("Street") {|applicant| applicant.billing_company.location.street if applicant.billing_company.present? && applicant.billing_company.location.present? }
+      column("City") {|applicant| applicant.billing_company.location.city if applicant.billing_company.present? && applicant.billing_company.location.present? }
+      column("ZIP") {|applicant| applicant.billing_company.location.zip if applicant.billing_company.present? && applicant.billing_company.location.present? }
+      column("Country") {|applicant| applicant.billing_company.location.country if applicant.billing_company.present? && applicant.billing_company.location.present? }
+    else
+      column("Company") {|applicant| applicant.company.title if applicant.company.present? }
+      column("Street") {|applicant| applicant.company.location.street if applicant.company.present? && applicant.company.location.present? }
+      column("City") {|applicant| applicant.company.location.city if applicant.company.present? && applicant.company.location.present? }
+      column("ZIP") {|applicant| applicant.company.location.zip if applicant.company.present? && applicant.company.location.present? }
+      column("Country") {|applicant| applicant.company.location.country if applicant.company.present? && applicant.company.location.present? }
+    end
     column("last_email_at") {|user| l(user.last_email_send, format: :short) if user.last_email_send.present? }
     column("total_price") {|u| number_to_currency(u.total_price, :locale => :de) }
     column("Preisgruppen") {|applicant| applicant.event_registrations.map(&:event_pricegroup).compact.map(&:title).uniq.compact.join(" - ") }

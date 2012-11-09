@@ -15,9 +15,10 @@ module GoldencobraEvents
         imap.search(["NOT", "DELETED"]).each do |message_id|
           # Use gem 'mail' to check for mail status
           mail = Mail::Message.new(imap.fetch(message_id, "RFC822")[0].attr["RFC822"])
-          if mail.bounced?
+          if mail.bounced? && mail.date > (Date.today - 1)
+          # Nur Bounce behandeln, wenn die Email seit der Prüfung gestern
+          # rein kam.
             counter += 1
-            # puts "#{mail.final_recipient.split("rfc822;")[1]} bounced, status: #{mail.error_status}, retryable: #{mail.retryable?}"
             address = mail.final_recipient.split("rfc822;")[1]
             blacklist_entry = GoldencobraEvents::EmailBlacklist.find_by_email_address(address) || GoldencobraEvents::EmailBlacklist.new(email_address: address)
             if blacklist_entry.count
