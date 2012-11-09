@@ -155,7 +155,7 @@ module GoldencobraEvents
     end
 
     def company_name
-      if self.billing_company_id.present? && self.billing_company.title.present? && GoldencobraEvents::Company.find(self.billing_company_id).title != "privat Person"
+      if self.billing_company_id.present? && GoldencobraEvents::Company.find(self.billing_company_id) && self.billing_company.title.present? && self.billing_company.title != "privat Person"
         company = GoldencobraEvents::Company.find(self.billing_company_id)
         result = company.title
       elsif self.company_id.present? && GoldencobraEvents::Company.find(self.company_id) && GoldencobraEvents::Company.find(self.company_id).title != "privat Person"
