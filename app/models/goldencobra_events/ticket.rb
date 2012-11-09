@@ -33,6 +33,7 @@ module GoldencobraEvents
       event_registration.update_attributes(ticket_number: ticket_number)
       kit = PDFKit.new(html, :page_size => 'Letter')
       kit.to_file("#{Rails.root}/public/system/tickets/ticket_#{ticket_number}.pdf")
+      return "#{Rails.root}/public/system/tickets/ticket_#{ticket_number}.pdf"
     end
 
     private
