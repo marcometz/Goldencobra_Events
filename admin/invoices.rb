@@ -60,6 +60,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column :second_reminder_sent, sortable: :second_reminder_sent do |invoice|
       invoice.second_reminder_sent.strftime("%d.%m.%Y") if invoice.second_reminder_sent
     end
+    column 'Storno' do |invoice|
+      vita_step = invoice.vita_steps.where(title: 'Registration canceled').last
+      vita_step && !invoice.active ? vita_step.created_at.strftime("%d.%m.%Y") : ''
+    end
     column "" do |invoice|
       result = ""
       result += link_to(t('active_admin.view'), admin_invoice_path(invoice), :class => "member_link show_link")
