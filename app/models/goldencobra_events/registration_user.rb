@@ -156,13 +156,13 @@ module GoldencobraEvents
 
     def company_name
       if self.billing_company_id.present?
-        company = GoldencobraEvents::Company.find(self.billing_company_id)
+        company = GoldencobraEvents::Company.where(id: self.billing_company_id).first
         if company && company.title.present? && company.title != "privat Person"
           result = company.title
         end
       elsif self.company_id.present?
-        company = GoldencobraEvents::Company.find(self.company_id)
-        if company.title != "privat Person"
+        company = GoldencobraEvents::Company.where(id: self.company_id).first
+        if company && company.title != "privat Person"
           result = company.title
         end
       else
