@@ -25,14 +25,14 @@
         <%= user.full_billing_name_with_gender_and_title %><br>
 
         <% if user.billing_company_id.present? %>
-          <% company = GoldencobraEvents::Company.where(user.billing_company_id).first %>
+          <% company = GoldencobraEvents::Company.where(id: user.billing_company_id).first %>
           <% if company && company.location_id.present? %>
             <%= company.location.street %><br />
             <%= "#{company.location.zip} #{company.location.city}" %><br />
             <%= company.location.country %>
           <% end %>
         <% else %>
-          <% company = GoldencobraEvents::Company.where(user.company_id).first %>
+          <% company = GoldencobraEvents::Company.where(id: user.company_id).first %>
           <% if company && user.company.location_id.present? %>
             <%= user.company.location.street %><br />
             <%= "#{user.company.location.zip} #{user.company.location.city}" %><br />
