@@ -53,7 +53,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   form :html => { :enctype => 'multipart/form-data' } do |f|
     if f.object.event_registrations.none?
       f.inputs "ACHTUNG" do
-        "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
+        p "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
       end
     end
     f.actions
@@ -143,11 +143,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
 
     f.actions
-    if f.object.event_registrations.none?
-      f.inputs "ACHTUNG" do
-        "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
-      end
-    end
+    # if f.object.event_registrations.none?
+    #   f.inputs "ACHTUNG" do
+    #     p "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
+    #   end
+    # end
   end
 
   show :title => :lastname do
