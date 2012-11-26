@@ -13,7 +13,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   filter :type_of_registration_not, :label => "Art der Registrierung ist NICHT", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :total_price, :as => :numeric
   filter :active, :as => :select
-  filter :pricegroup_name, :as => :select, :collection => GoldencobraEvents::Pricegroup.pluck(:title)
+  if ActiveRecord::Base.connection.table_exists?("goldencobra_events_pricegroups")
+    filter :pricegroup_name, :as => :select, :collection => GoldencobraEvents::Pricegroup.pluck(:title)
+  end
 
   index do
     selectable_column
