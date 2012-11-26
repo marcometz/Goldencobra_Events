@@ -47,7 +47,7 @@ module GoldencobraEvents
     validates_presence_of :email, :firstname, :lastname
     validates_inclusion_of :gender, :in => [true, false]
 
-    RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
+    RegistrationTypes = ["anderer Weg", "Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube"]
 
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :billing_company
