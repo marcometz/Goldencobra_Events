@@ -9,6 +9,7 @@ gemspec
 gem 'activeadmin', :git => "git://github.com/ikusei/active_admin.git", :require => "activeadmin"
 gem 'goldencobra', :git => "git://github.com/ikusei/Goldencobra.git"
 gem 'goldencobra_email_templates', :git => "git://github.com/ikusei/goldencobra_email_templates.git"
+gem 'acts-as-taggable-on', git: 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'compass-rails'
 gem 'coffee-rails'
 gem 'sass'
@@ -46,7 +47,7 @@ group :test do
   gem 'guard-rspec'
   gem 'guard-cucumber'
   gem 'guard-livereload'
-  gem 'rb-fsevent', :git => 'git://github.com/ttilley/rb-fsevent.git', :branch => 'pre-compiled-gem-one-off'
+  gem 'rb-fsevent', '~> 0.9.1'#, :git => 'git://github.com/ttilley/rb-fsevent.git', :branch => 'pre-compiled-gem-one-off'
   gem 'growl'
   gem 'launchy'
   gem 'spork'

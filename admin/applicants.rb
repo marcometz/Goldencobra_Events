@@ -49,6 +49,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   end
 
   form :html => { :enctype => 'multipart/form-data' } do |f|
+    if f.object.event_registrations.none?
+      f.inputs "ACHTUNG" do
+        "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
+      end
+    end
     f.actions
 
     f.inputs "Anmeldung", :class => "foldable inputs" do
@@ -118,7 +123,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
       f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
     end
-    f.inputs "" do
+    f.inputs "Event-Anmeldungen" do
       f.has_many :event_registrations do |reg|
         reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.joins(:event).map{|a| ["#{a.event.title if a.event} (#{a.event.id if a.event}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"}, label: t(:event_pricegroup, scope: [:activerecord, :models], count: 1)
         reg.input :_destroy, :as => :boolean
@@ -136,6 +141,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
 
     f.actions
+    if f.object.event_registrations.none?
+      f.inputs "ACHTUNG" do
+        "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
+      end
+    end
   end
 
   show :title => :lastname do

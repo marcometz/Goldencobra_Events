@@ -9,7 +9,7 @@ describe "GoldencobraEvents::RegistrationUser" do
                   email: "foo@bar.com",
                   password: "foobar123",
                   password_confirmation: "foobar123",
-                  company_id: company.id)
+                  company_id: company.id, gender: true)
     end
 
     it "should create a new registration from master data" do
