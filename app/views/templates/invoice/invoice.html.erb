@@ -24,7 +24,7 @@
 
         <%= user.full_billing_name_with_gender_and_title %><br>
 
-        <% if user.billing_company_id.present? %>
+        <% if user.billing_company_id.present? && user.billing_company.title.present? %>
           <% company = GoldencobraEvents::Company.where(id: user.billing_company_id).first %>
           <% if company && company.location_id.present? %>
             <%= company.location.street %><br />
