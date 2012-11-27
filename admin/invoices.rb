@@ -60,9 +60,17 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column :second_reminder_sent, sortable: :second_reminder_sent do |invoice|
       invoice.second_reminder_sent.strftime("%d.%m.%Y") if invoice.second_reminder_sent
     end
-    column 'Storno' do |invoice|
-      vita_step = invoice.vita_steps.where(title: 'Registration canceled').last
-      vita_step && !invoice.active ? vita_step.created_at.strftime("%d.%m.%Y") : ''
+    column 'Storno' do |i|
+      vita_step = i.vita_steps.where(title: 'Registration canceled').last
+      if vita_step && !i.active
+        if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf")
+          link_to(vita_step.created_at.strftime("%d.%m.%Y"), "/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank")
+        else
+          vita_step.created_at.strftime("%d.%m.%Y")
+        end
+      else
+        ''
+      end
     end
     column "" do |invoice|
       result = ""
@@ -259,7 +267,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     end
   end
 
-
   batch_action :destroy, false
 
   batch_action :generate_invoice do |selection|
@@ -283,6 +290,24 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       send_file(GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first), :type => 'application/pdf', :disposition => 'attachement')
     end
     # redirect_to :action => :index
+  end
+
+  batch_action :generate_cancellation do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      send_file(reguser.generate_cancellation, :type => 'application/pdf', :disposition => 'attachement')
+    end
+  end
+
+  batch_action :generate_reminder_1 do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      send_file(reguser.generate_reminder(1), :type => 'application/pdf', :disposition => 'attachement')
+    end
+  end
+
+  batch_action :generate_reminder_2 do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      send_file(reguser.generate_reminder(2), :type => 'application/pdf', :disposition => 'attachement')
+    end
   end
 
   sidebar "invoice_options", only: [:index] do

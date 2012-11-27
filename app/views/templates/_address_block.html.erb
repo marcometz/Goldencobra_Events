@@ -1,0 +1,22 @@
+<%= user.company_name(billing) %><br />
+
+<% if billing == true %>
+  <% if user.billing_department.present? %>
+    <%= user.billing_department %><br />
+  <% end %>
+  <%= user.full_billing_name_with_gender_and_title %><br>
+<% else %>
+  <%= user.full_name_with_gender_and_title %><br>
+<% end %>
+
+<% if billing == true && user.billing_company_id.present? && user.billing_company.title.present? %>
+  <% company = GoldencobraEvents::Company.where(id: user.billing_company_id).first %>
+<% else %>
+  <% company = GoldencobraEvents::Company.where(id: user.company_id).first %>
+<% end %>
+
+<% if company && company.location_id.present? %>
+  <%= company.location.street %><br />
+  <%= "#{company.location.zip} #{company.location.city}" %><br />
+  <%= company.location.country %>
+<% end %>

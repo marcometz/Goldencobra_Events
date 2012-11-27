@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
@@ -237,7 +239,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
   end
 
-  batch_action :send_default_conf_mails, :confirm => "Sind Sie sicher?" do |selection|
+  batch_action "Sende Bestätigungsemail", :confirm => "Sind Sie sicher?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
       reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}")
@@ -247,7 +249,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     redirect_to :action => :index
   end
 
-  batch_action :deactivate_applicants, :confirm => "Sie wollen diese Gaeste stornieren?" do |selection|
+  batch_action "Storniere Anmeldung", :confirm => "Sie wollen diese Gaeste stornieren?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       reguser.cancel_reservation!
     end

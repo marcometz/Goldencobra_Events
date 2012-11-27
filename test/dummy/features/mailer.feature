@@ -1,3 +1,4 @@
+#Encoding: UTF-8
 Feature: Send confirmation emails
   In order give a customer a response
   As an admin
@@ -11,12 +12,12 @@ Feature: Send confirmation emails
       | id | firstname | lastname | email        |
       | 1 | Tim       | Test     | "tim@test.de"  |
       | 2 | Tom       | Test     | "tom@test.de"  |
-      | 3 | Tina      | Test     | "tina@test.de" |      
+      | 3 | Tina      | Test     | "tina@test.de" |
     When I go to the admin list of applicants
     Then I check "batch_action_item_1"
     And I check "batch_action_item_2"
     And I click on "Batch Actions"
-    Then I click on "Send Default Conf Mails"
+    Then I click on "Sende Bestätigungsemail"
     #And "tim@test.de" should receive an email
     #And "tom@test.de" should receive an email
-    
+
