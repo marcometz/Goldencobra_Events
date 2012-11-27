@@ -1,56 +1,56 @@
 #goldencobra_events_enter_account_data_wrapper{
-	
+
 	#goldencobra_events_enter_account_data{
-		border:1px solid black;	
+		border:1px solid black;
 		background-color:grey;
-		color:white;	
+		color:white;
 		text-decoration:none;
-		padding:5px;		
+		padding:5px;
 		margin:5px;
-	}	
+	}
 }
 #goldencobra_events_enter_account_data_form{
-	ul.tabs { 
-	    list-style:none; 
-	    margin:0 !important; 
-	    padding:0;  
-	    border-bottom:1px solid #666;   
+	ul.tabs {
+	    list-style:none;
+	    margin:0 !important;
+	    padding:0;
+	    border-bottom:1px solid #666;
 	    height:30px;
-		li { 
-		    float:left;  
+		li {
+		    float:left;
 		    text-indent:0;
 		    padding:0;
 		    margin:0 !important;
-		    list-style-image:none !important; 
+		    list-style-image:none !important;
 		}
-		 a { 
+		 a {
 		    background: url("/assets/goldencobra/tools/tabs/blue.png") no-repeat -420px 0;
 		    font-size:11px;
 		    display:block;
 		    line-height:30px;
 		    width: 134px;
-		    text-align:center;  
+		    text-align:center;
 		    text-decoration:none;
 		    color:#333;
 		    padding:0px;
-		    margin:0px; 
+		    margin:0px;
 		    position:relative;
 		    top:1px;
 			&:active {
-			    outline:none;       
+			    outline:none;
 			}
 			&:hover {
-			    background-position: -420px -31px;  
-			    color:#fff; 
+			    background-position: -420px -31px;
+			    color:#fff;
 			}
 		}
 		a.current, a.current:hover, li.current a {
-		    background-position: -420px -62px;      
-		    cursor:default !important; 
+		    background-position: -420px -62px;
+		    cursor:default !important;
 		    color:#000 !important;
 		}
 	}
-	p{	
+	p{
 		label{
 			display:inline-block;
 			width:200px;
@@ -72,26 +72,26 @@
 		li{
 			padding:0;
 			margin:0;
-		}		
+		}
 	}
 	div.article_event_content{
 		border:1px solid black;
 	}
-	
+
 	li.article_event_item.completed > div.article_event_content{
 		opacity:0.5;
 	}
 	li.article_event_item.has_exclusive_children{
 		border: 3px solid red;
 	}
-	
+
 	&.program{
 		.article_event_content{
 			.pricegroups{
 				margin:0 0 0 100px;
 				ul{
 					li{
-						list-style:none;	
+						list-style:none;
 						.pricegroup_id{
 							display:none;
 						}
@@ -117,11 +117,11 @@
 						}
 					}
 				}
-					
+
 			}
 		}
 	}
-	
+
 	&.registration{
 		.article_event_content{
 			overflow:hidden;
@@ -175,9 +175,9 @@
 					text-indent:-9999999px;
 					background:url("/assets/goldencobra_events/exclusive.png") no-repeat;
 					width:20px;
-					
+
 				}
-				
+
 			}
 			.venue{
 				margin:0 0 0 10px;
@@ -189,7 +189,7 @@
 				a{
 					border:1px solid black;
 					background-color:grey;
-					color:white;	
+					color:white;
 					text-decoration:none;
 					padding:2px;
 					&:hover{
@@ -198,7 +198,7 @@
 				}
 			}
 		}
-		
+
 	}
 }
 
@@ -221,7 +221,7 @@
 		cursor:pointer;
 		height:14px;
 		width:14px;
-		text-indent:-999999px;		
+		text-indent:-999999px;
 	}
 }
 //Alles unterhalb hiervon kann warscheinlich weg
@@ -247,3 +247,47 @@ div.error{
 }
 */
 
+#tooltip
+{
+    text-align: center;
+    color: #fff;
+    background: #111;
+    position: absolute;
+    z-index: 100;
+    padding: 15px;
+}
+
+    #tooltip:after /* triangle decoration */
+    {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #111;
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        margin-left: -10px;
+    }
+
+        #tooltip.top:after
+        {
+            border-top-color: transparent;
+            border-bottom: 10px solid #111;
+            top: -20px;
+            bottom: auto;
+        }
+
+        #tooltip.left:after
+        {
+            left: 10px;
+            margin: 0;
+        }
+
+        #tooltip.right:after
+        {
+            right: 10px;
+            left: auto;
+            margin: 0;
+        }

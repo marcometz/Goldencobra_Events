@@ -55,7 +55,7 @@
         </p>
         <p>
             <label><%= s("goldencobra_events.event.registration.user_form.user_label.email") %> <span class="asterix">*</span></label>
-            <%= text_field_tag "registration[user][email]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.email") %>
+            <%= text_field_tag "registration[user][email]", "", :required => true, "data-message" => s("goldencobra_events.event.registration.user_form.errors.email"), 'rel'=>"tooltip" %>
         </p>
   <%# Felder fuer abweichende Rechnungsadresse %>
     <hr />

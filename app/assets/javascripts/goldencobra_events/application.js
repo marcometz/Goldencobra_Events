@@ -10,6 +10,8 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require goldencobra_events/mailcheck.min.js
+//= require goldencobra_events/tooltip.js
 
 $(document).ready(function() {
 
@@ -46,7 +48,30 @@ $(document).ready(function() {
     	$('#goldencobra_events_enter_account_data_form').fadeIn();
 	});
 
-  // Validierung des Formulars zur Eingabe der Anmeldungsaten
+  var domains = ["t-online.de", "yahoo.de", "welt.de", "bundestag.de", "spiegel.de", "zeit.de", "zdf.de", "web.de", "telecolumbus.de", "compuserve.com", "hotmail.com", "meedia.de", "n24.de", "neue-westfaelische.de", "nzz.ch", "aol.com", "freenet.de", "sueddeutsche.de", "gmx.de", 'gmail.com', 'aol.com'];
+  var topLevelDomains = ["com", "net", "org", "de"];
+
+  $('#registration_user_email').bind('blur', function() {
+    $('#registration_user_email').mailcheck({
+      domains: domains,                       // optional
+      topLevelDomains: topLevelDomains,       // optional
+      suggested: function(element, suggestion) {
+        // callback code
+        $('#registration_user_email').parent().append("<span class='validation_error' style='color:red;'>Meinten Sie " + suggestion.full + "?</span>");
+      },
+      empty: function(element) {
+        // callback code
+        // console.log('empty');
+        // $('#registration_user_email').parent().append("<span class='validation_error' style='color:red;'>Pflichtangabe</span>");
+      }
+    });
+  });
+
+  $('#registration_user_email').bind('focus', function() {
+    $('.validation_error').each(function() { $(this).remove();});
+  });
+
+  // Validierung des Formulars zur Eingabe der Anmeldedaten
   $('#goldencobra_events_user_registration_form_submit').bind("click", function(){
     $('.validation_error').each(function() { $(this).remove();});
     var gender_selection = false;

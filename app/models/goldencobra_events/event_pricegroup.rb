@@ -20,7 +20,7 @@
 module GoldencobraEvents
   class EventPricegroup < ActiveRecord::Base
     attr_accessible :event_id, :pricegroup_id, :price, :price_raw, :max_number_of_participators, :cancelation_until, :start_reservation, :end_reservation, :available, :webcode, :description
-    
+
     belongs_to :event
     belongs_to :pricegroup
     has_many :event_registrations, :class_name => GoldencobraEvents::EventRegistration
@@ -32,9 +32,9 @@ module GoldencobraEvents
 
     validate :validate_date_range
     after_initialize :set_default_available
-    
+
     def set_default_available
-      if self.new_record? 
+      if self.new_record?
         default_available = Goldencobra::Setting.for_key("goldencobra_events.event_pricegroup.available.default")
         if default_available.present? && default_available == "false"
           self.available = false
@@ -55,14 +55,14 @@ module GoldencobraEvents
     def brutto_price
       self.price + (self.price / 100 * 19)
     end
-    
+
     def number_of_participators_label
       if max_number_of_participators == 0
         "&infin;"
       else
         "#{GoldencobraEvents::EventRegistration.where("event_pricegroup_id = #{self.id}").select("goldencobra_events_event_registrations.id").count}/#{max_number_of_participators}"
       end
-      
+
     end
 
     def registration_date_valid
@@ -83,6 +83,10 @@ module GoldencobraEvents
       else
         return true
       end
+    end
+
+    def self.bookable
+      GoldencobraEvents::EventPricegroup.where('start_reservation < ? AND ? < end_reservation', Time.now.utc, Time.now.utc)
     end
 
     private

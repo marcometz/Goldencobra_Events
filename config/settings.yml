@@ -100,7 +100,7 @@ goldencobra_events:
                     gender_male: "Herr"
                     gender_female: "Frau"
                     title: "Titel"
-                    firstname: "Vor- &"
+                    firstname: "Vorname"
                     lastname: "Nachname"
                     function: "Function"
                     email: "Email"
@@ -117,7 +117,7 @@ goldencobra_events:
                     billing_firstname: "Vorname"
                     billing_lastname: "Nachname"
                 company_label:
-                    title: "Name"
+                    title: "Unternehmen"
                     legal_form: "Rechtsform"
                     phone: "Telefon"
                     fax: "Fax"
