@@ -105,37 +105,40 @@ module GoldencobraEvents
     end
 
     def generate_cancellation
-      require 'pdfkit'
-      invoice_numb = self.event_registrations.first.invoice_number
-      html = ActionController::Base.new.render_to_string(
-                                    template: 'templates/invoice/cancellation', layout: false,
-                                      locals: {
-          user: self,
-          event: self.event_registrations.first.event_pricegroup.event,
-          invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
-          })
-      kit = PDFKit.new(html, :page_size => 'Letter')
-      if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
-        File.delete("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
+      if self.event_registrations.any?
+        require 'pdfkit'
+        invoice_numb = self.event_registrations.first.invoice_number
+        html = ActionController::Base.new.render_to_string(
+                                      template: 'templates/invoice/cancellation', layout: false,
+                                        locals: {
+            user: self,
+            event: self.event_registrations.first.event_pricegroup.event,
+            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
+            })
+        kit = PDFKit.new(html, :page_size => 'Letter')
+        if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
+          File.delete("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
+        end
+        kit.to_file("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
       end
-      kit.to_file("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
     end
 
     def generate_reminder(category)
-      require 'pdfkit'
-      html = ActionController::Base.new.render_to_string(
-                                    template: 'templates/invoice/cancellation', layout: false,
-                                      locals: {
-          user: self,
-          event: self.event_registrations.first.event_pricegroup.event,
-          invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
-          })
-      kit = PDFKit.new(html, :page_size => 'Letter')
-      if File.exists?("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
-        File.delete("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
+      if self.event_registrations.any?
+        require 'pdfkit'
+        html = ActionController::Base.new.render_to_string(
+                                      template: 'templates/invoice/cancellation', layout: false,
+                                        locals: {
+            user: self,
+            event: self.event_registrations.first.event_pricegroup.event,
+            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
+            })
+        kit = PDFKit.new(html, :page_size => 'Letter')
+        if File.exists?("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
+          File.delete("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
+        end
+        kit.to_file("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
       end
-      kit.to_file("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
-
     end
 
     def reactivate_reservation!
