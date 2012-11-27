@@ -42,6 +42,7 @@
           </td>
         </tr>
     <% end %>
+    <% if event.venue && event.venue.location %>
         <tr>
           <td valign="top">Ort<br> <br><br> <br></td>
           <td>
@@ -50,6 +51,7 @@
             <%= event.venue.location.zip %> <%= event.venue.location.city %></strong><br><br>
           </td>
         </tr>
+        <% end %>
       </table>
   <p>Bestellt von <%= user.full_name %> am <%= user.event_registrations.first.created_at.strftime("%d. %B %Y, %H:%M") %><br> <br>
   <%= Goldencobra::Setting.for_key('goldencobra_events.ticket.veranstalter') %><br></p>

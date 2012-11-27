@@ -62,7 +62,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     end
     column 'Storno' do |i|
       vita_step = i.vita_steps.where(title: 'Registration canceled').last
-      if vita_step && !i.active
+      if vita_step && !i.active && i.event_registrations.any?
         if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf")
           link_to(vita_step.created_at.strftime("%d.%m.%Y"), "/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank")
         else

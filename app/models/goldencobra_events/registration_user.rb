@@ -42,7 +42,7 @@ module GoldencobraEvents
     belongs_to :user, :class_name => User
     has_many :vita_steps, :as => :loggable, :class_name => Goldencobra::Vita
     attr_accessor :should_not_initialize
-    after_create :init_default_data
+    # after_create :init_default_data
     after_commit :check_for_master_data
     validates_presence_of :email, :firstname, :lastname
     validates_inclusion_of :gender, :in => [true, false]
