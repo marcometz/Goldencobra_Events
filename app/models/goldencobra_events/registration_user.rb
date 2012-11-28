@@ -113,7 +113,8 @@ module GoldencobraEvents
                                         locals: {
             user: self,
             event: self.event_registrations.first.event_pricegroup.event,
-            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
+            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y"),
+            invoice_number: invoice_numb
             })
         kit = PDFKit.new(html, :page_size => 'Letter')
         if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
