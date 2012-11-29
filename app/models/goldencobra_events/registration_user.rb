@@ -124,15 +124,19 @@ module GoldencobraEvents
       end
     end
 
-    def generate_reminder(category)
-      if self.event_registrations.any?
+    def generate_reminder(cat)
+      if self.event_registrations.any? && cat.present?
+        category = cat.to_s
         require 'pdfkit'
+        re_date = Time.now + 14.days
         html = ActionController::Base.new.render_to_string(
-                                      template: 'templates/invoice/cancellation', layout: false,
-                                        locals: {
+                              template: "templates/invoice/cancellation_#{category}",
+                              layout: false,
+                              locals: {
             user: self,
             event: self.event_registrations.first.event_pricegroup.event,
-            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
+            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y"),
+            reminder_date: re_date.strftime("%d.%m.%Y")
             })
         kit = PDFKit.new(html, :page_size => 'Letter')
         if File.exists?("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
