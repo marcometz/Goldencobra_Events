@@ -5,20 +5,19 @@
   <title>Rechnung <%= event.title %></title>
 </head>
 
-<body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px; padding-left: 20px;">
-  <section>
-    <article>
-
-      <!-- Anschrift -->
-      <header>
-      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/>
+<body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px; padding-left: 20px; line-height: 15px">
+      <div style="height:300px">
+		<img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/>
+		
         <h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
         <p class="contact-informations">
           <%= render partial: 'templates/address_block', locals: { user: user, billing: true } %>
         <p/>
-      </header>
+      </div>
 
-      <p style="margin-top: 70px;"><strong>Teilnahme-Rechnung <%= event.title_for_invoice %>, <%= event.date %></strong></p>
+
+	<div  style="height:670px">
+      <p><strong>Teilnahme-Rechnung <%= event.title_for_invoice %>, <%= event.date %></strong></p>
       <p>(im Auftrag des Tagesspiegels, <%= event.title %>)</p>
       <hr style="max-width:740px; align: left;" />
       <table id="invoice-details" style="width: 300px;">
@@ -62,13 +61,11 @@
       <br />
       <p>Mit freundlichen Grüßen<br />
       Teilnehmermanagement <%= event.title %></p>
-    </article>
-  </section>
 
-  <footer>
-      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px;"/>
-  </footer>
-</body>
-</html>
-
+		</div>
+	    <div>
+	    	<img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px; margin-left:-20px;"/>
+	    </div>
+	</body>
+	</html>
 

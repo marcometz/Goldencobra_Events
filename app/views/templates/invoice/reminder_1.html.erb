@@ -7,8 +7,8 @@
 
 <body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px; padding-left: 20px; line-height: 15px">
       <div style="height:300px">
-<!--      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/> -->
-      <img src="http://www.diversity-konferenz.de/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/>
+		<img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/>
+		
         <h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
         <p class="contact-informations">
           <%= render partial: 'templates/address_block', locals: { user: user, billing: true } %>
@@ -70,7 +70,7 @@
 
 	</div>
     <div>
-    	<img src="http://www.diversity-konferenz.de/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px; margin-left:-20px;"/>
+    	<img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px; margin-left:-20px;"/>
     </div>
 </body>
 </html>
