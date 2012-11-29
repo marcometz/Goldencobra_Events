@@ -130,7 +130,7 @@ module GoldencobraEvents
         require 'pdfkit'
         re_date = Time.now + 14.days
         html = ActionController::Base.new.render_to_string(
-                              template: "templates/invoice/cancellation_#{category}",
+                              template: "templates/invoice/reminder_#{category}",
                               layout: false,
                               locals: {
             user: self,
