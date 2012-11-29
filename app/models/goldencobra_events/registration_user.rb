@@ -129,6 +129,7 @@ module GoldencobraEvents
         category = cat.to_s
         require 'pdfkit'
         re_date = Time.now + 14.days
+        invoice_numb = self.event_registrations.first.invoice_number
         html = ActionController::Base.new.render_to_string(
                               template: "templates/invoice/reminder_#{category}",
                               layout: false,
@@ -136,7 +137,8 @@ module GoldencobraEvents
             user: self,
             event: self.event_registrations.first.event_pricegroup.event,
             invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y"),
-            reminder_date: re_date.strftime("%d.%m.%Y")
+            reminder_date: re_date.strftime("%d.%m.%Y"),
+            invoice_number: invoice_numb
             })
         kit = PDFKit.new(html, :page_size => 'Letter')
         if File.exists?("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
