@@ -52,17 +52,21 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent
     end
     column :payed_on, sortable: :payed_on do |invoice|
-      invoice.payed_on.strftime("%d.%m.%Y") if invoice.payed_on
+      invoice.payed_on.strftime("%d.%m.%Y") if invoice.payed_on.present?
     end
     column :first_reminder_sent, sortable: :first_reminder_sent do |invoice|
-      invoice.first_reminder_sent.strftime("%d.%m.%Y") if invoice.first_reminder_sent
+      if invoice.first_reminder_sent.present?
+        invoice.first_reminder_sent.strftime("%d.%m.%Y")
+      end
     end
     column :second_reminder_sent, sortable: :second_reminder_sent do |invoice|
-      invoice.second_reminder_sent.strftime("%d.%m.%Y") if invoice.second_reminder_sent
+      if invoice.second_reminder_sent.present?
+        invoice.second_reminder_sent.strftime("%d.%m.%Y")
+      end
     end
     column 'Storno' do |i|
       vita_step = i.vita_steps.where(title: 'Registration canceled').last
-      if vita_step && !i.active && i.event_registrations.any?
+      if vita_step && !i.active && i.event_registrations.any? && i.event_registrations.first.invoice_number.present?
         if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf")
           link_to(vita_step.created_at.strftime("%d.%m.%Y"), "/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank")
         else
