@@ -44,8 +44,10 @@ module GoldencobraEvents
     attr_accessor :should_not_initialize
     after_create :init_default_data
     after_commit :check_for_master_data
+    validates_presence_of :email, :firstname, :lastname
+    validates_inclusion_of :gender, :in => [true, false]
 
-    RegistrationTypes = ["Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube", "anderer Weg"]
+    RegistrationTypes = ["anderer Weg", "Webseite", "Fax", "Email", "Telefon", "Importer", "Brieftaube"]
 
     accepts_nested_attributes_for :company
     accepts_nested_attributes_for :billing_company
@@ -102,6 +104,50 @@ module GoldencobraEvents
       end
     end
 
+    def generate_cancellation
+      if self.event_registrations.any?
+        require 'pdfkit'
+        invoice_numb = self.event_registrations.first.invoice_number
+        html = ActionController::Base.new.render_to_string(
+                                      template: 'templates/invoice/cancellation', layout: false,
+                                        locals: {
+            user: self,
+            event: self.event_registrations.first.event_pricegroup.event,
+            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y"),
+            invoice_number: invoice_numb
+            })
+        kit = PDFKit.new(html, :page_size => 'Letter')
+        if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
+          File.delete("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
+        end
+        kit.to_file("#{Rails.root}/public/system/invoices/cancellation_#{invoice_numb}.pdf")
+      end
+    end
+
+    def generate_reminder(cat)
+      if self.event_registrations.any? && cat.present?
+        category = cat.to_s
+        require 'pdfkit'
+        re_date = Time.now + 14.days
+        invoice_numb = self.event_registrations.first.invoice_number
+        html = ActionController::Base.new.render_to_string(
+                              template: "templates/invoice/reminder_#{category}",
+                              layout: false,
+                              locals: {
+            user: self,
+            event: self.event_registrations.first.event_pricegroup.event,
+            invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y"),
+            reminder_date: re_date.strftime("%d.%m.%Y"),
+            invoice_number: invoice_numb
+            })
+        kit = PDFKit.new(html, :page_size => 'Letter')
+        if File.exists?("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
+          File.delete("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
+        end
+        kit.to_file("#{Rails.root}/public/system/invoices/reminder_#{category}_#{invoice_numb}.pdf")
+      end
+    end
+
     def reactivate_reservation!
       if self.active == false
         self.active = true
@@ -152,13 +198,17 @@ module GoldencobraEvents
       s << " #{self.firstname} #{self.lastname}"
     end
 
-    def company_name
-      if self.billing_company_id.present? && self.billing_company.title.present? && GoldencobraEvents::Company.find(self.billing_company_id).title != "privat Person"
-        company = GoldencobraEvents::Company.find(self.billing_company_id)
-        result = company.title
-      elsif self.company_id.present? && GoldencobraEvents::Company.find(self.company_id) && GoldencobraEvents::Company.find(self.company_id).title != "privat Person"
-        company = GoldencobraEvents::Company.find(self.company_id)
-        result = company.title
+    def company_name(billing=true)
+      if billing == true && self.billing_company_id.present? && self.billing_company.title.present?
+        company = GoldencobraEvents::Company.where(id: self.billing_company_id).first
+        if company && company.title != "privat Person"
+          result = company.title
+        end
+      elsif self.company_id.present?
+        company = GoldencobraEvents::Company.where(id: self.company_id).first
+        if company && company.title != "privat Person"
+          result = company.title
+        end
       else
         result = nil
       end

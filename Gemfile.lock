@@ -1,19 +1,23 @@
 GIT
   remote: git://github.com/ikusei/Goldencobra.git
-  revision: 4bd9e403b5f627c810c7fac6479caa1e6de23280
+  revision: acd797e928f2fe7959b8146b1ff37b28079ef132
   specs:
-    goldencobra (1.0.8)
+    goldencobra (1.0.9)
       activeadmin
       activeadmin-cancan
       acts-as-taggable-on
       ancestry
       cancan (= 1.6.7)
+      coffee-rails
+      compass-960-plugin
       compass-rails
       devise
       exception_notification
       execjs
       friendly_id
       geocoder
+      geokit
+      inherited_resources
       jquery-rails
       jqueryui_rails
       liquid
@@ -24,8 +28,10 @@ GIT
       omniauth-openid
       paper_trail
       paperclip
-      rails (~> 3.2.3)
+      progress_bar
+      rails (~> 3.2.8)
       rubyzip
+      sass
       sass-rails
       sidekiq
       sinatra
@@ -62,19 +68,19 @@ GIT
       rails (~> 3.2.2)
 
 GIT
+  remote: git://github.com/mbleigh/acts-as-taggable-on.git
+  revision: 62f5fea1e19e4520a7bc8b65e0207aea11d4927f
+  specs:
+    acts-as-taggable-on (2.3.3)
+      rails (~> 3.0)
+
+GIT
   remote: git://github.com/thoughtbot/factory_girl_rails.git
   revision: fb7658267dc73edec9c1fac772405a31f27872bd
   specs:
     factory_girl_rails (4.1.0)
       factory_girl (~> 4.1.0)
       railties (>= 3.0.0)
-
-GIT
-  remote: git://github.com/ttilley/rb-fsevent.git
-  revision: f36a8cd01b49a6ce2a26d9e1083b5f6e6722c470
-  branch: pre-compiled-gem-one-off
-  specs:
-    rb-fsevent (0.4.3.1pre1)
 
 PATH
   remote: .
@@ -93,39 +99,37 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
-    actionmailer (3.2.8)
-      actionpack (= 3.2.8)
+    actionmailer (3.2.9)
+      actionpack (= 3.2.9)
       mail (~> 2.4.4)
-    actionpack (3.2.8)
-      activemodel (= 3.2.8)
-      activesupport (= 3.2.8)
+    actionpack (3.2.9)
+      activemodel (= 3.2.9)
+      activesupport (= 3.2.9)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
       rack (~> 1.4.0)
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
-      sprockets (~> 2.1.3)
+      sprockets (~> 2.2.1)
     activeadmin-cancan (0.1.4)
       activeadmin (>= 0.4.0)
       cancan (>= 1.6.2)
       rails (>= 3.0)
-    activemodel (3.2.8)
-      activesupport (= 3.2.8)
+    activemodel (3.2.9)
+      activesupport (= 3.2.9)
       builder (~> 3.0.0)
-    activerecord (3.2.8)
-      activemodel (= 3.2.8)
-      activesupport (= 3.2.8)
+    activerecord (3.2.9)
+      activemodel (= 3.2.9)
+      activesupport (= 3.2.9)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.8)
-      activemodel (= 3.2.8)
-      activesupport (= 3.2.8)
-    activesupport (3.2.8)
+    activeresource (3.2.9)
+      activemodel (= 3.2.9)
+      activesupport (= 3.2.9)
+    activesupport (3.2.9)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    acts-as-taggable-on (2.3.3)
-      rails (~> 3.0)
     addressable (2.3.2)
     ancestry (1.3.0)
       activerecord (>= 2.3.14)
@@ -135,8 +139,9 @@ GEM
     arel (3.0.2)
     barby (0.5.0)
     bcrypt-ruby (3.0.1)
-    bourbon (2.1.1)
-      sass (>= 3.1)
+    bourbon (2.1.2)
+      sass (>= 3.2)
+      thor
     brakeman (1.8.1)
       activesupport
       erubis (~> 2.6)
@@ -149,7 +154,7 @@ GEM
       ruby_parser (= 2.3.1)
       sass (~> 3.0)
       terminal-table (~> 1.4)
-    builder (3.0.3)
+    builder (3.0.4)
     cancan (1.6.7)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -161,13 +166,14 @@ GEM
     capybara-webkit (0.12.1)
       capybara (>= 1.0.0, < 1.2)
       json
-    celluloid (0.12.0)
+    celluloid (0.12.3)
+      facter (>= 1.6.12)
       timers (>= 1.0.0)
     childprocess (0.3.5)
       ffi (~> 1.0, >= 1.0.6)
-    chronic (0.6.7)
+    chronic (0.8.0)
     chunky_png (1.2.6)
-    cocaine (0.3.2)
+    cocaine (0.4.2)
     coderay (1.0.7)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -180,6 +186,8 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    compass-960-plugin (0.10.4)
+      compass (>= 0.10.0)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
     connection_pool (0.9.2)
@@ -211,21 +219,28 @@ GEM
       rspec (~> 2.0)
     erubis (2.7.0)
     eventmachine (1.0.0)
-    exception_notification (2.6.1)
+    exception_notification (3.0.0)
       actionmailer (>= 3.0.4)
+      tinder (~> 1.8)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    facter (1.6.14)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
     faraday (0.8.4)
       multipart-post (~> 1.1)
+    faraday_middleware (0.9.0)
+      faraday (>= 0.7.4, < 0.9)
     fastercsv (1.5.5)
+    fattr (2.2.1)
     ffi (1.1.5)
     formtastic (2.2.1)
       actionpack (>= 3.0)
-    friendly_id (4.0.8)
+    friendly_id (4.0.9)
     fssm (0.2.9)
-    geocoder (1.1.3)
+    geocoder (1.1.5)
+    geokit (1.6.5)
+      multi_json
     gherkin (2.11.2)
       json (>= 1.4.6)
     git-pivotal (0.2.3)
@@ -255,6 +270,7 @@ GEM
     highline (1.6.15)
     hike (1.2.1)
     hirb (0.7.0)
+    http_parser.rb (0.5.3)
     httpauth (0.2.0)
     i18n (0.6.1)
     inherited_resources (1.3.1)
@@ -293,7 +309,7 @@ GEM
       polyamorous (~> 0.5.0)
     method_source (0.8)
     mime-types (1.19)
-    multi_json (1.3.6)
+    multi_json (1.3.7)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
     nokogiri (1.5.5)
@@ -321,15 +337,17 @@ GEM
     omniauth-openid (1.0.1)
       omniauth (~> 1.0)
       rack-openid (~> 1.3.1)
+    options (2.3.0)
+      fattr
     orm_adapter (0.4.0)
-    paper_trail (2.6.3)
+    paper_trail (2.6.4)
       activerecord (~> 3.0)
       railties (~> 3.0)
-    paperclip (3.2.0)
+    paperclip (3.3.1)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-      cocaine (>= 0.0.2)
+      cocaine (~> 0.4.0)
       mime-types
     pdfkit (0.5.2)
     polyamorous (0.5.0)
@@ -338,6 +356,9 @@ GEM
     powder (0.1.8)
       thor (>= 0.11.5)
     pr_geohash (1.0.0)
+    progress_bar (0.4.0)
+      highline (~> 1.6.1)
+      options (~> 2.3.0)
     pry (0.9.10)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -354,27 +375,28 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.8)
-      actionmailer (= 3.2.8)
-      actionpack (= 3.2.8)
-      activerecord (= 3.2.8)
-      activeresource (= 3.2.8)
-      activesupport (= 3.2.8)
+    rails (3.2.9)
+      actionmailer (= 3.2.9)
+      actionpack (= 3.2.9)
+      activerecord (= 3.2.9)
+      activeresource (= 3.2.9)
+      activesupport (= 3.2.9)
       bundler (~> 1.0)
-      railties (= 3.2.8)
+      railties (= 3.2.9)
     rails-pry (0.0.1)
-    railties (3.2.8)
-      actionpack (= 3.2.8)
-      activesupport (= 3.2.8)
+    railties (3.2.9)
+      actionpack (= 3.2.9)
+      activesupport (= 3.2.9)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
     raindrops (0.10.0)
-    rake (0.9.2.2)
+    rake (10.0.2)
+    rb-fsevent (0.9.2)
     rdoc (3.12)
       json (~> 1.4)
-    redis (3.0.1)
+    redis (3.0.2)
     redis-namespace (1.2.1)
       redis (~> 3.0.0)
     responders (0.9.3)
@@ -401,14 +423,14 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.11.0)
-    ruby-openid (2.2.1)
+    ruby-openid (2.2.2)
     ruby2ruby (1.3.1)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
     rubyzip (0.9.9)
-    sass (3.2.1)
+    sass (3.2.3)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -419,23 +441,25 @@ GEM
       multi_json (~> 1.0)
       rubyzip
     sexp_processor (3.2.0)
-    sidekiq (2.3.2)
+    sidekiq (2.5.3)
       celluloid (~> 0.12.0)
       connection_pool (~> 0.9.2)
       multi_json (~> 1)
       redis (~> 3)
       redis-namespace
+    simple_oauth (0.1.9)
     sinatra (1.3.3)
       rack (~> 1.3, >= 1.3.6)
       rack-protection (~> 1.2)
       tilt (~> 1.3, >= 1.3.3)
-    slim (1.3.2)
-      temple (~> 0.5.0)
+    slim (1.3.4)
+      temple (~> 0.5.5)
       tilt (~> 1.3.3)
     slop (3.3.3)
     spork (0.9.2)
-    sprockets (2.1.3)
+    sprockets (2.2.1)
       hike (~> 1.2)
+      multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sunspot (1.3.3)
@@ -445,7 +469,7 @@ GEM
       nokogiri
       sunspot (= 1.3.3)
     sunspot_solr (1.3.3)
-    temple (0.5.4)
+    temple (0.5.5)
     terminal-table (1.4.5)
     therubyracer (0.10.2)
       libv8 (~> 3.3.10)
@@ -456,10 +480,24 @@ GEM
     thor (0.16.0)
     tilt (1.3.3)
     timers (1.0.1)
-    treetop (1.4.10)
+    tinder (1.9.1)
+      eventmachine (>= 0.12.0, < 2)
+      faraday (~> 0.8)
+      faraday_middleware (~> 0.8)
+      hashie (~> 1.0)
+      json (~> 1.6)
+      mime-types (~> 1.16)
+      multi_json (~> 1.0)
+      multipart-post (~> 1.1)
+      twitter-stream (~> 0.1)
+    treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.33)
+    twitter-stream (0.1.16)
+      eventmachine (>= 0.12.8)
+      http_parser.rb (~> 0.5.1)
+      simple_oauth (~> 0.1.4)
+    tzinfo (0.3.35)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
@@ -469,9 +507,9 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.1)
       rack (>= 1.0)
-    whenever (0.7.3)
+    whenever (0.8.0)
       activesupport (>= 2.3.4)
-      chronic (~> 0.6.3)
+      chronic (>= 0.6.3)
     wkhtmltopdf-binary (0.9.9.1)
     xpath (0.1.4)
       nokogiri (~> 1.3)
@@ -481,6 +519,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin!
+  acts-as-taggable-on!
   annotate
   brakeman
   capybara
@@ -510,7 +549,7 @@ DEPENDENCIES
   powder
   pry
   rails-pry
-  rb-fsevent!
+  rb-fsevent (~> 0.9.1)
   roadie
   rspec-core
   rspec-rails

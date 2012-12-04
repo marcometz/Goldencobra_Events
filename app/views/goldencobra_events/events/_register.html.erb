@@ -1,5 +1,5 @@
 <% if @event_to_register %>
-  <% if @event_to_register.event_pricegroups.available.count > 0 %>
+  <% if @event_to_register.event_pricegroups.available.bookable.count > 0 %>
     <%= form_tag "/goldencobra_events/event/#{@event_to_register.id}/register", :remote => true do %>
       <!-- <p><%#= s("goldencobra_events.event.registration.to_add.headline") %></p> -->
 
@@ -47,7 +47,7 @@
             <span>Leider kann die gew&uuml;nschte Preisgruppe nicht mehr gebucht werden. Bitte w&auml;hlen Sie eine andere Preisgruppe.</span>
           <% end %>
           <ul class="select_pricegroup_id" id="select_pricegroup_<%= @event_to_register.event_pricegroups.available.publicly_available.map{|a| a.id}.join('_')%>">
-          <% @event_to_register.event_pricegroups.available.publicly_available.each do |e_pricegroup| %>
+          <% @event_to_register.event_pricegroups.available.publicly_available.bookable.each do |e_pricegroup| %>
             <li class="goldencobra_events_event_price_group_item_for_select_id goldencobra_events_event_price_group_item_for_select_<%= e_pricegroup.id %>">
               <%= radio_button "event", "event_pricegroup", e_pricegroup.id, :class =>"event_pricegroup_select" %>
               <% if e_pricegroup.description.present? %>

@@ -42,20 +42,39 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column "Rechnung" do |i|
       link_to(i.event_registrations.first.invoice_number, "/system/invoices/#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank") if i.event_registrations.count > 0 && i.event_registrations.first.invoice_number.present?
     end
-    column "Ticket" do |applicant|
-      link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf?#{Time.now}", target: "blank") if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
+    column "Ticket" do |invoice|
+      link_to(invoice.event_registrations.first.ticket_number, "/system/tickets/ticket_#{invoice.event_registrations.first.ticket_number}.pdf?#{Time.now}", target: "blank") if invoice.event_registrations.count > 0 && invoice.event_registrations.first.ticket_number.present?
+    end
+    column '# Checkins' do |invoice|
+      invoice.event_registrations.first.checkin_count if invoice.event_registrations.any?
     end
     column :invoice_sent, sortable: :invoice_sent do |invoice|
       invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent
     end
     column :payed_on, sortable: :payed_on do |invoice|
-      invoice.payed_on.strftime("%d.%m.%Y") if invoice.payed_on
+      invoice.payed_on.strftime("%d.%m.%Y") if invoice.payed_on.present?
     end
     column :first_reminder_sent, sortable: :first_reminder_sent do |invoice|
-      invoice.first_reminder_sent.strftime("%d.%m.%Y") if invoice.first_reminder_sent
+      if invoice.first_reminder_sent.present?
+        invoice.first_reminder_sent.strftime("%d.%m.%Y")
+      end
     end
     column :second_reminder_sent, sortable: :second_reminder_sent do |invoice|
-      invoice.second_reminder_sent.strftime("%d.%m.%Y") if invoice.second_reminder_sent
+      if invoice.second_reminder_sent.present?
+        invoice.second_reminder_sent.strftime("%d.%m.%Y")
+      end
+    end
+    column 'Storno' do |i|
+      vita_step = i.vita_steps.where(title: 'Registration canceled').last
+      if vita_step && !i.active && i.event_registrations.any? && i.event_registrations.first.invoice_number.present?
+        if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf")
+          link_to(vita_step.created_at.strftime("%d.%m.%Y"), "/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank")
+        else
+          vita_step.created_at.strftime("%d.%m.%Y")
+        end
+      else
+        ''
+      end
     end
     column "" do |invoice|
       result = ""
@@ -252,7 +271,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     end
   end
 
-
   batch_action :destroy, false
 
   batch_action :generate_invoice do |selection|
@@ -261,9 +279,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
       # Wenn Rechungen nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
       # GoldencobraEvents::Invoice.generate_invoice(registration) if registration.event_registrations.any? && registration.event_registrations.first.invoice_number.blank?
-      GoldencobraEvents::Invoice.generate_invoice(registration)
+
+      send_file(GoldencobraEvents::Invoice.generate_invoice(registration), :type => 'application/pdf', :disposition => 'attachement')
     end
-    redirect_to action: :index
+    # redirect_to action: :index
   end
 
   batch_action :generate_ticket do |selection|
@@ -272,9 +291,27 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
       # Wenn Tickets nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
       # GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.any? && reguser.event_registrations.first.ticket_number.present?
-      GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first)
+      send_file(GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first), :type => 'application/pdf', :disposition => 'attachement')
     end
-    redirect_to :action => :index
+    # redirect_to :action => :index
+  end
+
+  batch_action :generate_cancellation do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      send_file(reguser.generate_cancellation, :type => 'application/pdf', :disposition => 'attachement')
+    end
+  end
+
+  batch_action :generate_reminder_1 do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      send_file(reguser.generate_reminder(1), :type => 'application/pdf', :disposition => 'attachement')
+    end
+  end
+
+  batch_action :generate_reminder_2 do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      send_file(reguser.generate_reminder(2), :type => 'application/pdf', :disposition => 'attachement')
+    end
   end
 
   sidebar "invoice_options", only: [:index] do
@@ -309,11 +346,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     column :created_at
     column :updated_at
     column :comment
-    column("Company") {|applicant| applicant.company.title if applicant.company.present? }
-    column("Street") {|applicant| applicant.company.location.street if applicant.company.present? && applicant.company.location.present? }
-    column("City") {|applicant| applicant.company.location.city if applicant.company.present? && applicant.company.location.present? }
-    column("ZIP") {|applicant| applicant.company.location.zip if applicant.company.present? && applicant.company.location.present? }
-    column("Country") {|applicant| applicant.company.location.country if applicant.company.present? && applicant.company.location.present? }
+    # column("Company") {|applicant| applicant.billing_company.firstname.present? ? applicant.billing_company.firstname : applicant.company.firstname }
+    # column("Street") {|applicant| applicant.billing_company.firstname.present? && applicant.billing_company.location.present? ? applicant.billing_company.location.street : applicant.company.location.street }
+    # column("City") {|applicant| applicant.billing_company.firstname.present? && applicant.billing_company.location.present? ? applicant.billing_company.location.city : applicant.company.location.city }
+    # column("ZIP") {|applicant| applicant.billing_company.firstname.present? && applicant.billing_company.location.present? ? applicant.billing_company.location.zip : applicant.company.location.zip }
+    # column("Country") {|applicant| applicant.billing_company.firstname.present? && applicant.billing_company.location.present? ? applicant.billing_company.location.country : applicant.company.location.country }
     column("last_email_at") {|user| l(user.last_email_send, format: :short) if user.last_email_send.present? }
     column("total_price") {|u| number_to_currency(u.total_price, :locale => :de) }
     column("Preisgruppen") {|applicant| applicant.event_registrations.map(&:event_pricegroup).compact.map(&:title).uniq.compact.join(" - ") }

@@ -29,11 +29,11 @@ Feature: See and register events
       | Abendessen Alternative 2   |  11       | 10 | 1      |               |  0                          | Registration needed     | 0         |
       | Abendessen Alternative 1   |  11       | 4  | 1      |               |  0                          | Registration needed     | 0         |
     And the following "event_pricegroups" exist:
-      | event_id | pricegroup_id | price | max_number_of_participators | available | 
-      |        5 |             1 |  50.0 |                         500 |      true | 
-      |        5 |             2 |  30.0 |                         200 |      true | 
-      |       10 |             3 |  80.0 |                         100 |      true | 
-      |        1 |             1 |  80.0 |                         500 |      true | 
+      | event_id | pricegroup_id | price | max_number_of_participators | available |
+      |        5 |             1 |  50.0 |                         500 |      true |
+      |        5 |             2 |  30.0 |                         200 |      true |
+      |       10 |             3 |  80.0 |                         100 |      true |
+      |        1 |             1 |  80.0 |                         500 |      true |
 
   @javascript
   Scenario: Go to the program site, add an event and complete registration with all data needed
@@ -47,18 +47,18 @@ Feature: See and register events
 #    Then I click on "Anmeldung abschließen"
 #    And I should see "Bitte füllen Sie Ihre Benutzerdaten aus"
 #    When I choose "male" within "#goldencobra_events_event_popup"
-#    And I fill in "registration_user_title" with "Dr."      
-#    And I fill in "registration_user_firstname" with "Tim"      
-#    And I fill in "registration_user_lastname" with "Test"      
-#    And I fill in "registration_user_function" with "Developer"      
-#    And I fill in "registration_user_email" with "tim.test@tester.de"      
+#    And I fill in "registration_user_title" with "Dr."
+#    And I fill in "registration_user_firstname" with "Tim"
+#    And I fill in "registration_user_lastname" with "Test"
+#    And I fill in "registration_user_function" with "Developer"
+#    And I fill in "registration_user_email" with "tim.test@tester.de"
 #    And I fill in "registration_user_phone" with "030755667523"
-#    And I fill in "registration_user_fax" with "030755667529"  
+#    And I fill in "registration_user_fax" with "030755667529"
 #    Then I click on "Detailinformationen"
 #    When I fill in "registration_user_facebook" with "facebook_id"
 #    And I fill in "registration_user_twitter" with "marcometz"
 #    And I fill in "registration_user_linkedin" with "myLinkdid"
-#    And I fill in "registration_user_xing" with "xingID"                        
+#    And I fill in "registration_user_xing" with "xingID"
 #    And I fill in "registration_user_googleplus" with "googleaccount"
 #    Then I click on "Firmendaten"
 #    When I fill in "registration_company_title" with "ikusei GmbH"
@@ -106,5 +106,5 @@ Feature: See and register events
 #      | country | "Deutschland" |
 #    And I should have a "GoldencobraEvents::EventRegistration" stored with following attributes:
 #      | event_pricegroup_id | 8 |
-#    
-#      
+#
+#

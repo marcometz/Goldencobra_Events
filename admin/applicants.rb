@@ -1,3 +1,5 @@
+#encoding: utf-8
+
 ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::RegistrationUser)}
   controller.authorize_resource :class => GoldencobraEvents::RegistrationUser
@@ -13,7 +15,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   filter :type_of_registration_not, :label => "Art der Registrierung ist NICHT", :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes
   filter :total_price, :as => :numeric
   filter :active, :as => :select
-  filter :pricegroup_name, :as => :select, :collection => GoldencobraEvents::Pricegroup.pluck(:title)
+  if ActiveRecord::Base.connection.table_exists?("goldencobra_events_pricegroups")
+    filter :pricegroup_name, :as => :select, :collection => GoldencobraEvents::Pricegroup.pluck(:title)
+  end
 
   index do
     selectable_column
@@ -28,6 +32,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
     column 'Ticket' do |applicant|
       link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf", target: 'blank') if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
+    end
+    column '# Checkins' do |applicant|
+      applicant.event_registrations.last.checkin_count if applicant.event_registrations.any?
     end
     column :type_of_registration
     column :total_price, sortable: :total_price do |u|
@@ -46,6 +53,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   end
 
   form :html => { :enctype => 'multipart/form-data' } do |f|
+    if f.object.event_registrations.none?
+      f.inputs "ACHTUNG" do
+        p "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
+      end
+    end
     f.actions
 
     f.inputs "Anmeldung", :class => "foldable inputs" do
@@ -115,7 +127,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::RegistrationUser::RegistrationTypes, :label => "Art der Anmeldung"
       f.input :comment, :label => "Kommentar", :input_html => {:rows => 3}
     end
-    f.inputs "" do
+    f.inputs "Event-Anmeldungen" do
       f.has_many :event_registrations do |reg|
         reg.input :event_pricegroup_id, :as => :select, :collection => GoldencobraEvents::EventPricegroup.joins(:event).map{|a| ["#{a.event.title if a.event} (#{a.event.id if a.event}), #{a.pricegroup.title if a.pricegroup }, EUR:#{a.price}", a.id]}, :input_html => { :class => 'chzn-select', 'data-placeholder' => "Preisgruppe eines Events"}, label: t(:event_pricegroup, scope: [:activerecord, :models], count: 1)
         reg.input :_destroy, :as => :boolean
@@ -133,6 +145,11 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
 
     f.actions
+    # if f.object.event_registrations.none?
+    #   f.inputs "ACHTUNG" do
+    #     p "Es gibt noch keine Anmeldungen fuer diesen Teilnehmer. Erstellen Sie unter 'Event-Anmeldungen' bitte die entsprechenden Anmeldungen mit Preisgruppen."
+    #   end
+    # end
   end
 
   show :title => :lastname do
@@ -222,7 +239,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
   end
 
-  batch_action :send_default_conf_mails, :confirm => "Sind Sie sicher?" do |selection|
+  batch_action "Sende Bestätigungsemail", :confirm => "Sind Sie sicher?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
       reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}")
@@ -232,7 +249,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     redirect_to :action => :index
   end
 
-  batch_action :deactivate_applicants, :confirm => "Sie wollen diese Gaeste stornieren?" do |selection|
+  batch_action "Storniere Anmeldung", :confirm => "Sie wollen diese Gaeste stornieren?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       reguser.cancel_reservation!
     end
@@ -261,7 +278,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     # Search for NewsletterRegistrations. If present, MasterData ist registered as ActiveAdmin resource as well
     action_item only: [:edit, :show] do
       _applicant = @_assigns['applicant']
-      link_to t(:link_to_master_data, scope: [:active_admin, :applicants]), edit_admin_master_datum_path(_applicant.user_id)
+      link_to t(:link_to_master_data, scope: [:active_admin, :applicants]), edit_admin_master_datum_path(_applicant.user_id) if _applicant.user_id.present?
     end
   end
 

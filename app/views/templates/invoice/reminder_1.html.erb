@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Rechnung <%= event.title %></title>
+</head>
+
+<body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; max-width:740px; padding-left: 20px; line-height: 15px">
+      <div style="height:250px">
+		<img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/Logo_ikusei.png" alt="ikusei Logo" style="margin:0px 0 0 560px;"/>
+		
+        <h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
+        <p class="contact-informations">
+          <%= render partial: 'templates/address_block', locals: { user: user, billing: true } %>
+        <p/>
+      </div>
+
+
+	<div  style="height:600px">
+		<p><strong>Zahlungserinnerung zur Teilnahme-Rechnung <%= event.title_for_invoice %></strong></p>
+      	<p>(im Auftrag des Tagesspiegels)</p>
+		<p>
+			<br>
+			Sehr geehrte Damen und Herren, <br> <br>
+			leider konnten wir für die u.g. Rechnung bisher keinen Zahlungseingang verzeichnen. Bitte veranlassen Sie eine Zahlung spätestens bis zum <%= reminder_date %>. Sollte sich Ihre Zahlung mit unserem Erinnerungsschreiben gekreuzt haben, sehen Sie dieses bitte als gegenstandslos an.
+		</p>
+
+      <hr style="max-width:740px; align: left;" />
+      <table id="invoice-details">
+        <tr>
+          <td style="width:200px;">Rechnungsdatum:</td><td><%= invoice_date %></td>
+        </tr>
+        <tr>
+          <td style="width:200px;">Rechnungsnummer:</td><td><%= invoice_number %></td>
+        </tr>
+        <tr>
+          <td style="width:200px;">Teilnehmer:</td><td><%= user.full_name %></td>
+        </tr>
+      </table>
+      <hr style="max-width:740px;" />
+      <table id="invoice-amount-bt">
+        <tr>
+          <td style="width:200px;">Teilnehmergebühr:</td><td><%= number_to_currency(user.total_price, :locale => :de) %></td>
+        </tr>
+        <tr>
+          <td style="width:200px;"><strong>Gesamtbetrag netto</strong></td><td><%= number_to_currency(user.total_price, :locale => :de) %></td>
+        </tr>
+      </table>
+      <hr style="max-width:740px;" />
+      <table id="invoice-amount-at">
+        <tr>
+          <td style="width:200px;">Zzgl. MwSt. 19%:</td><td><%= number_to_currency(user.total_price/100*19, :locale => :de) %></td>
+        </tr>
+        <tr>
+          <td style="width:200px;"><strong>Gesamtbetrag</strong></td><td><%= number_to_currency(user.total_price + user.total_price/100*19, :locale => :de) %></td>
+        </tr>
+      </table>
+      <hr style="max-width:740px;" />
+      <p id="account-informations" style="max-width:740px;">Bitte überweisen Sie den Betrag unter Angabe der Rechnungsnummer auf unser Konto:<br /><br />
+      Kontoinhaber: ikusei GmbH<br />
+      Commerzbank Berlin • Kto-Nr.: 0420148600 • BLZ: 100 800 00<br />
+      (IBAN: DRES DE FF 100 • Swift/BIC: DE38 1008 0000 0420 1486 00)<br /><br />
+      <strong>Der Rechnungsbetrag ist ohne Abzug sofort fällig.</strong><br /></p>
+      <br />
+      <p>Mit freundlichen Grüßen<br />
+      Teilnehmermanagement <%= event.title %></p>
+
+	</div>
+    <div>
+    	<img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/assets/goldencobra_events/ikusei_footer.png" alt="ikusei footer" style="max-width:740px; margin-left:-20px;"/>
+    </div>
+</body>
+</html>
+
+

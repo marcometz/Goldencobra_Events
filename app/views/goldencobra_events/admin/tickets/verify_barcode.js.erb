@@ -1,6 +1,6 @@
   $("#result").removeClass("valid invalid");
 <% if @barcode == "valid" %>
-  $("#result").html("<span class='correct'><%= @checkin %></span>");
+    $("#result").html("<span class='correct'><%= @checkin %>&nbsp; Anzahl von Check-Ins: <%= @count %></span>");
   $("#result").addClass("valid");
 <% else %>
   $("#result").html("<span class='incorrect'>Nicht gültig!</span>");
