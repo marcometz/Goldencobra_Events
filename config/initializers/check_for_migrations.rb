@@ -14,6 +14,6 @@ unless ::Rails.root.to_s.include?("/test/dummy")
     all_files_exists << single_all_files_exists.include?(true)
   end
   if all_files_exists.include?(false)
-    raise "There are new migrations to install: rake goldencobra:install:migrations"
+    raise "There are new migrations to install: rake goldencobra_events:install:migrations"
   end
 end
