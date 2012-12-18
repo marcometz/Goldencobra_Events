@@ -85,7 +85,7 @@ GIT
 PATH
   remote: .
   specs:
-    goldencobra_events (1.0.4)
+    goldencobra_events (1.0.5)
       andand
       barby
       compass-rails
