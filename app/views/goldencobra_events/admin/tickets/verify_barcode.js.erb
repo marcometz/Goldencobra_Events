@@ -1,4 +1,5 @@
-  $("#result").removeClass("valid invalid");
+
+
 <% if @barcode == "valid" %>
     $("#result").html("<span class='correct'><%= @checkin %>&nbsp; Anzahl von Check-Ins: <%= @count %></span>");
   $("#result").addClass("valid");
@@ -6,4 +7,10 @@
   $("#result").html("<span class='incorrect'>Nicht gültig!</span>");
   $("#result").addClass("invalid");
 <% end %>
-  $("input#barcode").val("")
+$('#result').children().fadeIn()
+$("input#barcode").val("")
+
+setTimeout(function() {
+  $('#result').children().fadeOut();
+  $("#result").removeClass("valid invalid");
+}, 2000 );

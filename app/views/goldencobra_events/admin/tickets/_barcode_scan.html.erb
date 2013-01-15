@@ -4,7 +4,6 @@ $(document).ready(function() {
   $("input[type='text']:first", document.forms[0]).focus();
 });
 </script>
-<div id="result"></div>
 
 <div id="scan">
   <%= form_tag verify_barcode_admin_ticketsscannens_path, id: "scan-form", authenticity_token: false, remote: true do %>
@@ -12,4 +11,10 @@ $(document).ready(function() {
     <%= text_field_tag "barcode", "" %><br />
     <%= submit_tag "Abschicken", id: "form_submit", class: "button" %>
   <% end %>
+</div>
+
+<div id="result"></div>
+
+<div id="recently_registered">
+
 </div>
