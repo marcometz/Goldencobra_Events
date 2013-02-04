@@ -8,9 +8,10 @@ $(document).ready(function() {
 
 <div id="scan">
   <%= form_tag verify_barcode_admin_ticketsscannens_path, id: "scan-form", authenticity_token: false, remote: true do %>
-    <%= label_tag "barcode" %>&nbsp;<%= text_field_tag "barcode", "" %><br />
-    <%= label_tag "firstname" %>&nbsp;<%= text_field_tag "firstname", "" %><br />
-    <%= label_tag "lastname" %>&nbsp;<%= text_field_tag "lastname", "" %><br />
+    <%= label_tag "barcode" %><br />
+    <%= text_field_tag "barcode", "" %><br />
+    <%#= label_tag "firstname" %>&nbsp;<%= text_field_tag "firstname", "" %>
+    <%#= label_tag "lastname" %>&nbsp;<%= text_field_tag "lastname", "" %>
     <%= submit_tag "Abschicken", id: "form_submit", class: "button" %>
   <% end %>
 </div>
