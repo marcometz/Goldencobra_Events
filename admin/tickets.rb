@@ -3,7 +3,7 @@ ActiveAdmin.register GoldencobraEvents::Ticket, :as => "Tickets scannen" do
 
   skip_before_filter :verify_authenticity_token
 
-  before_filter { @skip_sidebar = true }
+  # before_filter { @skip_sidebar = true }
   before_filter { GoldencobraEvents::Ticket.all.none? ? GoldencobraEvents::Ticket.create : nil }
   batch_action :destroy, false
 
@@ -18,7 +18,10 @@ ActiveAdmin.register GoldencobraEvents::Ticket, :as => "Tickets scannen" do
 
   collection_action :verify_barcode, method: :post do
     barcode = params[:barcode]
-    registration = GoldencobraEvents::EventRegistration.active.where('ticket_number = ? AND ticket_number IS NOT NULL', barcode.to_s.split("?")[1]).readonly(false).first
+    if barcode
+      registration = GoldencobraEvents::EventRegistration.active.where('ticket_number = ? AND ticket_number IS NOT NULL', barcode.to_s.split("?")[1]).readonly(false).first
+    end
+
     @count = 0
     if registration
       @barcode = "valid"

@@ -1,4 +1,5 @@
-
+// Refresh recently_checked_in_list
+$("#recently_checked_in").html("<%= escape_javascript(render :partial => '/goldencobra_events/admin/tickets/recently_checked_in_list' ) %>");
 
 <% if @barcode == "valid" %>
     $("#result").html("<span class='correct'><%= @checkin %>&nbsp; Anzahl von Check-Ins: <%= @count %></span>");

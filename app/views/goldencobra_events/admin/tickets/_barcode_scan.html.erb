@@ -1,5 +1,6 @@
 <script>
 $(document).ready(function() {
+  $("#recently_checked_in").html("<%= escape_javascript(render :partial => '/goldencobra_events/admin/tickets/recently_checked_in_list' ) %>");
   // focus on the first text input field in the first field on the page
   $("input[type='text']:first", document.forms[0]).focus();
 });
@@ -7,14 +8,16 @@ $(document).ready(function() {
 
 <div id="scan">
   <%= form_tag verify_barcode_admin_ticketsscannens_path, id: "scan-form", authenticity_token: false, remote: true do %>
-    <%= label_tag "barcode" %><br />
-    <%= text_field_tag "barcode", "" %><br />
+    <%= label_tag "barcode" %>&nbsp;<%= text_field_tag "barcode", "" %><br />
+    <%= label_tag "firstname" %>&nbsp;<%= text_field_tag "firstname", "" %><br />
+    <%= label_tag "lastname" %>&nbsp;<%= text_field_tag "lastname", "" %><br />
     <%= submit_tag "Abschicken", id: "form_submit", class: "button" %>
   <% end %>
 </div>
 
 <div id="result"></div>
-
-<div id="recently_registered">
-
+<br /><br />
+<% # Übersicht von kürzlich eingecheckten Tickets %>
+<div id="recently_checked_in">
+  <% # Wird per Javascript gerendered %>
 </div>

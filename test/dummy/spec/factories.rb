@@ -69,6 +69,10 @@ FactoryGirl.define do
   factory :event_registration, :class => GoldencobraEvents::EventRegistration do |u|
     u.event_pricegroup_id 1
     u.user_id 1
+    u.ticket_number 't123'
+    u.invoice_number 'i123'
+    u.checkin_status ''
+    u.checkin_count 0
   end
 
   factory :registration_user, :class => GoldencobraEvents::RegistrationUser do |u|

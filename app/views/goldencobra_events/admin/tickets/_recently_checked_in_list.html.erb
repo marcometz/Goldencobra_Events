@@ -1,0 +1,23 @@
+<% @recently_registered_tickets = GoldencobraEvents::EventRegistration.where('updated_at > ? AND checkin_status IS NOT NULL AND ticket_number IS NOT NULL', Time.new.beginning_of_day) %>
+<h2>Übersicht von kürzlich eingecheckten Tickets</h2>
+<span>Heute bereits insgesamt eingecheckt: <%= @recently_registered_tickets.count %></span><br /><br />
+<table id="recently_registered">
+  <thead>
+    <tr>
+      <th>Name, E-Mail</th>
+      <th>Ticketnummer</th>
+      <th>Check-In Zeit</th>
+      <th>Check-In Anzahl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recently_registered_tickets.each do |ticket| %>
+    <tr>
+      <td><%= "#{ticket.user.full_name}, #{ticket.user.email}" if ticket.user.present? %>
+      <td><%= "#{ticket.ticket_number}" %></td>
+      <td><%= ticket.updated_at.strftime('%H:%M Uhr, am %d.%m.%y') %></td>
+      <td><%= ticket.checkin_count %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,12 +1,12 @@
 Feature: Display event informations on article page
   In order to view event informations
   I go to the article page
-  
+
   Background:
     Given that I am not logged in
     And the following "articles" exist:
-      | title               | url_name          | teaser         | content                    | id | event_id | active | eventmoduletype |
-      | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert." |  1 |        1 | true   | program         |
+      | title               | url_name          | teaser         | content                    | id | event_id | active | eventmoduletype | article_type   |
+      | "Dies ist ein Test" | dies-ist-ein-test | "Die kleine …" | "Die kleine Maus wandert." |  1 |        1 | true   | program         | 'Default Show' |
     And the following "pricegroups" exist:
       | title       | id |
       | "Studenten" |  1 |
