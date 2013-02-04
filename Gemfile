@@ -7,7 +7,7 @@ gemspec
 
 # jquery-rails is used by the dummy application
 gem 'activeadmin', :git => "git://github.com/ikusei/active_admin.git", :require => "activeadmin"
-gem 'goldencobra', :git => "git://github.com/ikusei/Goldencobra.git"
+gem 'goldencobra', :git => 'ssh://git@git.ikusei.de:7999/GC/basis-modul.git'
 gem 'goldencobra_email_templates', :git => "git://github.com/ikusei/goldencobra_email_templates.git"
 gem 'acts-as-taggable-on', git: 'git://github.com/mbleigh/acts-as-taggable-on.git'
 gem 'compass-rails'

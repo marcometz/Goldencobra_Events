@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["CC-LICENSE", "Rakefile", "README.markdown"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 3.2.2"
+  s.add_dependency "rails", "~> 3.2.11"
   s.add_dependency "goldencobra"
   s.add_dependency "goldencobra_email_templates"
   s.add_dependency "sass-rails"
