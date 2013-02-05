@@ -13,11 +13,23 @@ module GoldencobraEvents
     def registration_email(user, email=nil)
       @user = user
       if @user && @user.present? && GoldencobraEvents::EmailBlacklist.is_blacklisted?(user.email) == false
-        if email != nil
-          mail to: email, bcc: ['holger@ikusei.de'], :css => "goldencobra_events/email"
-        else
-          mail to: user.email, bcc: ['holger@ikusei.de'], :css => "/goldencobra_events/email"
+        if email == nil
+          email = @user.email
         end
+
+        if user.event_registrations.any?
+          ticket_number = user.event_registrations.last.ticket_number
+          if Goldencobra::Setting.for_key('goldencobra_events.invoice.event_name_for_invoice').present?
+            event_title = Goldencobra::Setting.for_key('goldencobra_events.invoice.event_name_for_invoice')
+          end
+          pricegroup_title = user.event_registrations.last.event_pricegroup.pricegroup.title if user.event_registrations.last.event_pricegroup.present? && user.event_registrations.last.event_pricegroup.pricegroup.present?
+        end
+
+        if ticket_number.present?
+          attachments["Ticket-#{event_title}.pdf"] = File.read("#{Rails.root}/public/system/tickets/ticket_#{ticket_number}.pdf")
+        end
+
+        mail to: email, bcc: ['holger@ikusei.de'], :css => "goldencobra_events/email"
       end
     end
 

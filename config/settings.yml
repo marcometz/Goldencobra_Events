@@ -22,6 +22,8 @@ goldencobra_events:
         last_invoice_number: "0"
         event_name_for_invoice: "DK"
     event:
+        title_for_email: 'Tagesspiegel Veranstaltung'
+        event_title_for_email_body: 'Tagesspiegel-Event 2012'
         cancellation:
             info_email: "foo@bar.baz"
         registration_basket:

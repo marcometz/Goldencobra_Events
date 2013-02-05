@@ -4,28 +4,28 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Ticket <%= event.title %></title>
 </head>
-
 <body id="invoice" style="font-size:12px; font-family: Helvetica,Arial,sans-serif; margin:0; padding:0;">
 <div id="page" style="width:680px; margin:0 auto;">
-    <div style="height:130px; margin:70px 0 10px 35px;">
+    <div style="height:170px; margin:70px 0 10px 35px;">
       <h5>ikusei GmbH • Zossener Str. 55-58 • 10961 Berlin</h5>
       <p class="contact-informations">
-        <%= render partial: 'templates/address_block', locals: { user: user, billing: false } %>
+          <%= render partial: 'templates/address_block', locals: { user: user, billing: false } %>
       <p/>
     </div>
+
     <div>
       <div style="padding: 10px; border:1px solid #ccc;">
-      <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/system/tickets/barcode_for_ticket_<%= ticket_number %>.png" alt="barcode-vertical" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg); float:left; margin-top: 100px;" />
-      <img src="<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.logo_for_ticket') %>" alt="logo-event" style="float:right; width: 200px;" />
-      <table id="invoice-details" style="width: 250px; margin-left: 90px;">
-        <tr>
-          <td>Veranstaltung<br> <br></td><td><strong><%= event.title %><br> <br></strong></td>
-        </tr>
-        <tr>
+        <img src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/system/tickets/barcode_for_ticket_<%= ticket_number %>.png" alt="barcode-vertical" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg); float:left; margin-top: 100px;" />
+        <img src="<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.logo_for_ticket') %>" alt="logo-event" style="float:right; width: 200px;" />
+        <table id="invoice-details" style="width: 250px; margin-left: 90px;">
+          <tr>
+            <td>Veranstaltung<br> <br></td><td><strong><%= event.title %><br> <br></strong></td>
+          </tr>
+          <tr>
             <td>Name<br> <br></td><td><strong><%= user.full_name_with_gender_and_title %></strong><br> <br></td>
           </tr>
           <tr>
-            <td>Termin<br> <br></td><td><strong><%= l(event.start_date, format: '%d.%m.%Y') %></strong><br> <br></td>
+            <td>Termin<br> <br></td><td><strong><%= event.date %></strong><br> <br></td>
           </tr>
       <% if user.total_price != 0 %>
           <tr>
@@ -42,19 +42,17 @@
           </td>
         </tr>
     <% end %>
-    <% if event.venue && event.venue.location %>
-        <tr>
-          <td valign="top">Ort<br> <br><br> <br></td>
-          <td>
-            <strong><%= event.venue.title %><br />
-            <%= event.venue.location.street %><br />
-            <%= event.venue.location.zip %> <%= event.venue.location.city %></strong><br><br>
-          </td>
-        </tr>
-        <% end %>
-      </table>
-  <p>Bestellt von <%= user.full_name %> am <%= user.event_registrations.first.created_at.strftime("%d. %B %Y, %H:%M") %><br> <br>
-  <%= Goldencobra::Setting.for_key('goldencobra_events.ticket.veranstalter') %><br></p>
+          <tr>
+            <td valign="top">Ort<br> <br><br> <br></td>
+            <td>
+              <strong><%= event.venue.title %><br />
+              <%= event.venue.location.street %><br />
+              <%= event.venue.location.zip %> <%= event.venue.location.city %></strong><br><br>
+            </td>
+          </tr>
+        </table>
+    <p>Bestellt von <%= user.full_name %> am <%= user.event_registrations.first.created_at.strftime("%d. %B %Y, %H:%M") %><br>
+    Eine Veranstaltung von Verlag der Tagesspiegel GmbH und Charta der Vielfalt e.V.<br></p>
       </div>
       <div style="margin-top: 30px; margin-bottom: 10px;">
         <img style="float:right;" src="http://<%= Goldencobra::Setting.for_key('goldencobra.url') %>/system/tickets/barcode_for_ticket_<%= ticket_number %>.png" alt="barcode-vertical" style=" margin: 10px;" />
@@ -63,7 +61,7 @@
     </div>
   <div style="text-align:center;">
   <hr />
-  <img src="<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.sponsorenleiste_for_ticket') %>" style="width:100%; margin-top:50px;" id="footer-image">
+    <img src="<%= Goldencobra::Setting.for_key('goldencobra_events.ticket.sponsorenleiste_for_ticket') %>" style="width:100%; margin-top: 100px;" id="footer-image">
   </div>
 </div>
 </body>

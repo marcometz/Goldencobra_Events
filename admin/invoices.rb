@@ -291,7 +291,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
       # Wenn Tickets nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
       # GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.any? && reguser.event_registrations.first.ticket_number.present?
-      send_file(GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first), :type => 'application/pdf', :disposition => 'attachement')
+      send_file(GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.last), :type => 'application/pdf', :disposition => 'attachement')
     end
     # redirect_to :action => :index
   end

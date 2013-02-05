@@ -165,9 +165,15 @@
             session[:goldencobra_event_registration][:user_id] = reguser.id
             @result = GoldencobraEvents::EventRegistration.create_batch(session[:goldencobra_event_registration][:pricegroup_ids], reguser)
             @errors << @result if @result != true
-            GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
-            reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: customer #{reguser.id}")
-            reguser.user.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: customer #{reguser.id}") if reguser.user.present?
+            if @result == true
+              # Ticket generieren, da es direkt mit der Bestätigungsmail versandt wird
+              if reguser.event_registrations.any? && reguser.event_registrations.last.ticket_number.blank?
+                GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.last)
+              end
+              GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
+              reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: customer #{reguser.id}")
+              reguser.user.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: customer #{reguser.id}") if reguser.user.present?
+          end
             reset_session
         else
           @errors << "user_not_exists"

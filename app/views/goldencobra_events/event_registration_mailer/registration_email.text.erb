@@ -1,44 +1,66 @@
-Cloudforum 2012 - eine Veranstaltung des Tagesspiegels
+  <% if @user.gender == true %>
+Sehr geehrter Herr <%= @user.firstname %> <%= @user.lastname %>,
+  <% else %>
+Sehr geehrte Frau <%= @user.firstname %> <%= @user.lastname %>,
+  <% end %>
 
-	<% if @user.gender == true %>
-    	Sehr geehrter Herr <%= @user.firstname %> <%= @user.lastname %>,
-	<% else %>
-    	Sehr geehrte Frau <%= @user.firstname %> <%= @user.lastname %>,
-	<% end %>
+vielen Dank für Ihre Anmeldung zur <%= Goldencobra::Setting.for_key("goldencobra_events.event.event_title_for_email_body")%> am 8. und 9. November 2012 in Berlin.
+Die Einzelheiten finden Sie hier noch einmal in der Übersicht:
 
-	vielen Dank für Ihre Anmeldung zum Tagesspiegel Cloud Forum am 26. und 27. April 2012 in Berlin.
-	Die Einzelheiten finden Sie hier noch einmal in der Übersicht:
-
-	Rechnungsanschrift
-	<%= @user.title %> <%= @user.firstname %> <%= @user.lastname %>
-	<% if @user.company.present? && @user.company.location.present? %>
-	<%= @user.company.title if @user.company.title != "privat Person"%>
-		<%= @user.company.location.street %>
-		<%= @user.company.location.zip %> <%= @user.company.location.city %>
-	<% end %>
-
-  Sie haben sich f&uuml;r folgende Panels angemeldet:
-
-    <% @event_titles = [] %>
-    <% @user.event_registrations.each do |erg| %>
-      <% unless erg.event_pricegroup.event.is_root? || erg.event_pricegroup.event.parent.title.blank? || @event_titles.include?(erg.event_pricegroup.event.parent.title) %>
-        <%= erg.event_pricegroup.event.parent.title %>(<%= erg.event_pricegroup.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event_pricegroup.event.parent.end_date.strftime('%H:%M') %> Uhr)
+Anschrift
+<%= @user.gender ? "Herr" : "Frau" %><%= " #{@user.title}" %> <%= @user.firstname %> <%= @user.lastname %>
+  <% if @user.company.present? && @user.company.location.present? %>
+    <% if @user.company.title != "privat Person" %>
+<%= @user.company.title %>
     <% end %>
-    <%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %>
-    <% end %>
-	Teilnahmegebühr:
-	<% event_reg = @user.event_registrations.joins(:event_pricegroup).where("price > 0").order("created_at ASC").last %>
-	<% event_pg = event_reg.event_pricegroup if event_reg %>
-	<% if event_pg %>
-	Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %><br>
-	zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %><br>
-	Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %><br>
-	<% end %>
+<%= @user.company.location.street %>
+<%= @user.company.location.zip %> <%= @user.company.location.city %>
+  <% end %>
 
-	Zahlungsart: Rechnung
-	
-	Bitte überweisen Sie die Teilnahmegebühr nach Erhalt der Rechnung. Ihre Kongressunterlagen liegen auf dem Cloud Forum für Sie bereit. Bitte registrieren Sie sich vor Ort mit Ihrem Namen beim Anmeldecounter.
-	
-	Wir freuen uns, Sie auf dem Cloud Forum begrüßen zu dürfen!
-	
-	Ihr Verlag Der Tagesspiegel
+  <% if @user.billing_firstname.present? %>
+Rechnungsanschrift
+<%= @user.billing_gender ? "Herr" : "Frau" %> <%= @user.billing_firstname%> <%= @user.billing_lastname %>
+    <% if @user.billing_company_id.present? %>
+      <% @billing_company = GoldencobraEvents::Company.find_by_id(@user.billing_company_id) %>
+      <% if @billing_company.title != "privat Person"%>
+<%= @billing_company.title %>
+      <% end %>
+      <% if @user.billing_department.present? %>
+<%= @user.billing_department %>
+      <% end %>
+<%= @billing_company.location.street %>
+<%= @billing_company.location.zip %> <%= @billing_company.location.city %>
+    <% end %>
+  <% end %>
+
+
+  <% @event_titles = [] %>
+  <% @user.event_registrations.each do |erg| %>
+    <% unless erg.event_pricegroup.event.is_root? || erg.event_pricegroup.event.parent.title.blank? || @event_titles.include?(erg.event_pricegroup.event.parent.title) %>
+<%= erg.event_pricegroup.event.parent.title %>&nbsp;(<%= erg.event_pricegroup.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event_pricegroup.event.parent.end_date.strftime('%H:%M') %> Uhr)
+    <% end %>
+<%= erg.event_pricegroup.event.title unless erg.event_pricegroup.event.is_root? %>
+  <% end %>
+  <% event_reg = @user.event_registrations.joins(:event_pricegroup).where("price > 0").order("created_at ASC").last %>
+  <% event_pg = event_reg.event_pricegroup if event_reg && event_reg.event_pricegroup %>
+  <% if event_pg %>
+<%= raw(Goldencobra::Setting.for_key("goldencobra_events.event.registration.user_form.footer_description")) %>
+
+Teilnahmegebühr:
+Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %>
+zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %>
+Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %>
+
+Zahlungsart: Rechnung
+
+Bitte überweisen Sie die Teilnahmegebühr nach Erhalt der Rechnung. Ihre Kongressunterlagen liegen auf der <%= Goldencobra::Setting.for_key("goldencobra_events.event.event_title_for_email_body")%> für Sie bereit. Bitte legen Sie bei der Konferenz Ihr Einlassticket vor.
+  <% else %>
+Ihr Ticket finden Sie im Anhang dieser E-Mail.
+  <% end %>
+
+Wir freuen uns, Sie auf dem <%= Goldencobra::Setting.for_key("goldencobra_events.event.event_title_for_email_body")%> begrüßen zu dürfen!
+
+Ihr <%= Goldencobra::Setting.for_key("goldencobra_events.event.event_title_for_email_body")%>-Team
+
+Verlag Der Tagesspiegel GmbH | Askanischer Platz 3 | 10963 Berlin | Telefon: (030) 29021 587 | Fax: (030) 29021 29224
+Vertreten durch die Geschäftsführung: Oliver Finsterwalder | Registriergericht: AG Charlottenburg | Registriernummer: HRB 43850 | Umsatzsteuer-Identifikationsnummer: DE 151725755
