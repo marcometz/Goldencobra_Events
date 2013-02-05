@@ -176,6 +176,8 @@ de:
         updated_at: "Bearbeitet am"
       goldencobra_events/pricegroup:
         title: "Name"
+        email_text: 'Beschreibender Text in E-Mail'
+        show_details_in_email: 'Weitere Details in E-Mail anzeigen'
         created_at: "Erstellt am"
         updated_at: "Bearbeitet am"
       goldencobra_events/sponsor:

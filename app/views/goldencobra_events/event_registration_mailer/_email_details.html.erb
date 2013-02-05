@@ -1,0 +1,54 @@
+  <br>
+  <strong>Anschrift</strong><br>
+  <%= @user.gender ? "Herr" : "Frau" %><%= " #{@user.title}" %> <%= @user.firstname %> <%= @user.lastname %><br>
+  <% if @user.company.present? && @user.company.location.present? %>
+    <% if @user.company.title != "privat Person" %>
+      <%= @user.company.title %><br>
+    <% end %>
+    <%= @user.company.location.street %><br>
+    <%= @user.company.location.zip %> <%= @user.company.location.city %>
+    <br>
+  <% end %>
+  <br>
+  <% if @user.billing_firstname.present? %>
+    <strong>Rechnungsanschrift</strong><br />
+    <%= @user.billing_gender ? "Herr" : "Frau" %> <%= @user.billing_firstname%> <%= @user.billing_lastname %><br>
+    <% if @user.billing_company_id.present? %>
+      <% @billing_company = GoldencobraEvents::Company.find_by_id(@user.billing_company_id) %>
+      <% if @billing_company.title != "privat Person"%>
+        <%= @billing_company.title %><br>
+      <% end %>
+      <% if @user.billing_department.present? %>
+          <%= @user.billing_department %> <br>
+      <% end %>
+      <%= @billing_company.location.street %><br>
+      <%= @billing_company.location.zip %> <%= @billing_company.location.city %>
+      <br />
+      <br />
+    <% end %>
+  <% end %>
+  <% @event_titles = [] %>
+  <% @user.event_registrations.each do |erg| %>
+    <% unless erg.event_pricegroup.event.is_root? || erg.event_pricegroup.event.parent.title.blank? || @event_titles.include?(erg.event_pricegroup.event.parent.title) %>
+      <strong><%= erg.event_pricegroup.event.parent.title %>&nbsp;(<%= erg.event_pricegroup.event.parent.start_date.strftime('%H:%M') %> - <%= erg.event_pricegroup.event.parent.end_date.strftime('%H:%M') %> Uhr)</strong>
+      <br />
+    <% end %>
+    <% unless erg.event_pricegroup.event.is_root? %>
+      <%= erg.event_pricegroup.event.title %>
+      <br />
+    <% end %>
+  <% end %>
+  <% event_reg = @user.event_registrations.joins(:event_pricegroup).where("price > 0").order("created_at ASC").last %>
+  <% event_pg = event_reg.event_pricegroup if event_reg && event_reg.event_pricegroup %>
+  <% if event_pg %>
+    <%= raw(Goldencobra::Setting.for_key("goldencobra_events.event.registration.user_form.footer_description")) %>
+    <br />
+    <strong>Teilnahmegebühr:</strong><br>
+    Preis netto: <%= number_to_currency(event_pg.price, :locale => :de) %><br>
+    zzgl. MwSt: <%= number_to_currency(event_pg.price/100*19, :locale => :de) %><br>
+    Preis brutto: <%= number_to_currency(event_pg.price + (event_pg.price/100*19), :locale => :de) %><br>
+
+    Zahlungsart: Rechnung<br>
+    <br>
+    <strong>Bitte überweisen Sie die Teilnahmegebühr nach Erhalt der Rechnung. Ihre Kongressunterlagen liegen auf der <%= Goldencobra::Setting.for_key("goldencobra_events.event.event_title_for_email_body")%> für Sie bereit. Bitte legen Sie bei der Konferenz Ihr Einlassticket vor.</strong><br>
+  <% end %>
