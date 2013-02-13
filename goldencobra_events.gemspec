@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
   s.add_dependency "pdfkit"
   s.add_dependency "wkhtmltopdf-binary"
   s.add_dependency "barby"
+  # s.add_dependency 'builder', '~> 3.0.4'
+  # s.add_dependency 'pixelletter'
   s.add_development_dependency "mysql2"
   s.add_development_dependency 'annotate'
   s.add_development_dependency 'guard-annotate'
