@@ -104,6 +104,10 @@ module GoldencobraEvents
       end
     end
 
+    def set_invoice_date(date)
+      self.update_attributes(invoice_sent: date)
+    end
+
     def generate_cancellation
       if self.event_registrations.any?
         require 'pdfkit'

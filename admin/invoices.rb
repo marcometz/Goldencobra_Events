@@ -273,17 +273,6 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
   batch_action :destroy, false
 
-  batch_action :generate_invoice do |selection|
-    GoldencobraEvents::RegistrationUser.find(selection).each do |registration|
-      #render(template: 'templates/invoice/invoice', layout: false, locals: {user: registration, event: registration.event_registrations.first.event_pricegroup.event.root})
-
-      # Wenn Rechungen nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
-      # GoldencobraEvents::Invoice.generate_invoice(registration) if registration.event_registrations.any? && registration.event_registrations.first.invoice_number.blank?
-
-      send_file(GoldencobraEvents::Invoice.generate_invoice(registration), :type => 'application/pdf', :disposition => 'attachement')
-    end
-    # redirect_to action: :index
-  end
 
   batch_action :generate_ticket do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
@@ -291,26 +280,106 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
       # Wenn Tickets nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
       # GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.any? && reguser.event_registrations.first.ticket_number.present?
+
+      reguser.vita_steps << Goldencobra::Vita.create(:title => "Ticket erstellt", :description => "von #{current_user.email}")
       send_file(GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.last), :type => 'application/pdf', :disposition => 'attachement')
     end
     # redirect_to :action => :index
   end
 
+  batch_action :generate_invoice do |selection|
+    GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
+      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+        reguser.vita_steps << Goldencobra::Vita.create(:title => "Rechnung erstellt", :description => "von #{current_user.email}")
+        reguser.set_invoice_date(Date.today) unless reguser.invoice_sent.present?
+        pdf_invoice = GoldencobraEvents::Invoice.generate_invoice(reguser)
+        if Goldencobra::Setting.for_key('goldencobra_events.printer.email').present?
+          # TODO: print invoice
+        end
+
+        require 'pixelletter'
+        Pixelletter.load_initial_values unless ENV['EMAIL'].present?
+
+        if Goldencobra::Setting.for_key('goldencobra_events.send_with_pixelletter') == 'true' && ENV['EMAIL'].present?
+          testmode = Goldencobra::Setting.for_key('goldencobra_events.pixelletter_testmodus') == 'true' ? true : false
+          request = Pixelletter::Request.new(email: ENV['EMAIL'], password: ENV['PASSWORD'], agb: true, widerrufsverzicht: true, testmodus: testmode)
+          order = { order: { options: { type: 'upload', action: 1, destination: 'DE' } } }
+          response = request.request(order, pdf_invoice)
+          reguser.vita_steps << Goldencobra::Vita.create(:title => "Rechnung an Pixelletter gesandt", :description => "von #{current_user.email}")
+        end
+        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "#{reguser.event_registrations.last.invoice_number}.pdf"))
+        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+      end
+    end
+  end
+
   batch_action :generate_cancellation do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      send_file(reguser.generate_cancellation, :type => 'application/pdf', :disposition => 'attachement')
+      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+        cancelation_file = reguser.generate_cancellation
+        reguser.cancel_reservation! # Erstellt VitaStep und verschickt email
+        require 'pixelletter'
+        Pixelletter.load_initial_values unless ENV['EMAIL'].present?
+
+        if Goldencobra::Setting.for_key('goldencobra_events.send_with_pixelletter') == 'true' && ENV['EMAIL'].present?
+          testmode = Goldencobra::Setting.for_key('goldencobra_events.pixelletter_testmodus') == 'true' ? true : false
+          request = Pixelletter::Request.new(email: ENV['EMAIL'], password: ENV['PASSWORD'], agb: true, widerrufsverzicht: true, testmodus: testmode)
+          order = { order: { options: { type: 'upload', action: 1, destination: 'DE' } } }
+          response = request.request(order, cancelation_file)
+          reguser.vita_steps << Goldencobra::Vita.create(:title => "Storno an Pixelletter gesandt", :description => "von #{current_user.email}")
+        end
+        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "cancellation_#{reguser.event_registrations.last.invoice_number}.pdf"))
+
+        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+      end
     end
   end
 
   batch_action :generate_reminder_1 do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      send_file(reguser.generate_reminder(1), :type => 'application/pdf', :disposition => 'attachement')
+      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+        reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 erstellt", :description => "von #{current_user.email}")
+        reminder_1_file = reguser.reguser.generate_reminder(1)
+        reguser.update_attributes(first_reminder_sent: Date.today)
+        require 'pixelletter'
+        Pixelletter.load_initial_values unless ENV['EMAIL'].present?
+
+        if Goldencobra::Setting.for_key('goldencobra_events.send_with_pixelletter') == 'true' && ENV['EMAIL'].present?
+          testmode = Goldencobra::Setting.for_key('goldencobra_events.pixelletter_testmodus') == 'true' ? true : false
+          request = Pixelletter::Request.new(email: ENV['EMAIL'], password: ENV['PASSWORD'], agb: true, widerrufsverzicht: true, testmodus: testmode)
+          order = { order: { options: { type: 'upload', action: 1, destination: 'DE' } } }
+          response = request.request(order, reminder_1_file)
+          reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 an Pixelletter gesandt", :description => "von #{current_user.email}")
+        end
+        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_1_#{reguser.event_registrations.last.invoice_number}.pdf"))
+
+        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+      end
     end
   end
 
   batch_action :generate_reminder_2 do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      send_file(reguser.generate_reminder(2), :type => 'application/pdf', :disposition => 'attachement')
+      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+        reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 erstellt", :description => "von #{current_user.email}")
+
+        reminder_2_file = reguser.reguser.generate_reminder(2)
+        reguser.update_attributes(second_reminder_sent: Date.today)
+
+        require 'pixelletter'
+        Pixelletter.load_initial_values unless ENV['EMAIL'].present?
+
+        if Goldencobra::Setting.for_key('goldencobra_events.send_with_pixelletter') == 'true' && ENV['EMAIL'].present?
+          testmode = Goldencobra::Setting.for_key('goldencobra_events.pixelletter_testmodus') == 'true' ? true : false
+          request = Pixelletter::Request.new(email: ENV['EMAIL'], password: ENV['PASSWORD'], agb: true, widerrufsverzicht: true, testmodus: testmode)
+          order = { order: { options: { type: 'upload', action: 1, destination: 'DE' } } }
+          response = request.request(order, reminder_2_file)
+          reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 an Pixelletter gesandt", :description => "von #{current_user.email}")
+        end
+        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_2_#{reguser.event_registrations.last.invoice_number}.pdf"))
+
+        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+      end
     end
   end
 

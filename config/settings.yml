@@ -21,6 +21,14 @@ goldencobra_events:
     invoice:
         last_invoice_number: "0"
         event_name_for_invoice: "DK"
+    printer:
+        email: 'test@test.de'
+    send_with_pixelletter:
+        value: 'true'
+        type: 'boolean'
+    pixelletter_testmodus:
+        value: 'true'
+        type: 'boolean'
     event:
         title_for_email: 'Tagesspiegel Veranstaltung'
         event_title_for_email_body: 'Tagesspiegel-Event 2012'
