@@ -41,6 +41,7 @@ PATH
       goldencobra_email_templates
       mail
       pdfkit
+      pixelletter
       rails (~> 3.2.11)
       roadie
       sass
@@ -50,7 +51,7 @@ PATH
 
 GIT
   remote: ssh://git@git.ikusei.de:7999/GC/basis-modul.git
-  revision: 3fc701888eb64b0dd4788dd4507cfe5ba8e836fc
+  revision: e5ea44c6be96dcfa8b8996fbf1be30ee783f3d8f
   specs:
     goldencobra (1.1.0)
       activeadmin
@@ -94,17 +95,6 @@ GIT
       therubyracer (~> 0.10.2)
       uglifier
       whenever
-
-GIT
-  remote: ssh://git@git.ikusei.de:7999/IK/pixelletter.git
-  revision: 8b686af52392ecaaf5d1a7d6f5da3f6028579211
-  specs:
-    pixelletter (0.1.0)
-      activesupport
-      attr_required
-      builder (~> 3.0.4)
-      nokogiri
-      restclient_with_cert
 
 GEM
   remote: http://rubygems.org/
@@ -383,6 +373,12 @@ GEM
       cocaine (~> 0.4.0)
       mime-types
     pdfkit (0.5.2)
+    pixelletter (0.1.1)
+      activesupport
+      attr_required
+      builder (~> 3.0.4)
+      nokogiri
+      restclient_with_cert
     polyamorous (0.5.0)
       activerecord (~> 3.0)
     polyglot (0.3.3)
@@ -552,6 +548,8 @@ DEPENDENCIES
   brakeman
   capybara
   capybara-webkit
+  coffee-rails
+  compass-rails
   cucumber
   cucumber-rails
   database_cleaner
@@ -570,15 +568,21 @@ DEPENDENCIES
   guard-rspec
   hirb
   launchy
+  mail
   mysql2
-  pixelletter!
+  pdfkit
+  pixelletter
   powder
   pry
   pry-nav
   rails-pry
   rb-fsevent (~> 0.9.1)
+  roadie
   rspec
   rspec-rails
+  sass
   shoulda-matchers
   thin
+  uglifier (>= 1.0.3)
   unicorn
+  wkhtmltopdf-binary

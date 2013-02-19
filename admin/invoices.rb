@@ -288,11 +288,13 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   end
 
   batch_action :generate_invoice do |selection|
+    @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       if reguser.event_registrations.last.event_pricegroup.price > 0.0
-        reguser.vita_steps << Goldencobra::Vita.create(:title => "Rechnung erstellt", :description => "von #{current_user.email}")
+        @generated = true
         reguser.set_invoice_date(Date.today) unless reguser.invoice_sent.present?
         pdf_invoice = GoldencobraEvents::Invoice.generate_invoice(reguser)
+        reguser.vita_steps << Goldencobra::Vita.create(:title => "Rechnung erstellt", :description => "von #{current_user.email}")
         if Goldencobra::Setting.for_key('goldencobra_events.printer.email').present?
           # TODO: print invoice
         end
@@ -311,11 +313,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
+    redirect_to :action => :index unless @generated
   end
 
   batch_action :generate_cancellation do |selection|
+    @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       if reguser.event_registrations.last.event_pricegroup.price > 0.0
+        @generated = true
         cancelation_file = reguser.generate_cancellation
         reguser.cancel_reservation! # Erstellt VitaStep und verschickt email
         require 'pixelletter'
@@ -333,11 +338,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
+    redirect_to :action => :index unless @generated
   end
 
   batch_action :generate_reminder_1 do |selection|
+    @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       if reguser.event_registrations.last.event_pricegroup.price > 0.0
+        @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 erstellt", :description => "von #{current_user.email}")
         reminder_1_file = reguser.reguser.generate_reminder(1)
         reguser.update_attributes(first_reminder_sent: Date.today)
@@ -356,11 +364,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
+    redirect_to :action => :index unless @generated
   end
 
   batch_action :generate_reminder_2 do |selection|
+    @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       if reguser.event_registrations.last.event_pricegroup.price > 0.0
+        @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 erstellt", :description => "von #{current_user.email}")
 
         reminder_2_file = reguser.reguser.generate_reminder(2)
@@ -381,6 +392,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
+    redirect_to :action => :index unless @generated
   end
 
   sidebar "invoice_options", only: [:index] do

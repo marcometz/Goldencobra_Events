@@ -10,19 +10,19 @@ gem 'activeadmin', :git => "git://github.com/ikusei/active_admin.git", :require 
 gem 'goldencobra', :git => 'ssh://git@git.ikusei.de:7999/GC/basis-modul.git'
 gem 'goldencobra_email_templates', :git => "git://github.com/ikusei/goldencobra_email_templates.git"
 gem 'acts-as-taggable-on', git: 'git://github.com/mbleigh/acts-as-taggable-on.git'
-# gem 'compass-rails'
-# gem 'coffee-rails'
-# gem 'sass'
-# gem 'mail'
+gem 'compass-rails'
+gem 'coffee-rails'
+gem 'sass'
+gem 'mail'
 
 gem "rspec-rails", :group => [:test, :development] # rspec in dev so the rake tasks run properly
 gem "rspec", :group => [:test, :development] # rspec in dev so the rake tasks run properly
 gem "faker", :group => [:test, :development] # rspec in dev so the rake tasks run properly
-# gem 'roadie'
-# gem 'uglifier', '>= 1.0.3'
-# gem 'pdfkit'
-# gem 'wkhtmltopdf-binary'
-gem 'pixelletter', git: 'ssh://git@git.ikusei.de:7999/IK/pixelletter.git'
+gem 'roadie'
+gem 'uglifier', '>= 1.0.3'
+gem 'pdfkit'
+gem 'wkhtmltopdf-binary'
+gem 'pixelletter'
 
 group :development do
   gem 'unicorn'
