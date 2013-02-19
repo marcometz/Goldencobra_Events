@@ -290,7 +290,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_invoice do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
         @generated = true
         reguser.set_invoice_date(Date.today) unless reguser.invoice_sent.present?
         pdf_invoice = GoldencobraEvents::Invoice.generate_invoice(reguser)
@@ -319,7 +319,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_cancellation do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
         @generated = true
         cancelation_file = reguser.generate_cancellation
         reguser.cancel_reservation! # Erstellt VitaStep und verschickt email
@@ -344,7 +344,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_reminder_1 do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 erstellt", :description => "von #{current_user.email}")
         reminder_1_file = reguser.reguser.generate_reminder(1)
@@ -370,7 +370,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_reminder_2 do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 erstellt", :description => "von #{current_user.email}")
 
