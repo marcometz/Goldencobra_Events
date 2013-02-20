@@ -347,7 +347,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 erstellt", :description => "von #{current_user.email}")
-        reminder_1_file = reguser.reguser.generate_reminder(1)
+        reminder_1_file = reguser.generate_reminder(1)
         reguser.update_attributes(first_reminder_sent: Date.today)
         require 'pixelletter'
         Pixelletter.load_initial_values unless ENV['EMAIL'].present?
@@ -374,7 +374,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 erstellt", :description => "von #{current_user.email}")
 
-        reminder_2_file = reguser.reguser.generate_reminder(2)
+        reminder_2_file = reguser.generate_reminder(2)
         reguser.update_attributes(second_reminder_sent: Date.today)
 
         require 'pixelletter'
