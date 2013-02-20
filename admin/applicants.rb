@@ -295,6 +295,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     end
   end
 
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
+
   controller do
 
     def new

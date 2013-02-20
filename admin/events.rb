@@ -6,7 +6,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   scope "Alle", :scoped, :default => true
   scope "Aktiv", :active
   scope "Inaktiv", :inactive
-  
+
   filter :title
   filter :start_date
   filter :end_date
@@ -178,6 +178,13 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     render :partial => "/goldencobra_events/admin/events/timeline", :object => GoldencobraEvents::Event.active, :locals => {:link_name => "title", :url_path => "event" }
   end
 
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
 
   controller do
 

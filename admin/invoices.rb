@@ -399,6 +399,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     render "/goldencobra_events/admin/invoices/invoice_options_sidebar"
   end
 
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
+
   collection_action :set_invoice_date, :method => :post do
     collection_selection = params[:invoice_collection_selection]
     if collection_selection.present?

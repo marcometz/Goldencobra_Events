@@ -1,14 +1,14 @@
 ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
-  
+
   menu :parent => "Event-Management", :if => proc{can?(:read, GoldencobraEvents::Sponsor) && (Goldencobra::Setting.for_key('goldencobra_events.active_admin.menue.sponsors.display') != "false")}
   controller.authorize_resource :class => GoldencobraEvents::Sponsor
-  
+
   filter :title
   filter :email
   filter :link_url
-  
+
   batch_action :destroy, false
-  
+
   form :html => { :enctype => "multipart/form-data" } do |f|
     f.inputs :class => "buttons inputs" do
       f.actions
@@ -33,7 +33,7 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
       end
     end
     f.inputs "Bilder" do
-      f.input :logo, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_logo_image_file chzn-select'} 
+      f.input :logo, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_logo_image_file chzn-select'}
       f.has_many :sponsor_images, label: "Test" do |si|
         si.input :image, :as => :select, :collection => Goldencobra::Upload.all.map{|c| [c.complete_list_name, c.id]}, :input_html => { :class => 'sponsor_image_file chzn-select'}
       end
@@ -119,7 +119,15 @@ ActiveAdmin.register GoldencobraEvents::Sponsor, :as => "Sponsor" do
           end
         end
       end
-
     end
   end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
+
 end

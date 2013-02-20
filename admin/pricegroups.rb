@@ -19,6 +19,14 @@ ActiveAdmin.register GoldencobraEvents::Pricegroup, :as => "Pricegroup" do
     link_to(t('active_admin.pricegroups.new_pricegroup'), new_admin_pricegroup_path)
   end
 
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
+
   batch_action :destroy, false
 
 end

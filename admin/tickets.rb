@@ -34,4 +34,12 @@ ActiveAdmin.register GoldencobraEvents::Ticket, :as => "Tickets scannen" do
       format.js { render file: "goldencobra_events/admin/tickets/verify_barcode"}
     end
   end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
 end

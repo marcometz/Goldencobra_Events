@@ -38,6 +38,14 @@ ActiveAdmin.register GoldencobraEvents::Venue, :as => "Venue" do
     link_to(t('active_admin.venue.new_venue'), new_admin_venue_path)
   end
 
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
+
   batch_action :destroy, false
 
   show :title => :title do

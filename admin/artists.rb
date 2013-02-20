@@ -64,6 +64,14 @@ ActiveAdmin.register GoldencobraEvents::Artist, :as => "Artist" do
     link_to(t('active_admin.artist.new_artist'), new_admin_artist_path)
   end
 
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
+
   batch_action :destroy, false
 
   show :title => :title do
