@@ -299,6 +299,13 @@ module GoldencobraEvents
         end
       end
     end
+
+    def self.search_with_indifferent_attributes(input)
+      if input.present?
+        company_ids = GoldencobraEvents::Company.where("goldencobra_events_companies.title LIKE '%#{input}%'").pluck(:id)
+        GoldencobraEvents::RegistrationUser.where("goldencobra_events_registration_users.email LIKE '%#{input}%' OR goldencobra_events_registration_users.lastname LIKE '%#{input}%' OR goldencobra_events_registration_users.firstname LIKE '%#{input}%' OR goldencobra_events_registration_users.company_id IN (?)", company_ids)
+      end
+    end
   end
 end
 
