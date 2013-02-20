@@ -1,15 +1,20 @@
 // Refresh recently_checked_in_list
 $("#recently_checked_in").html("<%= escape_javascript(render :partial => '/goldencobra_events/admin/tickets/recently_checked_in_list' ) %>");
+$('#spinner').remove();
 
 <% if @barcode == "valid" %>
-    $("#result").html("<span class='correct'><%= @checkin %>&nbsp; Anzahl von Check-Ins: <%= @count %></span>");
+  $("#result").html("<span class='correct'><%= @checkin %>&nbsp; Anzahl von Check-Ins: <%= @count %></span>");
   $("#result").addClass("valid");
+  $('#hits').html('');
+<% elsif @barcode == false && @hits.any? %>
+  $('#hits').html("<%= escape_javascript(render :partial => '/goldencobra_events/admin/tickets/hits', locals: { hits: @hits } ) %>");
 <% else %>
-  $("#result").html("<span class='incorrect'>Nicht gültig!</span>");
+  $('#hits').html('');
+    $("#result").html("<span class='incorrect'>Nicht gültig!</span>");
   $("#result").addClass("invalid");
 <% end %>
 $('#result').children().fadeIn()
-$("input#barcode").val("")
+$("input#input").val("")
 
 setTimeout(function() {
   $('#result').children().fadeOut();
