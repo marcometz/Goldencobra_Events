@@ -1,4 +1,5 @@
 <% if @errors.count == 0 %>
+  $('html, body').animate({scrollTop:0}, 'slow');
   $('#main_article').html("<%= escape_javascript(render(:partial => '/goldencobra_events/events/summary' ))%>");
   _gaq.push(['_trackPageview', '/registrierung/bestellzusammenfassung']);
 <% end %>
