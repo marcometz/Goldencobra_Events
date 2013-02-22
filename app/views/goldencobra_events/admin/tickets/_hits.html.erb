@@ -7,6 +7,7 @@
         <th>Vorname</th>
         <th>E-Mail</th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
           <% canceled_at = hit.vita_steps.where(title: "Registration canceled").last.created_at %>
             <td>Wurde storniert am <%= l(canceled_at, format: "%d.%m.%Y") %></td>
           <% end %>
+          <td><%= link_to 'Details', "/admin/applicants/#{hit.id}/edit", target: '_blank' %></td>
         </tr>
       <% end %>
     </tbody>
