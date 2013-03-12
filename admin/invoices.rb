@@ -123,7 +123,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       f.input :billing_lastname
       f.input :billing_department, label: Goldencobra::Setting.for_key("goldencobra_events.event.registration.user_form.user_label.billing_department")
     end
-    # if f.object.billing_company.present?
+    if f.object.billing_company
       f.inputs "Rechnungsadresse Firma" do
         f.fields_for :billing_company_attributes, f.object.billing_company do |comp|
           comp.inputs "", class: "foldable inputs" do
@@ -141,7 +141,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           end
         end
       end
-    # end
+    end
 
     f.inputs "" do
       f.fields_for :company_attributes, f.object.company do |comp|
@@ -295,8 +295,8 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         reguser.set_invoice_date(Date.today) unless reguser.invoice_sent.present?
         pdf_invoice = GoldencobraEvents::Invoice.generate_invoice(reguser)
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Rechnung erstellt", :description => "von #{current_user.email}")
-        if Goldencobra::Setting.for_key('goldencobra_events.printer.email').present?
-          # TODO: print invoice
+        if Goldencobra::Setting.for_key('goldencobra_events.printer.email') != 'test@test.de'
+          GoldencobraEvents::SentToPrinterMailer.send_email(pdf_invoice).deliver
         end
 
         require 'pixelletter'
@@ -309,8 +309,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           response = request.request(order, pdf_invoice)
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Rechnung an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
-        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "#{reguser.event_registrations.last.invoice_number}.pdf"))
-        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+        # Do not download file
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
     redirect_to :action => :index unless @generated
@@ -323,6 +324,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         @generated = true
         cancelation_file = reguser.generate_cancellation
         reguser.cancel_reservation! # Erstellt VitaStep und verschickt email
+        if Goldencobra::Setting.for_key('goldencobra_events.printer.email') != 'test@test.de'
+          GoldencobraEvents::SentToPrinterMailer.send_email(cancelation_file).deliver
+        end
+
         require 'pixelletter'
         Pixelletter.load_initial_values unless ENV['EMAIL'].present?
 
@@ -333,9 +338,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           response = request.request(order, cancelation_file)
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Storno an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
-        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "cancellation_#{reguser.event_registrations.last.invoice_number}.pdf"))
-
-        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+        # Do not download file
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "cancellation_#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
     redirect_to :action => :index unless @generated
@@ -347,8 +352,12 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 erstellt", :description => "von #{current_user.email}")
-        reminder_1_file = reguser.reguser.generate_reminder(1)
+        reminder_1_file = reguser.generate_reminder(1)
         reguser.update_attributes(first_reminder_sent: Date.today)
+        if Goldencobra::Setting.for_key('goldencobra_events.printer.email') != 'test@test.de'
+          GoldencobraEvents::SentToPrinterMailer.send_email(reminder_1_file).deliver
+        end
+
         require 'pixelletter'
         Pixelletter.load_initial_values unless ENV['EMAIL'].present?
 
@@ -359,9 +368,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           response = request.request(order, reminder_1_file)
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
-        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_1_#{reguser.event_registrations.last.invoice_number}.pdf"))
-
-        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+        # Do not download file
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_1_#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
     redirect_to :action => :index unless @generated
@@ -374,9 +383,12 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 erstellt", :description => "von #{current_user.email}")
 
-        reminder_2_file = reguser.reguser.generate_reminder(2)
+        reminder_2_file = reguser.generate_reminder(2)
         reguser.update_attributes(second_reminder_sent: Date.today)
 
+        if Goldencobra::Setting.for_key('goldencobra_events.printer.email') != 'test@test.de'
+          GoldencobraEvents::SentToPrinterMailer.send_email(reminder_2_file).deliver
+        end
         require 'pixelletter'
         Pixelletter.load_initial_values unless ENV['EMAIL'].present?
 
@@ -387,9 +399,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           response = request.request(order, reminder_2_file)
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
-        file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_2_#{reguser.event_registrations.last.invoice_number}.pdf"))
-
-        send_file(file, :type => 'application/pdf', :disposition => 'attachement')
+        # Do not download file
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_2_#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
     redirect_to :action => :index unless @generated
@@ -397,6 +409,14 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
   sidebar "invoice_options", only: [:index] do
     render "/goldencobra_events/admin/invoices/invoice_options_sidebar"
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
   end
 
   collection_action :set_invoice_date, :method => :post do

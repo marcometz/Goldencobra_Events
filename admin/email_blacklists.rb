@@ -14,4 +14,12 @@ ActiveAdmin.register GoldencobraEvents::EmailBlacklist, as: "Email-Blacklist" do
       end
       default_actions
   end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
 end

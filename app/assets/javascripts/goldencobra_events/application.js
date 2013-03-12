@@ -12,6 +12,7 @@
 //
 //= require goldencobra_events/mailcheck.min.js
 //= require goldencobra_events/tooltip.js
+//= require goldencobra_events/jquery.scrollTo.min
 
 $(document).ready(function() {
 

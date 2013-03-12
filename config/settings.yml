@@ -23,6 +23,9 @@ goldencobra_events:
         event_name_for_invoice: "DK"
     printer:
         email: 'test@test.de'
+        from: ''
+        subject: ''
+        reply_to: 'do-not-reply'
     send_with_pixelletter:
         value: 'true'
         type: 'boolean'

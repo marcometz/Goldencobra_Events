@@ -2,21 +2,27 @@
 $(document).ready(function() {
   $("#recently_checked_in").html("<%= escape_javascript(render :partial => '/goldencobra_events/admin/tickets/recently_checked_in_list' ) %>");
   // focus on the first text input field in the first field on the page
-  $("input[type='text']:first", document.forms[0]).focus();
+  //$("input[type='text']:first", document.forms[0]).focus();
+  $("input#input").focus();
+  $('#form_submit').live('submit', function() {
+    $('#scan').append('<br /><br /><img src="/assets/goldencobra_events/spinner.gif" alt="loading..." id="spinner" />');
+  });
 });
 </script>
 
 <div id="scan">
   <%= form_tag verify_barcode_admin_ticketsscannens_path, id: "scan-form", authenticity_token: false, remote: true do %>
-    <%= label_tag "barcode" %><br />
-    <%= text_field_tag "barcode", "" %><br />
-    <%#= label_tag "firstname" %>&nbsp;<%= text_field_tag "firstname", "" %>
-    <%#= label_tag "lastname" %>&nbsp;<%= text_field_tag "lastname", "" %>
+    <%= label_tag "Eingabe" %>
+    <%= text_field_tag "input", "" %><br />
     <%= submit_tag "Abschicken", id: "form_submit", class: "button" %>
   <% end %>
 </div>
 
 <div id="result"></div>
+<br /><br />
+
+<div id="hits"></div>
+
 <br /><br />
 <% # Übersicht von kürzlich eingecheckten Tickets %>
 <div id="recently_checked_in">

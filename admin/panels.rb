@@ -43,6 +43,13 @@ ActiveAdmin.register GoldencobraEvents::Panel, :as => "Event_Panel" do
     link_to('New Panel', new_admin_event_panel_path)
   end
 
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/prev_item'
+  end
+
+  action_item only: [:edit, :show] do
+    render partial: '/goldencobra/admin/shared/next_item'
+  end
 
   show :title => :title do
     panel "Panel Details" do

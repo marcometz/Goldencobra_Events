@@ -1,0 +1,30 @@
+<% if hits %>
+  <h2>Meinten Sie vielleicht?</h2>
+  <table id="hits_table">
+    <thead>
+      <tr>
+        <th>Nachname</th>
+        <th>Vorname</th>
+        <th>E-Mail</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% hits.each do |hit| %>
+        <tr>
+          <td><%= hit.lastname %></td>
+          <td><%= hit.firstname %></td>
+          <td><%= hit.email %></td>
+          <% if hit.active %>
+            <td><%= link_to 'Check In', check_in_admin_ticketsscannens_path(reg_id: hit.id), remote: true %></td>
+          <% else %>
+          <% canceled_at = hit.vita_steps.where(title: "Registration canceled").last.created_at %>
+            <td>Wurde storniert am <%= l(canceled_at, format: "%d.%m.%Y") %></td>
+          <% end %>
+          <td><%= link_to 'Details', "/admin/applicants/#{hit.id}/edit", target: '_blank' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

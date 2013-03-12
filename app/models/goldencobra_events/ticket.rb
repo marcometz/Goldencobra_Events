@@ -26,6 +26,9 @@ module GoldencobraEvents
     def self.generate_ticket(event_registration)
       require 'pdfkit'
       ticket_number = self.generate_barcode
+      if !File.exists?("#{Rails.root}/public/system/tickets")
+        Dir.mkdir("#{Rails.root}/public/system/tickets")
+      end
       if File.exist?("#{Rails.root}/public/system/tickets/ticket_#{ticket_number}.pdf")
         File.delete("#{Rails.root}/public/system/tickets/ticket_#{ticket_number}.pdf")
       end
