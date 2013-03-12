@@ -6,7 +6,7 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
   scope "Alle", :scoped, :default => true
   scope "Aktiv", :active
   scope "Inaktiv", :inactive
-  
+
   filter :title
   filter :start_date
   filter :end_date
