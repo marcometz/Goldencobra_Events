@@ -18,8 +18,8 @@ ActiveAdmin.register GoldencobraEvents::Event, :as => "Event" do
     f.actions
     f.inputs "Allgemein" do
       f.input :title, :hint => "Der Titel der Seite, kann Leerzeichen und Sonderzeichen enthalten"
-      f.input :start_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_date.strftime('%A, %d.%m.%Y') if f.object.start_date}" }
-      f.input :end_date, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.end_date.strftime('%A, %d.%m.%Y') if f.object.end_date}" }
+      f.input :start_date#, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.start_date.strftime('%A, %d.%m.%Y') if f.object.start_date}" }
+      f.input :end_date#, as: :string, :input_html => { class: "datepicker", :size => "20", value: "#{f.object.end_date.strftime('%A, %d.%m.%Y') if f.object.end_date}" }
       f.input :parent_id, :as => :select, :collection => GoldencobraEvents::Event.all.map{|c| [c.title, c.id]}, :include_blank => true
       f.input :type_of_event, :as => :select, :collection => GoldencobraEvents::Event::EventType.map{|c| c}, :include_blank => false
       f.input :type_of_registration, :as => :select, :collection => GoldencobraEvents::Event::RegistrationType.map{|c| c}, :include_blank => false
