@@ -7,6 +7,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   scope "Aktive", :active, :default => true
   scope "Alle", :scoped
   scope "Stornierte", :storno
+  scope "Aktive Events", :current_event
 
   filter :firstname
   filter :lastname
