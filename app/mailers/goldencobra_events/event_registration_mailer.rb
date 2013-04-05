@@ -18,7 +18,7 @@ module GoldencobraEvents
         end
 
         if user.event_registrations.any?
-          ticket_number = user.event_registrations.last.ticket_number
+          ticket_number = user.master_event_registration.ticket_number
           if Goldencobra::Setting.for_key('goldencobra_events.invoice.event_name_for_invoice').present?
             event_title = Goldencobra::Setting.for_key('goldencobra_events.invoice.event_name_for_invoice')
           end

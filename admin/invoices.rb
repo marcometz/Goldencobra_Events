@@ -40,13 +40,13 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
       number_to_currency(u.total_price, :locale => :de)
     end
     column "Rechnung" do |i|
-      link_to(i.event_registrations.first.invoice_number, "/system/invoices/#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank") if i.event_registrations.count > 0 && i.event_registrations.first.invoice_number.present?
+      link_to(i.master_event_registration.invoice_number, "/system/invoices/#{i.master_event_registration.invoice_number}.pdf?#{Time.now}", target: "blank") if i.event_registrations.count > 0 && i.master_event_registration.invoice_number.present?
     end
     column "Ticket" do |invoice|
-      link_to(invoice.event_registrations.first.ticket_number, "/system/tickets/ticket_#{invoice.event_registrations.first.ticket_number}.pdf?#{Time.now}", target: "blank") if invoice.event_registrations.count > 0 && invoice.event_registrations.first.ticket_number.present?
+      link_to(invoice.master_event_registration.ticket_number, "/system/tickets/ticket_#{invoice.master_event_registration.ticket_number}.pdf?#{Time.now}", target: "blank") if invoice.event_registrations.count > 0 && invoice.master_event_registration.ticket_number.present?
     end
     column '# Checkins' do |invoice|
-      invoice.event_registrations.first.checkin_count if invoice.event_registrations.any?
+      invoice.master_event_registration.checkin_count if invoice.event_registrations.any?
     end
     column :invoice_sent, sortable: :invoice_sent do |invoice|
       invoice.invoice_sent.strftime("%d.%m.%Y") if invoice.invoice_sent
@@ -66,9 +66,9 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
     end
     column 'Storno' do |i|
       vita_step = i.vita_steps.where(title: 'Registration canceled').last
-      if vita_step && !i.active && i.event_registrations.any? && i.event_registrations.first.invoice_number.present?
-        if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf")
-          link_to(vita_step.created_at.strftime("%d.%m.%Y"), "/system/invoices/cancellation_#{i.event_registrations.first.invoice_number}.pdf?#{Time.now}", target: "blank")
+      if vita_step && !i.active && i.event_registrations.any? && i.master_event_registration.invoice_number.present?
+        if File.exists?("#{Rails.root}/public/system/invoices/cancellation_#{i.master_event_registration.invoice_number}.pdf")
+          link_to(vita_step.created_at.strftime("%d.%m.%Y"), "/system/invoices/cancellation_#{i.master_event_registration.invoice_number}.pdf?#{Time.now}", target: "blank")
         else
           vita_step.created_at.strftime("%d.%m.%Y")
         end
@@ -276,13 +276,13 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
 
   batch_action :generate_ticket do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      # render(template: 'templates/ticket/ticket', layout: false, locals: {user: reguser, event: reguser.event_registrations.first.event_pricegroup.event.root})
+      # render(template: 'templates/ticket/ticket', layout: false, locals: {user: reguser, event: reguser.master_event_registration.event_pricegroup.event.root})
 
       # Wenn Tickets nicht mehrfach generiert werden sollen, dann die folgende Zeile entkommentieren und dafür die dahinter kommentieren
-      # GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.first) unless reguser.event_registrations.any? && reguser.event_registrations.first.ticket_number.present?
+      # GoldencobraEvents::Ticket.generate_ticket(reguser.master_event_registration) unless reguser.event_registrations.any? && reguser.master_event_registration.ticket_number.present?
 
       reguser.vita_steps << Goldencobra::Vita.create(:title => "Ticket erstellt", :description => "von #{current_user.email}")
-      send_file(GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.last), :type => 'application/pdf', :disposition => 'attachement')
+      send_file(GoldencobraEvents::Ticket.generate_ticket(reguser.master_event_registration), :type => 'application/pdf', :disposition => 'attachement')
     end
     # redirect_to :action => :index
   end
@@ -290,7 +290,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_invoice do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.master_event_registration.event_pricegroup.price > 0.0
         @generated = true
         reguser.set_invoice_date(Date.today) unless reguser.invoice_sent.present?
         pdf_invoice = GoldencobraEvents::Invoice.generate_invoice(reguser)
@@ -310,7 +310,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Rechnung an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
         # Do not download file
-        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "#{reguser.master_event_registration.invoice_number}.pdf"))
         # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
@@ -320,7 +320,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_cancellation do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.master_event_registration.event_pricegroup.price > 0.0
         @generated = true
         cancelation_file = reguser.generate_cancellation
         reguser.cancel_reservation! # Erstellt VitaStep und verschickt email
@@ -339,7 +339,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Storno an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
         # Do not download file
-        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "cancellation_#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "cancellation_#{reguser.master_event_registration.invoice_number}.pdf"))
         # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
@@ -349,7 +349,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_reminder_1 do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.master_event_registration.event_pricegroup.price > 0.0
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 erstellt", :description => "von #{current_user.email}")
         reminder_1_file = reguser.generate_reminder(1)
@@ -369,7 +369,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 1 an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
         # Do not download file
-        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_1_#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_1_#{reguser.master_event_registration.invoice_number}.pdf"))
         # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end
@@ -379,7 +379,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
   batch_action :generate_reminder_2 do |selection|
     @generated = false
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
-      if reguser.event_registrations.any? && reguser.event_registrations.last.event_pricegroup.price > 0.0
+      if reguser.event_registrations.any? && reguser.master_event_registration.event_pricegroup.price > 0.0
         @generated = true
         reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 erstellt", :description => "von #{current_user.email}")
 
@@ -400,7 +400,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Invoice" do
           reguser.vita_steps << Goldencobra::Vita.create(:title => "Mahnung 2 an Pixelletter gesandt", :description => "von #{current_user.email}")
         end
         # Do not download file
-        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_2_#{reguser.event_registrations.last.invoice_number}.pdf"))
+        # file = File.new(File.join(Rails.root, 'public', 'system', 'invoices', "reminder_2_#{reguser.master_event_registration.invoice_number}.pdf"))
         # send_file(file, :type => 'application/pdf', :disposition => 'attachement')
       end
     end

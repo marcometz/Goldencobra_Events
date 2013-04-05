@@ -235,7 +235,7 @@
       Sehr geehrte Frau <%= @user.firstname %> <%= @user.lastname %>,<br>
   <% end %>
   <br>
-  <% pricegroup = @user.event_registrations.last.event_pricegroup.pricegroup if @user.event_registrations.any? && @user.event_registrations.last.event_pricegroup.present? && @user.event_registrations.last.event_pricegroup.pricegroup.present? %>
+  <% pricegroup = @user.master_event_registration.event_pricegroup.pricegroup if @user.event_registrations.any? && @user.master_event_registration.event_pricegroup.present? && @user.master_event_registration.event_pricegroup.pricegroup.present? %>
   <% if pricegroup %>
     <%= raw(pricegroup.email_text) %>
 

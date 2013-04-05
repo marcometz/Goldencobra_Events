@@ -167,8 +167,8 @@
             @errors << @result if @result != true
             if @result == true
               # Ticket generieren, da es direkt mit der Bestätigungsmail versandt wird
-              if reguser.event_registrations.any? && reguser.event_registrations.last.ticket_number.blank?
-                GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.last)
+              if reguser.event_registrations.any? && reguser.master_event_registration.ticket_number.blank?
+                GoldencobraEvents::Ticket.generate_ticket(reguser.master_event_registration)
               end
               GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
               reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: customer #{reguser.id}")

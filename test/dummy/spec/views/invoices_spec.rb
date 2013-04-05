@@ -46,7 +46,7 @@ describe "Generating documents" do
            layout: nil,
            locals: {
             user: @reg_user,
-            event: @reg_user.event_registrations.first.event_pricegroup.event,
+            event: @reg_user.master_event_registration.event_pricegroup.event,
             invoice_number: "Test-123",
             invoice_date: Time.now.strftime("%d.%m.%Y")})
     rendered.should have_content('Mustercompany')
@@ -59,7 +59,7 @@ describe "Generating documents" do
            layout: nil,
            locals: {
              user: @reg_user,
-             event: @reg_user.event_registrations.first.event_pricegroup.event.root,
+             event: @reg_user.master_event_registration.event_pricegroup.event.root,
              ticket_number: 'Ticket-123'})
     rendered.should have_content('Privatunternehmen')
     rendered.should have_content('Zossener Str. 55')
@@ -71,7 +71,7 @@ describe "Generating documents" do
            layout: nil,
            locals: {
             user: @privat_user,
-            event: @privat_user.event_registrations.first.event_pricegroup.event,
+            event: @privat_user.master_event_registration.event_pricegroup.event,
             invoice_number: "Test-123",
             invoice_date: Time.now.strftime("%d.%m.%Y")})
     rendered.should_not have_content('privat Person')
@@ -84,7 +84,7 @@ describe "Generating documents" do
            layout: nil,
            locals: {
              user: @privat_user,
-             event: @privat_user.event_registrations.first.event_pricegroup.event.root,
+             event: @privat_user.master_event_registration.event_pricegroup.event.root,
              ticket_number: 'Ticket-123'})
     rendered.should_not have_content('privat Person')
     rendered.should have_content('Zossener Str. 55')

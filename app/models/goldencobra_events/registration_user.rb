@@ -112,12 +112,12 @@ module GoldencobraEvents
     def generate_cancellation
       if self.event_registrations.any?
         require 'pdfkit'
-        invoice_numb = self.event_registrations.first.invoice_number
+        invoice_numb = self.master_event_registration.invoice_number
         html = ActionController::Base.new.render_to_string(
                                       template: 'templates/invoice/cancellation', layout: false,
                                         locals: {
             user: self,
-            event: self.event_registrations.first.event_pricegroup.event,
+            event: self.master_event_registration.event_pricegroup.event,
             invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y"),
             invoice_number: invoice_numb
             })
@@ -134,13 +134,13 @@ module GoldencobraEvents
         category = cat.to_s
         require 'pdfkit'
         re_date = Time.now + 14.days
-        invoice_numb = self.event_registrations.first.invoice_number
+        invoice_numb = self.master_event_registration.invoice_number
         html = ActionController::Base.new.render_to_string(
                               template: "templates/invoice/reminder_#{category}",
                               layout: false,
                               locals: {
             user: self,
-            event: self.event_registrations.first.event_pricegroup.event,
+            event: self.master_event_registration.event_pricegroup.event,
             invoice_date: self.invoice_sent.present? ? self.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y"),
             reminder_date: re_date.strftime("%d.%m.%Y"),
             invoice_number: invoice_numb

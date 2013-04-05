@@ -28,11 +28,11 @@ module GoldencobraEvents
                                     template: 'templates/invoice/invoice', layout: false,
                                       locals: {
           user: registration_user,
-          event: registration_user.event_registrations.first.event_pricegroup.event,
+          event: registration_user.master_event_registration.event_pricegroup.event,
           invoice_number: invoice_numb,
           invoice_date: registration_user.invoice_sent.present? ? registration_user.invoice_sent.strftime("%d.%m.%Y") : Time.now.strftime("%d.%m.%Y")
           })
-      registration_user.event_registrations.first.update_attributes(invoice_number: invoice_numb)
+      registration_user.master_event_registration.update_attributes(invoice_number: invoice_numb)
       kit = PDFKit.new(html, :page_size => 'Letter')
       if !File.exists?("#{Rails.root}/public/system/invoices")
         Dir.mkdir("#{Rails.root}/public/system/invoices")

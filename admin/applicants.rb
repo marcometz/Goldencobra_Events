@@ -32,10 +32,10 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
       span applicant.email, class: 'email'
     end
     column 'Ticket' do |applicant|
-      link_to(applicant.event_registrations.first.ticket_number, "/system/tickets/ticket_#{applicant.event_registrations.first.ticket_number}.pdf", target: 'blank') if applicant.event_registrations.count > 0 && applicant.event_registrations.first.ticket_number.present?
+      link_to(applicant.master_event_registration.ticket_number, "/system/tickets/ticket_#{applicant.master_event_registration.ticket_number}.pdf", target: 'blank') if applicant.event_registrations.count > 0 && applicant.master_event_registration.ticket_number.present?
     end
     column '# Checkins' do |applicant|
-      applicant.event_registrations.last.checkin_count if applicant.event_registrations.any?
+      applicant.master_event_registration.checkin_count if applicant.event_registrations.any?
     end
     column :type_of_registration
     column :total_price, sortable: :total_price do |u|
@@ -243,7 +243,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
   batch_action "Sende Bestätigungsemail", :confirm => "Sind Sie sicher?" do |selection|
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       # Ticket generieren, sofern noch nicht vorhanden
-      if reguser.event_registrations.any? && reguser.event_registrations.last.ticket_number.blank?
+      if reguser.event_registrations.any? && reguser.master_event_registration.ticket_number.blank?
         GoldencobraEvents::Ticket.generate_ticket(reguser.master_event_registration)
       end
       GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
