@@ -60,7 +60,7 @@ module GoldencobraEvents
     scope :unpayed, where(:payed_on => nil )
     scope :payed, where('payed_on IS NOT NULL')
     scope :invoice_not_send, where(:invoice_sent => nil )
-    scope :current_event, where(:active => true).where("goldencobra_events_events.ancestry IS NULL").where(:goldencobra_events_events => {:active => true} ).joins(:event_registrations => {:event_pricegroup => :event})
+    scope :current_event, where("goldencobra_events_registration_users.active = 1").where("goldencobra_events_events.ancestry IS NULL").where(:goldencobra_events_events => {:active => true} ).joins(:event_registrations => {:event_pricegroup => :event}).uniq
 
     search_methods :type_of_registration_not_eq
     scope :type_of_registration_not_eq, lambda { |param| where("type_of_registration <> '#{param}'") }
