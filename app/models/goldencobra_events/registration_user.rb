@@ -230,13 +230,18 @@ module GoldencobraEvents
 
 
     def pricegroup_title
-      master_reg = self.event_registrations.where("goldencobra_events_events.ancestry IS NULL").joins(:event_pricegroup => :event).first
+      master_reg = master_event_registration
       if master_reg && master_reg.event_pricegroup.present? && master_reg.event_pricegroup.pricegroup.present? && master_reg.event_pricegroup.pricegroup.title.present?
         master_reg.event_pricegroup.pricegroup.title
       else
         "leer"
       end
     end
+
+    def master_event_registration
+      self.event_registrations.where("goldencobra_events_events.ancestry IS NULL").joins(:event_pricegroup => :event).first
+    end
+
 
     def registration_emails
       self.vita_steps.where(title: "Mail delivered: registration confirmation")

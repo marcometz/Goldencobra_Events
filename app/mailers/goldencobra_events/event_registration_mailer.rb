@@ -22,7 +22,7 @@ module GoldencobraEvents
           if Goldencobra::Setting.for_key('goldencobra_events.invoice.event_name_for_invoice').present?
             event_title = Goldencobra::Setting.for_key('goldencobra_events.invoice.event_name_for_invoice')
           end
-          pricegroup_title = user.event_registrations.last.event_pricegroup.pricegroup.title if user.event_registrations.last.event_pricegroup.present? && user.event_registrations.last.event_pricegroup.pricegroup.present?
+          pricegroup_title = user.pricegroup_title
         end
 
         if ticket_number.present?

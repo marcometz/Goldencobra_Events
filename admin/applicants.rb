@@ -244,7 +244,7 @@ ActiveAdmin.register GoldencobraEvents::RegistrationUser, :as => "Applicant" do
     GoldencobraEvents::RegistrationUser.find(selection).each do |reguser|
       # Ticket generieren, sofern noch nicht vorhanden
       if reguser.event_registrations.any? && reguser.event_registrations.last.ticket_number.blank?
-        GoldencobraEvents::Ticket.generate_ticket(reguser.event_registrations.last)
+        GoldencobraEvents::Ticket.generate_ticket(reguser.master_event_registration)
       end
       GoldencobraEvents::EventRegistrationMailer.registration_email(reguser).deliver unless Rails.env == "test"
       reguser.vita_steps << Goldencobra::Vita.create(:title => "Mail delivered: registration confirmation", :description => "email: #{reguser.email}, user: admin #{current_user.id}")
