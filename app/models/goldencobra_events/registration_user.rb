@@ -230,10 +230,9 @@ module GoldencobraEvents
 
 
     def pricegroup_title
-      if self.event_registrations.last && self.event_registrations.last.event_pricegroup.present? &&
-        self.event_registrations.last.event_pricegroup.pricegroup.present? &&
-        self.event_registrations.last.event_pricegroup.pricegroup.title.present?
-        self.event_registrations.last.event_pricegroup.pricegroup.title
+      master_reg = self.event_registrations.where("goldencobra_events_events.ancestry IS NULL").joins(:event_pricegroup => :event).first
+      if master_reg && master_reg.event_pricegroup.present? && master_reg.event_pricegroup.pricegroup.present? && master_reg.event_pricegroup.pricegroup.title.present?
+        master_reg.event_pricegroup.pricegroup.title
       else
         "leer"
       end
