@@ -24,7 +24,7 @@ ActiveAdmin.register GoldencobraEvents::Ticket, :as => "Tickets scannen" do
         via_barcode = true
       else
         via_barcode = false
-        registration = GoldencobraEvents::RegistrationUser.search_with_indifferent_attributes(input)
+        registrations = GoldencobraEvents::RegistrationUser.search_with_indifferent_attributes(input)
       end
     end
 
@@ -33,10 +33,10 @@ ActiveAdmin.register GoldencobraEvents::Ticket, :as => "Tickets scannen" do
       @barcode = "valid"
       @checkin = registration.checkin_status_message
       @count = registration.checkin_count
-    elsif registration && registration.count > 1
+    elsif registrations && registrations.count > 1
       logger.info "\n\n\ntest\n"
       @barcode = false
-      @hits = registration
+      @hits = registrations
     else
       @hits = []
       @barcode = false
