@@ -33,8 +33,7 @@ ActiveAdmin.register GoldencobraEvents::Ticket, :as => "Tickets scannen" do
       @barcode = "valid"
       @checkin = registration.checkin_status_message
       @count = registration.checkin_count
-    elsif registrations && registrations.count > 1
-      logger.info "\n\n\ntest\n"
+    elsif registrations && registrations.count > 0
       @barcode = false
       @hits = registrations
     else
