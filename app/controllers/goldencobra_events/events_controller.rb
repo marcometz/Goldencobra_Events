@@ -14,6 +14,21 @@
       end
     end
 
+
+# PW am 18.04.: Meiner Meinung ist das hier überflüssig und falsch, die Variable @valid_webcode wurde nur einmal verwendet, da nehmen wir jetzt auch @webcode
+#    def validate_web_code
+#      if params[:webcode] && params[:webcode].present?
+#        session[:goldencobra_events_webcode] = params[:webcode]
+#        @webcode = true
+#        if GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
+#          @valid_webcode = true
+#        else
+#         @valid_webcode = false
+#        end
+#      end
+#    end
+
+
     def display_agb
       art_id = Goldencobra::Setting.find_by_title("agb_article_id")
       if art_id.present? && art_id.value != "0"
@@ -198,18 +213,6 @@
         epg_id = @event_to_register.event_pricegroups.first.id
       end
       return GoldencobraEvents::EventPricegroup.find_by_id(epg_id)
-    end
-
-    def validate_web_code
-      if params[:webcode] && params[:webcode].present?
-        session[:goldencobra_events_webcode] = params[:webcode]
-        @webcode = true
-        if GoldencobraEvents::EventPricegroup.select(:webcode).map(&:webcode).include?(params[:webcode])
-          @valid_webcode = true
-        else
-          @valid_webcode = false
-        end
-      end
     end
 
     def init_registration_session
